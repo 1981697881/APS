@@ -43,7 +43,6 @@ export const StaticRouterMap = [{
     component: () => import('@/views/404'),
     hidden: true
   },
-
   {
     path: '/',
     component: Layout,
@@ -55,120 +54,329 @@ export const StaticRouterMap = [{
       meta: {
         title: '首页',
         icon: 'dashboard',
-        affix: true ,
+        affix: true
       }
     }]
   },
-  /* {
-    path: '/wy',
+  {
+    path: '/basic',
     component: Layout,
-    redirect: '/wy/resource',
-    name: 'Wy',
+    name: 'Basic',
     meta: {
-      title: '物业管理系统',
-      icon: 'nested'
+      title: '基础资料',
+      icon: "component"
     },
     children: [{
-        path: 'resource',
-        component: () => import('@/views/wy/resource/index'),
-        name: 'Resource',
-        meta: {
-          title: '资源管理'
-        },
-        children: [{
-            path: 'houses',
-            component: () => import('@/views/wy/resource/houselist/index'),
-            name: 'Houses',
-            meta: {
-              title: '房产资料'
-            },
-          },
-          {
-            path: 'clients',
-            component: () => import('@/views/wy/customer/clientlist/index'),
-            name: 'Clients',
-            meta: {
-              title: '客户管理'
-            }
-          },
-          {
-            path: 'carPark',
-            component: notpage,
-            name: 'CarPark',
-            meta: {
-              title: '车位管理'
-            }
-          },
-        ]
+      path: 'framework',
+      component: () => import('@/views/basic/framework/index'),
+      name: 'Framework',
+      meta: {
+        title: '组织架构'
       },
-      {
-        path: 'lease',
-        component: notpage,
-        name: 'Lease',
-        meta: {
-          title: '租赁管理'
-        },
-        children: [{
-            path: 'lease-manage',
-            component: notpage,
-            name: 'Lease-manage',
-            meta: {
-              title: '租赁合同'
-            }
-          },
-          {
-            path: 'lease-contract',
-            component: notpage,
-            name: 'Lease-contract',
-            meta: {
-              title: '返租合同'
-            }
-          }
-        ]
+    },{
+      path: 'material',
+      component: () => import('@/views/basic/material/index'),
+      name: 'Material',
+      meta: {
+        title: '物料管理'
       },
-      {
-        path: 'finance',
-        component: notpage,
-        name: 'Finance',
-        meta: {
-          title: '财务管理'
-        },
-        children: [{
-            path: 'receipt-standard',
-            component: notpage,
-            name: 'Receipt-standard',
-            meta: {
-              title: '收费标准'
-            }
-          },
-          {
-            path: 'receipt-manage',
-            component: notpage,
-            name: 'Receipt-manage',
-            meta: {
-              title: '收款管理'
-            }
-          },
-          {
-            path: 'payables',
-            component: notpage,
-            name: 'Payables',
-            meta: {
-              title: '应付管理'
-            }
-          },
-          {
-            path: 'receivable',
-            component: notpage,
-            name: 'Receivable',
-            meta: {
-              title: '应收管理'
-            }
-          }
-        ]
+    },{
+      path: 'clerk',
+      component: () => import('@/views/basic/clerk/index'),
+      name: 'Clerk',
+      meta: {
+        title: '职员管理'
       },
-    ]
-  }, */
+    },{
+      path: 'supplier',
+      component: () => import('@/views/basic/supplier/index'),
+      name: 'Supplier',
+      meta: {
+        title: '供应商管理'
+      },
+    },{
+      path: 'inventory',
+      component: () => import('@/views/basic/inventory/index'),
+      name: 'Inventory',
+      meta: {
+        title: '库存信息'
+      },
+    },{
+      path: 'resources',
+      component: () => import('@/views/basic/resources/index'),
+      name: 'Resources',
+      meta: {
+        title: '生产资源管理'
+      },
+    },{
+      path: 'barcode',
+      component: () => import('@/views/basic/barcode/index'),
+      name: 'Barcode',
+      meta: {
+        title: '条码设置'
+      },
+    }]
+  },
+  {
+    path: '/production',
+    component: Layout,
+    name: 'Production',
+    meta: {
+      title: '生产管理',
+      icon: "component"
+    },
+    children: [{
+      path: 'prepare',
+      component: () => import('@/views/production/prepare/index'),
+      name: 'Prepare',
+      meta: {
+        title: '生产单管理'
+      },
+    },{
+      path: 'scheduling',
+      component: () => import('@/views/production/scheduling/index'),
+      name: 'Scheduling',
+      meta: {
+        title: '生产排程'
+      },
+    },{
+      path: 'sboard',
+      component: () => import('@/views/production/sboard/index'),
+      name: 'sboard',
+      meta: {
+        title: '生产任务看板'
+      },
+    },{
+      path: 'efficiency',
+      component: () => import('@/views/production/efficiency/index'),
+      name: 'Efficiency',
+      meta: {
+        title: '工时效率统计表'
+      },
+    }]
+  },
+  {
+    path: '/warehouse',
+    component: Layout,
+    name: 'Warehouse',
+    meta: {
+      title: '仓库物流管理',
+      icon: "component"
+    },
+    children: [{
+      path: 'procurement',
+      component: () => import('@/views/warehouse/procurement/index'),
+      name: 'Procurement',
+      meta: {
+        title: '采购入库'
+      },
+    },{
+      path: 'recipients',
+      component: () => import('@/views/warehouse/recipients/index'),
+      name: 'Recipients',
+      meta: {
+        title: '领用出库'
+      },
+    },{
+      path: 'materialback',
+      component: () => import('@/views/warehouse/materialback/index'),
+      name: 'Materialback',
+      meta: {
+        title: '退料单'
+      },
+    },{
+      path: 'returns',
+      component: () => import('@/views/warehouse/returns/index'),
+      name: 'Returns',
+      meta: {
+        title: '退货入库单'
+      },
+    },{
+      path: 'storage',
+      component: () => import('@/views/warehouse/storage/index'),
+      name: 'Storage',
+      meta: {
+        title: '生产入库'
+      },
+    },{
+      path: 'shelves',
+      component: () => import('@/views/warehouse/shelves/index'),
+      name: 'Shelves',
+      meta: {
+        title: '商品上架'
+      },
+    },{
+      path: 'movingframe',
+      component: () => import('@/views/warehouse/movingframe/index'),
+      name: 'Movingframe',
+      meta: {
+        title: '商品移架'
+      },
+    },{
+      path: 'picking',
+      component: () => import('@/views/warehouse/picking/index'),
+      name: 'Picking',
+      meta: {
+        title: '拣货单管理'
+      },
+    },{
+      path: 'soldout',
+      component: () => import('@/views/warehouse/soldout/index'),
+      name: 'Soldout',
+      meta: {
+        title: '商品下架'
+      },
+    },{
+      path: 'sipping',
+      component: () => import('@/views/warehouse/sipping/index'),
+      name: 'Sipping',
+      meta: {
+        title: '发货出库'
+      },
+    },{
+      path: 'adjust',
+      component: () => import('@/views/warehouse/adjust/index'),
+      name: 'Adjust',
+      meta: {
+        title: '库存调整单'
+      },
+    },{
+      path: 'scrap',
+      component: () => import('@/views/warehouse/scrap/index'),
+      name: 'Scrap',
+      meta: {
+        title: '商品报废'
+      },
+    },{
+      path: 'wboard',
+      component: () => import('@/views/warehouse/wboard/index'),
+      name: 'wBoard',
+      meta: {
+        title: '仓库物流看板'
+      },
+    },{
+      path: 'differences',
+      component: () => import('@/views/warehouse/differences/index'),
+      name: 'Differences',
+      meta: {
+        title: '发货差异报表'
+      },
+    }]
+  },
+  {
+    path: '/aftermarket',
+    component: Layout,
+    name: 'Aftermarket',
+    meta: {
+      title: '售后管理',
+      icon: "component"
+    },
+    children: [{
+      path: 'sales',
+      component: () => import('@/views/aftermarket/sales/index'),
+      name: 'Sales',
+      meta: {
+        title: '销售订单'
+      },
+    },{
+      path: 'shipment',
+      component: () => import('@/views/aftermarket/shipment/index'),
+      name: 'Shipment',
+      meta: {
+        title: '出货排程'
+      },
+    },{
+      path: 'perform',
+      component: () => import('@/views/aftermarket/perform/index'),
+      name: 'Perform',
+      meta: {
+        title: '订单执行统计'
+      },
+    }]
+  },
+  {
+    path: '/attendance',
+    component: Layout,
+    name: 'Attendance',
+    meta: {
+      title: '考勤管理',
+      icon: "component"
+    },
+    children: [{
+      path: 'shift',
+      component: () => import('@/views/attendance/shift/index'),
+      name: 'Shift',
+      meta: {
+        title: '班次管理'
+      },
+    },{
+      path: 'arrange',
+      component: () => import('@/views/attendance/arrange/index'),
+      name: 'Arrange',
+      meta: {
+        title: '排班'
+      },
+    },{
+      path: 'punchcard',
+      component: () => import('@/views/attendance/punchcard/index'),
+      name: 'Punchcard',
+      meta: {
+        title: '打卡管理'
+      },
+    },{
+      path: 'vacate',
+      component: () => import('@/views/attendance/vacate/index'),
+      name: 'Vacate',
+      meta: {
+        title: '请假管理'
+      },
+    },{
+      path: 'salary',
+      component: () => import('@/views/attendance/salary/index'),
+      name: 'Salary',
+      meta: {
+        title: '考勤管理'
+      },
+    }]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    name: 'System',
+    meta: {
+      title: '系统设置',
+      icon: "component"
+    },
+    children: [{
+      path: 'users',
+      component: () => import('@/views/system/users/index'),
+      name: 'Users',
+      meta: {
+        title: '用户管理'
+      },
+    },{
+      path: 'journal',
+      component: () => import('@/views/system/journal/index'),
+      name: 'Journal',
+      meta: {
+        title: '日志管理'
+      },
+    },{
+      path: 'notice',
+      component: () => import('@/views/system/notice/index'),
+      name: 'Notice',
+      meta: {
+        title: '通知管理'
+      },
+    },{
+      path: 'board',
+      component: () => import('@/views/system/board/index'),
+      name: 'Board',
+      meta: {
+        title: '看板管理'
+      },
+    }]
+  },
   /* {
     path: 'external-link',
     component: Layout,

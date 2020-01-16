@@ -12,12 +12,16 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
-
+import {
+  MessageBox,
+  Message
+} from 'element-ui'
 import '@/icons' // icon
 import '@/permission' // permission control
 
 import Cookies from 'js-cookie'
-import {login} from '@/api/user'
+import {login,logout} from '@/api/user'
+
 
 
 /**
@@ -51,7 +55,29 @@ new Vue({
       password: Cookies.get('ps')
      }
     if(data.username && data.password){
-     login(data)
+     var rs=Cookies.get('rx')
+      console.log(rs)
+      console.log( Cookies.get('rx') == "undefined")
+      if(Cookies.get('rx') =="undefined"){
+        this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+        store.dispatch('user/resetToken')
+      }else{
+        login(data).then(res => {
+          console.log(res.flag)
+          if(!res.flag){
+            this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+            store.dispatch('user/resetToken')
+          }
+        }).catch(res => {
+          Message({
+            message:res.msg,
+            type:'error',
+            duration: 5 * 1000
+          })
+          this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+          store.dispatch('user/resetToken')
+        })
+      }
     }
     /* let routes = JSON.parse(localStorage.getItem('routes'))
     if(routes){
@@ -67,7 +93,7 @@ new Vue({
     })
     router.addRoutes(routes)
     global.antRouter = router.options.routes.concat(routes) // 将路由数据传递给全局变量，做侧边栏菜单渲染工作
-    
+
     console.log(router.options.routes) */
-  } 
+  }
 })

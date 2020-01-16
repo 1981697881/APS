@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: '融歆智慧管理平台N9',
+      title: '排产系统',
       logo: require('@/assets/logo/logo.png')
     }
   }

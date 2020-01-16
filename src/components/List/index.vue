@@ -1,8 +1,9 @@
 <template>
   <div>
     <el-table
-      :data="list.list"
+      :data="list.records"
       border
+      stripe
       size="mini"
       :highlight-current-row="true"
       @row-dblclick="dblclick"
@@ -20,11 +21,20 @@
         v-for="(t,i) in columns"
         :key="i"
         :prop="t.name"
+        v-if="t.default!=undefined?t.default:true"
         :label="t.text"
         :width="t.width?t.width:(selfAdaption?'':'120px')"
         show-overflow-tooltip
         align="center"
       ></el-table-column>
+      <!--<el-table-column
+        fixed="right"
+        label="操作"
+        width="100">
+        <template slot-scope="scope">
+          <el-button  type="text" size="small"  @click.native="">添加</el-button>
+        </template>
+      </el-table-column>-->
       <slot name="after"></slot>
     </el-table>
 
@@ -32,9 +42,9 @@
       <el-pagination
         @size-change="handleSize"
         @current-change="handleCurrent"
-        :current-page="list.pageNum"
-        :page-sizes="[5, 10, 20, 30]"
-        :page-size="list.pageSize"
+        :current-page="list.current"
+        :page-sizes="[50, 100, 250, 500]"
+        :page-size="list.size"
         :page-count="list.pages?list.pages:0"
         layout="total, sizes, prev, pager, next, jumper"
         :total="list.total?list.total:0"
@@ -78,7 +88,7 @@ export default {
     //是否自适应宽度，不自适应宽度默认为120px
     selfAdaption: {
       type: Boolean,
-      default: false
+      default:true
     },
     //是否自定义高度 默认100%
     height:{
@@ -137,5 +147,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+  .el-table__body tr.current-row>td{
+    background-color: #f19944 !important;
+    /* color: #f19944; */  /* 设置文字颜色，可以选择不设置 */
+  }
+  /* 用来设置当前页面element全局table 鼠标移入某行时的背景色*/
+  .el-table--enable-row-hover .el-table__body tr:hover>td {
+    background-color: #f19944;
+    /* color: #f19944; */ /* 设置文字颜色，可以选择不设置 */
+  }
+
 </style>

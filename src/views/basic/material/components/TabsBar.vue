@@ -1,0 +1,106 @@
+<template>
+  <div class="list-header">
+    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+      <el-row :gutter="10">
+        <el-col :span="4">
+          <el-form-item :label="'物料'">
+            <el-input v-model="search.keyword" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'类别'">
+            <el-select v-model="value" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="2">
+          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
+        </el-col>
+        <el-col :span="2">
+          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAdd">新增</el-button>
+        </el-col>
+        <el-col :span="2">
+          <el-button :size="'mini'" type="primary" icon="el-icon-search" >修改</el-button>
+        </el-col>
+        <el-col :span="2">
+          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="del">删除</el-button>
+        </el-col>
+
+        <el-col :span="2" >
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >审核</el-button>
+        </el-col>
+        <el-col :span="2" >
+        <el-button :size="'mini'" type="primary" icon="el-icon-plus" >反审核</el-button>
+      </el-col>
+        <el-col :span="2" >
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >禁用</el-button>
+        </el-col>
+        <el-col :span="2" >
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >启用</el-button>
+        </el-col>
+      </el-row>
+    </el-form>
+  </div>
+</template>
+<script>
+import { mapGetters } from "vuex";
+import {getMType} from "@/api/basic/index";
+export default {
+    components: {},
+    computed: {
+        ...mapGetters(["node","clickData","selections"])
+    },
+  data() {
+    return {
+        options: [{
+            value: '选项1',
+            label: '成品'
+        }, {
+            value: '选项2',
+            label: '半成品'
+        }],
+        value: '',
+      search: {
+          keyword: null,
+          type:null
+      }
+    };
+  },
+  mounted(){
+
+  },
+  methods:{
+      //关键字查询
+      query(){
+          if((typeof this.search.keyword != null) && (this.search.keyword !='')){
+
+          }
+      },
+      del() {
+          if (this.clickData.oid) {
+              this.$emit('delList',{
+                  oid:this.clickData.oid,
+              })
+          } else {
+              this.$message({
+                  message: "无选中行",
+                  type: "warning"
+              });
+          }
+      },
+      handleAdd(){
+          this.$emit('showDialog')
+
+    },
+  }
+};
+</script>
+
+<style>
+</style>
