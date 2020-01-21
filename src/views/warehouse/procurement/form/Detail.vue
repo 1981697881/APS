@@ -1,193 +1,156 @@
 <template>
   <div>
-    <el-form v-model="form" label-width="100px" :size="'mini'">
+    <el-form :model="form" :rules="rules" ref="form"  :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'oid'" style="display: none">
-            <el-input v-model="form.oid"></el-input>
+          <el-form-item :label="'rid'" style="display: none">
+            <el-input v-model="form.rid"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'订单编号'">
-            <el-input v-model="form.orderId"></el-input>
+          <el-form-item :label="'日期'" prop="roleName">
+            <el-input v-model="form.roleName"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'下单日期'">
-            <el-input v-model="form.createTime"></el-input>
+          <el-form-item :label="'入库单号'" prop="roleName">
+            <el-input v-model="form.roleName"></el-input>
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'客户名称'">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'客户编号'">
-            <el-input v-model="form.code"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-       <el-table :data="list" border :height="'250px'" stripe size="mini" :highlight-current-row="true" >
-         <el-table-column prop="date" label="序号" type="index" sortable></el-table-column>
-     <el-table-column
-       v-for="(t,i) in columns"
-       :key="i"
-       :prop="t.name"
-       :label="t.text"
-       :width="t.width?t.width:'120px'"
-       v-if="t.default!=undefined?t.default:true"
-     ></el-table-column>
-         <el-table-column
-           fixed="right"
-           label="操作"
-           width="100">
-           <template slot-scope="scope">
-             <el-button  type="text" size="small"  @click.native="alterNum(scope.row)">修改数量</el-button>
-           </template>
-         </el-table-column>
-   </el-table>
 
-     </el-row>
-   </el-form>
-    <el-dialog
-      :visible.sync="visible"
-      title="下单数量"
-      v-if="visible"
-      :width="'30%'"
-      destroy-on-close
-      append-to-body
-    >
-      <el-form>
-        <el-row :gutter="20" type="flex" justify="center">
-          <el-col :span="12">
-            <el-form-item :label="'下单数量'">
-              <el-input-number v-model="num1"  :min="1" label="请输入数量"></el-input-number>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'供应商'" prop="roleLevel">
+            <el-select v-model="form.roleLevel" class="width-full" placeholder="请选择供应商">
+              <el-option :label="t[1]" :value="t[0]" v-for="(t,i) in levelFormat" :key="i"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'供应商'" prop="roleLevel">
+            <el-select v-model="form.roleLevel" class="width-full" placeholder="请选择供应商">
+              <el-option :label="t[1]" :value="t[0]" v-for="(t,i) in levelFormat" :key="i"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+        <el-row :gutter="20">
+          <el-col :span="24">
+            <el-form-item :label="'旧料号'" prop="roleName">
+              <el-table :data="list" border height="250px" stripe size="mini" :highlight-current-row="true" >
+                <el-table-column align="center" type="selection"></el-table-column>
+                <el-table-column
+                  v-for="(t,i) in columns"
+                  :key="i"
+                  align="center"
+                  :prop="t.name"
+                  :label="t.text"
+                  :width="t.width?t.width:(selfAdaption?'':'120px')"
+                  v-if="t.default!=undefined?t.default:true"
+                ></el-table-column>
+              </el-table>
             </el-form-item>
           </el-col>
-        </el-row>
-      </el-form>
-      <div slot="footer" style="text-align:center">
-        <el-button type="primary" @click.native="saveNum">确定</el-button>
+      </el-row>
+    </el-form>
+    <div slot="footer" style="text-align:center">
+        <el-button type="primary" @click="saveData('form')">保存</el-button>
       </div>
-    </el-dialog>
-   <div slot="footer" style="text-align:center;padding-top: 15px">
-       <el-button type="warning" @click.native="rejected">驳回</el-button>
-       <el-button type="primary" @click.native="audit">审核</el-button>
-     </div>
- </div>
+  </div>
 </template>
 
 <script>
-import { saleInfo,auditOrder,Dismissed} from "@/api/indent/sales";
-import List from "@/components/List";
+import {materialAdd,getMaterialInfo,getMType,getUnit} from "@/api/basic/index";
 
 export default {
-   components: {
-       List
-   },
- props: {
-   oid: {
-     type: Number,
-     default: null
-   },
-     orderId: {
-         type: String,
-         default: null
-     },
-     createTime: {
-         type: String,
-         default: null
-     }
- },
- data() {
-   return {
-       num1: 1,
-       visible:false,
-     form: {
-         oid: null,
-         orderId: null,
-         createTime: null,
-       name: null, // 客户名称
-       code: null, // 客户编号
-     },
-       loading: false,
-       list: [],
-       obj:{},
-       type: null,
-       columns: [
-           { text: "gid", name: "gid",default:false },
-           { text: "商品名称", name: "goodName" },
-           { text: "商品编码", name: "goodCode" },
-           { text: "下单数量", name: "num" },
-           { text: "实发数量", name: "actualNum" },
-           { text: "价格", name: "phone" },
-       ],
-   };
- },
- created() {
+  props: {
+      rid: {
+      type: Number,
+      default: null
+    }
+  },
+  data() {
+    return {
+      form: {
+          rid: null,
+          roleName: null, // 名称
+          roleLevel:null,
+      },
+        pidS:[],
+        pArray:[],
+        columns: [
+            { text: "物料编码", name: "" },
+            { text: "物料名称", name: "" },
+            { text: "色号", name: "" },
+            { text: "旧料号", name: "" },
+            { text: "仓库", name: "" },
+            { text: "仓位", name: "" },
+            { text: "入库数量", name: "" },
+            { text: "批号", name: "" },
+        ],
+        rules: {
+            roleName: [
+                {required: true, message: '请输入名稱', trigger: 'blur'},
+            ],
+            roleLevel: [
+                {required: true, message: '请选择等级', trigger: 'change'},
+            ],
 
- },
- mounted() {
-     this.form.oid=this.oid
-     this.form.orderId=this.orderId
-     this.form.createTime=this.createTime
-   if (this.form.oid) {
-     this.fetchData(this.form.oid);
-   }
- },
- methods: {
-     //修改数量
-     alterNum(row) {
-         this.obj = row;
-         this.visible = true;
-     },
-     saveNum(){
-         this.visible = false
-        this.obj["actualNum"]=this.num1
-         this.num1=1
-     },
-     audit() {
-         let list=this.list,array=[]
-         if (list.length > 0) {
-             for (const i in list) {
-                 var jbj = {}
-                 jbj.gid = list[i].gid
-                 jbj.oid = this.form.oid
-                 jbj.actualNum = list[i].actualNum
-                 array.push(jbj)
-             }
+        },
+      levelFormat: [[1,'一级'],[2,'二级']]
+    };
+  },
+  created() {
+      this.form.rid=this.rid
+  },
+  mounted() {
+      this.fetchFormat();
+    if (this.form.rid) {
+      this.fetchData(this.form.rid);
+    }
+  },
+  methods: {
+    saveData(form) {
+        this.$refs[form].validate((valid) => {
+            //判断必填项
+            if (valid) {
+                if (typeof (this.form.rid) != undefined && this.form.rid != null) {
+                    updateRoles(this.form).then(res => {
+                        this.$emit('hideDialog', false)
+                        this.$emit('uploadList')
+                    });
+                }else{
+                    materialAdd(this.form).then(res => {
+                        this.$emit('hideDialog', false)
+                        this.$emit('uploadList')
+                    });
+                }
 
-             auditOrder(array).then(res => {
-                     this.$emit('hideDialog', false)
-                 this.$emit('uploadList')
-                 });
 
-         } else {
-             return this.$message({
-                 message: "无退货商品",
-                 type: "warning"
-             })
-         }
-   },
-     rejected() {
-         Dismissed(this.form.oid).then(res => {
-             this.$emit('hideDialog', false)
-             this.$emit('uploadList')
+            }else {
+                return false;
+            }
+        })
 
-         })
-     },
-   fetchData(val) {
-       saleInfo(val).then(res => {
-       this.list = res.data;
-     });
-   },
- }
+    },
+      //初始化下拉
+      fetchFormat() {
+          getMType().then(res => {
+              this.pArray = res.data;
+          });
+          getUnit().then(res => {
+              this.pArray = res.data;
+          });
+      },
+    fetchData(val) {
+        getMaterialInfo(val).then(res => {
+        this.form = res.data;
+      });
+    }
+  }
 };
 </script>
 

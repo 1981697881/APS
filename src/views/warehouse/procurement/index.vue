@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @theDelivery="delivery"/>
+        <tabs-bar @showDialog="handlerDialog" @delList="delivery" @uploadList="upload"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog"/>
     </div>
@@ -15,7 +15,7 @@
       :width="'50%'"
       destroy-on-close
     >
-      <info @hideDialog="hideWindow" @uploadList="upload" :oid="oid" :orderId="orderId" :createTime="createTime"></info>
+      <info @hideDialog="hideWindow" @uploadList="upload" ></info>
 
     </el-dialog>
   </div>
@@ -48,18 +48,14 @@ export default {
       delivery(obj){
           if(obj){
               this.$refs.list.Delivery(obj.oid)
-              this.$refs.list.fetchData()
           }
       },
       hideWindow(val){
           this.visible = val
       },
     handlerDialog(obj){
-      if(obj)this.oid = obj.oid;this.orderId=obj.orderId;this.createTime=obj.createTime
+     // if(obj)
       this.visible = true
-    },
-    handlerNode(node) {
-      this.$refs.list.fetchData(node.data.fid,node.data.type)
     },
       //更新列表
       upload(){

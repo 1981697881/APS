@@ -18,7 +18,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { salesList ,delivery} from "@/api/indent/sales";
+import { journalList} from "@/api/system/index";
 import List from "@/components/List";
 
 export default {
@@ -33,12 +33,12 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: "oid", name: "oid",default:false },
+        { text: "lid", name: "lid",default:false },
         { text: "操作用户", name: "" },
-        { text: "操作时间", name: "" },
+        { text: "操作时间", name: "updateTime" },
         { text: "业务对象", name: "" },
         { text: "操作名称", name: "" },
-          { text: "操作描述", name: "" },
+          { text: "操作描述", name: "remark" },
       ]
     };
   },
@@ -66,17 +66,17 @@ export default {
           this.$store.dispatch("list/setClickData", obj.row);
       },
     fetchData(fid, type) {
-     // this.loading = true;
+     this.loading = true;
       const data = {
       /*  fid: fid,
         type: type,*/
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 50
       };
-       /* salesList(data).then(res => {
+        journalList(data).then(res => {
         this.loading = false;
         this.list = res.data;
-      });*/
+      });
     }
   }
 };

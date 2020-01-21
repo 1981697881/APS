@@ -1,74 +1,68 @@
 <template>
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
-      <el-row :gutter="10">
-        <el-col :span="6">
-          <el-form-item :label="'订单单号'">
-            <el-input v-model="search.keyword" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="2">
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleAudit">审核</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="Delivery">发货确认</el-button>
-        </el-col>
-      </el-row>
+      <el-button-group style="float:right">
+        <el-button :size="'mini'" type="primary" @click="handlerAdd">新建</el-button>
+        <el-button :size="'mini'" type="primary" @click="handlerAlter">保存</el-button>
+        <el-button :size="'mini'" type="primary" @click="del">删除</el-button>
+      </el-button-group>
     </el-form>
   </div>
 </template>
+
 <script>
+
 import { mapGetters } from "vuex";
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
   data() {
     return {
       search: {
-          keyword: null
+        name: ""
       }
     };
   },
-
+  computed: {
+    ...mapGetters(["node","clickData"])
+  },
   methods:{
-      Delivery(){
-          if (this.clickData.oid) {
-              this.$emit('theDelivery',{
-                  oid:this.clickData.oid,
-              })
+    handleTab(node){
+      if(node){
+        console.log(node.data.type)
+        if(node){
+
+        }
+      }else{
+        this.$message({
+          type:"warning",
+          message:"请先选择房产"
+        })
+      }
+    },
+      handlerAdd() {
+      this.$emit("showDialog",{rid:null})
+    },
+      del() {
+          if (this.clickData.reOdId) {
+                  this.$emit('del',{
+                      reOdId:this.clickData.reOdId,
+                  })
+              } else {
+                  this.$message({
+                      message: "无选中行",
+                      type: "warning"
+                  });
+              }
+      },
+      handlerAlter() {
+          if (this.clickData.rid) {
+              this.$emit('showDialog',{rid: this.clickData.rid })
           } else {
               this.$message({
                   message: "无选中行",
                   type: "warning"
               });
           }
-      },
-      //关键字查询
-      query(){
-          if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
-          }
-      },
-      handleAudit(){
-        if (this.clickData.oid) {
-            this.$emit('showDialog',{
-                oid:this.clickData.oid,
-                orderId:this.clickData.orderId,
-                createTime:this.clickData.createTime
-            })
-        } else {
-            this.$message({
-                message: "无选中行",
-                type: "warning"
-            });
-        }
-
-    },
+      }
   }
 };
 </script>

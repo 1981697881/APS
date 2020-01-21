@@ -2,8 +2,8 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
-        <el-col :span="6">
-          <div class="block">
+        <el-col :span="7">
+          <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
               type="datetimerange"
@@ -14,21 +14,16 @@
               end-placeholder="结束日期"
               align="right">
             </el-date-picker>
-          </div>
+          </el-form-item>
         </el-col>
         <el-col :span="3">
-          <div class="block">
+          <el-form-item :label="'操作员'">
             <el-input v-model="search.keyword" placeholder="输入操作员"/>
-          </div>
+          </el-form-item>
         </el-col>
+
         <el-col :span="2">
-          <el-button :size="'medium'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'medium'" type="primary" icon="el-icon-plus" @click="handleAudit">审核</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'medium'" type="primary" icon="el-icon-plus" @click="Delivery">发货确认</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
       </el-row>
     </el-form>

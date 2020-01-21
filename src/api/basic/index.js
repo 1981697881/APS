@@ -88,15 +88,16 @@ export function delFrame(params) {
 }
 
 // 物料管理-获取列表
-export function getMaterialList(params) {
+export function getMaterialList(data) {
+  const url = ' /goods/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: '/table/list',
-    headers: {
-      'authorization': getToken('rx')
-    },
-    method: 'get',
-    params
-  })
+      url: url,
+      headers: {
+        'authorization': getToken('rx'),
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    })
 }
 
 // 物料管理-新增

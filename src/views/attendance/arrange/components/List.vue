@@ -1,7 +1,7 @@
 <template>
   <div>
     <list
-       class="list-main box-shadow"
+      class="list-main box-shadow"
       :columns="columns"
       :loading="loading"
       :list="list"
@@ -10,15 +10,14 @@
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
-       @row-click="rowClick"
+      @row-click="rowClick"
     />
-
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import { salesList ,delivery} from "@/api/indent/sales";
+import {getFrameList,delFrame} from "@/api/basic/index";
 import List from "@/components/List";
 
 export default {
@@ -31,19 +30,20 @@ export default {
   data() {
     return {
       loading: false,
+      visible: false,
       list: {},
+      fid: null,
+      type: null,
+        checkDate:null,
       columns: [
-        { text: "oid", name: "oid",default:false },
-        { text: "订单单号", name: "orderId" },
-        { text: "客户名称", name: "code" },
-        { text: "金额", name: "price" },
-        { text: "下单时间", name: "createTime" },
-          { text: "审核状态", name: "auditStatus" },
-          { text: "发货状态", name: "status" },
+        { text: "rid", name: "rid" },
+        { text: "职员", name: "" },
       ]
     };
   },
+
   methods: {
+    handlerForm() {},
       //监听每页显示几条
       handleSize(val) {
           this.list.size = val
@@ -55,29 +55,36 @@ export default {
           this.fetchData(this.node.data.fid,this.node.data.type);
       },
     dblclick(obj) {
-      this.$emit('showDialog',obj.row)
+        this.$emit('showDialog',obj)
     },
-      Delivery(val){
-          delivery(val).then(res => {
-              this.$emit('uploadList')
-          });
-      },
       //监听单击某一行
       rowClick(obj) {
-          this.$store.dispatch("list/setClickData", obj.row);
+          this.checkDate=obj;
+          this.$emit('showTree',obj)
+          this.$store.dispatch("list/setClickData", obj);
+      },
+      //删除
+      delDate(val) {
+          delFrame(val).then(res => {
+            if(res.flag){
+                this.$emit('uploadList',obj)
+            }
+       });
+
       },
     fetchData(fid, type) {
-      this.loading = true;
+      //this.loading = true;
+
       const data = {
       /*  fid: fid,
         type: type,*/
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 50
       };
-        salesList(data).then(res => {
+        /*getFrameList(data).then(res => {
         this.loading = false;
         this.list = res.data;
-      });
+      });*/
     }
   }
 };

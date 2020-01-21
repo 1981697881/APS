@@ -15,14 +15,15 @@ export function getUsersTree(params) {
   })
 }
 // 用户权限管理-获取列表
-export function getUsersList(params) {
+export function getUsersList(data) {
+  const url = '/Admin/user/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'POST'
   })
 }
 // 用户权限管理-新增
@@ -93,14 +94,15 @@ export function getClerk(params) {
 }
 
 // 日志管理-获取列表
-export function journalList(params) {
+export function journalList(data) {
+  const url = '/operation-log/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'POST'
   })
 }
 // 日志管理-清除

@@ -1,70 +1,65 @@
 <template>
   <div class="app-list">
-    <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
-    <div class="list-containerOther">
+    <Tree ref="tree" class="list-table" @handler-node="handlerNode" />
+    <div class="list-containerT">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @theDelivery="delivery"/>
+        <tabs-bar @showDialog="handlerDialog" @del="delList" @uploadList="upload"/>
       </div>
-      <list ref="list"  @showDialog="handlerDialog"/>
+      <list ref="list" @showDialog="handlerDialog"  />
     </div>
-
     <el-dialog
       :visible.sync="visible"
       title="基本信息"
       v-if="visible"
-      :width="'50%'"
+      :width="'60%'"
       destroy-on-close
     >
-      <info @hideDialog="hideWindow" @uploadList="upload" :oid="oid" :orderId="orderId" :createTime="createTime"></info>
+      <info @hideDialog="hideWindow" @uploadList="upload" :rid="rid"></info>
 
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { TabsBar, List } from "./components";
+import { Tree, TabsBar,List } from "./components";
 import { Info } from "./form";
-
 export default {
   components: {
+    Tree,
     TabsBar,
     List,
       Info
   },
   data() {
     return {
-      visible: null,
-      oid: null,
-        orderId: null,
-        createTime: null,
-      treeId: null, // null
+        visible:null,
+        rid:null,
       floorId: null
-    };
+    }
   },
     mounted() {
         this.$refs.list.fetchData()
     },
   methods: {
-      delivery(obj){
-          if(obj){
-              this.$refs.list.Delivery(obj.oid)
-              this.$refs.list.fetchData()
-          }
-      },
       hideWindow(val){
           this.visible = val
       },
-    handlerDialog(obj){
-      if(obj)this.oid = obj.oid;this.orderId=obj.orderId;this.createTime=obj.createTime
-      this.visible = true
-    },
-    handlerNode(node) {
-      this.$refs.list.fetchData(node.data.fid,node.data.type)
-    },
+      handlerDialog(obj){
+          if(obj)this.rid = obj.rid
+          this.visible = true
+      },
+      delList(){
+          this.$refs.list.delData()
+      },
       //更新列表
       upload(){
           this.$refs.list.fetchData()
-      }
+      },
+    handlerNode(node) {
+      // 触发列表的获取数据函数（原为像list组件传入id并监听变动在list组件里触发函数，已销毁）
+      this.$refs.list.fetchData(node.data.fid,node.data.type)
+    },
+
   }
 };
 </script>
