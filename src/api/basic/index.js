@@ -102,25 +102,58 @@ export function getMaterialList(data) {
 
 // 物料管理-新增
 export function materialAdd(params) {
+  const url = '/goods/add'
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'post',
+    data: {
+      goods: params
+    }
   })
 }
-
+// 物料管理-修改
+export function materialAlter(params) {
+  const url = '/goods/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: {
+      goods: params
+    }
+  })
+}
+// 物料管理-同步物料
+export function syncMaterialInfo(params) {
+  const url = '/Admin/ItemInfo/sync'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: {
+      itemInfoPojo: params
+    }
+  })
+}
 // 物料管理-获取详情
 export function getMaterialInfo(params) {
+  const url = '/goods/getById/' + params
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
       'authorization': getToken('rx')
     },
     method: 'get',
-    params
   })
 }
 
@@ -150,13 +183,13 @@ export function getUnit(params) {
 
 // 物料管理-删除
 export function delMaterial(params) {
+  const url = '/goods/del/' + params
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
       'authorization': getToken('rx')
     },
-    method: 'get',
-    params
+    method: 'delete'
   })
 }
 
@@ -270,13 +303,29 @@ export function delSupplier(params) {
 
 // 库存查看-获取列表
 export function getInventory(params) {
+  const url = ' /inv-detail/list/' + params.pageNum + '/' + params.pageSize
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'POST'
+  })
+}
+// 库存管理-同步库存
+export function syncInventory(params) {
+  const url = '/Admin/InvDetail/sync'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: {
+      itemInfoPojo: params
+    }
   })
 }
 

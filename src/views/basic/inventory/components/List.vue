@@ -35,16 +35,16 @@ export default {
       columns: [
         { text: "oid", name: "oid",default:false },
         { text: "类别", name: "" },
-        { text: "编码", name: "" },
-        { text: "名称", name: "" },
+        { text: "编码", name: "goodCode" },
+        { text: "名称", name: "goodName" },
         { text: "规格", name: "" },
           { text: "色号", name: "" },
           { text: "安全数量", name: "" },
           { text: "计量单位", name: "" },
           { text: "即时库存", name: "" },
-          { text: "仓库", name: "" },
-          { text: "仓位", name: "" },
-          { text: "批号", name: "" },
+          { text: "仓库", name: "whName" },
+          { text: "仓位", name: "binName" },
+          { text: "批号", name: "lotNo" },
           { text: "旧料号", name: "" },
       ]
     };
@@ -68,17 +68,18 @@ export default {
           this.$store.dispatch("list/setClickData", obj.row);
       },
     fetchData(fid, type) {
-     // this.loading = true;
+     this.loading = true;
       const data = {
       /*  fid: fid,
         type: type,*/
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 50
       };
-       /* getInventory(data).then(res => {
+      console.log(data)
+        getInventory(data).then(res => {
         this.loading = false;
         this.list = res.data;
-      });*/
+      });
     }
   }
 };

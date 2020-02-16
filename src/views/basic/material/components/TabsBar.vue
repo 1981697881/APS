@@ -24,9 +24,9 @@
         </el-col>
         <el-button-group style="float:right">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAdd">新增</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" >修改</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAlter">修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="del">删除</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >同步</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleSync">同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" >审核</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" >反审核</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" >禁用</el-button>
@@ -71,17 +71,32 @@ export default {
           }
       },
       del() {
-          if (this.clickData.oid) {
-              this.$emit('delList',{
-                  oid:this.clickData.oid,
-              })
-          } else {
-              this.$message({
-                  message: "无选中行",
-                  type: "warning"
-              });
-          }
-      },
+      if (this.clickData.gid) {
+        this.$emit('delList',{
+          gid:this.clickData.gid,
+        })
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    handleAlter() {
+      if (this.clickData.gid) {
+        this.$emit('showDialog',{
+          gid: this.clickData.gid,
+        })
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    handleSync() {
+      this.$emit('syncDialog')
+    },
       handleAdd(){
           this.$emit('showDialog')
 

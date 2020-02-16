@@ -11,22 +11,22 @@
             <el-dropdown-item command="2">用户</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-dropdown trigger="click">
+        <el-dropdown @command="handlerAlter" trigger="click">
           <el-button :size="'mini'" type="primary">
             修改<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>用户组</el-dropdown-item>
-            <el-dropdown-item>用户</el-dropdown-item>
+            <el-dropdown-item command="1">用户组</el-dropdown-item>
+            <el-dropdown-item command="2">用户</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-dropdown  trigger="click">
+        <el-dropdown @command="handlerDel" trigger="click">
           <el-button :size="'mini'" type="primary">
             删除<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>用户组</el-dropdown-item>
-            <el-dropdown-item>用户</el-dropdown-item>
+            <el-dropdown-item command="1">用户组</el-dropdown-item>
+            <el-dropdown-item command="2">用户</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <el-button style="float: right" :size="'mini'" type="primary" >权限管理</el-button>
@@ -54,39 +54,61 @@ export default {
     ...mapGetters(["node","clickData"])
   },
   methods:{
-    handleTab(node){
-      if(node){
-        console.log(node.data.type)
-        if(node){
 
-        }
-      }else{
-        this.$message({
-          type:"warning",
-          message:"请先选择房产"
-        })
-      }
-    },
-      saveRole(){
-          this.$emit("saveRoles")
-      },
-    handlerBtn(command){
-        if(command=="1"){
-        console.log(123)
-        }else if(command=="2"){
+    handlerBtn(command) {
+        if(command=="1") {
+          this.$emit("showGroupDialog",{rid:null})
+        }else if(command=="2") {
             this.$emit("showDialog",{rid:null})
         }
     },
-      handlerAlter(){
-          if (this.clickData.rid) {
-              this.$emit('showDialog',{rid: this.clickData.rid })
+      handlerAlter(command) {
+        if(command=="1") {
+          if (this.clickData.gpId) {
+            this.$emit('showGroupDialog', this.clickData)
           } else {
-              this.$message({
-                  message: "无选中行",
-                  type: "warning"
-              });
+            this.$message({
+              message: "无选中行",
+              type: "warning"
+            });
           }
+        }else if(command=="2") {
+          console.log(this.clickData)
+          if (this.clickData.uid) {
+            this.$emit('showDialog',{uid: this.clickData.uid })
+          } else {
+            this.$message({
+              message: "无选中行",
+              type: "warning"
+            });
+          }
+        }
+
+      },
+    handlerDel(command) {
+      if(command=="1") {
+        if (this.clickData.gpId) {
+          this.$emit('delGroup', this.clickData.gpId)
+        } else {
+          this.$message({
+            message: "无选中行",
+            type: "warning"
+          });
+        }
+      }else if(command=="2") {
+        if (this.clickData.uid) {
+          this.$emit('delList',{
+            uid: this.clickData.uid,
+          })
+        } else {
+          this.$message({
+            message: "无选中行",
+            type: "warning"
+          });
+        }
       }
+
+    },
   }
 };
 </script>

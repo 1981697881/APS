@@ -67,13 +67,13 @@
       </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">
-        <el-button type="primary" @click="saveData('form')">保存</el-button>
+        <el-button type="primary" @click="saveData('form')">同步</el-button>
       </div>
   </div>
 </template>
 
 <script>
-import {syncMaterialInfo} from "@/api/basic/index";
+import {syncInventory} from "@/api/basic/index";
 
 export default {
   props: {
@@ -111,17 +111,17 @@ export default {
 
   },
   mounted() {
-
+      //this.fetchFormat();
   },
   methods: {
     saveData(form) {
         this.$refs[form].validate((valid) => {
             //判断必填项
             if (valid) {
-              syncMaterialInfo(this.form).then(res => {
-                        this.$emit('hideSyncDialog', false)
+              syncInventory(this.form).then(res => {
+                        this.$emit('hideDialog', false)
                         this.$emit('uploadList')
-                    })
+                    });
             }else {
                 return false;
             }

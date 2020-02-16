@@ -67,69 +67,95 @@
       </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">
-        <el-button type="primary" @click="saveData('form')">保存</el-button>
-      </div>
+      <el-button type="primary" @click="saveData('form')">保存</el-button>
+    </div>
   </div>
 </template>
 
 <script>
-import {syncMaterialInfo} from "@/api/basic/index";
+  import {materialAdd,materialAlter,getMaterialInfo,getMType,getUnit} from "@/api/basic/index";
 
-export default {
-  props: {
-    gid: {
-      type: Number,
-      default: null
-    }
-  },
-  data() {
-    return {
-      form: {
+  export default {
+    props: {
+      gid: {
+        type: Number,
+        default: null
+      }
+    },
+    data() {
+      return {
+        form: {
           gid: null,
-        goodCode: null, // 名称
-        goodName:null,
-        oldCode:null,
-      },
+          goodCode: null, // 名称
+          goodName:null,
+          oldCode:null,
+        },
         pidS:[],
         pArray:[],
         rules: {
           goodCode: [
-                {required: true, message: '请输入编码', trigger: 'blur'},
-            ],
+            {required: true, message: '请输入编码', trigger: 'blur'},
+          ],
           goodName: [
             {required: true, message: '请输入名稱', trigger: 'blur'},
           ],
-            roleLevel: [
-                {required: true, message: '请选择等级', trigger: 'change'},
-            ],
+          roleLevel: [
+            {required: true, message: '请选择等级', trigger: 'change'},
+          ],
 
         },
-      levelFormat: [[1,'一级'],[2,'二级']]
-    };
-  },
-  created() {
-
-  },
-  mounted() {
-
-  },
-  methods: {
-    saveData(form) {
+        levelFormat: [[1,'一级'],[2,'二级']]
+      };
+    },
+    created() {
+      this.form.gid=this.gid
+    },
+    mounted() {
+      //this.fetchFormat();
+      if (this.form.gid) {
+        this.fetchData(this.form.gid);
+      }
+    },
+    methods: {
+      saveData(form) {
         this.$refs[form].validate((valid) => {
-            //判断必填项
-            if (valid) {
-              syncMaterialInfo(this.form).then(res => {
-                        this.$emit('hideSyncDialog', false)
-                        this.$emit('uploadList')
-                    })
-            }else {
-                return false;
+          //判断必填项
+          if (valid) {
+            if (typeof (this.form.gid) != undefined && this.form.gid != null) {
+              materialAlter(this.form).then(res => {
+                this.$emit('hideDialog', false)
+                this.$emit('uploadList')
+              });
+            }else{
+              materialAdd(this.form).then(res => {
+                this.$emit('hideDialog', false)
+                this.$emit('uploadList')
+              });
             }
+
+
+          }else {
+            return false;
+          }
         })
 
-    },
-  }
-};
+      },
+      //初始化下拉
+      fetchFormat() {
+        getMType().then(res => {
+          this.pArray = res.data;
+        });
+        getUnit().then(res => {
+          this.pArray = res.data;
+        });
+      },
+      fetchData(val) {
+        getMaterialInfo(val).then(res => {
+          this.form = res.data;
+        });
+      }
+    }
+  };
 </script>
 
 <style>

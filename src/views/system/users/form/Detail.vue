@@ -3,8 +3,8 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'rid'" >
-            <el-input v-model="form.rid"></el-input>
+          <el-form-item :label="'uid'" >
+            <el-input v-model="form.uid"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -87,11 +87,11 @@
 </template>
 
 <script>
-    import {saveRoles, updateRoles, getRoles, getPermission} from "@/api/system/permissions";
+    import {addUsers, alterUsers, getUsersTree, getUsersInfo} from "@/api/system/index";
 
     export default {
         props: {
-            rid: {
+          uid: {
                 type: Number,
                 default: null
             },
@@ -147,17 +147,19 @@
                 value:false,
                 Checkeds:[],
                 form: {
-                    rid: null,
+                  uid: null,
                     roleName: null, // 名称
                     roleLevel: null,
                 },
                 columns: [
-                    { text: "gid", name: "gid", },
-                    { text: "用户组", name: "" },
+                  {text: "用户组", name: "gpName"},
+                  {text: "gpLevel", name: "gpLevel", default:false},
+                  {text: "isDel", name: "isDel", default:false},
+                  {text:'gpId', name:'gpId', default:false}
                 ],
                 activeName: 'first',
                 pidS: [],
-                list:{},
+                list:[],
                 pArray: [],
                 rules: {
                     roleName: [
@@ -172,13 +174,15 @@
             };
         },
         created() {
-            this.form.rid = this.rid
+
         },
         mounted() {
-           /* this.fetchFormat();
-            if (this.form.rid) {
-                this.fetchData(this.form.rid);
-            }*/
+          this.form.uid = this.uid
+          this.factchGroup()
+           // this.fetchFormat();
+            if (this.form.uid) {
+                this.fetchData(this.form.uid)
+            }
         },
         methods: {
             handleClick(tab, event) {
@@ -189,12 +193,12 @@
                     //判断必填项
                     if (valid) {
                         if (typeof (this.form.rid) != undefined && this.form.rid != null) {
-                            updateRoles(this.form).then(res => {
+                          alterUsers(this.form).then(res => {
                                 this.$emit('hideDialog', false)
                                 this.$emit('uploadList')
                             });
                         } else {
-                            saveRoles(this.form).then(res => {
+                          addUsers(this.form).then(res => {
                                 this.$emit('hideDialog', false)
                                 this.$emit('uploadList')
                             });
@@ -207,13 +211,20 @@
                 })
 
             },
+          factchGroup() {
+            this.loading = true
+            getUsersTree().then(res => {
+              this.loading = false
+              this.list = res.data
+            })
+          },
             fetchFormat() {
                 getPermission().then(res => {
                     this.pArray = res.data;
                 });
             },
             fetchData(val) {
-                getRoles(val).then(res => {
+              getUsersInfo(val).then(res => {
                     this.form = res.data;
                 });
             }

@@ -5,13 +5,54 @@ import {
 
 // 用户权限管理-获取用户组
 export function getUsersTree(params) {
+  var url = '/Admin/group/list/'
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
       'authorization': getToken('rx')
     },
-    method: 'get',
-    params
+    method: 'get'
+  })
+}
+// 用户管理-用户组新增
+export function groupAdd(params) {
+  const url = '/Admin/group/add'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: {
+      goods: params
+    }
+  })
+}
+// 用户管理-用户组修改
+export function groupAlter(params) {
+  const url = '/Admin/group/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: {
+      goods: params
+    }
+  })
+}
+// 用户管理-用户组删除
+export function delGroup(params) {
+  const url = '/Admin/group/delete/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx')
+    },
+    method: 'delete'
   })
 }
 // 用户权限管理-获取列表
@@ -28,13 +69,28 @@ export function getUsersList(data) {
 }
 // 用户权限管理-新增
 export function addUsers(params) {
+  const url = '/Admin/user/add/'
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'post',
+    data: params
+  })
+}
+// 用户权限管理-修改
+export function alterUsers(params) {
+  const url = '/user/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: params
   })
 }
 // 用户权限管理-删除
@@ -70,15 +126,16 @@ export function enableUsers(params) {
     params
   })
 }
-// 用户权限管理-获取详情信息
+// 用户管理-获取详情信息
 export function getUsersInfo(params) {
+  const url = '/Admin/user/' + params
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'POST'
   })
 }
 // 用户权限管理-职员下拉

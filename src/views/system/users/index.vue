@@ -1,77 +1,97 @@
 <template>
   <div class="app-list">
-    <Tree ref="tree" class="list-tree" @handler-node="handlerNode" />
+    <Tree ref="tree" class="list-tree" />
     <div class="list-container">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @saveRoles="handlerSave" />
+        <tabs-bar @showDialog="handlerDialog" @delList="delList" @delGroup="delGroup" @showGroupDialog="groupDialog"  />
       </div>
-      <list ref="list" @showDialog="handlerDialog" @showTree="handlerTree" />
+      <list ref="list" @showDialog="handlerDialog"  />
     </div>
     <el-dialog
       :visible.sync="visible"
-      title="基本信息"
+      title="用户信息"
       v-if="visible"
       :width="'40%'"
       destroy-on-close
     >
-      <info @hideDialog="hideWindow" @uploadList="upload" :rid="rid"></info>
+      <info @hideDialog="hideWindow" @uploadList="upload" :uid="uid"></info>
+
+    </el-dialog>
+    <el-dialog
+      :visible.sync="visible2"
+      title="用户组信息"
+      v-if="visible2"
+      :width="'40%'"
+      destroy-on-close
+    >
+      <group @hideGroupDialog="hideGroupWindow" @uploadGroup="uploadGroup" :gpInfo="gpInfo"></group>
 
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { Tree, TabsBar,List } from "./components";
-import { Info } from "./form";
-import { addRoleMenu} from "@/api/system/permissions";
+import { Tree, TabsBar, List } from "./components";
+import { Info, Group } from "./form";
+import { delGroup } from "@/api/system/index";
 export default {
   components: {
     Tree,
     TabsBar,
     List,
-      Info
+    Group,
+    Info
   },
   data() {
     return {
         visible:null,
-        rid:null,
+      uid:null,
+      gpInfo:null,
+      visible2:null,
       floorId: null
     }
   },
     mounted() {
-        this.$refs.list.fetchData()
+        this.$refs.list.fetchData();
+      this.$refs.tree.fetchData();
     },
   methods: {
       hideWindow(val){
           this.visible = val
       },
-      handlerSave(){
-          this.loading = true;
-          let val = this.$refs.list.getClickRow();
-          addRoleMenu({menuIds:this.$refs.tree.getChecked(),rid:val.rid,}).then(res => {
-              console.log(res)
-              this.loading = false;
-          });
-      },
+    hideGroupWindow(val){
+      this.visible2 = val
+    },
       handlerDialog(obj){
-          console.log(obj)
-          if(obj)this.rid = obj.rid
+          if(obj)this.uid = obj.uid
           this.visible = true
       },
-      handlerTree(obj){
-          this.$refs.tree.setMeunKeys(obj)
-      },
+    groupDialog(obj){
+        console.log(obj)
+      if(obj)this.gpInfo = obj
+      this.visible2 = true
+    },
       //更新列表
-      upload(){
+      upload() {
           this.$refs.list.fetchData()
       },
-    handlerNode(node) {
-      // 触发列表的获取数据函数（原为像list组件传入id并监听变动在list组件里触发函数，已销毁）
-      this.$refs.list.fetchData(node.data.fid,node.data.type)
+    //更新列表
+    uploadGroup() {
+      this.$refs.tree.fetchData()
     },
+    delList() {
+
+    },
+    delGroup(val) {
+      this.loading = true
+      delGroup(val).then(res => {
+        this.loading = false
+        this.list = res.data
+      })
+    }
 
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

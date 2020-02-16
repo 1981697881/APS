@@ -33,10 +33,10 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: "oid", name: "oid",default:false },
+        { text: "gid", name: "gid",default:false },
         { text: "类别", name: "" },
-        { text: "编码", name: "" },
-        { text: "名称", name: "" },
+        { text: "编码", name: "goodCode" },
+        { text: "名称", name: "goodCode" },
         { text: "规格", name: "" },
           { text: "色号", name: "" },
           { text: "安全数量", name: "" },

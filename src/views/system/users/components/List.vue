@@ -73,19 +73,17 @@ export default {
       },
       //监听单击某一行
       rowClick(obj) {
-          this.checkDate=obj;
-          this.$emit('showTree',obj)
-          this.$store.dispatch("list/setClickData", obj);
+          this.$store.dispatch("list/setClickData", obj.row);
       },
     fetchData(fid, type) {
       this.loading = true;
       const data = {
-      /*  fid: fid,
-        type: type,*/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
+        /*  fid: fid,
+          type: type,*/
+        pageNum: this.list.current || 1,
+        pageSize: this.list.size || 50
       };
-        getUsersList(data).then(res => {
+      getUsersList(data).then(res => {
         this.loading = false;
         this.list = res.data;
       });
