@@ -12,7 +12,6 @@
       @dblclick="dblclick"
        @row-click="rowClick"
     />
-
   </div>
 </template>
 
@@ -34,12 +33,18 @@ export default {
       list: {},
       columns: [
         { text: "oid", name: "oid",default:false },
-        { text: "订单单号", name: "orderId" },
-        { text: "客户名称", name: "code" },
-        { text: "金额", name: "price" },
-        { text: "下单时间", name: "createTime" },
-          { text: "审核状态", name: "auditStatus" },
-          { text: "发货状态", name: "status" },
+        { text: "日期", name: "" },
+        { text: "退料单号", name: "" },
+        { text: "仓管员", name: "" },
+        { text: "审核人", name: "" },
+          { text: "审核时间", name: "" },
+          { text: "物料编码", name: "" },
+        { text: "色号", name: "" },
+        { text: "旧料号", name: "" },
+        { text: "仓库", name: "" },
+        { text: "仓位", name: "" },
+        { text: "退料数量", name: "" },
+        { text: "批号", name: "" },
       ]
     };
   },
@@ -67,17 +72,17 @@ export default {
           this.$store.dispatch("list/setClickData", obj.row);
       },
     fetchData(fid, type) {
-      this.loading = true;
+      //this.loading = true;
       const data = {
       /*  fid: fid,
         type: type,*/
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 50
       };
-        salesList(data).then(res => {
+       /* salesList(data).then(res => {
         this.loading = false;
         this.list = res.data;
-      });
+      });*/
     }
   }
 };

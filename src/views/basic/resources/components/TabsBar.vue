@@ -1,103 +1,112 @@
 <template>
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
-      <el-row :gutter="10">
-        <el-col :span="6" >
-          <div class="block">
-            <el-date-picker
-              v-model="value"
-              type="datetimerange"
-              :picker-options="pickerOptions"
-              range-separator="至"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              align="right">
-            </el-date-picker>
-          </div>
-        </el-col>
-        <el-col :span="2">
-          <el-button :size="'medium'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
-        </el-col>
-      </el-row>
+      <el-button-group style="float:right">
+        <el-dropdown @command="handlerBtn" trigger="click">
+          <el-button :size="'mini'" type="primary">
+            新增<i class="el-icon-arrow-down el-icon--right"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="1">资源类别</el-dropdown-item>
+            <el-dropdown-item command="2">生产线</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <el-dropdown @command="handlerAlter" trigger="click">
+          <el-button :size="'mini'" type="primary">
+            修改<i class="el-icon-arrow-down el-icon--right"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="1">资源类别</el-dropdown-item>
+            <el-dropdown-item command="2">生产线</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <el-dropdown @command="handlerDel" trigger="click">
+          <el-button :size="'mini'" type="primary">
+            删除<i class="el-icon-arrow-down el-icon--right"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="1">资源类别</el-dropdown-item>
+            <el-dropdown-item command="2">生产线</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <el-button style="float: right" :size="'mini'" type="primary" >审核</el-button>
+        <el-button style="float: right" :size="'mini'" type="primary" >反审核</el-button>
+        <el-button style="float: right" :size="'mini'" type="primary" >启用</el-button>
+        <el-button style="float: right" :size="'mini'" type="primary" >禁用</el-button>
+        <el-button style="float: right" :size="'mini'" type="primary" >资源使用情况</el-button>
+      </el-button-group>
     </el-form>
   </div>
 </template>
+
 <script>
+
 import { mapGetters } from "vuex";
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
   data() {
     return {
-        value: '',
-        pickerOptions: {
-            shortcuts: [{
-                text: '最近一周',
-                onClick(picker) {
-                    const end = new Date();
-                    const start = new Date();
-                    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-                    picker.$emit('pick', [start, end]);
-                }
-            }, {
-                text: '最近一个月',
-                onClick(picker) {
-                    const end = new Date();
-                    const start = new Date();
-                    start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-                    picker.$emit('pick', [start, end]);
-                }
-            }, {
-                text: '最近三个月',
-                onClick(picker) {
-                    const end = new Date();
-                    const start = new Date();
-                    start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-                    picker.$emit('pick', [start, end]);
-                }
-            }]
-        },
       search: {
-          keyword: null
+        name: ""
       }
     };
   },
-
+  computed: {
+    ...mapGetters(["node","clickData"])
+  },
   methods:{
-      Delivery(){
-          if (this.clickData.oid) {
-              this.$emit('theDelivery',{
-                  oid:this.clickData.oid,
-              })
-          } else {
-              this.$message({
-                  message: "无选中行",
-                  type: "warning"
-              });
-          }
-      },
-      //关键字查询
-      query(){
-          if((typeof this.search.keyword != null) && (this.search.keyword !='')){
 
-          }
-      },
-      handleAudit(){
-        if (this.clickData.oid) {
-            this.$emit('showDialog',{
-                oid:this.clickData.oid,
-                orderId:this.clickData.orderId,
-                createTime:this.clickData.createTime
-            })
-        } else {
-            this.$message({
-                message: "无选中行",
-                type: "warning"
-            });
+    handlerBtn(command) {
+        if(command=="1") {
+          this.$emit("showGroupDialog",{rid:null})
+        }else if(command=="2") {
+            this.$emit("showDialog",{rid:null})
         }
+    },
+      handlerAlter(command) {
+        if(command=="1") {
+          if (this.clickData.gpId) {
+            this.$emit('showGroupDialog', this.clickData)
+          } else {
+            this.$message({
+              message: "无选中行",
+              type: "warning"
+            });
+          }
+        }else if(command=="2") {
+          console.log(this.clickData)
+          if (this.clickData.uid) {
+            this.$emit('showDialog',{uid: this.clickData.uid })
+          } else {
+            this.$message({
+              message: "无选中行",
+              type: "warning"
+            });
+          }
+        }
+
+      },
+    handlerDel(command) {
+      if(command=="1") {
+        if (this.clickData.gpId) {
+          this.$emit('delGroup', this.clickData.gpId)
+        } else {
+          this.$message({
+            message: "无选中行",
+            type: "warning"
+          });
+        }
+      }else if(command=="2") {
+        if (this.clickData.uid) {
+          this.$emit('delList',{
+            uid: this.clickData.uid,
+          })
+        } else {
+          this.$message({
+            message: "无选中行",
+            type: "warning"
+          });
+        }
+      }
 
     },
   }

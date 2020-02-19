@@ -1,24 +1,23 @@
 <template>
   <div>
     <list
-       class="list-main box-shadow"
+      class="list-main"
       :columns="columns"
       :loading="loading"
       :list="list"
       index
-      type
+      selfAdaption
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
-       @row-click="rowClick"
+      @row-click="rowClick"
     />
-
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import { salesList ,delivery} from "@/api/indent/sales";
+import { getUsersList} from "@/api/system/index";
 import List from "@/components/List";
 
 export default {
@@ -31,16 +30,26 @@ export default {
   data() {
     return {
       loading: false,
+      visible: false,
       list: {},
+      fid: null,
+      type: null,
+        checkDate:null,
       columns: [
-        { text: "oid", name: "oid",default:false },
-        { text: "所属类型", name: "" },
-        { text: "生产线", name: "" },
+        { text: "rid", name: "rid" },
+        { text: "用户编码", name: "" },
+        { text: "用户名称", name: "username" },
+        { text: "用户组", name: "" },
+        { text: "对应职员", name: "" },
+          { text: "状态", name: "status" },
+        { text: "说明", name: "" },
 
       ]
     };
   },
+
   methods: {
+    handlerForm() {},
       //监听每页显示几条
       handleSize(val) {
           this.list.size = val
@@ -51,30 +60,33 @@ export default {
           this.list.current = val;
           this.fetchData(this.node.data.fid,this.node.data.type);
       },
-    dblclick(obj) {
-      this.$emit('showDialog',obj.row)
+    // 弹窗拖拽
+    handleDrag() {
+      this.$refs.select.blur();
     },
-      Delivery(val){
-          delivery(val).then(res => {
-              this.$emit('uploadList')
-          });
+    closedDialog() {},
+    dblclick(obj) {
+        this.$emit('showDialog',obj)
+    },
+      getClickRow(){
+        return this.checkDate
       },
       //监听单击某一行
       rowClick(obj) {
           this.$store.dispatch("list/setClickData", obj.row);
       },
     fetchData(fid, type) {
-     // this.loading = true;
+      this.loading = true;
       const data = {
-      /*  fid: fid,
-        type: type,*/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
+        /*  fid: fid,
+          type: type,*/
+        pageNum: this.list.current || 1,
+        pageSize: this.list.size || 50
       };
-       /* salesList(data).then(res => {
+      getUsersList(data).then(res => {
         this.loading = false;
         this.list = res.data;
-      });*/
+      });
     }
   }
 };

@@ -330,3 +330,140 @@ export function syncInventory(params) {
 }
 
 // 供应商管理-删除
+// 生产资源-获取列表
+export function getResourcesList(data) {
+  const url = '/type/list/' + data.pageNum + '/' + data.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: {
+      category: '产线'
+    }
+  })
+}
+
+// 生产资源-新增
+export function resourcesAdd(params) {
+  const url = '/type/add'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: {
+      goods: params
+    }
+  })
+}
+// 生产资源-修改
+export function resourcesAlter(params) {
+  const url = '/type/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: {
+      goods: params
+    }
+  })
+}
+// 生产资源-获取详情
+export function resourcesInfo(params) {
+  const url = '/type/getById/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST'
+  })
+}
+
+// 生产资源-删除
+export function delResources(params) {
+  const url = '/type/del/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx')
+    },
+    method: 'delete'
+  })
+}
+// 生产资源产线-获取列表
+export function productionLineList(data) {
+  const url = ' /goods/list/' + data.pageNum + '/' + data.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST'
+  })
+}
+
+// 生产资源产线-新增
+export function productionLineAdd(params) {
+  const url = '/production-line/add'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: {
+      goods: params
+    }
+  })
+}
+// 生产资源产线-修改
+export function productionLineAlter(params) {
+  const url = '/production-line/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: {
+      goods: params
+    }
+  })
+}
+// 生产资源产线-获取详情
+export function productionLineInfo(params) {
+  const url = '/production-line/getById/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST'
+  })
+}
+
+// 生产资源产线-删除
+export function delProductionLine(params) {
+  const url = '/production-line/del/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx')
+    },
+    method: 'delete'
+  })
+}
