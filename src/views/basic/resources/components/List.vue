@@ -6,6 +6,7 @@
       :loading="loading"
       :list="list"
       index
+      type
       selfAdaption
       @handle-size="handleSize"
       @handle-current="handleCurrent"
@@ -17,7 +18,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getUsersList} from "@/api/system/index";
+import { productionLineList} from "@/api/basic/index";
 import List from "@/components/List";
 
 export default {
@@ -34,16 +35,15 @@ export default {
       list: {},
       fid: null,
       type: null,
-        checkDate:null,
+      checkDate:null,
       columns: [
-        { text: "rid", name: "rid" },
-        { text: "用户编码", name: "" },
-        { text: "用户名称", name: "username" },
-        { text: "用户组", name: "" },
-        { text: "对应职员", name: "" },
-          { text: "状态", name: "status" },
-        { text: "说明", name: "" },
-
+        { text: "plId", name: "plId" },
+        { text: "所属类别", name: "type.tpName" },
+        { text: "生产线", name: "plName" },
+        { text: "正常资源", name: "normalResources" },
+        { text: "加班资源", name: "overtimeResources" },
+        { text: "其他资源", name: "otherResources" },
+        { text: "描述", name: "description" },
       ]
     };
   },
@@ -66,7 +66,7 @@ export default {
     },
     closedDialog() {},
     dblclick(obj) {
-        this.$emit('showDialog',obj)
+        this.$emit('showDialog', obj.row)
     },
       getClickRow(){
         return this.checkDate
@@ -75,7 +75,7 @@ export default {
       rowClick(obj) {
           this.$store.dispatch("list/setClickData", obj.row);
       },
-    fetchData(fid, type) {
+    fetchData(val) {
       this.loading = true;
       const data = {
         /*  fid: fid,
@@ -83,7 +83,9 @@ export default {
         pageNum: this.list.current || 1,
         pageSize: this.list.size || 50
       };
-      getUsersList(data).then(res => {
+      let obj = {}
+      val != null || val != undefined ? obj.tpId = val : null
+      productionLineList(data, obj).then(res => {
         this.loading = false;
         this.list = res.data;
       });

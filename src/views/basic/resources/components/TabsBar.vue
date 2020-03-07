@@ -54,17 +54,16 @@ export default {
     ...mapGetters(["node","clickData"])
   },
   methods:{
-
     handlerBtn(command) {
         if(command=="1") {
-          this.$emit("showGroupDialog",{rid:null})
+          this.$emit("showGroupDialog")
         }else if(command=="2") {
-            this.$emit("showDialog",{rid:null})
+            this.$emit("showDialog")
         }
     },
       handlerAlter(command) {
         if(command=="1") {
-          if (this.clickData.gpId) {
+          if (this.clickData.tpId) {
             this.$emit('showGroupDialog', this.clickData)
           } else {
             this.$message({
@@ -73,9 +72,8 @@ export default {
             });
           }
         }else if(command=="2") {
-          console.log(this.clickData)
-          if (this.clickData.uid) {
-            this.$emit('showDialog',{uid: this.clickData.uid })
+          if (this.clickData.plId) {
+            this.$emit('showDialog', this.clickData)
           } else {
             this.$message({
               message: "无选中行",
@@ -86,20 +84,18 @@ export default {
 
       },
     handlerDel(command) {
-      if(command=="1") {
-        if (this.clickData.gpId) {
-          this.$emit('delGroup', this.clickData.gpId)
+      if(command == "1") {
+        if (this.clickData.tpId) {
+          this.$emit('delGroup', this.clickData.tpId)
         } else {
           this.$message({
             message: "无选中行",
             type: "warning"
           });
         }
-      }else if(command=="2") {
-        if (this.clickData.uid) {
-          this.$emit('delList',{
-            uid: this.clickData.uid,
-          })
+      }else if(command == "2") {
+        if (this.clickData.plId) {
+          this.$emit('delList', this.clickData.plId)
         } else {
           this.$message({
             message: "无选中行",

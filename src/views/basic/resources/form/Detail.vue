@@ -3,85 +3,56 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'uid'" >
-            <el-input v-model="form.uid"></el-input>
+          <el-form-item :label="'plId'" style="display: none">
+            <el-input v-model="form.plId"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'用户编码'" prop="roleName">
-            <el-input v-model="form.roleName"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'用户名称'" prop="roleName">
-            <el-input v-model="form.roleName"></el-input>
-          </el-form-item>
-        </el-col>
-
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'对应职员'" prop="roleName">
-            <el-input v-model="form.roleName"></el-input>
-          </el-form-item>
-          <!--<el-form-item :label="'对应职员'" prop="roleLevel">
-            <el-select v-model="form.roleLevel" class="width-full" placeholder="请选择职员">
-              <el-option :label="t[1]" :value="t[0]" v-for="(t,i) in levelFormat" :key="i"></el-option>
+          <el-form-item :label="'资源类别'" prop="tpId">
+            <el-select v-model="form.tpId" class="width-full" placeholder="类别">
+              <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
-          </el-form-item>-->
+          </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'说明'" >
-            <el-input v-model="form.roleName"></el-input>
+          <el-form-item :label="'生产线'" prop="plName">
+            <el-input v-model="form.plName"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'超级管理员'" >
-            <el-switch
-              v-model="value"
-              >
-            </el-switch>
+          <el-form-item :label="'正常资源'" >
+            <el-input-number v-model="form.normalResources"  :min="0"  label="描述文字"></el-input-number>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'加班资源'">
+            <el-input-number v-model="form.overtimeResources"  :min="0"  label="描述文字"></el-input-number>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-tabs  v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="所属用户组" name="first">
-          <el-row >
-            <el-table :data="list" border height="250px" ref="multipleTable" stripe size="mini" :highlight-current-row="true" >
-              <el-table-column align="center" type="selection"></el-table-column>
-              <el-table-column
-                v-for="(t,i) in columns"
-                :key="i"
-                align="center"
-                :prop="t.name"
-                :label="t.text"
-                :width="t.width?t.width:(selfAdaption?'':'120px')"
-                v-if="t.default!=undefined?t.default:true"
-              ></el-table-column>
-            </el-table>
-          </el-row>
-        </el-tab-pane>
-        <el-tab-pane label="用户权限" name="second">
-          <el-row  style="height: 250px;overflow: auto;border: 1px solid #EBEEF5;">
-            <el-tree
-
-              ref="tree1"
-              :props="defaultProps"
-              :default-expand-all="false"
-              :data="data"
-              show-checkbox
-              :default-checked-keys="Checkeds"
-              node-key="menuId"
-              highlight-current
-              :expand-on-click-node="false"
-            />
-          </el-row>
-        </el-tab-pane>
-      </el-tabs>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'其他资源'">
+            <el-input-number v-model="form.otherResources"  :min="0"  label="描述文字"></el-input-number>
+          </el-form-item>
+        </el-col>
+<!--        <el-col :span="12">-->
+<!--          <el-form-item :label="'计量单位'">-->
+<!--            <el-input v-model="form.roleName"></el-input>-->
+<!--          </el-form-item>-->
+<!--        </el-col>-->
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="24">
+          <el-form-item :label="'描述'">
+            <el-input v-model="form.description"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <div slot="footer" style="text-align:center;padding-top: 15px">
       <el-button type="primary" @click="saveData('form')">保存</el-button>
@@ -90,165 +61,89 @@
 </template>
 
 <script>
-    import {addUsers, alterUsers, getUsersTree, getUsersInfo} from "@/api/system/index";
-
-    export default {
-        props: {
-          uid: {
-                type: Number,
-                default: null
-            },
-            //是否自适应宽度，不自适应宽度默认为120px
-            selfAdaption: {
-                type: Boolean,
-                default: true
-            },
+  import{productionLineAdd, productionLineAlter, getResourcesList} from '@/api/basic/index'
+  export default {
+    props: {
+      listInfo: {
+        type: Object,
+        default: null
+      },
+      //是否自适应宽度，不自适应宽度默认为120px
+      selfAdaption: {
+        type: Boolean,
+        default: true
+      },
+    },
+    data() {
+      return {
+        form: {
+          plId: null,
+          tpId: null,
+          plName: null, // 名称
+          normalResources: null,
+          otherResources: null,
+          overtimeResources: null,
+          description: null,
         },
-        data() {
-            return {
-                data: [{
-                    label: '一级 1',
-                    children: [{
-                        label: '二级 1-1',
-                        children: [{
-                            label: '三级 1-1-1'
-                        }]
-                    }]
-                }, {
-                    label: '一级 2',
-                    children: [{
-                        label: '二级 2-1',
-                        children: [{
-                            label: '三级 2-1-1'
-                        }]
-                    }, {
-                        label: '二级 2-2',
-                        children: [{
-                            label: '三级 2-2-1'
-                        }]
-                    }]
-                }, {
-                    label: '一级 3',
-                    children: [{
-                        label: '二级 3-1',
-                        children: [{
-                            label: '三级 3-1-1'
-                        }]
-                    }, {
-                        label: '二级 3-2',
-                        children: [{
-                            label: '三级 3-2-1'
-                        }]
-                    }]
-                }],
-                defaultProps: {
-                    children: "children",
-                    label: "label",
-                    isLeaf: "leaf",
-                    id: "menuId"
-                },
-                value:false,
-                Checkeds:[],
-                form: {
-                  uid: null,
-                    roleName: null, // 名称
-                    roleLevel: null,
-                },
-                columns: [
-                  {text: "用户组", name: "gpName"},
-                  {text: "gpLevel", name: "gpLevel", default:false},
-                  {text: "isDel", name: "isDel", default:false},
-                  {text:'gpId', name:'gpId', default:false}
-                ],
-                activeName: 'first',
-                pidS: [],
-                list:[],
-                pArray: [],
-                rules: {
-                    roleName: [
-                        {required: true, message: '请输入名稱', trigger: 'blur'},
-                    ],
-                    roleLevel: [
-                        {required: true, message: '请选择等级', trigger: 'change'},
-                    ],
-
-                },
-                multipleSelection: [],
-                levelFormat: [[1, '一级'], [2, '二级']]
-            };
-        },
-        created() {
+        list: [],
+        pArray: [],
+        rules: {
+          plName: [
+            {required: true, message: '请输入名稱', trigger: 'blur'},
+          ],
+          tpId: [
+            {required: true, message: '请选择等级', trigger: 'change'},
+          ],
 
         },
-        mounted() {
-          this.form.uid = this.uid
-          this.factchGroup()
-           // this.fetchFormat();
-            if (this.form.uid) {
-                this.fetchData(this.form.uid)
+      };
+    },
+    created() {
+
+    },
+    mounted() {
+      this.fetchFormat()
+      if (this.listInfo) {
+        this.form = this.listInfo
+        this.form.tpId = this.listInfo.type.tpId
+        delete this.form.type
+      }
+    },
+    methods: {
+      handleClick(tab, event) {
+        console.log(tab, event);
+      },
+      saveData(form) {
+        this.$refs[form].validate((valid) => {
+          // 判断必填项
+          if (valid) {
+            if (typeof (this.form.plId) != undefined && this.form.plId != null) {
+              productionLineAlter(this.form).then(res => {
+                this.$emit('hideDialog', false)
+                this.$emit('uploadList')
+              });
+            } else {
+              productionLineAdd(this.form).then(res => {
+                this.$emit('hideDialog', false)
+                this.$emit('uploadList')
+              });
             }
-        },
-        methods: {
-            handleClick(tab, event) {
-                console.log(tab, event);
-            },
-            saveData(form) {
-                this.$refs[form].validate((valid) => {
-                    //判断必填项
-                    if (valid) {
-                        if (typeof (this.form.rid) != undefined && this.form.rid != null) {
-                          alterUsers(this.form).then(res => {
-                                this.$emit('hideDialog', false)
-                                this.$emit('uploadList')
-                            });
-                        } else {
-                          addUsers(this.form).then(res => {
-                                this.$emit('hideDialog', false)
-                                this.$emit('uploadList')
-                            });
-                        }
-
-
-                    } else {
-                        return false;
-                    }
-                })
-
-            },
-          factchGroup() {
-            this.loading = true
-            getUsersTree().then(res => {
-              this.loading = false
-              this.list = res.data
-            })
-          },
-            fetchFormat() {
-                getPermission().then(res => {
-                    this.pArray = res.data;
-                });
-            },
-            fetchData(val) {
-              getUsersInfo(val).then(res => {
-                  if(res.flag){
-                      this.form = res.data
-                      const rows = this.list,
-                          group = res.data.group;
-                      if (rows) {
-                          rows.forEach(row => {
-                              for(const i in group) {
-                                  if(row.gpId == group[i]){
-                                      this.$refs.multipleTable.toggleRowSelection(row)
-                                  }
-                              }
-                          })
-                      } else {
-                          this.$refs.multipleTable.clearSelection()
-                      }
-                  }
-                });
-            }
-        }
-    };
+          } else {
+            return false
+          }
+        })
+      },
+      fetchFormat() {
+        const data = {
+          pageNum: this.list.current || 1,
+          pageSize: this.list.size || 1000
+        };
+        getResourcesList(data).then(res => {
+          this.pArray = res.data.records
+        });
+      },
+    }
+  };
 </script>
 
 <style>

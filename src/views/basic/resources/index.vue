@@ -1,9 +1,9 @@
 <template>
   <div class="app-list">
-    <type ref="tree" class="list-tree" />
+    <type ref="tree" class="list-tree" @queryList="queryList" />
     <div class="list-container">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @delList="delList" @delGroup="delGroup" @showGroupDialog="groupDialog"  />
+        <tabs-bar @showDialog="handlerDialog" @delList="delList" @delGroup="delType" @showGroupDialog="groupDialog"  />
       </div>
       <list ref="list" @showDialog="handlerDialog"  />
     </div>
@@ -14,7 +14,7 @@
       :width="'40%'"
       destroy-on-close
     >
-      <info @hideDialog="hideWindow" @uploadList="upload" :uid="uid"></info>
+      <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
 
     </el-dialog>
     <el-dialog
@@ -33,7 +33,7 @@
 <script>
 import { Type, TabsBar, List } from "./components";
 import { Info, TDetail } from "./form";
-import { delGroup } from "@/api/system/index";
+import { delProductionLine, delResources} from "@/api/basic/index";
 export default {
   components: {
     Type,
@@ -44,47 +44,56 @@ export default {
   },
   data() {
     return {
-        visible:null,
-      uid:null,
-      gpInfo:null,
-      visible2:null,
+      visible: null,
+      plId: null,
+      gpInfo: null,
+      listInfo: null,
+      visible2: null,
       floorId: null
     }
   },
-    mounted() {
-        this.$refs.list.fetchData();
-      this.$refs.tree.fetchData();
-    },
+  mounted() {
+    this.$refs.list.fetchData()
+    this.$refs.tree.fetchData()
+  },
   methods: {
-      hideWindow(val){
-          this.visible = val
-      },
-    hideGroupWindow(val){
+    queryList(val) {
+      this.$refs.list.fetchData(val)
+    },
+    hideWindow(val) {
+      this.visible = val
+    },
+    hideGroupWindow(val) {
       this.visible2 = val
     },
-      handlerDialog(obj){
-          if(obj)this.uid = obj.uid
-          this.visible = true
-      },
-    groupDialog(obj){
-        console.log(obj)
-      if(obj)this.gpInfo = obj
+    handlerDialog(obj) {
+      this.listInfo = null
+      if (obj) this.listInfo = obj
+      this.visible = true
+    },
+    groupDialog(obj) {
+      this.gpInfo = null
+      if(obj) this.gpInfo = obj
       this.visible2 = true
     },
-      //更新列表
-      upload() {
-          this.$refs.list.fetchData()
-      },
+    // 更新列表
+    upload() {
+      this.$refs.list.fetchData()
+    },
     //更新列表
     uploadGroup() {
       this.$refs.tree.fetchData()
     },
-    delList() {
-
-    },
-    delGroup(val) {
+    delList(val) {
       this.loading = true
-      delGroup(val).then(res => {
+      delProductionLine(val).then(res => {
+        this.loading = false
+        this.list = res.data
+      })
+    },
+    delType(val) {
+      this.loading = true
+      delResources(val).then(res => {
         this.loading = false
         this.list = res.data
       })

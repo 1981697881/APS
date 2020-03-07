@@ -3,71 +3,71 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'gid'" style="display: none">
-            <el-input v-model="form.gid"></el-input>
+          <el-form-item :label="'物料编码'" prop="goodCode">
+            <el-input v-model="form.code"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'物料名称'" prop="goodName">
+            <el-input v-model="form.name"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'编码'" prop="goodCode">
-            <el-input v-model="form.goodCode"></el-input>
+          <el-form-item :label="'参照料号1'" prop="roleName">
+            <el-input v-model="form.code1"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'名称'" prop="goodName">
-            <el-input v-model="form.goodName"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'规格'" prop="roleName">
-            <el-input v-model="form.roleName"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'色号'" prop="roleName">
-            <el-input v-model="form.roleName"></el-input>
+          <el-form-item :label="'参照料号2'" prop="roleName">
+            <el-input v-model="form.code2"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'物料类别'" >
-            <el-select v-model="form.roleLevel" class="width-full" placeholder="请选择用户权限">
-              <el-option :label="t[1]" :value="t[0]" v-for="(t,i) in levelFormat" :key="i"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'计量单位'" >
-            <el-select v-model="form.pidS" multiple  placeholder="请选择">
-              <el-option
-                v-for="(t,i) in pArray"
-                :key="i"
-                :label="t.permissionName"
-                :value="t.pid">
-              </el-option>
-            </el-select>
+          <el-form-item :label="'组织编码'" prop="roleName">
+            <el-input v-model="form.orgCode"></el-input>
           </el-form-item>
         </el-col>
         <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item :label="'安全数量'" prop="roleName">
-              <el-input v-model="form.roleName"></el-input>
+          <el-col :span="24">
+            <el-form-item :label="'创建时间'">
+              <el-date-picker
+                v-model="value1"
+                type="datetimerange"
+                :picker-options="pickerOptions"
+                range-separator="至"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                align="right">
+              </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item :label="'旧料号'" prop="oldCode">
-              <el-input v-model="form.oldCode"></el-input>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="24">
+            <el-form-item :label="'修改时间'">
+              <el-date-picker
+                v-model="value2"
+                @onClick="onClick"
+                type="datetimerange"
+                :picker-options="pickerOptions"
+                range-separator="至"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                align="right">
+              </el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
       </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">
-      <el-button type="primary" @click="saveData('form')">保存</el-button>
+      <el-button type="primary" @click="saveData('form')">同步</el-button>
     </div>
   </div>
 </template>
@@ -85,13 +85,18 @@
     data() {
       return {
         form: {
-          gid: null,
-          goodCode: null, // 名称
-          goodName:null,
-          oldCode:null,
+          code: null,
+          code1: null, // 名称
+          code2:null,
+          createdOnEnd:null,
+          createdOnStart:null,
+          modifyOnEnd:null,
+          modifyOnStart:null,
+          name:null,
+          orgCode:null,
         },
-        pidS:[],
-        pArray:[],
+        value1: '',
+        value2: '',
         rules: {
           goodCode: [
             {required: true, message: '请输入编码', trigger: 'blur'},
@@ -102,9 +107,34 @@
           roleLevel: [
             {required: true, message: '请选择等级', trigger: 'change'},
           ],
-
         },
-        levelFormat: [[1,'一级'],[2,'二级']]
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
       };
     },
     created() {
@@ -117,10 +147,14 @@
       }
     },
     methods: {
+      onClick(val) {
+          console.log(val)
+      },
       saveData(form) {
         this.$refs[form].validate((valid) => {
           //判断必填项
           if (valid) {
+
             if (typeof (this.form.gid) != undefined && this.form.gid != null) {
               materialAlter(this.form).then(res => {
                 this.$emit('hideDialog', false)
@@ -132,28 +166,12 @@
                 this.$emit('uploadList')
               });
             }
-
-
           }else {
             return false;
           }
         })
 
       },
-      //初始化下拉
-      fetchFormat() {
-        getMType().then(res => {
-          this.pArray = res.data;
-        });
-        getUnit().then(res => {
-          this.pArray = res.data;
-        });
-      },
-      fetchData(val) {
-        getMaterialInfo(val).then(res => {
-          this.form = res.data;
-        });
-      }
     }
   };
 </script>

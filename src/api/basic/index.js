@@ -17,13 +17,14 @@ export function getFrameTree(params) {
 
 // 组织架构-获取列表
 export function getFrameList(params) {
+  const url = '/department/list/' + params.pageNum + '/' + params.pageSize
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'POST'
   })
 }
 
@@ -89,7 +90,7 @@ export function delFrame(params) {
 
 // 物料管理-获取列表
 export function getMaterialList(data) {
-  const url = ' /goods/list/' + data.pageNum + '/' + data.pageSize
+  const url = '/goods/list/' + data.pageNum + '/' + data.pageSize
   return request({
       url: url,
       headers: {
@@ -303,7 +304,7 @@ export function delSupplier(params) {
 
 // 库存查看-获取列表
 export function getInventory(params) {
-  const url = ' /inv-detail/list/' + params.pageNum + '/' + params.pageSize
+  const url = '/inv-detail/list/' + params.pageNum + '/' + params.pageSize
   return request({
     url: url,
     headers: {
@@ -341,14 +342,14 @@ export function getResourcesList(data) {
     },
     method: 'POST',
     data: {
-      category: '产线'
+      tpCategory: '产线'
     }
   })
 }
 
 // 生产资源-新增
 export function resourcesAdd(params) {
-  const url = '/type/add'
+  const url = '/Admin/type/add'
   return request({
     url: url,
     headers: {
@@ -356,24 +357,20 @@ export function resourcesAdd(params) {
       'Content-Type': 'application/json'
     },
     method: 'post',
-    data: {
-      goods: params
-    }
+    data: params
   })
 }
 // 生产资源-修改
 export function resourcesAlter(params) {
-  const url = '/type/update'
+  const url = '/Admin/type/update'
   return request({
     url: url,
     headers: {
       'authorization': getToken('rx'),
       'Content-Type': 'application/json'
     },
-    method: 'put',
-    data: {
-      goods: params
-    }
+    method: 'post',
+    data: params
   })
 }
 // 生产资源-获取详情
@@ -391,31 +388,32 @@ export function resourcesInfo(params) {
 
 // 生产资源-删除
 export function delResources(params) {
-  const url = '/type/del/' + params
+  const url = '/Admin/type/delete/' + params
   return request({
     url: url,
     headers: {
       'authorization': getToken('rx')
     },
-    method: 'delete'
+    method: 'post'
   })
 }
 // 生产资源产线-获取列表
-export function productionLineList(data) {
-  const url = ' /goods/list/' + data.pageNum + '/' + data.pageSize
+export function productionLineList(data, query) {
+  const url = '/production-line/list/' + data.pageNum + '/' + data.pageSize
   return request({
     url: url,
     headers: {
       'authorization': getToken('rx'),
       'Content-Type': 'application/json'
     },
-    method: 'POST'
+    method: 'POST',
+    data: query
   })
 }
 
 // 生产资源产线-新增
 export function productionLineAdd(params) {
-  const url = '/production-line/add'
+  const url = '/Admin/productionLine/add'
   return request({
     url: url,
     headers: {
@@ -423,24 +421,20 @@ export function productionLineAdd(params) {
       'Content-Type': 'application/json'
     },
     method: 'post',
-    data: {
-      goods: params
-    }
+    data: params
   })
 }
 // 生产资源产线-修改
 export function productionLineAlter(params) {
-  const url = '/production-line/update'
+  const url = '/Admin/productionLine/update'
   return request({
     url: url,
     headers: {
       'authorization': getToken('rx'),
       'Content-Type': 'application/json'
     },
-    method: 'put',
-    data: {
-      goods: params
-    }
+    method: 'post',
+    data: params
   })
 }
 // 生产资源产线-获取详情
@@ -458,7 +452,7 @@ export function productionLineInfo(params) {
 
 // 生产资源产线-删除
 export function delProductionLine(params) {
-  const url = '/production-line/del/' + params
+  const url = '/Admin/productionLine/delete/' + params
   return request({
     url: url,
     headers: {

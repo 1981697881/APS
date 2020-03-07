@@ -15,7 +15,7 @@
 
 <script>
   import {mapGetters} from "vuex";
-  import {getResourcesList, delResources} from "@/api/basic/index";
+  import {getResourcesList} from "@/api/basic/index";
   import List from "@/components/List";
   export default {
     components: {
@@ -35,6 +35,7 @@
       return {
         loading: false,
         columns: [
+          {text: "tpId", name: "tpId", default:false},
           {text: "资源类别", name: "tpName"},
           {text: "category", name: "category", default:false},
         ],
@@ -50,13 +51,12 @@
     methods: {
       //监听单击某一行
       rowClick(obj) {
-        this.$store.dispatch("list/setClickData", obj.row);
+        this.$emit('queryList', obj.row.tpId)
+        this.$store.dispatch("list/setClickData", obj.row)
       },
       fetchData() {
         this.loading = true;
         const data = {
-          /*  fid: fid,
-            type: type,*/
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 1000
         };

@@ -44,8 +44,10 @@ module.exports = {
       [process.env.VUE_APP_BASE_API]: {
         // target: `http://localhost:8090/asset`, // 修改后台接口地址
         // target: `http://192.168.3.60:8081/asset`,
-         target: `http://fanxserver.oicp.net/`,
+         target: `http://test.gzfzdev.com:8080/`,
         changeOrigin: true, // 必须加上跨域
+        ws: false,
+        secure: false,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }

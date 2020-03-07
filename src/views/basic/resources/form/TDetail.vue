@@ -3,22 +3,15 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'gpId'" style="display: none">
-            <el-input v-model="form.gpId"></el-input>
+          <el-form-item :label="'tpId'" style="display: none">
+            <el-input v-model="form.tpId"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'名称'" prop="gpName">
-            <el-input v-model="form.gpName"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'等级'" prop="gpLevel">
-            <el-select v-model="form.gpLevel" class="width-full" placeholder="请选择用户组等级">
-              <el-option :label="t[1]" :value="t[0]" v-for="(t,i) in levelFormat" :key="i"></el-option>
-            </el-select>
+      <el-row :gutter="20" >
+        <el-col :span="14" style="margin-left: 16%">
+          <el-form-item :label="'名称'" prop="tpName">
+            <el-input v-model="form.tpName" ></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -30,7 +23,7 @@
 </template>
 
 <script>
-  import {groupAdd, groupAlter} from "@/api/system/index";
+  import{ resourcesAdd, resourcesAlter } from "@/api/basic/index"
 
   export default {
     props: {
@@ -42,26 +35,19 @@
     data() {
       return {
         form: {
-          gpId: null,
-          gpName: null, // 名称
-          gpLevel:null,
+          tpId: null,
+          tpName: null, // 名称
+          tpCategory: '产线'
         },
-        pidS:[],
-        pArray:[],
         rules: {
-          gpName: [
+          tpName: [
             {required: true, message: '请输入名稱', trigger: 'blur'},
           ],
-          gpLevel: [
-            {required: true, message: '请选择等级', trigger: 'change'},
-          ],
-
         },
-        levelFormat: [[1,'一级'],[2,'二级']]
       };
     },
     created() {
-      this.form=this.gpInfo
+      if (this.gpInfo) this.form = this.gpInfo
     },
     mounted() {
 
@@ -71,13 +57,13 @@
         this.$refs[form].validate((valid) => {
           //判断必填项
           if (valid) {
-            if (typeof (this.form.gpId) != undefined && this.form.gpId != null) {
-              groupAlter(this.form).then(res => {
+            if (typeof (this.form.tpId) != undefined && this.form.tpId != null) {
+              resourcesAlter(this.form).then(res => {
                 this.$emit('hideGroupDialog', false)
                 this.$emit('uploadGroup')
               });
             } else {
-              groupAdd(this.form).then(res => {
+              resourcesAdd(this.form).then(res => {
                 this.$emit('hideGroupDialog', false)
                 this.$emit('uploadGroup')
               });

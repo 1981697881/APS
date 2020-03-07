@@ -11,61 +11,52 @@ import {
 import getPageTitle from '@/utils/get-page-title'
 import { addRouter } from './utils/addRouter'// 格式化菜单data
 import { getRouter } from '@/api/wy/menu'// 格式化菜单data
-
-
 NProgress.configure({
   showSpinner: false
 }) // NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
 
-var hasMenu = true//是否有路由 *
-router.beforeEach(async (to, from, next) => {
-
-
+var hasMenu = true// 是否有路由
+router.beforeEach(async(to, from, next) => {
   // start progress bar 加载进度条
   NProgress.start()
   // set page title
   document.title = getPageTitle(to.meta.title)
-
   // determine whether the user has logged in
   const hasToken = getToken('rx')
-  if (typeof(hasToken)!='undefined') {
+  if (typeof (hasToken) !== 'undefined') {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
-     /* next({
+      next({
         path: '/'
       })
-      NProgress.done()*/
+      NProgress.done()
     } else {
       if (hasMenu) {
         // 获取了动态路由 hasMenu一定true,就无需再次请求 直接放行
         const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
-        next()
-      } else {
-        try {
-          // get user info
-          //await store.dispatch('user/getInfo')
-          console.log(next())
+        if (hasGetUserInfo) {
           next()
-        } catch (error) {
+        } else {
+          try {
+          // get user info
+          // await store.dispatch('user/getInfo')
+            console.log(next())
+            next()
+          } catch (error) {
           // remove token and go to login page to re-login
-          await store.dispatch('user/resetToken')
-          Message.error(error || 'Has Error')
-          next(`/login?redirect=${to.path}`)
-          NProgress.done()
+            await store.dispatch('user/resetToken')
+            Message.error(error || 'Has Error')
+            next(`/login?redirect=${to.path}`)
+            NProgress.done()
+          }
         }
-      }
       } else {
         // hasMenu为false,一定没有获取动态路由,就跳转到获取动态路由的方法
         gotoRouter(to, next)
       }
-
-     /*   */
     }
-
-
   } else {
     /* has no token*/
     console.log(to.path)
@@ -91,7 +82,7 @@ function gotoRouter(to, next) {
     .then(res => {
       console.log('解析后端动态路由', res.data)
 
-      res.data[0].map(val=>{
+      res.data[0].map(val => {
         val.type = 1
       })
       console.log('解析后端动态路由', res.data)
@@ -103,13 +94,13 @@ function gotoRouter(to, next) {
     })
     .then(asyncRouter => {
       router.addRoutes(asyncRouter) // vue-router提供的addRouter方法进行路由拼接
-      for(var i = 0;i<asyncRouter.length;i++){
-        router.options.routes[3+i] = asyncRouter[i] // addRoutes不会更新视图
+      for (var i = 0; i < asyncRouter.length; i++) {
+        router.options.routes[3 + i] = asyncRouter[i] // addRoutes不会更新视图
       }
       hasMenu = true // 记录路由获取状态
       store.dispatch('menu/setRouterList', asyncRouter) // 存储到vuex
 
-      store.dispatch('permission/generateRoutes',router.options.routes)
+      store.dispatch('permission/generateRoutes', router.options.routes)
       next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
     })
     .catch(e => {

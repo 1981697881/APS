@@ -33,40 +33,36 @@ import notpage from '@/views/404'
  * all roles can be accessed
  */
 export const StaticRouterMap = [{
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
-
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: {
-        title: '首页',
-        icon: 'dashboard',
-        affix: true
-      }
-    }]
-  },
-  {
-    path: '/basic',
-    component: Layout,
-    name: 'Basic',
+  path: '/login',
+  component: () => import('@/views/login/index'),
+  hidden: true
+}, {
+  path: '/404',
+  component: () => import('@/views/404'),
+  hidden: true
+}, {
+  path: '/',
+  component: Layout,
+  redirect: '/dashboard',
+  children: [{
+    path: 'dashboard',
+    name: 'Dashboard',
+    omponent: () => import('@/views/dashboard/index'),
     meta: {
-      title: '基础资料',
-      icon: "component"
-    },
-    children: [{
+      title: '首页',
+      icon: 'dashboard',
+      affix: true
+    }
+  }]
+}, {
+  path: '/basic',
+  component: Layout,
+  name: 'Basic',
+  meta: {
+    title: '基础资料',
+    icon: 'component'
+  },
+  children: [{
       path: 'framework',
       component: () => import('@/views/basic/framework/index'),
       name: 'Framework',
@@ -80,14 +76,16 @@ export const StaticRouterMap = [{
       meta: {
         title: '物料管理'
       },
-    },{
+    },
+    /*{
       path: 'clerk',
       component: () => import('@/views/basic/clerk/index'),
       name: 'Clerk',
       meta: {
         title: '职员管理'
       },
-    },{
+    },*/
+    {
       path: 'supplier',
       component: () => import('@/views/basic/supplier/index'),
       name: 'Supplier',
