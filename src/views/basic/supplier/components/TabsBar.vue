@@ -10,27 +10,6 @@
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleAudit">新增</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus">修改</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >删除</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus">审核</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >反审核</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >禁用</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="Delivery">启用</el-button>
-        </el-col>
       </el-row>
     </el-form>
   </div>

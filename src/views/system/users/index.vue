@@ -14,7 +14,7 @@
       :width="'40%'"
       destroy-on-close
     >
-      <info @hideDialog="hideWindow" @uploadList="upload" :uid="uid"></info>
+      <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
 
     </el-dialog>
     <el-dialog
@@ -33,7 +33,7 @@
 <script>
 import { Tree, TabsBar, List } from "./components";
 import { Info, Group } from "./form";
-import { delGroup } from "@/api/system/index";
+import { delGroup, delUsers} from "@/api/system/index";
 export default {
   components: {
     Tree,
@@ -44,49 +44,56 @@ export default {
   },
   data() {
     return {
-        visible:null,
-      uid:null,
-      gpInfo:null,
-      visible2:null,
+      visible: null,
+      gpInfo: null,
+      listInfo: null,
+      visible2: null,
       floorId: null
     }
   },
-    mounted() {
-        this.$refs.list.fetchData();
-      this.$refs.tree.fetchData();
-    },
+  mounted() {
+    this.$refs.list.fetchData();
+    this.$refs.tree.fetchData();
+  },
   methods: {
-      hideWindow(val){
-          this.visible = val
-      },
-    hideGroupWindow(val){
+    hideWindow(val) {
+      this.visible = val
+    },
+    hideGroupWindow(val) {
       this.visible2 = val
     },
-      handlerDialog(obj){
-          if(obj)this.uid = obj.uid
-          this.visible = true
-      },
-    groupDialog(obj){
-        console.log(obj)
+    handlerDialog(obj) {
+      this.listInfo = null
+      if(obj)this.listInfo = obj
+      this.visible = true
+    },
+    groupDialog(obj) {
+      this.gpInfo = null
       if(obj)this.gpInfo = obj
       this.visible2 = true
     },
-      //更新列表
-      upload() {
-          this.$refs.list.fetchData()
-      },
-    //更新列表
+    // 更新列表
+    upload() {
+      this.$refs.list.fetchData()
+    },
+    // 更新列表
     uploadGroup() {
       this.$refs.tree.fetchData()
     },
-    delList() {
-
+    delList(val) {
+      this.loading = true
+      delUsers(val).then(res => {
+        this.loading = false
+        this.list = res.data
+        this.uploadGroup()
+      })
     },
     delGroup(val) {
       this.loading = true
       delGroup(val).then(res => {
         this.loading = false
         this.list = res.data
+        this.uploadGroup()
       })
     }
 

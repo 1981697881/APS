@@ -24,9 +24,7 @@ export function groupAdd(params) {
       'Content-Type': 'application/json'
     },
     method: 'post',
-    data: {
-      goods: params
-    }
+    data: params
   })
 }
 // 用户管理-用户组修改
@@ -82,26 +80,27 @@ export function addUsers(params) {
 }
 // 用户权限管理-修改
 export function alterUsers(params) {
-  const url = '/user/update'
+  const url = '/Admin/user/update/'
   return request({
     url: url,
     headers: {
       'authorization': getToken('rx'),
       'Content-Type': 'application/json'
     },
-    method: 'put',
+    method: 'POST',
     data: params
   })
 }
 // 用户权限管理-删除
 export function delUsers(params) {
+  const url = '/Admin/user/delete/' + params
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'POST'
   })
 }
 // 用户权限管理-禁用

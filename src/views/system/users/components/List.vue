@@ -36,13 +36,13 @@ export default {
       type: null,
         checkDate:null,
       columns: [
-        { text: "rid", name: "rid" },
-        { text: "用户编码", name: "" },
+        { text: "uid", name: "uid", default: false},
+        { text: "用户编码", name: "jobNum" },
         { text: "用户名称", name: "username" },
         { text: "用户组", name: "" },
-        { text: "对应职员", name: "" },
+        { text: "对应职员", name: "empName" },
           { text: "状态", name: "status" },
-        { text: "说明", name: "" },
+        { text: "说明", name: "description" },
 
       ]
     };
@@ -53,12 +53,12 @@ export default {
       //监听每页显示几条
       handleSize(val) {
           this.list.size = val
-          this.fetchData(this.node.data.fid,this.node.data.type);
+          this.fetchData()
       },
       //监听当前页
       handleCurrent(val) {
-          this.list.current = val;
-          this.fetchData(this.node.data.fid,this.node.data.type);
+          this.list.current = val
+          this.fetchData()
       },
     // 弹窗拖拽
     handleDrag() {
@@ -66,7 +66,7 @@ export default {
     },
     closedDialog() {},
     dblclick(obj) {
-        this.$emit('showDialog',obj)
+        this.$emit('showDialog', obj.row)
     },
       getClickRow(){
         return this.checkDate

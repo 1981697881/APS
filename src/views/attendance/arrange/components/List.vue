@@ -16,16 +16,16 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import {getFrameList,delFrame} from "@/api/basic/index";
-import List from "@/components/List";
+import { mapGetters } from 'vuex'
+import {getFrameList,delFrame} from '@/api/basic/index'
+import List from '@/components/List'
 
 export default {
   components: {
     List
   },
   computed: {
-    ...mapGetters(["node"])
+    ...mapGetters(['node'])
   },
   data() {
     return {
@@ -34,60 +34,61 @@ export default {
       list: {},
       fid: null,
       type: null,
-        checkDate:null,
+      checkDate:null,
       columns: [
-        { text: "rid", name: "rid" },
-        { text: "职员", name: "" },
+        { text: 'rid', name: 'rid' },
+        { text: '部门', name: '' },
+        { text: '子部门', name: '' },
+        { text: '职员', name: '' },
+        { text: '上班时间', name: '' },
+        { text: '下班时间', name: '' },
+        { text: '出勤类型', name: '' },
+        { text: '上班时间', name: '' },
+        { text: '下班时间', name: '' },
+        { text: '出勤类型', name: '' },
       ]
     };
   },
-
   methods: {
     handlerForm() {},
-      //监听每页显示几条
-      handleSize(val) {
-          this.list.size = val
-          this.fetchData(this.node.data.fid,this.node.data.type);
-      },
-      //监听当前页
-      handleCurrent(val) {
-          this.list.current = val;
-          this.fetchData(this.node.data.fid,this.node.data.type);
-      },
-    dblclick(obj) {
-        this.$emit('showDialog',obj)
+    // 监听每页显示几条
+    handleSize(val) {
+      this.list.size = val
+      this.fetchData(this.node.data.fid,this.node.data.type);
     },
-      //监听单击某一行
-      rowClick(obj) {
-          this.checkDate=obj;
-          this.$emit('showTree',obj)
-          this.$store.dispatch("list/setClickData", obj);
-      },
-      //删除
-      delDate(val) {
-          delFrame(val).then(res => {
-            if(res.flag){
-                this.$emit('uploadList',obj)
-            }
-       });
-
-      },
+    // 监听当前页
+    handleCurrent(val) {
+      this.list.current = val
+      this.fetchData(this.node.data.fid,this.node.data.type)
+    },
+    dblclick(obj) {
+      this.$emit('showDialog', obj)
+    },
+    // 监听单击某一行
+    rowClick(obj) {
+      this.checkDate = obj
+      this.$emit('showTree', obj)
+      this.$store.dispatch('list/setClickData', obj)
+    },
+    // 删除
+    delDate(val) {
+      delFrame(val).then(res => {
+        if (res.flag) {
+          this.$emit('uploadList', val)
+        }
+      })
+    },
     fetchData(fid, type) {
-      //this.loading = true;
-
+      // this.loading = true;
       const data = {
       /*  fid: fid,
-        type: type,*/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
-      };
-        /*getFrameList(data).then(res => {
-        this.loading = false;
-        this.list = res.data;
-      });*/
+       type: type,*/
+        pageNum: this.list.current || 1,
+        pageSize: this.list.size || 50
+      }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

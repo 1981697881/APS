@@ -37,11 +37,11 @@ export default {
         { text: "类别", name: "" },
         { text: "编码", name: "goodCode" },
         { text: "名称", name: "goodCode" },
-        { text: "规格", name: "" },
+        { text: "规格", name: "spec" },
           { text: "色号", name: "" },
           { text: "安全数量", name: "" },
           { text: "计量单位", name: "" },
-          { text: "旧料号", name: "" },
+          { text: "旧料号", name: "orgCode" },
       ]
     };
   },

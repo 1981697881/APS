@@ -18,7 +18,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { supplierList,delSupplier} from "@/api/basic/index";
+import { supplierList} from "@/api/basic/index";
 import List from "@/components/List";
 
 export default {
@@ -47,15 +47,15 @@ export default {
       //监听每页显示几条
       handleSize(val) {
           this.list.size = val
-          this.fetchData(this.node.data.fid,this.node.data.type);
+          this.fetchData()
       },
       //监听当前页
       handleCurrent(val) {
-          this.list.current = val;
-          this.fetchData(this.node.data.fid,this.node.data.type);
+          this.list.current = val
+          this.fetchData()
       },
     dblclick(obj) {
-      this.$emit('showDialog',obj.row)
+      this.$emit('showDialog', obj.row)
     },
       Delivery(val){
           delSupplier(val).then(res => {
@@ -69,17 +69,15 @@ export default {
           this.$store.dispatch("list/setClickData", obj.row);
       },
     fetchData(fid, type) {
-      //this.loading = true;
+      this.loading = true;
       const data = {
-      /*  fid: fid,
-        type: type,*/
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 50
       };
-       /* supplierList(data).then(res => {
+        supplierList(data).then(res => {
         this.loading = false;
         this.list = res.data;
-      });*/
+      });
     }
   }
 };

@@ -53,14 +53,13 @@ export default {
   computed: {
     ...mapGetters(["node","clickData"])
   },
-  methods:{
-
+  methods: {
     handlerBtn(command) {
-        if(command=="1") {
-          this.$emit("showGroupDialog",{rid:null})
-        }else if(command=="2") {
-            this.$emit("showDialog",{rid:null})
-        }
+      if(command=="1") {
+        this.$emit("showGroupDialog")
+      }else if(command=="2") {
+        this.$emit("showDialog")
+      }
     },
       handlerAlter(command) {
         if(command=="1") {
@@ -75,7 +74,7 @@ export default {
         }else if(command=="2") {
           console.log(this.clickData)
           if (this.clickData.uid) {
-            this.$emit('showDialog',{uid: this.clickData.uid })
+            this.$emit('showDialog', {uid: this.clickData.uid})
           } else {
             this.$message({
               message: "无选中行",
@@ -97,9 +96,7 @@ export default {
         }
       }else if(command=="2") {
         if (this.clickData.uid) {
-          this.$emit('delList',{
-            uid: this.clickData.uid,
-          })
+          this.$emit('delList', this.clickData.uid)
         } else {
           this.$message({
             message: "无选中行",

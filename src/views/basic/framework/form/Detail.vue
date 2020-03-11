@@ -3,41 +3,42 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'rid'" style="display: none">
-            <el-input v-model="form.rid"></el-input>
+          <el-form-item :label="'deptId'" style="display: none">
+            <el-input v-model="form.deptId"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'编码'" prop="roleName">
-            <el-input v-model="form.roleName"></el-input>
+          <el-form-item :label="'编码'" prop="deptCode">
+            <el-input v-model="form.deptCode"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'名称'" prop="roleName">
-            <el-input v-model="form.roleName"></el-input>
+          <el-form-item :label="'名称'" prop="deptName">
+            <el-input v-model="form.deptName"></el-input>
           </el-form-item>
         </el-col>
 
       </el-row>
       <el-row :gutter="20">
+
         <el-col :span="12">
-          <el-form-item :label="'上级组织'" prop="roleLevel">
-            <el-select v-model="form.roleLevel" class="width-full" placeholder="请选择用户权限">
-              <el-option :label="t[1]" :value="t[0]" v-for="(t,i) in levelFormat" :key="i"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'组织属性'" >
-            <el-select v-model="form.pidS" multiple  placeholder="请选择">
+          <el-form-item :label="'上级组织'" >
+            <el-select v-model="form.deptParent"   placeholder="请选择">
               <el-option
                 v-for="(t,i) in pArray"
                 :key="i"
                 :label="t.permissionName"
                 :value="t.pid">
               </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'组织属性'" prop="orgAttr">
+            <el-select v-model="form.orgAttr" class="width-full" placeholder="请选择">
+              <el-option :label="t[1]" :value="t[0]" v-for="(t,i) in levelFormat" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -50,43 +51,47 @@
 </template>
 
 <script>
-import {FrameAdd,updateRoles,getSuperior,getCompany} from "@/api/system/permissions";
+import {FrameAdd,FrameAlter,getSuperior} from "@/api/basic/index";
 
 export default {
   props: {
-      rid: {
-      type: Number,
+    listInfo: {
+      type: Object,
       default: null
     }
   },
   data() {
     return {
       form: {
-          rid: null,
-          roleName: null, // 名称
-          roleLevel:null,
+        deptId: null,
+        deptCode: null, // 名称
+        deptName: null,
+        orgAttr: null,
       },
         pidS:[],
         pArray:[],
         rules: {
-            roleName: [
-                {required: true, message: '请输入名稱', trigger: 'blur'},
+          deptCode: [
+                {required: true, message: '请输入编码', trigger: 'blur'}
             ],
-            roleLevel: [
-                {required: true, message: '请选择等级', trigger: 'change'},
+          deptName: [
+            {required: true, message: '请输入名稱', trigger: 'blur'}
+          ],
+          orgAttr: [
+                {required: true, message: '请选择', trigger: 'change'},
             ],
 
         },
-      levelFormat: [[1,'一级'],[2,'二级']]
+      levelFormat: [['集团','集团'], ['公司','公司'], ['部门','部门']]
     };
   },
   created() {
-      this.form.rid=this.rid
+
   },
   mounted() {
-      this.fetchFormat();
-    if (this.form.rid) {
-
+    /*  this.fetchFormat();*/
+    if (this.listInfo) {
+      this.form = this.listInfo
     }
   },
   methods: {
@@ -95,8 +100,8 @@ export default {
             //判断必填项
             if (valid) {
                 //修改
-                if (typeof (this.form.rid) != undefined && this.form.rid != null) {
-                    updateRoles(this.form).then(res => {
+                if (typeof (this.form.deptId) != undefined && this.form.deptId != null) {
+                  FrameAlter(this.form).then(res => {
                         this.$emit('hideDialog', false)
                         this.$emit('uploadList')
                     });
@@ -107,8 +112,6 @@ export default {
                         this.$emit('uploadList')
                     });
                 }
-
-
             }else {
                 return false;
             }
@@ -116,17 +119,11 @@ export default {
 
     },
       fetchFormat() {
-        //获取公司、上级下拉
+        //获取上级下拉
           getSuperior().then(res => {
               this.pArray = res.data;
           });
-          getCompany().then(res => {
-              this.pArray = res.data;
-          });
       },
-    fetchData(val) {
-
-    }
   }
 };
 </script>

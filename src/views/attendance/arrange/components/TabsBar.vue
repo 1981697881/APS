@@ -2,7 +2,7 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-button-group style="float:right">
-        <el-button :size="'mini'" type="primary" @click="handlerAdd">全部</el-button>
+        <el-button :size="'mini'" type="primary" @click="handlerAdd">新增</el-button>
         <el-button :size="'mini'" type="primary" @click="handlerAlter">保存</el-button>
         <el-button :size="'mini'" type="primary" @click="del">删除</el-button>
       </el-button-group>

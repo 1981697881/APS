@@ -4,25 +4,57 @@
       <el-row :gutter="20">
         <el-col :span="24">
           <el-col :span="12">
-            <el-form-item :label="'模板编码'" prop="roleName">
+            <el-form-item :label="'班次代码'" prop="roleName">
               <el-input v-model="form.roleName"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'模板名称'" prop="roleName">
+            <el-form-item :label="'班次名称'" prop="roleName">
               <el-input v-model="form.roleName"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item :label="'内容'" prop="roleName">
-              <el-input type="textarea" v-model="form.desc"></el-input>
-            </el-form-item>
+            <el-col :span="12">
+              <el-form-item :label="'取卡最早时间'" prop="roleName">
+                <el-input  v-model="form.desc"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item :label="'取卡最晚时间'" prop="roleName">
+                <el-input v-model="form.roleName"></el-input>
+              </el-form-item>
+            </el-col>
           </el-col>
           <el-col :span="24">
-            <el-form-item :label="'名称'" prop="roleName">
-              <el-input v-model="form.roleName"></el-input>
+            <el-col :span="12">
+              <el-form-item :label="'迟到允许值'" prop="roleName">
+                <el-input  v-model="form.desc"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item :label="'早退允许值'" prop="roleName">
+                <el-input v-model="form.roleName"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-col>
+          <el-col :span="24">
+            <el-col :span="12">
+              <el-form-item :label="'加班起始值'" prop="roleName">
+                <el-input  v-model="form.desc"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item :label="'取整分钟数'" prop="roleName">
+                <el-input v-model="form.roleName"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item :label="'加班需要加班单'" prop="roleName">
+              <el-checkbox v-model="form.checked"></el-checkbox>
             </el-form-item>
           </el-col>
+
           <el-col :span="24">
             <el-form-item :label="'接收人员'" prop="roleName">
               <el-table class="list-main" :data="list" border size="mini" :highlight-current-row="true"   @row-click="rowClick">
@@ -46,7 +78,6 @@
 
 <script>
     import {FrameAdd,updateRoles,getSuperior,getCompany} from "@/api/system/permissions";
-
     export default {
         props: {
             rid: {
@@ -57,6 +88,7 @@
         data() {
             return {
                 form: {
+                  checked: true,
                     rid: null,
                     roleName: null, // 名称
                     roleLevel:null,

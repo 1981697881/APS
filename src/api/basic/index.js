@@ -30,16 +30,30 @@ export function getFrameList(params) {
 
 // 组织架构-新增
 export function FrameAdd(params) {
+  const url = '/department/add'
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'post',
+    data: params
   })
 }
-
+// 组织架构-新增
+export function FrameAlter(params) {
+  const url = '/department/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: params
+  })
+}
 // 组织架构-获取详情
 export function getFrameInfo(params) {
   return request({
@@ -79,12 +93,11 @@ export function getCompany(params) {
 // 组织架构-删除
 export function delFrame(params) {
   return request({
-    url: '/table/list',
+    url: '/department/del/' + params.deptId,
     headers: {
       'authorization': getToken('rx')
     },
-    method: 'get',
-    params
+    method: 'delete'
   })
 }
 
@@ -141,9 +154,7 @@ export function syncMaterialInfo(params) {
       'Content-Type': 'application/json'
     },
     method: 'post',
-    data: {
-      itemInfoPojo: params
-    }
+    data: params
   })
 }
 // 物料管理-获取详情
@@ -196,13 +207,14 @@ export function delMaterial(params) {
 
 // 职员管理-获取列表
 export function getClerkList(params) {
+  const url = '/Admin/employee/list/' + params.pageNum + '/' + params.pageSize
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'POST'
   })
 }
 
@@ -253,16 +265,16 @@ export function delClerk(params) {
     params
   })
 }
-
 // 供应商管理-获取列表
 export function supplierList(params) {
+  const url = '/supplier/list/' + params.pageNum + '/' + params.pageSize
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'POST'
   })
 }
 

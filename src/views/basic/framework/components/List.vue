@@ -29,7 +29,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import {getFrameList,delFrame} from "@/api/basic/index";
+import {getFrameList} from "@/api/basic/index";
 import List from "@/components/List";
 
 export default {
@@ -48,11 +48,11 @@ export default {
       type: null,
       checkDate:null,
       columns: [
-        { text: "rid", name: "rid" },
-        { text: "编码", name: "" },
-        { text: "名称", name: "" },
-        { text: "上级组织", name: "" },
-        { text: "组织属性", name: "" },
+        { text: "deptId", name: "deptId", default: false},
+        { text: "编码", name: "deptCode" },
+        { text: "名称", name: "deptName" },
+        { text: "上级组织", name: "deptParent" },
+        { text: "组织属性", name: "orgAttr" },
       ]
     };
   },
@@ -70,27 +70,17 @@ export default {
       this.fetchData()
     },
     dblclick(obj) {
-      this.$emit('showDialog',obj)
+      this.$emit('showDialog', obj.row)
     },
     // 监听单击某一行
     rowClick(obj) {
       this.checkDate = obj
       this.$emit('showTree', obj)
-      this.$store.dispatch("list/setClickData", obj)
-    },
-    // 删除
-    delDate(val) {
-      delFrame(val).then(res => {
-        if (res.flag) {
-          this.$emit('uploadList', obj)
-        }
-      });
+      this.$store.dispatch("list/setClickData", obj.row)
     },
     fetchData(fid, type) {
       this.loading = true;
       const data = {
-      /*  fid: fid,
-        type: type,*/
         pageNum: this.list.current || 1,
         pageSize: this.list.size || 50
       }

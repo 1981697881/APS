@@ -33,12 +33,12 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: "oid", name: "oid",default:false },
-        { text: "职员编码", name: "" },
-        { text: "职员名称", name: "" },
+        { text: "uid", name: "uid",default:false },
+        { text: "职员编码", name: "jobNum" },
+        { text: "职员名称", name: "name" },
         { text: "部门", name: "" },
         { text: "联系地址", name: "" },
-          { text: "联系电话", name: "" },
+          { text: "联系电话", name: "tel" },
           { text: "描述", name: "" },
       ]
     };
@@ -47,12 +47,12 @@ export default {
       //监听每页显示几条
       handleSize(val) {
           this.list.size = val
-          this.fetchData(this.node.data.fid,this.node.data.type);
+          this.fetchData()
       },
       //监听当前页
       handleCurrent(val) {
-          this.list.current = val;
-          this.fetchData(this.node.data.fid,this.node.data.type);
+          this.list.current = val
+          this.fetchData()
       },
     dblclick(obj) {
       this.$emit('showDialog',obj.row)
@@ -69,17 +69,15 @@ export default {
           this.$store.dispatch("list/setClickData", obj.row);
       },
     fetchData(fid, type) {
-      //this.loading = true;
+      this.loading = true;
       const data = {
-      /*  fid: fid,
-        type: type,*/
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 50
       };
-       /* getClerkList(data).then(res => {
+        getClerkList(data).then(res => {
         this.loading = false;
         this.list = res.data;
-      });*/
+      });
     }
   }
 };

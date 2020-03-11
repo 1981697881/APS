@@ -46,9 +46,9 @@ export default {
       this.$emit("showDialog",{rid:null})
     },
       del() {
-          if (this.clickData.reOdId) {
+          if (this.clickData.deptId) {
                   this.$emit('del',{
-                      reOdId:this.clickData.reOdId,
+                    deptId: this.clickData.deptId,
                   })
               } else {
                   this.$message({
@@ -58,8 +58,8 @@ export default {
               }
       },
       handlerAlter() {
-          if (this.clickData.rid) {
-              this.$emit('showDialog',{rid: this.clickData.rid })
+          if (this.clickData.deptId) {
+              this.$emit('showDialog', this.clickData)
           } else {
               this.$message({
                   message: "无选中行",

@@ -10,12 +10,9 @@
     :data="datedef"
     :prop="prop"></ele-calendar>
 </template>
-
 <script>
   import eleCalendar from 'ele-calendar'
-
   import 'ele-calendar/dist/vue-calendar.css'
-
     export default {
       components: {
         eleCalendar

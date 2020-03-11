@@ -3,12 +3,12 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'物料编码'" prop="goodCode">
+          <el-form-item :label="'物料编码'" >
             <el-input v-model="form.code"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'物料名称'" prop="goodName">
+          <el-form-item :label="'物料名称'" >
             <el-input v-model="form.name"></el-input>
           </el-form-item>
         </el-col>
@@ -36,10 +36,10 @@
             <el-form-item :label="'创建时间'">
               <el-date-picker
                 v-model="value1"
-                type="datetimerange"
+                type="daterange"
                 :picker-options="pickerOptions"
                 range-separator="至"
-                value-format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
                 align="right">
@@ -52,11 +52,10 @@
             <el-form-item :label="'修改时间'">
               <el-date-picker
                 v-model="value2"
-                @onClick="onClick"
-                type="datetimerange"
+                type="daterange"
                 :picker-options="pickerOptions"
                 range-separator="至"
-                value-format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
                 align="right">
@@ -73,15 +72,9 @@
 </template>
 
 <script>
-  import {materialAdd,materialAlter,getMaterialInfo,getMType,getUnit} from "@/api/basic/index";
+  import {syncMaterialInfo} from "@/api/basic/index";
 
   export default {
-    props: {
-      gid: {
-        type: Number,
-        default: null
-      }
-    },
     data() {
       return {
         form: {
@@ -100,9 +93,6 @@
         rules: {
           goodCode: [
             {required: true, message: '请输入编码', trigger: 'blur'},
-          ],
-          goodName: [
-            {required: true, message: '请输入名稱', trigger: 'blur'},
           ],
           roleLevel: [
             {required: true, message: '请选择等级', trigger: 'change'},
@@ -137,36 +127,28 @@
         },
       };
     },
-    created() {
-      this.form.gid=this.gid
-    },
-    mounted() {
-      //this.fetchFormat();
-      if (this.form.gid) {
-        this.fetchData(this.form.gid);
-      }
-    },
     methods: {
-      onClick(val) {
-          console.log(val)
-      },
       saveData(form) {
         this.$refs[form].validate((valid) => {
           //判断必填项
           if (valid) {
-
-            if (typeof (this.form.gid) != undefined && this.form.gid != null) {
-              materialAlter(this.form).then(res => {
-                this.$emit('hideDialog', false)
-                this.$emit('uploadList')
-              });
-            }else{
-              materialAdd(this.form).then(res => {
-                this.$emit('hideDialog', false)
-                this.$emit('uploadList')
-              });
+            this.form.createdOnEnd = null
+            this.form.createdOnStart = null
+            this.form.modifyOnEnd = null
+            this.form.modifyOnStart = null
+            if(this.value1 != null && this.value1 != '') {
+              this.form.createdOnEnd = this.value1[0]
+              this.form.createdOnStart = this.value1[1]
             }
-          }else {
+            if(this.value2 != null && this.value2 != '') {
+              this.form.modifyOnEnd = this.value2[0]
+              this.form.modifyOnStart = this.value2[1]
+            }
+            syncMaterialInfo(this.form).then(res => {
+                this.$emit('hideDialog', false)
+                this.$emit('uploadList')
+              });
+          } else {
             return false;
           }
         })

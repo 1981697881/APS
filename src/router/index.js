@@ -47,7 +47,7 @@ export const StaticRouterMap = [{
   children: [{
     path: 'dashboard',
     name: 'Dashboard',
-    omponent: () => import('@/views/dashboard/index'),
+    component: () => import('@/views/dashboard/index'),
     meta: {
       title: '首页',
       icon: 'dashboard',
@@ -77,14 +77,14 @@ export const StaticRouterMap = [{
         title: '物料管理'
       },
     },
-    /*{
+    {
       path: 'clerk',
       component: () => import('@/views/basic/clerk/index'),
       name: 'Clerk',
       meta: {
         title: '职员管理'
       },
-    },*/
+    },
     {
       path: 'supplier',
       component: () => import('@/views/basic/supplier/index'),
@@ -135,6 +135,20 @@ export const StaticRouterMap = [{
       component: () => import('@/views/production/scheduling/index'),
       name: 'Scheduling',
       meta: {
+        title: '成品线计划'
+      },
+    },{
+      path: 'scheduling',
+      component: () => import('@/views/production/scheduling/index'),
+      name: 'Scheduling',
+      meta: {
+        title: '半成品线生产计划'
+      },
+    },{
+      path: 'scheduling',
+      component: () => import('@/views/production/scheduling/index'),
+      name: 'Scheduling',
+      meta: {
         title: '生产排程'
       },
     },{
@@ -162,6 +176,20 @@ export const StaticRouterMap = [{
       icon: "component"
     },
     children: [{
+      path: 'procurement',
+      component: () => import('@/views/warehouse/procurement/index'),
+      name: 'Procurement',
+      meta: {
+        title: '出货计划'
+      },
+    },{
+      path: 'procurement',
+      component: () => import('@/views/warehouse/procurement/index'),
+      name: 'Procurement',
+      meta: {
+        title: '采购入库计划'
+      },
+    },{
       path: 'procurement',
       component: () => import('@/views/warehouse/procurement/index'),
       name: 'Procurement',
@@ -266,7 +294,7 @@ export const StaticRouterMap = [{
     component: Layout,
     name: 'Aftermarket',
     meta: {
-      title: '售后管理',
+      title: '销售管理',
       icon: "component"
     },
     children: [{
@@ -274,9 +302,45 @@ export const StaticRouterMap = [{
       component: () => import('@/views/aftermarket/sales/index'),
       name: 'Sales',
       meta: {
-        title: '销售订单'
+        title: '销售计划'
       },
     },{
+      path: '',
+      component: () => import('@/views/aftermarket/sales/index'),
+      name: 'Sales',
+      meta: {
+        title: '订单转出货情况表'
+      },
+    },{
+      path: '',
+      component: () => import('@/views/aftermarket/sales/index'),
+      name: 'Sales',
+      meta: {
+        title: '案例统计表'
+      },
+    },{
+      path: '',
+      component: () => import('@/views/aftermarket/sales/index'),
+      name: 'Sales',
+      meta: {
+        title: '跨区业绩数据表'
+      },
+    },{
+      path: '',
+      component: () =>import('@/views/aftermarket/sales/index'),
+      name: 'Sales',
+      meta: {
+        title: '产品可出货库存表'
+      },
+    },{
+      path: '',
+      component: () => import('@/views/aftermarket/sales/index'),
+      name: 'Sales',
+      meta: {
+        title: '项目订货情况分析表'
+      },
+    }
+      /*{
       path: 'shipment',
       component: () => import('@/views/aftermarket/shipment/index'),
       name: 'Shipment',
@@ -290,7 +354,9 @@ export const StaticRouterMap = [{
       meta: {
         title: '订单执行统计'
       },
-    }]
+    }*/
+
+    ]
   },
   {
     path: '/attendance',
@@ -314,7 +380,8 @@ export const StaticRouterMap = [{
       meta: {
         title: '排班'
       },
-    },{
+    },
+     /* {
       path: 'punchcard',
       component: () => import('@/views/attendance/punchcard/index'),
       name: 'Punchcard',
@@ -328,7 +395,8 @@ export const StaticRouterMap = [{
       meta: {
         title: '请假管理'
       },
-    },{
+    },*/
+      {
       path: 'salary',
       component: () => import('@/views/attendance/salary/index'),
       name: 'Salary',

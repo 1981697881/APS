@@ -9,16 +9,9 @@
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'名称'" prop="gpName">
+        <el-col :span="18" style="padding-left: 15%">
+          <el-form-item :label="'用户组名称'" prop="gpName">
             <el-input v-model="form.gpName"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'等级'" prop="gpLevel">
-            <el-select v-model="form.gpLevel" class="width-full" placeholder="请选择用户组等级">
-              <el-option :label="t[1]" :value="t[0]" v-for="(t,i) in levelFormat" :key="i"></el-option>
-            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -31,7 +24,6 @@
 
 <script>
   import {groupAdd, groupAlter} from "@/api/system/index";
-
   export default {
     props: {
       gpInfo: {
@@ -44,7 +36,7 @@
         form: {
           gpId: null,
           gpName: null, // 名称
-          gpLevel:null,
+          gpLevel: -1,
         },
         pidS:[],
         pArray:[],
@@ -61,7 +53,7 @@
       };
     },
     created() {
-      this.form=this.gpInfo
+      this.form = this.gpInfo
     },
     mounted() {
 

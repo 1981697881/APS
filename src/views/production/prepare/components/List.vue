@@ -20,10 +20,9 @@
 import { mapGetters } from "vuex";
 import { salesList ,delivery} from "@/api/indent/sales";
 import List from "@/components/List";
-
 export default {
   components: {
-    List
+    List,
   },
   computed: {
     ...mapGetters(["node"])
@@ -48,12 +47,12 @@ export default {
       //监听每页显示几条
       handleSize(val) {
           this.list.size = val
-          this.fetchData(this.node.data.fid,this.node.data.type);
+          this.fetchData()
       },
       //监听当前页
       handleCurrent(val) {
           this.list.current = val;
-          this.fetchData(this.node.data.fid,this.node.data.type);
+          this.fetchData()
       },
     dblclick(obj) {
       this.$emit('showDialog',obj.row)

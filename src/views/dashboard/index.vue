@@ -6,7 +6,7 @@
       effect="dark"
       :closable="false"
     ></el-alert>
-    
+
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
@@ -120,7 +120,7 @@ export default {
   &-main {
     margin: 30px;
   }
-  
+
 }
 
 @media (max-width:1024px) {
