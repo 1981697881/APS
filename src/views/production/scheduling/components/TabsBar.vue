@@ -25,7 +25,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
         <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleAudit">安排生产</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">安排生产</el-button>
         </el-col>
       </el-row>
     </el-form>
@@ -93,7 +93,7 @@ export default {
 
           }
       },
-      handleAudit(){
+      handleDialog(){
           this.$emit('showDialog')
     },
   }

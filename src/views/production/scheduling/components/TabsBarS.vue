@@ -1,6 +1,6 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'" :label-width="'60px'" style="padding-top: 15px;padding-bottom: 10px;">
       <el-row :gutter="10">
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" >调整生产</el-button>

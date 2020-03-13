@@ -55,7 +55,7 @@ export default {
           this.visible = val
       },
     handlerDialog(obj){
-      if(obj)this.oid = obj.oid;this.orderId=obj.orderId;this.createTime=obj.createTime
+      //if(obj)
       this.visible = true
     },
     handlerNode(node) {

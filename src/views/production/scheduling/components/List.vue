@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { salesList ,delivery} from "@/api/indent/sales";
+import { getSchedulingList ,delivery} from "@/api/production/index";
 import List from "@/components/List";
 
 export default {
@@ -71,18 +71,18 @@ export default {
       rowClick(obj) {
           this.$store.dispatch("list/setClickData", obj.row);
       },
-    fetchData(fid, type) {
-      //this.loading = true;
+    fetchData(val) {
+      this.loading = true;
       const data = {
-      /*  fid: fid,
-        type: type,*/
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 50
-      };
-       /* salesList(data).then(res => {
-        this.loading = false;
-        this.list = res.data;
-      });*/
+      }
+      let obj = {}
+      val != null || val != undefined ? obj.query = val : null
+      getSchedulingList(data, obj).then(res => {
+        this.loading = false
+        this.list = res.data
+      })
     }
   }
 };
@@ -90,6 +90,6 @@ export default {
 
 <style lang="scss" scoped>
 .list-main {
-  height: calc((100vh - 250px)/3);
+  height: calc((100vh - 260px)/3);
 }
 </style>

@@ -12,7 +12,6 @@
       @dblclick="dblclick"
        @row-click="rowClick"
     />
-
   </div>
 </template>
 
@@ -34,12 +33,22 @@ export default {
       list: {},
       columns: [
         { text: "oid", name: "oid",default:false },
-        { text: "订单单号", name: "orderId" },
-        { text: "客户名称", name: "code" },
-        { text: "金额", name: "price" },
-        { text: "下单时间", name: "createTime" },
-          { text: "审核状态", name: "auditStatus" },
-          { text: "发货状态", name: "status" },
+        { text: "订单日期", name: "" },
+        { text: "订单号", name: "" },
+        { text: "生产线", name: "" },
+        { text: "订单数量", name: "" },
+        { text: "物料编码", name: "" },
+        { text: "物料名称", name: "" },
+        { text: "色号", name: "" },
+        { text: "旧料号", name: "" },
+        { text: "厂务预计出货日期", name: "" },
+        { text: "客户", name: "" },
+        { text: "到货城市", name: "" },
+        { text: "销售部门", name: "" },
+        { text: "销售业务员", name: "" },
+        { text: "订单数量", name: "" },
+        { text: "拣货数量", name: "" },
+        { text: "出库数量", name: "" },
       ]
     };
   },
@@ -67,17 +76,17 @@ export default {
           this.$store.dispatch("list/setClickData", obj.row);
       },
     fetchData(fid, type) {
-      this.loading = true;
+      //this.loading = true;
       const data = {
       /*  fid: fid,
         type: type,*/
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 50
       };
-        salesList(data).then(res => {
+       /* salesList(data).then(res => {
         this.loading = false;
         this.list = res.data;
-      });
+      });*/
     }
   }
 };

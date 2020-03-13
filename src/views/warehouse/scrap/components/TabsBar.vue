@@ -1,22 +1,35 @@
 <template>
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
-      <el-row :gutter="10">
-        <el-col :span="6">
-          <el-form-item :label="'订单单号'">
+      <el-row :gutter="24" style="padding-top: 10px;">
+        <el-col :span="3">
+          <el-form-item :label="'日期'">
+            <el-input v-model="search.keyword" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'单据号'">
+            <el-input v-model="search.keyword" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'仓管员'">
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleAudit">审核</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="Delivery">发货确认</el-button>
-        </el-col>
+        <el-button-group style="float:right">
+          <el-button style="float: right" :size="'mini'" type="primary" >反审核</el-button>
+          <el-button style="float: right" :size="'mini'" type="primary" >审核</el-button>
+          <el-button style="float: right" :size="'mini'" type="primary" >删除</el-button>
+          <el-button style="float: right" :size="'mini'" type="primary" @click="handleAdd">新增</el-button>
+          <el-button style="float: right" :size="'mini'" type="primary" >修改</el-button>
+          <el-button style="float: right" :size="'mini'" type="primary" >刷新</el-button>
+        </el-button-group>
       </el-row>
+
     </el-form>
   </div>
 </template>
@@ -68,6 +81,9 @@ export default {
             });
         }
 
+    },
+    handleAdd() {
+      this.$emit('showDialog')
     },
   }
 };

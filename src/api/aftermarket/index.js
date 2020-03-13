@@ -15,3 +15,17 @@ export function getSalesList(params) {
     method: 'POST'
   })
 }
+// 获取销售单详情
+export function getSalesInfo(params) {
+  const url = '/sale-order/getOrderByOrderNum'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+    },
+    method: 'get',
+    params: {
+      orderNum: params
+    }
+  })
+}

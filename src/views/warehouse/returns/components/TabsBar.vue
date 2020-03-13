@@ -1,17 +1,6 @@
 <template>
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
-      <el-row :gutter="24">
-      <el-button-group style="float:right">
-        <el-button style="float: right" :size="'mini'" type="primary" >批量入库</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >打印条码</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >反审核</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >审核</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >删除</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" @click="handleAdd">新增</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >刷新</el-button>
-      </el-button-group>
-      </el-row>
       <el-row :gutter="24" style="padding-top: 10px;">
         <el-col :span="3">
           <el-form-item :label="'日期'">
@@ -46,8 +35,16 @@
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
+        <el-button-group style="float:right">
+          <el-button style="float: right" :size="'mini'" type="primary" >批量入库</el-button>
+          <el-button style="float: right" :size="'mini'" type="primary" >打印条码</el-button>
+          <el-button style="float: right" :size="'mini'" type="primary" >反审核</el-button>
+          <el-button style="float: right" :size="'mini'" type="primary" >审核</el-button>
+          <el-button style="float: right" :size="'mini'" type="primary" >删除</el-button>
+          <el-button style="float: right" :size="'mini'" type="primary" @click="handleAdd">新增</el-button>
+          <el-button style="float: right" :size="'mini'" type="primary" >刷新</el-button>
+        </el-button-group>
       </el-row>
-
     </el-form>
   </div>
 </template>

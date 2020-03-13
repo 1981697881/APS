@@ -135,20 +135,6 @@ export const StaticRouterMap = [{
       component: () => import('@/views/production/scheduling/index'),
       name: 'Scheduling',
       meta: {
-        title: '成品线计划'
-      },
-    },{
-      path: 'scheduling',
-      component: () => import('@/views/production/scheduling/index'),
-      name: 'Scheduling',
-      meta: {
-        title: '半成品线生产计划'
-      },
-    },{
-      path: 'scheduling',
-      component: () => import('@/views/production/scheduling/index'),
-      name: 'Scheduling',
-      meta: {
         title: '生产排程'
       },
     },{
@@ -173,23 +159,9 @@ export const StaticRouterMap = [{
     name: 'Warehouse',
     meta: {
       title: '仓库物流管理',
-      icon: "component"
+      icon: 'component'
     },
     children: [{
-      path: 'procurement',
-      component: () => import('@/views/warehouse/procurement/index'),
-      name: 'Procurement',
-      meta: {
-        title: '出货计划'
-      },
-    },{
-      path: 'procurement',
-      component: () => import('@/views/warehouse/procurement/index'),
-      name: 'Procurement',
-      meta: {
-        title: '采购入库计划'
-      },
-    },{
       path: 'procurement',
       component: () => import('@/views/warehouse/procurement/index'),
       name: 'Procurement',
@@ -297,14 +269,16 @@ export const StaticRouterMap = [{
       title: '销售管理',
       icon: "component"
     },
-    children: [{
+    children: [
+     {
       path: 'sales',
       component: () => import('@/views/aftermarket/sales/index'),
       name: 'Sales',
       meta: {
         title: '销售计划'
       },
-    },{
+    }, /*
+    {
       path: '',
       component: () => import('@/views/aftermarket/sales/index'),
       name: 'Sales',
@@ -339,8 +313,8 @@ export const StaticRouterMap = [{
       meta: {
         title: '项目订货情况分析表'
       },
-    }
-      /*{
+    }*/
+      {
       path: 'shipment',
       component: () => import('@/views/aftermarket/shipment/index'),
       name: 'Shipment',
@@ -354,8 +328,7 @@ export const StaticRouterMap = [{
       meta: {
         title: '订单执行统计'
       },
-    }*/
-
+    }
     ]
   },
   {
