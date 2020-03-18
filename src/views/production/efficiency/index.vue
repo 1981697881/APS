@@ -16,19 +16,39 @@
     <div class="list-containerOther">
       <eta-th ref="list4"  @showDialog="handlerDialog"/>
     </div>
+    <div class="list-containerOther">
+      <eta-fo ref="list5"  @showDialog="handlerDialog"/>
+    </div>
+    <div class="list-containerOther">
+      <eta-fi ref="list6"  @showDialog="handlerDialog"/>
+    </div>
+    <div class="list-containerOther">
+      <eta-six ref="list7"  @showDialog="handlerDialog"/>
+    </div>
+    <div class="list-containerOther">
+      <eta-se ref="list9"  @showDialog="handlerDialog"/>
+    </div>
+    <div class="list-containerOther">
+      <eta-ei ref="list9"  @showDialog="handlerDialog"/>
+    </div>
   </div>
 </template>
 
 <script>
-import {List ,BarChart,EtaO,EtaT,EtaTh} from "./components";
+import {List, BarChart, EtaO, EtaT, EtaTh, EtaFo, EtaFi, EtaSix, EtaSe, EtaEi } from "./components";
 
 export default {
   components: {
+    EtaEi,
+    EtaSe,
+    EtaSix,
+    EtaFi,
+    EtaFo,
     List,
-      EtaO,
-      EtaT,
-      EtaTh,
-      BarChart
+    EtaO,
+    EtaT,
+    EtaTh,
+    BarChart
   },
   data() {
     return {

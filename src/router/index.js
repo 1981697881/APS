@@ -123,14 +123,16 @@ export const StaticRouterMap = [{
       title: '生产管理',
       icon: "component"
     },
-    children: [{
+    children: [
+      /*{
       path: 'prepare',
       component: () => import('@/views/production/prepare/index'),
       name: 'Prepare',
       meta: {
         title: '生产单管理'
       },
-    },{
+    },*/
+      {
       path: 'scheduling',
       component: () => import('@/views/production/scheduling/index'),
       name: 'Scheduling',
@@ -166,16 +168,73 @@ export const StaticRouterMap = [{
       component: () => import('@/views/warehouse/procurement/index'),
       name: 'Procurement',
       meta: {
-        title: '采购入库'
+        title: '采购入库计划'
       },
     },{
       path: 'recipients',
       component: () => import('@/views/warehouse/recipients/index'),
       name: 'Recipients',
       meta: {
-        title: '领用出库'
+        title: '出货计划'
       },
     },{
+      path: 'movingframe',
+      component: () => import('@/views/warehouse/movingframe/index'),
+      name: 'Movingframe',
+      meta: {
+        title: '移库信息'
+      },
+    },{
+      path: 'adjust',
+      component: () => import('@/views/warehouse/adjust/index'),
+      name: 'Adjust',
+      meta: {
+        title: '库存调整'
+      },
+    },{
+      path: 'adjust',
+      component: () => import('@/views/warehouse/adjust/index'),
+      name: 'Adjust',
+      meta: {
+        title: '库位信息'
+      },
+    },{
+      path: 'adjust',
+      component: () => import('@/views/warehouse/adjust/index'),
+      name: 'Adjust',
+      meta: {
+        title: '物流部效率统计'
+      },
+    },{
+      path: 'wboard',
+      component: () => import('@/views/warehouse/wboard/index'),
+      name: 'wBoard',
+      meta: {
+        title: '出货看板'
+      },
+    },{
+      path: 'wboard',
+      component: () => import('@/views/warehouse/wboard/index'),
+      name: 'wBoard',
+      meta: {
+        title: '出货统计看板'
+      },
+    },{
+      path: 'wboard',
+      component: () => import('@/views/warehouse/wboard/index'),
+      name: 'wBoard',
+      meta: {
+        title: '收货统计看板'
+      },
+    },{
+      path: 'wboard',
+      component: () => import('@/views/warehouse/wboard/index'),
+      name: 'wBoard',
+      meta: {
+        title: '库位看板'
+      },
+    },
+     /* {
       path: 'materialback',
       component: () => import('@/views/warehouse/materialback/index'),
       name: 'Materialback',
@@ -204,13 +263,6 @@ export const StaticRouterMap = [{
         title: '商品上架'
       },
     },{
-      path: 'movingframe',
-      component: () => import('@/views/warehouse/movingframe/index'),
-      name: 'Movingframe',
-      meta: {
-        title: '商品移架'
-      },
-    },{
       path: 'picking',
       component: () => import('@/views/warehouse/picking/index'),
       name: 'Picking',
@@ -232,34 +284,22 @@ export const StaticRouterMap = [{
         title: '发货出库'
       },
     },{
-      path: 'adjust',
-      component: () => import('@/views/warehouse/adjust/index'),
-      name: 'Adjust',
-      meta: {
-        title: '库存调整单'
-      },
-    },{
       path: 'scrap',
       component: () => import('@/views/warehouse/scrap/index'),
       name: 'Scrap',
       meta: {
         title: '商品报废'
       },
-    },{
-      path: 'wboard',
-      component: () => import('@/views/warehouse/wboard/index'),
-      name: 'wBoard',
-      meta: {
-        title: '仓库物流看板'
-      },
-    },{
+    },
+      {
       path: 'differences',
       component: () => import('@/views/warehouse/differences/index'),
       name: 'Differences',
       meta: {
         title: '发货差异报表'
       },
-    }]
+    }*/
+    ]
   },
   {
     path: '/aftermarket',
@@ -277,61 +317,47 @@ export const StaticRouterMap = [{
       meta: {
         title: '销售计划'
       },
-    }, /*
+    },
     {
-      path: '',
-      component: () => import('@/views/aftermarket/sales/index'),
-      name: 'Sales',
+      path: 'shipping',
+      component: () => import('@/views/aftermarket/shipping/index'),
+      name: 'Shipping',
       meta: {
         title: '订单转出货情况表'
       },
     },{
-      path: '',
-      component: () => import('@/views/aftermarket/sales/index'),
-      name: 'Sales',
-      meta: {
-        title: '案例统计表'
-      },
-    },{
-      path: '',
-      component: () => import('@/views/aftermarket/sales/index'),
-      name: 'Sales',
-      meta: {
-        title: '跨区业绩数据表'
-      },
-    },{
-      path: '',
-      component: () =>import('@/views/aftermarket/sales/index'),
-      name: 'Sales',
+      path: 'inVoorraad',
+      component: () =>import('@/views/aftermarket/inVoorraad/index'),
+      name: 'inVoorraad',
       meta: {
         title: '产品可出货库存表'
       },
     },{
-      path: '',
-      component: () => import('@/views/aftermarket/sales/index'),
-      name: 'Sales',
+      path: 'auftragslage',
+      component: () => import('@/views/aftermarket/auftragslage/index'),
+      name: 'Auftragslage',
       meta: {
         title: '项目订货情况分析表'
       },
-    }*/
-      {
-      path: 'shipment',
-      component: () => import('@/views/aftermarket/shipment/index'),
-      name: 'Shipment',
-      meta: {
-        title: '出货排程'
-      },
-    },{
-      path: 'perform',
-      component: () => import('@/views/aftermarket/perform/index'),
-      name: 'Perform',
-      meta: {
-        title: '订单执行统计'
-      },
     }
+      /*, {
+       path: 'shipment',
+       component: () => import('@/views/aftermarket/shipment/index'),
+       name: 'Shipment',
+       meta: {
+         title: '出货排程'
+       },
+     }
+    ,{
+       path: 'perform',
+       component: () => import('@/views/aftermarket/perform/index'),
+       name: 'Perform',
+       meta: {
+         title: '订单执行统计'
+       },
+     }*/
     ]
-  },
-  {
+  },{
     path: '/attendance',
     component: Layout,
     name: 'Attendance',

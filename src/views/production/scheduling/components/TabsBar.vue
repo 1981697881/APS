@@ -1,6 +1,6 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'" :label-width="'80px'"  style="padding-top: 15px;">
       <el-row :gutter="10">
         <el-col :span="7">
           <el-form-item :label="'订单日期'">

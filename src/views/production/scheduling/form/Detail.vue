@@ -135,7 +135,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20">
+      <!-- <el-row :gutter="20">
         <el-table :data="list" border :height="'250px'" stripe size="mini" :highlight-current-row="true" >
           <el-table-column prop="date" label="序号"  align="center" type="index" sortable></el-table-column>
           <el-table-column
@@ -157,7 +157,7 @@
               width="120">
             </el-table-column>
           </el-table-column>
-          <!--<el-table-column
+         <el-table-column
            label="生产线"
            align="center"
            width="160px">
@@ -171,14 +171,14 @@
                </el-option>
              </el-select>
            </template>
-         </el-table-column>-->
+         </el-table-column>
    </el-table>
-     </el-row>
+     </el-row>-->
    </el-form>
    <div slot="footer" style="text-align:center;padding-top: 15px">
-       <el-button type="warning" @click.native="attempt">尝试排产</el-button>
+      <!-- <el-button type="warning" @click.native="attempt">尝试排产</el-button>-->
        <el-button type="primary" @click.native="saveData('form')">确定</el-button>
-      <el-button type="primary" @click="preview('form')">预览</el-button>
+     <!-- <el-button type="primary" @click="preview('form')">预览</el-button>-->
      </div>
  </div>
 </template>

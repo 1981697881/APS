@@ -1,20 +1,23 @@
 <template>
   <div>
-    <list
-      class="list-main box-shadow"
-      :columns="columns"
-      :loading="loading"
-      :list="list"
-      across
-      acrosstitle="美瓷胶灌装&包装线效率表"
-      selfAdaption
-      index
-      type
-      @handle-size="handleSize"
-      @handle-current="handleCurrent"
-      @dblclick="dblclick"
-      @row-click="rowClick"
-    />
+    <el-card class="box-card box-card-component">
+      <div slot="header" class="clearfix" style="text-align: center">
+        <span>美瓷胶灌装&包装线效率表</span>
+      </div>
+      <list
+        class="list-main box-shadow"
+        :columns="columns"
+        :loading="loading"
+        :list="list"
+        across
+        acrosstitle="美瓷胶灌装&包装线效率表"
+        selfAdaption
+        @handle-size="handleSize"
+        @handle-current="handleCurrent"
+        @dblclick="dblclick"
+        @row-click="rowClick"
+      />
+    </el-card>
   </div>
 </template>
 
@@ -35,7 +38,7 @@
                 list: {},
                 columns: [
                     { text: "oid", name: "oid",default:false },
-                    { text: "工时效率", name: "" },
+                    { text: "项目", name: "" },
                 ]
             };
         },
@@ -82,5 +85,16 @@
 <style lang="scss" scoped>
   .list-main {
     height: calc((100vh - 250px)/3);
+  }
+</style>
+<style lang="scss" >
+  .box-card-component{
+    .el-card__header {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    .el-card__body{
+      padding: 0px!important;
+    }
   }
 </style>

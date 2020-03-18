@@ -38,7 +38,7 @@
       <slot name="after"></slot>
     </el-table>
 
-    <div class="text-center pages" v-if="list.total && list.total!=0">
+    <div class="text-center pages" v-if="list.total && list.total!=0" style="padding-top: 15px;">
       <el-pagination
         @size-change="handleSize"
         @current-change="handleCurrent"
