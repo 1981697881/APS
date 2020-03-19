@@ -2,52 +2,28 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
-        <el-col :span="2">
+        <el-col :span="7">
           <el-form-item :label="'日期'">
+            <el-date-picker
+              v-model="value"
+              type="datetimerange"
+              :picker-options="pickerOptions"
+              range-separator="至"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              align="right">
+            </el-date-picker>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item :label="'关键字'">
             <el-input v-model="search.keyword" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="2">
-          <el-form-item :label="'入库号'">
-            <el-input v-model="search.keyword" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="2">
-          <el-form-item :label="'采购员'">
-            <el-select v-model="value" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="2">
-          <el-form-item :label="'供应商'">
-            <el-select v-model="value" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
-        <el-button-group style="float:right">
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAdd">新增</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" >修改</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="del">删除</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >审核</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >反审核</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >批量入库</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >条码打印</el-button>
-        </el-button-group>
       </el-row>
     </el-form>
   </div>
@@ -62,14 +38,34 @@ export default {
     },
   data() {
     return {
-        options: [{
-            value: '选项1',
-            label: '成品'
+      value: '',
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
         }, {
-            value: '选项2',
-            label: '半成品'
-        }],
-        value: '',
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
       search: {
           keyword: null,
           type:null
@@ -86,21 +82,17 @@ export default {
 
           }
       },
-      del() {
-          if (this.clickData.oid) {
-              this.$emit('delList',{
-                  oid:this.clickData.oid,
-              })
-          } else {
-              this.$message({
-                  message: "无选中行",
-                  type: "warning"
-              });
-          }
-      },
-      handleAdd(){
-          this.$emit('showDialog')
-
+    handleAlter() {
+      if (this.clickData.gid) {
+        this.$emit('showDialog',{
+          gid: this.clickData.gid,
+        })
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
     },
   }
 };

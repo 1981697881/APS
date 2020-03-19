@@ -6,7 +6,6 @@
       :loading="loading"
       :list="list"
       index
-       type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -34,14 +33,11 @@ export default {
       list: {},
       columns: [
         { text: '', name: '',default:false },
-        { text: '日期', name: '' },
-        { text: 'U9数号', name: '' },
-        { text: '色号', name: '' },
-        { text: '原仓位', name: '' },
-        { text: '数量', name: '' },
-        { text: '现仓位', name: '' },
-        { text: '现数量', name: '' },
-        { text: '操作员', name: '' },
+        { text: '总库位', name: '' },
+        { text: '占用库位', name: '' },
+        { text: '技术库位', name: '' },
+        { text: '可用库位', name: '' },
+        { text: '占用率', name: '' }
       ]
     };
   },

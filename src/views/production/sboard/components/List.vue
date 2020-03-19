@@ -1,18 +1,11 @@
 <template>
   <div>
     <list
-       class="list-main box-shadow"
+      class="list-main box-shadow"
       :columns="columns"
       :loading="loading"
       :list="list"
-      index
-      type
-      @handle-size="handleSize"
-      @handle-current="handleCurrent"
-      @dblclick="dblclick"
-       @row-click="rowClick"
     />
-
   </div>
 </template>
 
@@ -33,47 +26,15 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: "oid", name: "oid",default:false },
-        { text: "业务日期", name: "" },
-        { text: "销售部门", name: "" },
-        { text: "销售业务员", name: "" },
-        { text: "单据编号", name: "" },
-          { text: "料品名称", name: "" },
-          { text: "料号", name: "" },
-          { text: "色号", name: "" },
-          { text: "批号", name: "" },
-          { text: "规格", name: "" },
-          { text: "出货数量", name: "" },
-          { text: "状态", name: "" },
-          { text: "完工数量", name: "" },
-          { text: "完工日期", name: "" },
-          { text: "发货情况", name: "" },
+        { text: "", name: "",default:false },
+        { text: "设备", name: "" },
+        { text: "色号", name: "" },
+        { text: "数量", name: "" },
+        { text: "状态", name: "" },
       ]
     };
   },
   methods: {
-      //监听每页显示几条
-      handleSize(val) {
-          this.list.size = val
-          this.fetchData(this.node.data.fid,this.node.data.type);
-      },
-      //监听当前页
-      handleCurrent(val) {
-          this.list.current = val;
-          this.fetchData(this.node.data.fid,this.node.data.type);
-      },
-    dblclick(obj) {
-      this.$emit('showDialog',obj.row)
-    },
-      Delivery(val){
-          delivery(val).then(res => {
-              this.$emit('uploadList')
-          });
-      },
-      //监听单击某一行
-      rowClick(obj) {
-          this.$store.dispatch("list/setClickData", obj.row);
-      },
     fetchData(fid, type) {
      // this.loading = true;
       const data = {
@@ -93,6 +54,6 @@ export default {
 
 <style lang="scss" scoped>
 .list-main {
-  height: calc(100vh - 300px);
+  height: calc(100vh/3);
 }
 </style>

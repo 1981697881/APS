@@ -192,44 +192,44 @@ export const StaticRouterMap = [{
         title: '库存调整'
       },
     },{
-      path: 'adjust',
-      component: () => import('@/views/warehouse/adjust/index'),
-      name: 'Adjust',
+      path: 'storageBin',
+      component: () => import('@/views/warehouse/storageBin/index'),
+      name: 'StorageBin',
       meta: {
         title: '库位信息'
       },
     },{
-      path: 'adjust',
-      component: () => import('@/views/warehouse/adjust/index'),
-      name: 'Adjust',
+      path: 'laborMonitoring',
+      component: () => import('@/views/warehouse/laborMonitoring/index'),
+      name: 'LaborMonitoring',
       meta: {
         title: '物流部效率统计'
       },
     },{
-      path: 'wboard',
-      component: () => import('@/views/warehouse/wboard/index'),
-      name: 'wBoard',
+      path: 'deliveryOrderBoard',
+      component: () => import('@/views/warehouse/deliveryOrderBoard/index'),
+      name: 'DeliveryOrderBoard',
       meta: {
-        title: '出货看板'
+        title: '出货单可发看板'
       },
     },{
-      path: 'wboard',
-      component: () => import('@/views/warehouse/wboard/index'),
-      name: 'wBoard',
+      path: 'shipmentBoard',
+      component: () => import('@/views/warehouse/shipmentBoard/index'),
+      name: 'ShipmentBoard',
       meta: {
         title: '出货统计看板'
       },
     },{
-      path: 'wboard',
-      component: () => import('@/views/warehouse/wboard/index'),
-      name: 'wBoard',
+      path: 'receivingBoard',
+      component: () => import('@/views/warehouse/receivingBoard/index'),
+      name: 'ReceivingBoard',
       meta: {
         title: '收货统计看板'
       },
     },{
-      path: 'wboard',
-      component: () => import('@/views/warehouse/wboard/index'),
-      name: 'wBoard',
+      path: ' locationBoard',
+      component: () => import('@/views/warehouse/locationBoard/index'),
+      name: 'LocationBoard',
       meta: {
         title: '库位看板'
       },

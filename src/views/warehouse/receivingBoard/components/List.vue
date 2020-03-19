@@ -6,7 +6,6 @@
       :loading="loading"
       :list="list"
       index
-       type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -34,14 +33,14 @@ export default {
       list: {},
       columns: [
         { text: '', name: '',default:false },
-        { text: '日期', name: '' },
-        { text: 'U9数号', name: '' },
-        { text: '色号', name: '' },
-        { text: '原仓位', name: '' },
-        { text: '数量', name: '' },
-        { text: '现仓位', name: '' },
-        { text: '现数量', name: '' },
-        { text: '操作员', name: '' },
+        { text: '收货日期', name: '' },
+        { text: '计划批次', name: '' },
+        { text: '计划完成批次', name: '' },
+        { text: '末到货批次', name: '' },
+        { text: '其它日期到货批次', name: '' },
+        { text: '到货重量（kg)', name: '' },
+        { text: '累积完成批次', name: '' },
+        { text: '即时率', name: '' },
       ]
     };
   },

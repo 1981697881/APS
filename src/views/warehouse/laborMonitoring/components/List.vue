@@ -6,7 +6,6 @@
       :loading="loading"
       :list="list"
       index
-       type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -34,44 +33,44 @@ export default {
       list: {},
       columns: [
         { text: '', name: '',default:false },
-        { text: '日期', name: '' },
-        { text: 'U9数号', name: '' },
-        { text: '色号', name: '' },
-        { text: '原仓位', name: '' },
-        { text: '数量', name: '' },
-        { text: '现仓位', name: '' },
-        { text: '现数量', name: '' },
-        { text: '操作员', name: '' },
+        { text: '项目', name: '' },
+        { text: '3.1', name: '' },
+        { text: '3.2', name: '' },
+        { text: '3.3', name: '' },
+        { text: '3.4', name: '' },
+        { text: '3.5', name: '' },
+        { text: '3.6', name: '' },
+        { text: '3.7', name: '' },
       ]
     };
   },
   methods: {
-      //监听每页显示几条
-      handleSize(val) {
-          this.list.size = val
-          this.fetchData();
-      },
-      //监听当前页
-      handleCurrent(val) {
-          this.list.current = val;
-          this.fetchData();
-      },
-    dblclick(obj) {
-      //this.$emit('showDialog',obj.row)
+    // 监听每页显示几条
+    handleSize(val) {
+      this.list.size = val
+      this.fetchData();
     },
-      //监听单击某一行
-      rowClick(obj) {
-          this.$store.dispatch("list/setClickData", obj.row);
-      },
+    // 监听当前页
+    handleCurrent(val) {
+      this.list.current = val;
+      this.fetchData();
+    },
+    dblclick(obj) {
+      // this.$emit('showDialog',obj.row)
+    },
+    // 监听单击某一行
+    rowClick(obj) {
+      this.$store.dispatch("list/setClickData", obj.row);
+    },
     fetchData(fid, type) {
       this.loading = true;
       const data = {
       /*  fid: fid,
         type: type,*/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
+        pageNum: this.list.current || 1,
+        pageSize: this.list.size || 50
       };
-        getMaterialList(data).then(res => {
+      getMaterialList(data).then(res => {
         this.loading = false;
         this.list = res.data;
       });

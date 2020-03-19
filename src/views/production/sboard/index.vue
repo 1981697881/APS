@@ -1,24 +1,43 @@
 <template>
   <div class="app-list">
-    <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
-    <div class="list-containerOther">
-      <div>
-        <tabs-bar @showDialog="handlerDialog" @theDelivery="delivery"/>
-      </div>
-      <list ref="list"  @showDialog="handlerDialog"/>
-    </div>
-
-
+    <el-container>
+      <el-container>
+        <el-aside width="calc(100vh/2)">
+          <pie-chart></pie-chart>
+        </el-aside>
+        <el-container>
+          <el-main>
+            <div class="list-containerOther">
+              <el-card class="box-card box-card-component">
+                <div slot="header" class="clearfix" style="text-align: left">
+                  <span>加急生产任务</span>
+                </div>
+                <list ref="list"  @showDialog="handlerDialog"/>
+              </el-card>
+            </div>
+          </el-main>
+          <el-footer>
+            <el-card class="box-card box-card-component">
+              <div slot="header" class="clearfix" style="text-align: left">
+                <span>重要事项</span>
+              </div>
+              <info/>
+            </el-card>
+          </el-footer>
+        </el-container>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script>
-import { TabsBar, List } from "./components";
+import { List, PieChart, Info } from "./components";
 
 export default {
   components: {
-    TabsBar,
-    List
+    List,
+    PieChart,
+    Info
   },
   data() {
     return {
@@ -57,6 +76,45 @@ export default {
   }
 };
 </script>
+<style lang="scss" >
+  .box-card-component{
+    .el-card__header {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    .el-card__body{
+      padding: 0px!important;
+    }
+  }
+</style>
+<style>
+  .el-header, .el-footer {
+   /* background-color: #E9EEF3;*/
+    color: #333;
+    text-align: center;
+  }
 
-<style lang="scss" scoped>
+  .el-aside {
+    text-align: center;
+    line-height: 200px;
+  }
+
+  .el-main {
+    /*background-color: #E9EEF3;*/
+    color: #333;
+    text-align: center;
+  }
+
+  body > .el-container {
+    margin-bottom: 40px;
+  }
+
+  .el-container:nth-child(5) .el-aside,
+  .el-container:nth-child(6) .el-aside {
+    line-height: 260px;
+  }
+
+  .el-container:nth-child(7) .el-aside {
+    line-height: 320px;
+  }
 </style>
