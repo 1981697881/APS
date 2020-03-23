@@ -19,7 +19,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getSalesList} from "@/api/aftermarket/index";
+import { getSalesList, notarizeList} from "@/api/aftermarket/index";
 import List from "@/components/List";
 
 export default {
@@ -34,7 +34,7 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: 'id', name: '', default: false},
+        { text: 'soId', name: 'soId', default: false},
         { text: '大区', name: '' },
         { text: '业务员', name: 'seller' },
         { text: '助理', name: '' },
@@ -71,58 +71,66 @@ export default {
     };
   },
   methods: {
-      //监听每页显示几条
-      handleSize(val) {
-          this.list.size = val
-          this.fetchData(this.node.data.fid,this.node.data.type);
-      },
-      // 监听当前页
-      handleCurrent(val) {
-          this.list.current = val;
-          this.fetchData(this.node.data.fid,this.node.data.type);
-      },
-      dblclick(obj) {
-      //this.$emit('showDialog',obj.row)
-      },
-      // 监听单击某一行
-      rowClick(obj) {
-          this.$store.dispatch("list/setClickData", obj.row);
-      },
-     fetchData(fid, type) {
+    //监听每页显示几条
+    handleSize(val) {
+      this.list.size = val
+      this.fetchData(this.node.data.fid,this.node.data.type);
+    },
+    // 监听当前页
+    handleCurrent(val) {
+      this.list.current = val;
+      this.fetchData(this.node.data.fid,this.node.data.type);
+    },
+    dblclick(obj) {//this.$emit('showDialog',obj.row)
+    },
+    // 监听单击某一行
+    rowClick(obj) {
+      this.$store.dispatch("list/setClickData", obj.row);
+    },
+    notarize(val) {
+      notarizeList(val).then(res => {
+        this.loading = true
+        if (res.flag) {
+          this.fetchData()
+          this.loading = false
+        }
+      })
+    },
+    fetchData() {
       this.loading = true;
       const data = {
       /*  fid: fid,
         type: type,*/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
+        pageNum: this.list.current || 1,
+        pageSize: this.list.size || 50
       }
-        getSalesList(data).then(res => {
-           this.loading = false;
-          if(res.flag && res.data != null) {
-            this.list = res.data;
-            let record = res.data.records
-            let obj = []
-            for(const i in record) {
-              for(const a in record[i].detail) {
-                record[i].detail[a].customerCode = record[i].customerCode
-                record[i].detail[a].customerName = record[i].customerName
-                record[i].detail[a].orderNum = record[i].orderNum
-                record[i].detail[a].orgCode = record[i].orgCode
-                record[i].detail[a].seller = record[i].seller
-                record[i].detail[a].soId = record[i].soId
-                record[i].detail[a].soName = record[i].soName
-                obj.push(record[i].detail[a])
-              }
+      getSalesList(data).then(res => {
+        this.loading = false;
+        if(res.flag && res.data != null) {
+          this.list = res.data;
+          let record = res.data.records
+          let obj = []
+          for(const i in record) {
+            for(const a in record[i].detail) {
+              record[i].detail[a].customerCode = record[i].customerCode
+              record[i].detail[a].customerName = record[i].customerName
+              record[i].detail[a].orderNum = record[i].orderNum
+              record[i].detail[a].orgCode = record[i].orgCode
+              record[i].detail[a].seller = record[i].seller
+              record[i].detail[a].soId = record[i].soId
+              record[i].detail[a].soName = record[i].soName
+              obj.push(record[i].detail[a])
             }
-            this.list = {
-              current: res.data.current,
-              pages: res.data.pages,
-              size: res.data.size,
-              total: res.data.total,
-              records: obj
-            }
-            console.log(obj)
           }
+          this.list = {
+            current: res.data.current,
+            pages: res.data.pages,
+            size: res.data.size,
+            total: res.data.total,
+            records: obj
+          }
+          console.log(obj)
+        }
       })
     }
   }

@@ -31,19 +31,22 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: "oid", name: "oid",default:false },
-        { text: "订单日期", name: "" },
-        { text: "订单号", name: "" },
-        { text: "生产线", name: "" },
-        { text: "订单数量", name: "" },
-          { text: "旧料号", name: "" },
-          { text: "色号", name: "" },
-          { text: "客户", name: "" },
-          { text: "到货城市", name: "" },
-          { text: "销售部门", name: "" },
-          { text: "销售业务员", name: "" },
-          { text: "订单类型", name: "" },
-          { text: "生产状态", name: "" },
+        { text: "taskId", name: "taskId",default: false },
+        { text: "plId", name: "plId",default: false },
+        { text: "订单日期", name: "soDate" },
+        { text: "订单号", name: "soNum" },
+        { text: "排产单号", name: "taskNum" },
+        { text: "项目名称", name: "" },
+        { text: "色号/旧料号", name: "color" },
+        { text: "订单数量", name: "odPrNum" },
+        { text: "计划数量", name: "allocatedNum" },
+        { text: "计划日期", name: "productionDate" },
+        { text: "产品分类", name: "" },
+        { text: "生产设备", name: "plName" },
+        { text: "生产类型", name: "" },
+        { text: "生产状态", name: "allocatedStatus" },
+        { text: "任务警示", name: "" },
+        { text: "备注", name: "" },
       ]
     };
   },
@@ -71,13 +74,13 @@ export default {
           this.$store.dispatch("list/setClickData", obj.row);
       },
     fetchData(val) {
-      this.loading = true;
+      this.loading = true
       const data = {
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 50
       }
       let obj = {}
-      val != null || val != undefined ? obj.query = val : null
+      val != null || val != undefined ? obj = val : null
       getSchedulingList(data, obj).then(res => {
         this.loading = false
         this.list = res.data
@@ -89,6 +92,6 @@ export default {
 
 <style lang="scss" scoped>
 .list-main {
-  height: calc((100vh - 320px)/2);
+  height: calc((100vh - 335px)/2);
 }
 </style>

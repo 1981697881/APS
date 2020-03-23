@@ -358,7 +358,28 @@ export function getResourcesList(data) {
     }
   })
 }
-
+// 生产资源-获取成品产线
+export function getFinalGoods() {
+  const url = '/production-line/list/endProduct'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+    },
+    method: 'get'
+  })
+}
+// 生产资源-获取半成品产线
+export function getSemiFinishedProducts() {
+  const url = '/production-line/list/semiProductLine'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+    },
+    method: 'get'
+  })
+}
 // 生产资源-新增
 export function resourcesAdd(params) {
   const url = '/Admin/type/add'

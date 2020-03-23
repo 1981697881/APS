@@ -41,9 +41,6 @@ if (process.env.NODE_ENV === 'production') {
 Vue.use(ElementUI, { zhLocale })
 
 Vue.config.productionTip = false
-
-
-
 new Vue({
   el: '#app',
   router,
@@ -55,9 +52,6 @@ new Vue({
       password: Cookies.get('ps')
      }
     if(data.username && data.password){
-     var rs=Cookies.get('rx')
-      console.log(rs)
-      console.log( Cookies.get('rx') == "undefined")
       if(Cookies.get('rx') =="undefined"){
         this.$router.push(`/login?redirect=${this.$route.fullPath}`)
         store.dispatch('user/resetToken')

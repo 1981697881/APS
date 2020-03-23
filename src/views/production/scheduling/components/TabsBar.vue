@@ -1,9 +1,9 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'"  style="padding-top: 15px;">
-      <el-row :gutter="10">
-        <el-col :span="7">
-          <el-form-item :label="'订单日期'">
+    <el-form v-model="search" :size="'mini'" :label-width="'60px'"  style="padding-top: 15px;">
+      <el-row :gutter="24">
+        <el-col :span="8">
+          <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
               type="datetimerange"
@@ -17,16 +17,20 @@
           </el-form-item>
         </el-col>
         <el-col :span="3">
-          <el-form-item :label="'生产状态'">
-            <el-input v-model="search.keyword" placeholder="输入生产状态"/>
+          <el-form-item :label="'关键字'">
+            <el-input v-model="search.keyword" placeholder="输入关键字"/>
           </el-form-item>
         </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">安排生产</el-button>
-        </el-col>
+        <el-button-group style="float:right">
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="delivery">删除</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >插入</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >打印</el-button>
+        </el-button-group>
       </el-row>
     </el-form>
   </div>
@@ -75,27 +79,29 @@ export default {
   },
 
   methods:{
-      Delivery(){
-          if (this.clickData.oid) {
-              this.$emit('theDelivery',{
-                  oid:this.clickData.oid,
-              })
-          } else {
-              this.$message({
-                  message: "无选中行",
-                  type: "warning"
-              });
-          }
-      },
-      //关键字查询
-      query(){
-          if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
-          }
-      },
-      handleDialog(){
-          this.$emit('showDialog')
+    delivery() {
+      if (this.clickData.taskId) {
+        this.$emit('theDelivery',{
+          taskId: this.clickData.taskId,
+        })
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
     },
+    upload() {
+      this.$emit('uploadList')
+    },
+    //关键字查询
+    query(){
+      if((typeof this.search.keyword != null) && (this.search.keyword !='')){
+      }
+    },
+    handleDialog(){
+      this.$emit('showDialog')
+    }
   }
 };
 </script>

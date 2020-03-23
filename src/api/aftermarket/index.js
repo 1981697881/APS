@@ -29,3 +29,14 @@ export function getSalesInfo(params) {
     }
   })
 }
+// 确认单据
+export function notarizeList(params) {
+  const url = '/sale-order/confirm/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+    },
+    method: 'post',
+  })
+}

@@ -5,36 +5,36 @@
       <el-card class="box-card box-card-component">
         <div slot="header" class="clearfix" >
           <span>成品线计划</span>
-          <el-select v-model="value" style="float: right;" placeholder="请选择">
+          <el-select v-model="plaIdS" style="float: right;" placeholder="请选择" @change="selectChangeO">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="(t,i) in plaArray"
+              :key="i"
+              :label="t.plName"
+              :value="t.plId">
             </el-option>
           </el-select>
         </div>
         <div>
-          <tabs-bar @showDialog="handlerDialog" @theDelivery="delivery"/>
+          <tabs-bar @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload"/>
         </div>
-        <list ref="list1"  @showDialog="handlerDialog"/>
+        <list ref="list1"  @showDialog="handlerDialog" />
       </el-card>
     </div>
     <div class="list-containerOther">
       <el-card class="box-card box-card-component">
         <div slot="header" class="clearfix" >
           <span>半成品线生产计划</span>
-          <el-select v-model="value" style="float: right;" placeholder="请选择">
+          <el-select v-model="plaIdS" style="float: right;" placeholder="请选择" @change="selectChangeT">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="(t,i) in plaArray"
+              :key="i"
+              :label="t.platformName"
+              :value="t.plaId">
             </el-option>
           </el-select>
         </div>
         <div>
-          <tabs-bar-e @showDialog="handlerDialog" @theDelivery="delivery"/>
+          <tabs-bar-e @showDialog="handlerDialog" @theDelivery="deliveryT" @uploadList="uploadT"/>
         </div>
         <scheduling ref="list2"  @showDialog="handlerDialog"/>
       </el-card>
@@ -64,18 +64,16 @@
 </template>
 
 <script>
-import { TabsBar, List ,Detail,Scheduling,TabsBarE,TabsBarS} from "./components";
-import { Info } from "./form";
-
+import { TabsBar, List ,Scheduling, TabsBarE } from "./components"
+import { Info } from "./form"
+import { getFinalGoods, getSemiFinishedProducts } from "@/api/basic"
 export default {
   components: {
     TabsBar,
     List,
-      Info,
-      Detail,
-      Scheduling,
-      TabsBarE,
-      TabsBarS
+    Info,
+    Scheduling,
+    TabsBarE
   },
   data() {
     return {
@@ -97,26 +95,50 @@ export default {
       }],
       value: '',
       visible: null,
-      oid: null,
-        orderId: null,
-        createTime: null,
-      treeId: null, // null
-      floorId: null
+      plaIdS: null,
+      plaArray: [],
+      plaIdB: null,
+      plaBArray: [],
     };
   },
-    mounted() {
-        this.$refs.list1.fetchData()
-    },
+  mounted() {
+    this.fetchFormat()
+  },
   methods: {
-      delivery(obj){
-          if(obj){
-              this.$refs.list1.Delivery(obj.oid)
-              this.$refs.list1.fetchData()
-          }
-      },
-      hideWindow(val){
-          this.visible = val
-      },
+    selectChangeO(val) {
+     this.upload({plId: val })
+    },
+    selectChangeT(val) {
+      this.upload({plId: val })
+    },
+    delivery(obj) {
+      if(obj) {
+
+      }
+    },
+    deliveryT(obj) {
+      if(obj) {
+
+      }
+    },
+    fetchFormat() {
+      getFinalGoods().then(res => {
+        if(res.flag) {
+          this.plaArray = res.data
+          this.plaIdS = res.data[0].plId
+          this.$refs.list1.fetchData({plId: this.plaIdS})
+        }
+      })
+      getSemiFinishedProducts().then(res => {
+        if(res.flag) {
+          this.plaBArray = res.data
+          this.plaIdB = res.data[0].plId
+        }
+      });
+    },
+    hideWindow(val){
+      this.visible = val
+    },
     handlerDialog(obj){
       //if(obj)
       this.visible = true
@@ -124,10 +146,14 @@ export default {
     handlerNode(node) {
       this.$refs.list1.fetchData(node.data.fid,node.data.type)
     },
-      //更新列表
-      upload(){
-          this.$refs.list1.fetchData()
-      }
+    //更新列表
+    upload(val = {plId: this.plaIdS}) {
+      this.$refs.list1.fetchData(val)
+    },
+    //更新列表
+    uploadT(val = {plId: this.plaIdB}) {
+      this.$refs.list2.fetchData(val)
+    }
   }
 };
 </script>

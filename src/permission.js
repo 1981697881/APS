@@ -18,6 +18,7 @@ NProgress.configure({
 const whiteList = ['/login'] // no redirect whitelist
 
 var hasMenu = true// 是否有路由
+console.log(router)
 router.beforeEach(async(to, from, next) => {
   // start progress bar 加载进度条
   NProgress.start()
@@ -58,8 +59,6 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
-    console.log(to.path)
-    console.log(whiteList.indexOf(to.path) !== -1)
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()
@@ -79,12 +78,9 @@ router.afterEach(() => {
 function gotoRouter(to, next) {
   getRouter(store.getters.token) // 使用useid获取路由
     .then(res => {
-      console.log('解析后端动态路由', res.data)
-
       res.data[0].map(val => {
         val.type = 1
       })
-      console.log('解析后端动态路由', res.data)
       const asyncRouter = addRouter(res.data[0]) // 进行递归解析
       // 一定不能写在静态路由里面,否则会出现,访问动态路由404的情况.所以在这列添加
       asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
@@ -98,7 +94,6 @@ function gotoRouter(to, next) {
       }
       hasMenu = true // 记录路由获取状态
       store.dispatch('menu/setRouterList', asyncRouter) // 存储到vuex
-
       store.dispatch('permission/generateRoutes', router.options.routes)
       next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
     })

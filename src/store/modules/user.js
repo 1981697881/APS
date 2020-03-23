@@ -54,11 +54,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
-
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-
         const { name, avatar } = data
 
         commit('SET_NAME', name)

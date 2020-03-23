@@ -10,12 +10,11 @@
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
-        <el-col :span="2" >
+        <el-button-group style="float:right">
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleAudit">U9同步</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="Delivery">出货排程</el-button>
-        </el-col>
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="notarize">确认</el-button>
+        </el-button-group>
       </el-row>
     </el-form>
   </div>
@@ -23,50 +22,39 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
+  components: {},
+  computed: {
+    ...mapGetters(["node","clickData","selections"])
+  },
   data() {
     return {
       search: {
-          keyword: null
+        keyword: null
       }
-    };
+    }
   },
+  methods: {
+    notarize() {
+      if (this.clickData.soId) {
+        this.$emit('Notarize', this.clickData)
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    // 关键字查询
+    query(){
+      if((typeof this.search.keyword != null) && (this.search.keyword !='')) {
 
-  methods:{
-      Delivery(){
-          if (this.clickData.oid) {
-              this.$emit('theDelivery',{
-                  oid:this.clickData.oid,
-              })
-          } else {
-              this.$message({
-                  message: "无选中行",
-                  type: "warning"
-              });
-          }
-      },
-      //关键字查询
-      query(){
-          if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
-          }
-      },
-      handleAudit(){
-        if (this.clickData.oid) {
-            this.$emit('showDialog',{
-                oid:this.clickData.oid,
-                orderId:this.clickData.orderId,
-                createTime:this.clickData.createTime
-            })
-        } else {
-            this.$message({
-                message: "无选中行",
-                type: "warning"
-            });
-        }
+      }
+    },
+    upload() {
+      this.$emit('uploadList')
+      this.search.keyword = ''
+    },
+    handleAudit(){
 
     },
   }

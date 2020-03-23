@@ -36,7 +36,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-
+import {getToken} from '@/utils/auth' // get token from cookie
 export default {
   components: {
     Breadcrumb,
@@ -45,9 +45,15 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar',
-      'name'
+      'avatar'
     ])
+  },
+  data() {
+    return {
+      visible: null,
+      fid: null,
+      name: getToken('un')
+    };
   },
   methods: {
     toggleSideBar() {
@@ -128,7 +134,7 @@ export default {
             border-radius: 10px;
           }
         }
-        
+
         .el-icon-caret-bottom {
           cursor: pointer;
           position: absolute;
