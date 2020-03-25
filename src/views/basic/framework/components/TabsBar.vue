@@ -5,8 +5,6 @@
         <el-button :size="'mini'" type="primary" @click="handlerAdd">新增</el-button>
         <el-button :size="'mini'" type="primary" @click="handlerAlter">修改</el-button>
         <el-button :size="'mini'" type="primary" @click="del">删除</el-button>
-        <el-button :size="'mini'" type="primary" >审核</el-button>
-        <el-button :size="'mini'" type="primary" >反审核</el-button>
         <el-button :size="'mini'" type="primary" >禁用</el-button>
         <el-button :size="'mini'" type="primary" >反禁用</el-button>
       </el-button-group>

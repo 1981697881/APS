@@ -53,7 +53,9 @@
       };
     },
     created() {
-      this.form = this.gpInfo
+      if(this.gpInfo){
+        this.form = this.gpInfo
+      }
     },
     mounted() {
 

@@ -31,7 +31,7 @@ export function schedulingPreview(params) {
 }
 // 生产排程-保存
 export function schedulingSave(params) {
-  const url = '/Admin/Schedule'
+  const url = '/Admin/Schedule/insertOrder'
   return request({
     url: url,
     headers: {

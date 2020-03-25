@@ -36,7 +36,7 @@ export default {
         { text: "订单日期", name: "soDate" },
         { text: "订单号", name: "soNum" },
         { text: "排产单号", name: "taskNum" },
-        { text: "项目名称", name: "" },
+        { text: "项目名称", name: "soName" },
         { text: "色号/旧料号", name: "color" },
         { text: "订单数量", name: "odPrNum" },
         { text: "计划数量", name: "allocatedNum" },
@@ -54,15 +54,15 @@ export default {
       //监听每页显示几条
       handleSize(val) {
           this.list.size = val
-          this.fetchData(this.node.data.fid,this.node.data.type);
+          this.fetchData();
       },
       //监听当前页
       handleCurrent(val) {
           this.list.current = val;
-          this.fetchData(this.node.data.fid,this.node.data.type);
+          this.fetchData();
       },
     dblclick(obj) {
-      this.$emit('showDialog',obj.row)
+      this.$emit('showDialog', obj.row)
     },
       Delivery(val){
           delivery(val).then(res => {
@@ -92,6 +92,6 @@ export default {
 
 <style lang="scss" scoped>
 .list-main {
-  height: calc((100vh - 335px)/2);
+  height: calc((100vh - 330px));
 }
 </style>

@@ -15,23 +15,52 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'订单号'">
-            <el-input v-model="form.orderNum"></el-input>
+          <el-form-item :label="'订单日期'" >
+            <el-input v-model="form.soDate" ></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="2">
+        <el-col :span="12">
+          <el-form-item :label="'订单号'" >
+            <el-input v-model="form.soNum"></el-input>
+          </el-form-item>
+        </el-col>
+        <!--<el-col :span="2">
           <el-button :size="'mini'" type="success" icon="el-icon-search" @click="queryOrder" >查询
           </el-button>
+        </el-col>-->
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'项目名称'" prop="soName">
+            <el-input v-model="form.soName" ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'排产单号'" prop="taskNum">
+            <el-input v-model="form.taskNum" ></el-input>
+          </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
+          <el-form-item :label="'色号/旧料号'" prop="color">
+            <el-input v-model="form.color"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'订单数量'" prop="odPrNum">
+            <el-input v-model="form.odPrNum"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <!--<el-col :span="12">
           <el-form-item :label="'所属类别'" prop="tpId">
             <el-select v-model="form.tpId" class="width-full" placeholder="类别" @change="selectChange">
               <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
-        </el-col>
+        </el-col>-->
         <el-col :span="12">
           <el-form-item :label="'生产线'" prop="plId">
             <el-select v-model="form.plId" class="width-full" placeholder="生产线" >
@@ -39,102 +68,53 @@
             </el-select>
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'旧料号'">
-            <el-input v-model="form.orderId"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'色号'">
-            <el-input v-model="form.color"></el-input>
+          <el-form-item :label="'生产类型'">
+            <el-input v-model="form.soId"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'客户'">
-            <el-input v-model="form.customerName" :readonly="true"></el-input>
+          <el-form-item :label="'计划数量'" >
+            <el-input-number v-model="form.allocatedNum"  :min="0" ></el-input-number>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'销售员'">
-            <el-input v-model="form.seller" :readonly="true"></el-input>
+          <el-form-item :label="'厂务预计日期'">
+            <div class="block">
+              <el-date-picker
+                v-model="form.productionDate"
+                type="date"
+                value-format="yyyy-MM-dd"
+                placeholder="选择日期">
+              </el-date-picker>
+            </div>
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'订单数量'" :readonly="true">
-            <el-input v-model="form.orderNum"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
+          <!--<el-col :span="12">
           <el-form-item :label="'产品名称'" prop="soDeId">
             <el-select v-model="form.soDeId" class="width-full" placeholder="产品名称" >
               <el-option :label="t.goodName" :value="t.soDeId" v-for="(t,i) in sArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
-        </el-col>
+        </el-col>-->
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'厂务预计日期'">
-            <div class="block">
-              <el-date-picker
-                v-model="form.dueDate"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="选择日期">
-              </el-date-picker>
-            </div>
+          <el-form-item :label="'备注'">
+            <el-input v-model="form.soId"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'安排生产日期'" prop="proDate">
-            <div class="block">
-              <el-date-picker
-                v-model="form.proDate"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="选择日期">
-              </el-date-picker>
-            </div>
+          <el-form-item :label="'任务警示'">
+            <el-color-picker v-model="form.tips" show-alpha></el-color-picker>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'试产数量'">
-            <el-input-number v-model="form.tryNum"  :min="0" ></el-input-number>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'试产日期'">
-            <div class="block">
-              <el-date-picker
-                v-model="form.tryDate"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="选择日期">
-              </el-date-picker>
-            </div>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'生产数量'" prop="num">
-            <el-input-number v-model="form.num"  :min="0" ></el-input-number>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'订单日期'">
-            <el-input v-model="form.createTime" :readonly="true"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <!--<el-row :gutter="20">
+
+      </el-row>-->
       <!-- <el-row :gutter="20">
         <el-table :data="list" border :height="'250px'" stripe size="mini" :highlight-current-row="true" >
           <el-table-column prop="date" label="序号"  align="center" type="index" sortable></el-table-column>
@@ -184,14 +164,14 @@
 </template>
 
 <script>
-import { schedulingPreview, schedulingSave } from "@/api/production/index";
-import { getResourcesList, productionLineList} from '@/api/basic/index'
+import { schedulingSave } from "@/api/production/index";
+import { getResourcesList, productionLineList, getFinalGoods} from '@/api/basic/index'
 import { getSalesInfo } from '@/api/aftermarket/index'
 
 export default {
   props: {
-    oid: {
-      type: Number,
+    listInfo: {
+      type: Object,
       default: null
     },
   },
@@ -201,15 +181,17 @@ export default {
       visible: false,
       form: {
         oid: null,
+        tips: null,
+        color: null,
         plId: null,
+        taskNum: null,
+        soNum: null,
         dueDate: null,
-        orderNum: null,
-        num: null,
-        tryNum: null,
-        proDate: null,
-        tryDate: null,
-        soDeId: null,
-        createTime: null
+        odPrNum: null,
+        soName: null,
+        allocatedNum: null,
+        soDate: null,
+        productionDate: null
       },
       rules: {
         num: [
@@ -227,7 +209,6 @@ export default {
         soDeId: [
           {required: true, message: '请选择产品', trigger: 'change'},
         ],
-
       },
       value: null,
       options: [{
@@ -258,10 +239,10 @@ export default {
   created() {
   },
   mounted() {
-    this.form.oid = this.oid
-    this.fetchFormat()
-    if (this.form.oid) {
-      this.fetchData(this.form.oid);
+    this.fetchLine()
+    console.log(this.listInfo)
+    if (this.listInfo) {
+      this.form = this.listInfo
     }
   },
   methods: {
@@ -302,22 +283,12 @@ export default {
         // 判断必填项
         if (valid) {
           if (typeof (this.form.oid) != undefined && this.form.oid != null) {
-           /* productionLineAlter(this.form).then(res => {
+            productionLineAlter(this.form).then(res => {
               this.$emit('hideDialog', false)
               this.$emit('uploadList')
-            });*/
+            });
           } else {
-            schedulingSave({
-              goodPojoList: [
-                {
-                  num: this.form.num,
-                  plId: this.form.plId,
-                  proDate: this.form.proDate,
-                  soDeId: this.form.soDeId
-                }
-              ],
-              soId: this.form.soId
-            }).then(res => {
+            schedulingSave(this.form).then(res => {
               this.$emit('hideDialog', false)
               this.$emit('uploadList')
             });
@@ -393,13 +364,9 @@ export default {
         }
       })
     },
-    fetchLine(val) {
-      const data = {
-        pageNum: this.list.current || 1,
-        pageSize: this.list.size || 1000
-      }
-      productionLineList(data, val).then(res => {
-        this.rArray = res.data.records
+    fetchLine() {
+      getFinalGoods().then(res => {
+        this.rArray = res.data
       })
     },
   }

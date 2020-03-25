@@ -1,44 +1,44 @@
 <template>
   <div class="app-list">
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
-    <div class="list-containerOther">
-      <el-card class="box-card box-card-component">
-        <div slot="header" class="clearfix" >
-          <span>成品线计划</span>
-          <el-select v-model="plaIdS" style="float: right;" placeholder="请选择" @change="selectChangeO">
-            <el-option
-              v-for="(t,i) in plaArray"
-              :key="i"
-              :label="t.plName"
-              :value="t.plId">
-            </el-option>
-          </el-select>
+    <el-tabs  class="table-card" type="border-card">
+      <el-tab-pane label="成品线计划">
+        <div class="list-containerOther">
+          <div style="width: 100%;display: inline-block">
+            <el-select v-model="plaIdS" style="float: right;" placeholder="请选择" @change="selectChangeO">
+              <el-option
+                v-for="(t,i) in plaArray"
+                :key="i"
+                :label="t.plName"
+                :value="t.plId">
+              </el-option>
+            </el-select>
+          </div>
+          <div>
+            <tabs-bar @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload"/>
+          </div>
+          <list ref="list1"  @showDialog="handlerDialog" />
         </div>
-        <div>
-          <tabs-bar @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload"/>
+      </el-tab-pane>
+      <el-tab-pane label="半成品线生产计划">
+        <div class="list-containerOther">
+          <div style="width: 100%;display: inline-block">
+            <el-select v-model="plaIdS" style="float: right;" placeholder="请选择" @change="selectChangeT">
+              <el-option
+                v-for="(t,i) in plaArray"
+                :key="i"
+                :label="t.platformName"
+                :value="t.plaId">
+              </el-option>
+            </el-select>
+          </div>
+          <div>
+            <tabs-bar-e @showDialog="handlerDialog" @theDelivery="deliveryT" @uploadList="uploadT"/>
+          </div>
+          <scheduling ref="list2"  @showDialog="handlerDialog"/>
         </div>
-        <list ref="list1"  @showDialog="handlerDialog" />
-      </el-card>
-    </div>
-    <div class="list-containerOther">
-      <el-card class="box-card box-card-component">
-        <div slot="header" class="clearfix" >
-          <span>半成品线生产计划</span>
-          <el-select v-model="plaIdS" style="float: right;" placeholder="请选择" @change="selectChangeT">
-            <el-option
-              v-for="(t,i) in plaArray"
-              :key="i"
-              :label="t.platformName"
-              :value="t.plaId">
-            </el-option>
-          </el-select>
-        </div>
-        <div>
-          <tabs-bar-e @showDialog="handlerDialog" @theDelivery="deliveryT" @uploadList="uploadT"/>
-        </div>
-        <scheduling ref="list2"  @showDialog="handlerDialog"/>
-      </el-card>
-    </div>
+      </el-tab-pane>
+    </el-tabs>
    <!-- <div class="list-containerOther">
       <el-card class="box-card box-card-component">
         <div slot="header" class="clearfix" >
@@ -57,7 +57,7 @@
       :width="'80%'"
       destroy-on-close
     >
-      <info @hideDialog="hideWindow" @uploadList="upload" ></info>
+      <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
 
     </el-dialog>
   </div>
@@ -77,23 +77,7 @@ export default {
   },
   data() {
     return {
-      options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
-      value: '',
+      listInfo: null,
       visible: null,
       plaIdS: null,
       plaArray: [],
@@ -136,11 +120,13 @@ export default {
         }
       });
     },
-    hideWindow(val){
+    hideWindow(val) {
       this.visible = val
     },
-    handlerDialog(obj){
-      //if(obj)
+    handlerDialog(obj) {
+      this.listInfo = null
+      console.log(obj)
+      if(obj) this.listInfo = obj
       this.visible = true
     },
     handlerNode(node) {
@@ -160,18 +146,11 @@ export default {
 
 <style lang="scss" scoped>
   .list-containerOther{
+    height: calc((100vh - 180px));
     padding-left: 10px;
     padding-right: 10px;
   }
-</style>
-<style lang="scss" >
-  .box-card-component{
-    .el-card__header {
-      padding: 2px 20px;
-      line-height: 40px;
-    }
-    .el-card__body{
-      padding: 0px!important;
-    }
+  .table-card{
+    margin: 5px;
   }
 </style>

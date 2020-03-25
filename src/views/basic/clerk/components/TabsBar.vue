@@ -38,41 +38,39 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
+  components: {},
+  computed: {
+    ...mapGetters(["node","clickData","selections"])
+  },
   data() {
     return {
       search: {
-          keyword: null
+        keyword: null
       }
     };
   },
 
-  methods:{
-      Delivery(){
-          if (this.clickData.oid) {
-              this.$emit('delList',{
-                  oid:this.clickData.oid,
-              })
-          } else {
-              this.$message({
-                  message: "无选中行",
-                  type: "warning"
-              });
-          }
-      },
-      //关键字查询
-      query(){
-          if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
-          }
-      },
-      handleAdd(){
-          this.$emit('showDialog')
-
+  methods: {
+    Delivery() {
+      if (this.clickData.oid) {
+        this.$emit('delList', {
+          oid: this.clickData.oid
+        })
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        })
+      }
     },
+    // 关键字查询
+    query() {
+      if((typeof this.search.keyword != null) && (this.search.keyword !='')) {
+      }
+    },
+    handleAdd(){
+      this.$emit('showDialog')
+    }
   }
 };
 </script>

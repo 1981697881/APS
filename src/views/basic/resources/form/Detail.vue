@@ -40,11 +40,18 @@
             <el-input-number v-model="form.otherResources"  :min="0"  label="描述文字"></el-input-number>
           </el-form-item>
         </el-col>
-<!--        <el-col :span="12">-->
-<!--          <el-form-item :label="'计量单位'">-->
-<!--            <el-input v-model="form.roleName"></el-input>-->
-<!--          </el-form-item>-->
-<!--        </el-col>-->
+        <el-col :span="12">
+          <el-form-item :label="'工作时段'" >
+            <el-select v-model="form.workDay" multiple placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+       </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="24">
@@ -84,9 +91,32 @@
           otherResources: null,
           overtimeResources: null,
           description: null,
+          workDay: []
         },
         list: [],
         pArray: [],
+        options: [{
+          value: '1',
+          label: '星期一'
+        }, {
+          value: '2',
+          label: '星期二'
+        }, {
+          value: '3',
+          label: '星期三'
+        }, {
+          value: '4',
+          label: '星期四'
+        }, {
+          value: '5',
+          label: '星期五'
+        }, {
+          value: '6',
+          label: '星期六'
+        }, {
+          value: '7',
+          label: '星期日'
+        }],
         rules: {
           plName: [
             {required: true, message: '请输入名稱', trigger: 'blur'},
@@ -94,7 +124,6 @@
           tpId: [
             {required: true, message: '请选择等级', trigger: 'change'},
           ],
-
         },
       };
     },
@@ -104,6 +133,7 @@
     mounted() {
       this.fetchFormat()
       if (this.listInfo) {
+        console.log(this.listInfo)
         this.form = this.listInfo
         this.form.tpId = this.listInfo.type.tpId
         delete this.form.type
@@ -117,6 +147,7 @@
         this.$refs[form].validate((valid) => {
           // 判断必填项
           if (valid) {
+            this.form.workDay = this.form.workDay.toString()
             if (typeof (this.form.plId) != undefined && this.form.plId != null) {
               productionLineAlter(this.form).then(res => {
                 this.$emit('hideDialog', false)

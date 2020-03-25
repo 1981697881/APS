@@ -82,6 +82,6 @@
 
 <style lang="scss" scoped>
   .list-main {
-    height: calc((100vh - 335px)/2);
+    height: calc((100vh - 330px));
   }
 </style>
