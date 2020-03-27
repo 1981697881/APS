@@ -65,9 +65,11 @@ export default {
     },
     handlerDialog(obj) {
       this.listInfo = null
-      this.obj = JSON.parse(JSON.stringify(obj));
-      this.obj.workDay = this.obj.workDay.split(',')
-      if (obj) this.listInfo = this.obj
+      if (obj) {
+        this.obj = JSON.parse(JSON.stringify(obj));
+        this.obj.workDay = this.obj.workDay.split(',')
+        this.listInfo = this.obj
+      }
       this.visible = true
     },
     groupDialog(obj) {

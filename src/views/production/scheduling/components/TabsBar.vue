@@ -16,6 +16,7 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
+
         <el-col :span="3">
           <el-form-item :label="'关键字'">
             <el-input v-model="search.keyword" placeholder="输入关键字"/>
@@ -28,7 +29,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="delivery">删除</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >插入</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="report">汇报</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" >打印</el-button>
         </el-button-group>
       </el-row>
@@ -93,6 +94,16 @@ export default {
     },
     upload() {
       this.$emit('uploadList')
+    },
+    report() {
+      if (this.clickData.taskId) {
+        this.$emit('reportInfo', this.clickData)
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
     },
     //关键字查询
     query(){

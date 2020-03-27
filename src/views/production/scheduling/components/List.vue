@@ -16,7 +16,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { getSchedulingList ,delivery} from "@/api/production/index";
+import { getSchedulingList } from "@/api/production/index";
 import List from "@/components/List";
 
 export default {
@@ -43,10 +43,10 @@ export default {
         { text: "计划日期", name: "productionDate" },
         { text: "产品分类", name: "" },
         { text: "生产设备", name: "plName" },
-        { text: "生产类型", name: "" },
+        { text: "生产类型", name: "productionType" },
         { text: "生产状态", name: "allocatedStatus" },
         { text: "任务警示", name: "" },
-        { text: "备注", name: "" },
+        { text: "备注", name: "remark" },
       ]
     };
   },
@@ -64,11 +64,7 @@ export default {
     dblclick(obj) {
       this.$emit('showDialog', obj.row)
     },
-      Delivery(val){
-          delivery(val).then(res => {
-              this.$emit('uploadList')
-          });
-      },
+
       //监听单击某一行
       rowClick(obj) {
           this.$store.dispatch("list/setClickData", obj.row);

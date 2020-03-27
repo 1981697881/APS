@@ -13,15 +13,13 @@
       @dblclick="dblclick"
        @row-click="rowClick"
     />
-
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { getSalesList, notarizeList} from "@/api/aftermarket/index";
-import List from "@/components/List";
-
+import { mapGetters } from "vuex"
+import { getSalesList } from "@/api/aftermarket/index"
+import List from "@/components/List"
 export default {
   components: {
     List
@@ -42,7 +40,7 @@ export default {
         { text: '项目名称', name: 'soName' },
         { text: '订单日期', name: '' },
         { text: '预计出货日期', name: 'planDate' },
-        { text: '厂务预计出货日期', name: '' },
+        { text: '厂务预计出货日期', name: 'factoryEstimatedDate' },
         { text: '产品名称', name: 'goodName' },
         { text: '色号', name: 'color' },
         { text: '订单数量', name: 'num' },
@@ -71,36 +69,25 @@ export default {
     };
   },
   methods: {
-    //监听每页显示几条
+    // 监听每页显示几条
     handleSize(val) {
       this.list.size = val
-      this.fetchData(this.node.data.fid,this.node.data.type);
+      this.fetchData()
     },
     // 监听当前页
     handleCurrent(val) {
-      this.list.current = val;
-      this.fetchData(this.node.data.fid,this.node.data.type);
+      this.list.current = val
+      this.fetchData();
     },
     dblclick(obj) {//this.$emit('showDialog',obj.row)
     },
     // 监听单击某一行
     rowClick(obj) {
-      this.$store.dispatch("list/setClickData", obj.row);
-    },
-    notarize(val) {
-      notarizeList(val).then(res => {
-        this.loading = true
-        if (res.flag) {
-          this.fetchData()
-          this.loading = false
-        }
-      })
+      this.$store.dispatch("list/setClickData", obj.row)
     },
     fetchData() {
-      this.loading = true;
+      this.loading = true
       const data = {
-      /*  fid: fid,
-        type: type,*/
         pageNum: this.list.current || 1,
         pageSize: this.list.size || 50
       }
@@ -118,6 +105,7 @@ export default {
               record[i].detail[a].orgCode = record[i].orgCode
               record[i].detail[a].seller = record[i].seller
               record[i].detail[a].soId = record[i].soId
+              record[i].detail[a].factoryEstimatedDate = record[i].factoryEstimatedDate
               record[i].detail[a].soName = record[i].soName
               obj.push(record[i].detail[a])
             }
@@ -129,12 +117,11 @@ export default {
             total: res.data.total,
             records: obj
           }
-          console.log(obj)
         }
       })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

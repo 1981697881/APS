@@ -31,12 +31,14 @@ export function getSalesInfo(params) {
 }
 // 确认单据
 export function notarizeList(params) {
-  const url = '/sale-order/confirm/' + params
+  const url = '/sale-order/confirm/'
   return request({
     url: url,
     headers: {
       'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
     },
     method: 'post',
+    data: params
   })
 }

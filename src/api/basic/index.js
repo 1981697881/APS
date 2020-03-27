@@ -494,3 +494,53 @@ export function delProductionLine(params) {
     method: 'delete'
   })
 }
+// 规则-获取列表
+export function regulationList(data) {
+  const url = '/task-rules/list/' + data.pageNum + '/' + data.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+  })
+}
+
+// 规则-新增
+export function regulationAdd(params) {
+  const url = '/task-rules/add'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
+// 规则-修改
+export function regulationAlter(params) {
+  const url = '/task-rules/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: params
+  })
+}
+// 规则-删除
+export function delRegulation(params) {
+  const url = '/task-rules/delete/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx')
+    },
+    method: 'delete'
+  })
+}

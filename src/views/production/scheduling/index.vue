@@ -15,7 +15,7 @@
             </el-select>
           </div>
           <div>
-            <tabs-bar @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload"/>
+            <tabs-bar @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload" @reportInfo="report"/>
           </div>
           <list ref="list1"  @showDialog="handlerDialog" />
         </div>
@@ -60,18 +60,28 @@
       <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
 
     </el-dialog>
+    <el-dialog
+      :visible.sync="visibleR"
+      title="汇报信息"
+      v-if="visibleR"
+      :width="'80%'"
+      destroy-on-close
+    >
+      <Report @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></Report>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { TabsBar, List ,Scheduling, TabsBarE } from "./components"
-import { Info } from "./form"
+import { Info, Report} from "./form"
 import { getFinalGoods, getSemiFinishedProducts } from "@/api/basic"
 export default {
   components: {
     TabsBar,
     List,
     Info,
+    Report,
     Scheduling,
     TabsBarE
   },
@@ -79,6 +89,7 @@ export default {
     return {
       listInfo: null,
       visible: null,
+      visibleR: null,
       plaIdS: null,
       plaArray: [],
       plaIdB: null,
@@ -123,20 +134,25 @@ export default {
     hideWindow(val) {
       this.visible = val
     },
+    hideReport(val) {
+      this.visibleR = val
+    },
     handlerDialog(obj) {
       this.listInfo = null
       console.log(obj)
       if(obj) this.listInfo = obj
       this.visible = true
     },
-    handlerNode(node) {
-      this.$refs.list1.fetchData(node.data.fid,node.data.type)
+    report(obj) {
+      this.listInfo = null
+      if(obj) this.listInfo = obj
+      this.visibleR = true
     },
-    //更新列表
+    // 更新列表
     upload(val = {plId: this.plaIdS}) {
       this.$refs.list1.fetchData(val)
     },
-    //更新列表
+    // 更新列表
     uploadT(val = {plId: this.plaIdB}) {
       this.$refs.list2.fetchData(val)
     }

@@ -113,7 +113,16 @@ export const StaticRouterMap = [{
       meta: {
         title: '条码设置'
       },
-    }]
+    },
+    {
+      path: 'regulation',
+      component: () => import('@/views/basic/regulation/index'),
+      name: 'Regulation',
+      meta: {
+        title: '规格设置'
+      },
+    }
+    ]
   },
   {
     path: '/production',
@@ -197,6 +206,20 @@ export const StaticRouterMap = [{
       name: 'StorageBin',
       meta: {
         title: '库位信息'
+      },
+    },{
+      path: 'libraryStatistics',
+      component: () => import('@/views/warehouse/libraryStatistics/index'),
+      name: 'LibraryStatistics',
+      meta: {
+        title: '入库统计表'
+      },
+    },{
+      path: 'outboundStatistics',
+      component: () => import('@/views/warehouse/outboundStatistics/index'),
+      name: 'OutboundStatistics',
+      meta: {
+        title: '出库统计表'
       },
     },{
       path: 'laborMonitoring',

@@ -36,7 +36,7 @@ export default {
   methods: {
     notarize() {
       if (this.clickData.soId) {
-        this.$emit('Notarize', this.clickData)
+        this.$emit('showDialog', this.clickData)
       } else {
         this.$message({
           message: "无选中行",

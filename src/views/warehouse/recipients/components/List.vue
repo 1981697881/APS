@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { delMaterial,getMaterialList} from '@/api/basic/index'
+import { getRecipientsList } from '@/api/warehouse/index'
 import List from '@/components/List'
 
 export default {
@@ -70,7 +70,7 @@ export default {
         pageNum: this.list.current || 1,
         pageSize: this.list.size || 50
       };
-      getMaterialList(data).then(res => {
+      getRecipientsList(data).then(res => {
         this.loading = false;
         this.list = res.data;
       });

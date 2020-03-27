@@ -6,7 +6,6 @@
       :loading="loading"
       :list="list"
       index
-       type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -18,7 +17,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { delMaterial,getMaterialList} from '@/api/basic/index'
+import {getAdjustList} from '@/api/warehouse/index'
 import List from '@/components/List'
 
 export default {
@@ -33,16 +32,17 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: '', name: '',default:false },
-        { text: '日期', name: '' },
+        { text: 'invId', name: 'invId',default:false },
+        { text: 'uid', name: 'uid',default:false },
+        { text: '日期', name: 'adjustTime' },
         { text: '仓位', name: '' },
         { text: 'U9数号', name: '' },
         { text: '色号', name: '' },
-          { text: '数量', name: '' },
-          { text: '调后U9料号', name: '' },
-          { text: '调后色号', name: '' },
-          { text: '调后数量', name: '' },
-          { text: '操作员', name: '' },
+        { text: '数量', name: 'pastNum' },
+        { text: '调后U9料号', name: '' },
+        { text: '调后色号', name: '' },
+        { text: '调后数量', name: 'adjNum' },
+        { text: '操作员', name: '' },
 
       ]
     };
@@ -73,7 +73,7 @@ export default {
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 50
       };
-        getMaterialList(data).then(res => {
+      getAdjustList(data).then(res => {
         this.loading = false;
         this.list = res.data;
       });

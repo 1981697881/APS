@@ -31,24 +31,24 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'项目名称'" prop="soName">
+          <el-form-item :label="'项目名称'" >
             <el-input v-model="form.soName" ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'排产单号'" prop="taskNum">
+          <el-form-item :label="'排产单号'">
             <el-input v-model="form.taskNum" ></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'色号/旧料号'" prop="color">
-            <el-input v-model="form.color"></el-input>
+          <el-form-item :label="'色号/旧料号'" prop="oldCode">
+            <el-input v-model="form.oldCode"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'订单数量'" prop="odPrNum">
+          <el-form-item :label="'订单数量'" >
             <el-input v-model="form.odPrNum"></el-input>
           </el-form-item>
         </el-col>
@@ -69,20 +69,22 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'生产类型'">
-            <el-input v-model="form.soId"></el-input>
+          <el-form-item :label="'生产类型'" prop="productionType">
+            <el-select v-model="form.productionType" class="width-full" placeholder="生产类型" >
+              <el-option :label="t.label" :value="t.value" v-for="(t,i) in options" :key="i"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'计划数量'" >
+          <el-form-item :label="'计划数量'" prop="allocatedNum">
             <el-input-number v-model="form.allocatedNum"  :min="0" ></el-input-number>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'厂务预计日期'">
-            <div class="block">
+          <el-form-item :label="'计划日期'" prop="productionDate">
+            <div class="block" >
               <el-date-picker
                 v-model="form.productionDate"
                 type="date"
@@ -103,7 +105,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'备注'">
-            <el-input v-model="form.soId"></el-input>
+            <el-input v-model="form.remark"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -154,13 +156,11 @@
          </el-table-column>
    </el-table>
      </el-row>-->
-   </el-form>
-   <div slot="footer" style="text-align:center;padding-top: 15px">
-      <!-- <el-button type="warning" @click.native="attempt">尝试排产</el-button>-->
-       <el-button type="primary" @click.native="saveData('form')">确定</el-button>
-     <!-- <el-button type="primary" @click="preview('form')">预览</el-button>-->
-     </div>
- </div>
+    </el-form>
+    <div slot="footer" style="text-align:center;padding-top: 15px">
+      <el-button type="primary" @click.native="saveData('form')">确定</el-button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -182,7 +182,7 @@ export default {
       form: {
         oid: null,
         tips: null,
-        color: null,
+        oldCode: null,
         plId: null,
         taskNum: null,
         soNum: null,
@@ -191,10 +191,15 @@ export default {
         soName: null,
         allocatedNum: null,
         soDate: null,
+        remark: null,
+        productionType: null,
         productionDate: null
       },
       rules: {
-        num: [
+        oldCode: [
+          {required: true, message: '请输入色号/旧料号', trigger: 'blur'},
+        ],
+        allocatedNum: [
           {required: true, message: '请输入数量', trigger: 'blur'},
         ],
         tpId: [
@@ -203,29 +208,32 @@ export default {
         plId: [
           {required: true, message: '请选择产线', trigger: 'change'},
         ],
-        proDate: [
+        productionDate: [
           {required: true, message: '请选择日期', trigger: 'change'},
         ],
-        soDeId: [
-          {required: true, message: '请选择产品', trigger: 'change'},
+        productionType: [
+          {required: true, message: '请选择类别', trigger: 'change'},
         ],
       },
       value: null,
       options: [{
-        value: '选项1',
-        label: '黄金糕'
+        value: '0',
+        label: '按订单生产'
       }, {
-        value: '选项2',
-        label: '双皮奶'
+        value: '1',
+        label: '备库存生产'
       }, {
-        value: '选项3',
-        label: '蚵仔煎'
+        value: '2',
+        label: '试生产'
       }, {
-        value: '选项4',
-        label: '龙须面'
+        value: '3',
+        label: '内部自用'
       }, {
-        value: '选项5',
-        label: '北京烤鸭'
+        value: '4',
+        label: '赔偿生产'
+      }, {
+        value: '5',
+        label: '返工生产'
       }],
       loading: false,
       list: [],
@@ -240,9 +248,16 @@ export default {
   },
   mounted() {
     this.fetchLine()
-    console.log(this.listInfo)
     if (this.listInfo) {
       this.form = this.listInfo
+      const listInfo = this.listInfo
+      const form = this.form
+      this.options.forEach(function(item, index) {
+        if (item.label == listInfo.productionType) {
+          form.productionType = item.value
+        }
+      })
+      this.form.oldCode = this.listInfo.color
     }
   },
   methods: {
@@ -298,7 +313,7 @@ export default {
         }
       })
     },
-    preview(form) {
+  /*  preview(form) {
       this.$refs[form].validate((valid) => {
         // 判断必填项
         if (valid) {
@@ -332,7 +347,7 @@ export default {
           return false
         }
       })
-    },
+    },*/
     queryOrder() {
       if(this.form.orderNum != null || this.form.orderNum != undefined) {
         getSalesInfo(this.form.orderNum).then(res => {

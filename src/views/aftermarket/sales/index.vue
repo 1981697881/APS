@@ -3,20 +3,19 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @Notarize="Notarize" @uploadList="uploadList"/>
+        <tabs-bar @showDialog="handlerDialog"  @uploadList="uploadList"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog"/>
     </div>
 
     <el-dialog
       :visible.sync="visible"
-      title="基本信息"
+      title="确认信息"
       v-if="visible"
-      :width="'50%'"
+      :width="'30%'"
       destroy-on-close
     >
-      <info @hideDialog="hideWindow" @uploadList="upload" :oid="oid" :orderId="orderId" :createTime="createTime"></info>
-
+      <info @hideDialog="hideWindow" @uploadList="uploadList" :soId="soId"></info>
     </el-dialog>
   </div>
 </template>
@@ -34,31 +33,19 @@ export default {
   data() {
     return {
       visible: null,
-      oid: null,
-      orderId: null,
-      createTime: null,
-      treeId: null, // null
-      floorId: null
+      soId: null,
     };
   },
   mounted() {
     this.$refs.list.fetchData()
   },
   methods: {
-    Notarize(obj) {
-      if(obj) {
-        this.$refs.list.notarize(obj.soId)
-      }
-    },
-    hideWindow(val){
+    hideWindow(val) {
       this.visible = val
     },
-    handlerDialog(obj){
-      if(obj)this.oid = obj.oid;this.orderId=obj.orderId;this.createTime=obj.createTime
+    handlerDialog(obj) {
+      if(obj)this.soId=obj.soId
       this.visible = true
-    },
-    handlerNode(node) {
-      this.$refs.list.fetchData(node.data.fid,node.data.type)
     },
     // 更新列表
     uploadList() {

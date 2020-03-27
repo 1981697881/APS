@@ -42,3 +42,16 @@ export function schedulingSave(params) {
     data: params
   })
 }
+// 生产排程-汇报
+export function updateProductNum(params) {
+  const url = '/task-scheduling/updateProductNum'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: params
+  })
+}
