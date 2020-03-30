@@ -23,17 +23,17 @@
       <el-tab-pane label="半成品线生产计划">
         <div class="list-containerOther">
           <div style="width: 100%;display: inline-block">
-            <el-select v-model="plaIdS" style="float: right;" placeholder="请选择" @change="selectChangeT">
+            <el-select v-model="plaIdB" style="float: right;" placeholder="请选择" @change="selectChangeT">
               <el-option
-                v-for="(t,i) in plaArray"
+                v-for="(t,i) in plaBArray"
                 :key="i"
-                :label="t.platformName"
-                :value="t.plaId">
+                :label="t.plName"
+                :value="t.plId">
               </el-option>
             </el-select>
           </div>
           <div>
-            <tabs-bar-e @showDialog="handlerDialog" @theDelivery="deliveryT" @uploadList="uploadT"/>
+            <tabs-bar-e ref="tabse" @showDialog="handlerBlank" @theDelivery="deliveryT" @uploadList="uploadT" />
           </div>
           <scheduling ref="list2"  @showDialog="handlerDialog"/>
         </div>
@@ -58,7 +58,15 @@
       destroy-on-close
     >
       <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
-
+    </el-dialog>
+    <el-dialog
+      :visible.sync="visibleBlank"
+      title="基本信息"
+      v-if="visibleBlank"
+      :width="'80%'"
+      destroy-on-close
+    >
+      <blank @hideDialog="hideBlank" @uploadList="upload" :listBlank="listBlank"></blank>
     </el-dialog>
     <el-dialog
       :visible.sync="visibleR"
@@ -67,20 +75,21 @@
       :width="'80%'"
       destroy-on-close
     >
-      <Report @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></Report>
+      <Report @hideDialog="hideReport" @uploadList="upload" :listInfo="listInfo"></Report>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import { TabsBar, List ,Scheduling, TabsBarE } from "./components"
-import { Info, Report} from "./form"
+import { Info, Report, Blank} from "./form"
 import { getFinalGoods, getSemiFinishedProducts } from "@/api/basic"
 export default {
   components: {
     TabsBar,
     List,
     Info,
+    Blank,
     Report,
     Scheduling,
     TabsBarE
@@ -88,7 +97,9 @@ export default {
   data() {
     return {
       listInfo: null,
+      listBlank: null,
       visible: null,
+      visibleBlank: null,
       visibleR: null,
       plaIdS: null,
       plaArray: [],
@@ -99,9 +110,10 @@ export default {
   mounted() {
     this.fetchFormat()
   },
+
   methods: {
     selectChangeO(val) {
-     this.upload({plId: val })
+      this.upload({plId: val })
     },
     selectChangeT(val) {
       this.upload({plId: val })
@@ -128,6 +140,8 @@ export default {
         if(res.flag) {
           this.plaBArray = res.data
           this.plaIdB = res.data[0].plId
+          const array = this.$refs.tabse.getODate()
+          this.$refs.list2.fetchData({plId: this.plaIdB, productionDateStart: array[0], productionDateEnd: array[1]})
         }
       });
     },
@@ -136,6 +150,9 @@ export default {
     },
     hideReport(val) {
       this.visibleR = val
+    },
+    hideBlank(val) {
+      this.visibleBlank = val
     },
     handlerDialog(obj) {
       this.listInfo = null
@@ -148,6 +165,11 @@ export default {
       if(obj) this.listInfo = obj
       this.visibleR = true
     },
+    handlerBlank(obj) {
+      this.listBlank = null
+      if(obj) this.listBlank = obj
+      this.visibleBlank = true
+    },
     // 更新列表
     upload(val = {plId: this.plaIdS}) {
       this.$refs.list1.fetchData(val)
@@ -155,7 +177,7 @@ export default {
     // 更新列表
     uploadT(val = {plId: this.plaIdB}) {
       this.$refs.list2.fetchData(val)
-    }
+    },
   }
 };
 </script>

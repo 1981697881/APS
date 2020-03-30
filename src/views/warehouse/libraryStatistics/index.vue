@@ -2,7 +2,7 @@
   <div class="app-list">
     <div class="list-containerOther">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @delList="delList" @uploadList="upload" />
+        <tabs-bar @showDialog="handlerDialog" @uploadList="upload" />
       </div>
       <list ref="list" @showDialog="handlerDialog"  />
     </div>
@@ -44,25 +44,12 @@ export default {
     },
     handlerDialog(obj) {
       this.listInfo = null
-      if (obj) {
-        this.obj = JSON.parse(JSON.stringify(obj));
-        this.obj.workDay = this.obj.workDay.split(',')
-        this.listInfo = this.obj
-      }
+      if (obj) this.listInfo = obj
       this.visible = true
     },
     // 更新列表
     upload() {
       this.$refs.list.fetchData()
-    },
-    delList(val) {
-      this.loading = true
-      delProductionLine(val).then(res => {
-        if(res.flag) {
-          this.loading = false
-          this.upload()
-        }
-      })
     },
   }
 }

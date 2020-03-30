@@ -41,7 +41,7 @@ export default {
         { text: "色号", name: "" },
         { text: "安全数量", name: "" },
         { text: "计量单位", name: "" },
-        { text: "旧料号", name: "orgCode" },
+        { text: "旧料号", name: "oldCode" },
       ]
     };
   },

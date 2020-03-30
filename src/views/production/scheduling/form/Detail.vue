@@ -3,8 +3,8 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="120px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'oid'" style="display: none">
-            <el-input v-model="form.oid"></el-input>
+          <el-form-item :label="'taskId'" style="display: none">
+            <el-input v-model="form.taskId"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -164,7 +164,7 @@
 </template>
 
 <script>
-import { schedulingSave } from "@/api/production/index";
+import { schedulingSave, schedulingAlter } from "@/api/production/index";
 import { getResourcesList, productionLineList, getFinalGoods} from '@/api/basic/index'
 import { getSalesInfo } from '@/api/aftermarket/index'
 
@@ -180,10 +180,11 @@ export default {
       num1: 1,
       visible: false,
       form: {
-        oid: null,
+        taskId: null,
         tips: null,
         oldCode: null,
         plId: null,
+        isSemi: 0,
         taskNum: null,
         soNum: null,
         dueDate: null,
@@ -262,10 +263,10 @@ export default {
   },
   methods: {
     // 查询前后三天日期
-    getDay(date, day){
+    getDay(date, day) {
       var today = new Date(date);
-      var targetday_milliseconds=today.getTime() + 1000*60*60*24*day
-      today.setTime(targetday_milliseconds) //注意，这行是关键代码
+      var targetday_milliseconds = today.getTime() + 1000*60*60*24*day
+      today.setTime(targetday_milliseconds) // 注意，这行是关键代码
       var tYear = today.getFullYear()
       var tMonth = today.getMonth()
       var tDate = today.getDate()
@@ -287,18 +288,17 @@ export default {
       }
       return m;
     },
-    //切换类别
+    // 切换类别
     selectChange(val) {
       this.fetchLine({tpId: val})
     },
     attempt() {},
-
     saveData(form) {
       this.$refs[form].validate((valid) => {
         // 判断必填项
         if (valid) {
-          if (typeof (this.form.oid) != undefined && this.form.oid != null) {
-            productionLineAlter(this.form).then(res => {
+          if (typeof (this.form.taskId) != undefined && this.form.taskId != null) {
+            schedulingAlter(this.form).then(res => {
               this.$emit('hideDialog', false)
               this.$emit('uploadList')
             });

@@ -3,9 +3,22 @@ import {
   getToken
 } from '@/utils/auth'
 
-// 生产排程-获取列表
+// 生产排程-获取成品列表
 export function getSchedulingList(params, query) {
   const url = '/task-scheduling/list/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
+  })
+}
+// 生产排程-获取半成品列表
+export function getSemiList(params, query) {
+  const url = '/task-scheduling/semiList'
   return request({
     url: url,
     headers: {
@@ -39,6 +52,19 @@ export function schedulingSave(params) {
       'Content-Type': 'application/json'
     },
     method: 'POST',
+    data: params
+  })
+}
+// 生产排程-修改
+export function schedulingAlter(params) {
+  const url = '/task-scheduling/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('rx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
     data: params
   })
 }

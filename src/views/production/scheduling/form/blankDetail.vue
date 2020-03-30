@@ -3,8 +3,8 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="120px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'oid'" style="display: none">
-            <el-input v-model="form.oid"></el-input>
+          <el-form-item :label="'taskId'" style="display: none">
+            <el-input v-model="form.taskId"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -14,11 +14,6 @@
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'项目名称'" >
-            <el-input v-model="form.soName" ></el-input>
-          </el-form-item>
-        </el-col>
         <el-col :span="12">
           <el-form-item :label="'排产单号'">
             <el-input v-model="form.taskNum" ></el-input>
@@ -32,23 +27,9 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'订单数量'" >
-            <el-input v-model="form.odPrNum"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
           <el-form-item :label="'生产线'" prop="plId">
             <el-select v-model="form.plId" class="width-full" placeholder="生产线" >
               <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray" :key="i"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'生产类型'" prop="productionType">
-            <el-select v-model="form.productionType" class="width-full" placeholder="生产类型" >
-              <el-option :label="t.label" :value="t.value" v-for="(t,i) in options" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -92,13 +73,12 @@
 </template>
 
 <script>
-  import { schedulingSave } from "@/api/production/index";
-  import { getResourcesList, getFinalGoods} from '@/api/basic/index'
-  import { getSalesInfo } from '@/api/aftermarket/index'
+  import { schedulingSave, schedulingAlter } from "@/api/production/index";
+  import { getSemiFinishedProducts} from '@/api/basic/index'
 
   export default {
     props: {
-      listInfo: {
+      listBlank: {
         type: Object,
         default: null
       },
@@ -108,17 +88,13 @@
         num1: 1,
         visible: false,
         form: {
-          oid: null,
+          taskId: null,
           tips: null,
+          isSemi: 1,
           oldCode: null,
           plId: null,
           taskNum: null,
-          soNum: null,
-          dueDate: null,
-          odPrNum: null,
-          soName: null,
           allocatedNum: null,
-          soDate: null,
           remark: null,
           productionType: null,
           productionDate: null
@@ -144,30 +120,9 @@
           ],
         },
         value: null,
-        options: [{
-          value: '0',
-          label: '按订单生产'
-        }, {
-          value: '1',
-          label: '备库存生产'
-        }, {
-          value: '2',
-          label: '试生产'
-        }, {
-          value: '3',
-          label: '内部自用'
-        }, {
-          value: '4',
-          label: '赔偿生产'
-        }, {
-          value: '5',
-          label: '返工生产'
-        }],
         loading: false,
         list: [],
-        pArray: [],
         rArray: [],
-        sArray: [],
         type: null,
         columns: null
       }
@@ -176,15 +131,8 @@
     },
     mounted() {
       this.fetchLine()
-      if (this.listInfo) {
-        this.form = this.listInfo
-        const listInfo = this.listInfo
-        const form = this.form
-        this.options.forEach(function(item, index) {
-          if (item.label == listInfo.productionType) {
-            form.productionType = item.value
-          }
-        })
+      if (this.listBlank) {
+        this.form = this.listBlank
         this.form.oldCode = this.listInfo.color
       }
     },
@@ -193,8 +141,8 @@
         this.$refs[form].validate((valid) => {
           // 判断必填项
           if (valid) {
-            if (typeof (this.form.oid) != undefined && this.form.oid != null) {
-              productionLineAlter(this.form).then(res => {
+            if (typeof (this.form.taskId) != undefined && this.form.taskId != null) {
+              schedulingAlter(this.form).then(res => {
                 this.$emit('hideDialog', false)
                 this.$emit('uploadList')
               });
@@ -210,7 +158,7 @@
         })
       },
       fetchLine() {
-        getFinalGoods().then(res => {
+        getSemiFinishedProducts().then(res => {
           this.rArray = res.data
         })
       },

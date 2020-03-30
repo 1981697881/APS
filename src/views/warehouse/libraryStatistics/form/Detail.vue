@@ -1,13 +1,24 @@
 <template>
   <div>
-
+    <list
+      height="300px"
+      class="list-main box-shadow"
+      :columns="columns"
+      :loading="loading"
+      :list="list"
+      index
+      @handle-size="handleSize"
+      @handle-current="handleCurrent"
+    />
   </div>
 </template>
-
 <script>
   import{ libraryStatisticsInfo } from '@/api/warehouse/index'
-
+  import List from '@/components/List'
   export default {
+    components: {
+      List
+    },
     props: {
       listInfo: {
         type: Object,
@@ -21,26 +32,47 @@
     },
     data() {
       return {
-
+        loading: false,
+        list: {},
+        columns: [
+          { text: '', name: '',default:false },
+          { text: 'U9料号', name: 'goodCode' },
+          { text: '色号', name: 'oldCode' },
+          { text: '规格', name: '' },
+          { text: '批号', name: 'lotNo' },
+          { text: '数量', name: 'num' },
+          { text: '库位', name: 'positionName' },
+        ]
       };
     },
     created() {
 
     },
+
     mounted() {
       if (this.listInfo) {
-        this.fetchFormat()
+        this.fetchFormat(this.listInfo.gid)
       }
     },
     methods: {
-      fetchFormat() {
+      // 监听每页显示几条
+      handleSize(val) {
+        this.list.size = val
+        this.fetchData();
+      },
+      // 监听当前页
+      handleCurrent(val) {
+        this.list.current = val;
+        this.fetchData();
+      },
+      fetchFormat(val) {
         const data = {
           pageNum: this.list.current || 1,
-          pageSize: this.list.size || 1000,
-          id: this.list.size || ''
+          pageSize: this.list.size || 50,
+          id: val || ''
         };
         libraryStatisticsInfo(data).then(res => {
-          this.pArray = res.data.records
+          this.list = res.data
         });
       },
     }

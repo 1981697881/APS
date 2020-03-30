@@ -6,13 +6,14 @@
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
-              type="datetimerange"
-              :picker-options="pickerOptions"
+              type="daterange"
+              align="right"
+              value-format="yyyy-MM-dd"
+              unlink-panels
               range-separator="至"
-              value-format="yyyy-MM-dd HH:mm:ss"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              align="right">
+              :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
         </el-col>
@@ -44,7 +45,7 @@
         },
         data() {
             return {
-                value: '',
+                value: [],
                 pickerOptions: {
                     shortcuts: [{
                         text: '最近一周',
@@ -77,14 +78,50 @@
                 }
             };
         },
+      created: function() {
+        this.value[0] = this.getDay('', 0).date
+        this.value[1] = this.getDay('', 2).date
+      },
+      mounted: function() {
+        this.$emit('firstLoad', this.value)
+      },
+        methods: {
+          getODate() {
+            return this.value
+          },
+          // 查询前后三天日期
+          getDay(date, day){
+            var today = new Date();
+            var targetday_milliseconds=today.getTime() + 1000*60*60*24*day
+            today.setTime(targetday_milliseconds) //注意，这行是关键代码
+            var tYear = today.getFullYear()
+            var tMonth = today.getMonth()
+            var tDate = today.getDate()
+            var getDay = today.getDay()
+            tMonth = this.doHandleMonth(tMonth + 1)
+            tDate = this.doHandleMonth(tDate)
+            var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+            var week = weeks[getDay]
+            return {
+              day: tDate,
+              week: week,
+              date: tYear + "-" + tMonth + "-" + tDate
+            }
+          },
+          doHandleMonth(month) {
+            var m = month;
+            if(month.toString().length == 1) {
+              m = "0" + month;
+            }
+            return m;
+          },
+            // 关键字查询
+          query() {
+            console.log(this.value)
+            if((typeof this.search.keyword != null) && (this.search.keyword !='')){
 
-        methods:{
-            //关键字查询
-            query(){
-                if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
-                }
-            },
+            }
+          },
           delivery() {
             if (this.clickData.taskId) {
               this.$emit('theDelivery',{
