@@ -57,7 +57,7 @@ export default {
           this.fetchData();
       },
     dblclick(obj) {
-      this.$emit('showDialog',obj.row)
+     /* this.$emit('showDialog',obj.row)*/
     },
       Delivery(val){
           delMaterial(val).then(res => {

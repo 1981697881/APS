@@ -15,7 +15,7 @@
             </el-select>
           </div>
           <div>
-            <tabs-bar @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload" @reportInfo="report"/>
+            <tabs-bar ref="tabs" @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload" @reportInfo="report"/>
           </div>
           <list ref="list1"  @showDialog="handlerDialog" />
         </div>
@@ -33,9 +33,9 @@
             </el-select>
           </div>
           <div>
-            <tabs-bar-e ref="tabse" @showDialog="handlerBlank" @theDelivery="deliveryT" @uploadList="uploadT" />
+            <tabs-bar-e ref="tabse" @showDialog="handlerBlank" @theDelivery="deliveryT" @uploadList="uploadT" @reportInfo="report" />
           </div>
-          <scheduling ref="list2"  @showDialog="handlerDialog"/>
+          <scheduling ref="list2"  @showDialog="handlerBlank"/>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -66,7 +66,7 @@
       :width="'80%'"
       destroy-on-close
     >
-      <blank @hideDialog="hideBlank" @uploadList="upload" :listBlank="listBlank"></blank>
+      <blank @hideDialog="hideBlank" @uploadList="uploadT" :listBlank="listBlank"></blank>
     </el-dialog>
     <el-dialog
       :visible.sync="visibleR"
@@ -75,7 +75,7 @@
       :width="'80%'"
       destroy-on-close
     >
-      <Report @hideDialog="hideReport" @uploadList="upload" :listInfo="listInfo"></Report>
+      <Report @hideReport="hideReport" @uploadList="upload" :listInfo="listInfo"></Report>
     </el-dialog>
   </div>
 </template>
@@ -116,7 +116,7 @@ export default {
       this.upload({plId: val })
     },
     selectChangeT(val) {
-      this.upload({plId: val })
+      this.uploadT({plId: val })
     },
     delivery(obj) {
       if(obj) {
@@ -167,16 +167,38 @@ export default {
     },
     handlerBlank(obj) {
       this.listBlank = null
-      if(obj) this.listBlank = obj
-      this.visibleBlank = true
+      if(obj.length > 0) {
+        const listBlank = obj[0]
+        const listInfo = {}
+        for(const i in listBlank) {
+          if(i.match(/\d+/g) != null) {
+            if(i.match(/\d+/g)[0] == obj[1]) {
+              eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + "'")
+            }
+          }
+        }
+        this.listBlank = listInfo
+        this.visibleBlank = true
+      } else {
+        this.$message({
+          message: "当前选中无数据！",
+          type: "warning"
+        });
+      }
     },
     // 更新列表
     upload(val = {plId: this.plaIdS}) {
-      this.$refs.list1.fetchData(val)
+      const obj = this.$refs.tabs.qFilter()
+      obj.plId = this.plaIdS
+      console.log(obj)
+      this.$refs.list1.fetchData(obj)
     },
     // 更新列表
     uploadT(val = {plId: this.plaIdB}) {
-      this.$refs.list2.fetchData(val)
+      const obj = this.$refs.tabse.qFilter()
+      console.log(obj)
+      obj.plId = this.plaIdB
+     this.$refs.list2.fetchData(obj)
     },
   }
 };

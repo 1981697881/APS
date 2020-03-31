@@ -106,9 +106,19 @@ export default {
         });
       }
     },
+    // 查询条件过滤
+    qFilter() {
+      let obj = {}
+      this.search.keyword != null || this.search.keyword != undefined ? obj.query = this.search.keyword : null
+      this.value[1] != null || this.value[1] != undefined ? obj.productionDateEnd = this.value[1] : null
+      this.value[0] != null || this.value[0] != undefined ? obj.productionDateStart = this.value[0] : null
+      return obj
+    },
     //关键字查询
-    query(){
+    query() {
+      console.log(123)
       if((typeof this.search.keyword != null) && (this.search.keyword !='')){
+        this.$emit('uploadList')
       }
     },
     handleDialog(){

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="list-main box-shadow">
     <!-- <list
        class="list-main box-shadow"
        :columns="columns"
@@ -12,7 +12,7 @@
        @dblclick="dblclick"
        @row-click="rowClick"
      />-->
-    <el-table :data="list" border :height="'250px'" stripe size="mini" :highlight-current-row="true">
+    <el-table :data="list" height="100%" border   stripe size="mini" :highlight-current-row="true"  @cell-dblclick="celldblclick" >
       <el-table-column prop="date" label="序号" align="center" type="index" sortable></el-table-column>
       <el-table-column
         v-for="(t,i) in columns"
@@ -30,7 +30,7 @@
           :key="b"
           :label="a.text"
           align="center"
-          width="120">
+          :width="a.width?a.width:'120px'">
         </el-table-column>
       </el-table-column>
     </el-table>
@@ -78,16 +78,8 @@
       rowClick(obj) {
         this.$store.dispatch("list/setClickData", obj.row);
       },
-      datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式
-        var dateSpan,
-          tempDate,
-          iDays;
-        sDate1 = Date.parse(sDate1);
-        sDate2 = Date.parse(sDate2);
-        dateSpan = sDate2 - sDate1;
-        dateSpan = Math.abs(dateSpan);
-        iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
-        return iDays
+      celldblclick(row, column, cell, event) {
+        this.$emit('showDialog', [row, column.property.match(/\d+/g)[0]])
       },
       fetchData(val) {
         const data = {
@@ -99,32 +91,51 @@
             const data = res.data
             this.columns = [
               {text: '', name: 'gid', default: false},
-              {text: '计划日期', name: '', colspan: true, data: [{text: '生产设备', name: 'plName'}]}
+              {text: '计划日期',width: '150px', name: '', colspan: true, data: [{text: '生产设备', width: '150px', name: 'plName'}]}
             ]
-            var array
+            var array = []
             const columns = this.columns
             var count = 0
-            var onArr = {};
+            var arr = []
+            // 根据时间生成表头 把时间包含数据重新组装 -》array
             for (const i in data) {
+              columns.push({text: i + '', name: i + '', colspan: true, data: [{text: '旧料号', name: 'oldCode' + count}, {text: '数量', name: 'allocatedNum' + count},{text: '生产状态', name: 'allocatedStatus' + count},{text: '任务警示', name: '' + count}]})
               count++
-              columns.push({text: i + '', name: i + '', colspan: true, data: [{text: '旧料号', name: 'color' + count}, {text: '数量', name: 'allocatedNum' + count},{text: '生产状态', name: 'allocatedStatus' + count},{text: '任务警示', name: '' + count}]})
               data[i][0].time = i
-              array = data[i]
-              var obj = {}
-              array.forEach((item1, index) => {
-                if(i == item1.time){
-                  eval("obj.color" + count + "='" + item1.color + "'")
-                  eval("obj.allocatedNum" + count + "='" + item1.allocatedNum + "'")
-                  eval("obj.allocatedStatus" + count + "='" + item1.allocatedStatus + "'")
-                  eval("obj.plName ='" + item1.plName + "'")
-                }
-              })
-              Object.assign(onArr, obj);
-              console.log(onArr)
+              array.push(data[i])
             }
-            console.log(this.columns)
+            // 遍历组装数据
+            array.forEach((item1, index) => {
+              item1.forEach((item2, index2) => {
+                var obj = {}
+                // 根据每个时间里的数据量生成数据行
+               if(arr.length == index2) {
+                 eval("obj.oldCode" + index + "='" + item2.color + "'")
+                 eval("obj.taskId" + index + "='" + item2.taskId + "'")
+                 eval("obj.allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                 eval("obj.taskNum" + index + "='" + item2.taskNum + "'")
+                 eval("obj.plId" + index + "='" + item2.plId + "'")
+                 eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
+                 eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
+                 eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                 eval("obj.plName ='" + item2.plName + "'")
+                 arr.push(obj)
+               } else {
+                 // 根据每个时间插入数据列
+                 eval("arr["+index2+"].oldCode" + index + "='" + item2.color + "'")
+                 eval("arr["+index2+"].taskId" + index + "='" + item2.taskId + "'")
+                 eval("arr["+index2+"].allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                 eval("arr["+index2+"].taskNum" + index + "='" + item2.taskNum + "'")
+                 eval("arr["+index2+"].plId" + index + "='" + item2.plId + "'")
+                 eval("arr["+index2+"].productionDate" + index + "='" + item2.productionDate + "'")
+                 eval("arr["+index2+"].remark" + index + "='" + (item2.remark == null? '' : item2.remark) + "'")
+                 eval("arr["+index2+"].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+               }
+              })
+            })
             this.loading = false
-            this.list = new Array(onArr)
+            console.log(arr)
+            this.list = arr
           }
         });
       }

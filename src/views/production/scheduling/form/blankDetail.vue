@@ -16,7 +16,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'排产单号'">
-            <el-input v-model="form.taskNum" ></el-input>
+            <el-input v-model="form.taskNum" readOnly="true"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -106,9 +106,6 @@
           allocatedNum: [
             {required: true, message: '请输入数量', trigger: 'blur'},
           ],
-          tpId: [
-            {required: true, message: '请选择类别', trigger: 'change'},
-          ],
           plId: [
             {required: true, message: '请选择产线', trigger: 'change'},
           ],
@@ -132,8 +129,7 @@
     mounted() {
       this.fetchLine()
       if (this.listBlank) {
-        this.form = this.listBlank
-        this.form.oldCode = this.listInfo.color
+       this.form = this.listBlank
       }
     },
     methods: {

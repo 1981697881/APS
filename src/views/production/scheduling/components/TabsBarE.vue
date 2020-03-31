@@ -29,7 +29,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="delivery">删除</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >插入</el-button>
+          <!--<el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="report">汇报</el-button>-->
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" >打印</el-button>
         </el-button-group>
       </el-row>
@@ -86,6 +86,16 @@
         this.$emit('firstLoad', this.value)
       },
         methods: {
+          report() {
+            if (this.clickData.taskId) {
+              this.$emit('reportInfo', this.clickData)
+            } else {
+              this.$message({
+                message: "无选中行",
+                type: "warning"
+              });
+            }
+          },
           getODate() {
             return this.value
           },
@@ -115,11 +125,18 @@
             }
             return m;
           },
+          // 查询条件过滤
+          qFilter() {
+            let obj = {}
+            this.search.keyword != null || this.search.keyword != undefined ? obj.query = this.search.keyword : null
+            this.value[1] != null || this.value[1] != undefined ? obj.productionDateEnd = this.value[1] : null
+            this.value[0] != null || this.value[0] != undefined ? obj.productionDateStart = this.value[0] : null
+            return obj
+          },
             // 关键字查询
           query() {
-            console.log(this.value)
             if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
+              this.$emit('uploadList')
             }
           },
           delivery() {

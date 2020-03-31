@@ -47,11 +47,11 @@
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="12">
+        <!--<el-col :span="12">
           <el-form-item :label="'生产批号'" prop="allocatedNum">
             <el-input v-model="form.allocatedNum"  ></el-input>
           </el-form-item>
-        </el-col>
+        </el-col>-->
         <el-col :span="12">
           <el-form-item :label="'生产日期'" prop="productionDate">
             <div class="block" >

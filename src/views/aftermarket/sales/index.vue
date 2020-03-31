@@ -7,7 +7,6 @@
       </div>
       <list ref="list"  @showDialog="handlerDialog"/>
     </div>
-
     <el-dialog
       :visible.sync="visible"
       title="确认信息"
@@ -21,8 +20,8 @@
 </template>
 
 <script>
-import { TabsBar, List } from "./components";
-import { Info } from "./form";
+import { TabsBar, List } from "./components"
+import { Info } from "./form"
 
 export default {
   components: {
@@ -48,8 +47,8 @@ export default {
       this.visible = true
     },
     // 更新列表
-    uploadList() {
-      this.$refs.list.fetchData()
+    uploadList(val) {
+      this.$refs.list.fetchData(val)
     }
   }
 };
