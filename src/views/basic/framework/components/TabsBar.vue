@@ -1,12 +1,13 @@
 <template>
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
-      <el-button-group style="float:right">
-        <el-button :size="'mini'" type="primary" @click="handlerAdd">新增</el-button>
-        <el-button :size="'mini'" type="primary" @click="handlerAlter">修改</el-button>
-        <el-button :size="'mini'" type="primary" @click="del">删除</el-button>
-        <el-button :size="'mini'" type="primary" >禁用</el-button>
-        <el-button :size="'mini'" type="primary" >反禁用</el-button>
+      <el-button-group style="float:right;padding-bottom: 10px">
+        <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handlerAdd">新增</el-button>
+        <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAlter">修改</el-button>
+        <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="del">删除</el-button>
+        <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
+        <el-button :size="'mini'" type="primary"  >禁用</el-button>
+        <el-button :size="'mini'" type="primary"  >启用</el-button>
       </el-button-group>
     </el-form>
   </div>
@@ -40,31 +41,34 @@ export default {
         })
       }
     },
-      handlerAdd() {
-      this.$emit("showDialog",{rid:null})
+    handlerAdd() {
+      this.$emit("showDialog", {rid: null})
     },
-      del() {
-          if (this.clickData.deptId) {
-                  this.$emit('del',{
-                    deptId: this.clickData.deptId,
-                  })
-              } else {
-                  this.$message({
-                      message: "无选中行",
-                      type: "warning"
-                  });
-              }
-      },
-      handlerAlter() {
-          if (this.clickData.deptId) {
-              this.$emit('showDialog', this.clickData)
-          } else {
-              this.$message({
-                  message: "无选中行",
-                  type: "warning"
-              });
-          }
+    upload() {
+      this.$emit("uploadList")
+    },
+    del() {
+      if (this.clickData.deptId) {
+        this.$emit('del',{
+          deptId: this.clickData.deptId,
+        })
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        })
       }
+    },
+    handlerAlter() {
+      if (this.clickData.deptId) {
+        this.$emit('showDialog', this.clickData)
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    }
   }
 };
 </script>

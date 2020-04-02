@@ -12,9 +12,9 @@
         </el-col>-->
         <el-button-group style="float:right;padding-bottom: 10px;padding-right: 10px">
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleAdd">新增</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleAlter">修改</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="del">删除</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleAlter">修改</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="del">删除</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
         </el-button-group>
       </el-row>
     </el-form>

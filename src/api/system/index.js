@@ -148,6 +148,16 @@ export function getClerk(params) {
     params
   })
 }
+// 用户权限管理-获取菜单树
+export function getMenuList(params) {
+  return request({
+    url: '/sys-menu/getSysMenuTree',
+    headers: {
+      'authorization': getToken('rx')
+    },
+    method: 'get',
+  })
+}
 
 // 日志管理-获取列表
 export function journalList(data) {

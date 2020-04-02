@@ -4,8 +4,7 @@
     <el-tabs  class="table-card" type="border-card">
       <el-tab-pane label="成品线计划">
         <div class="list-containerOther">
-          <div style="width: 100%;display: inline-block">
-            <el-select v-model="plaIdS" style="float: right;" placeholder="请选择" @change="selectChangeO">
+            <el-select v-model="plaIdS" style="float: left;z-index: 999;" placeholder="请选择" @change="selectChangeO">
               <el-option
                 v-for="(t,i) in plaArray"
                 :key="i"
@@ -13,7 +12,6 @@
                 :value="t.plId">
               </el-option>
             </el-select>
-          </div>
           <div>
             <tabs-bar ref="tabs" @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload" @reportInfo="report"/>
           </div>
@@ -22,8 +20,8 @@
       </el-tab-pane>
       <el-tab-pane label="半成品线生产计划">
         <div class="list-containerOther">
-          <div style="width: 100%;display: inline-block">
-            <el-select v-model="plaIdB" style="float: right;" placeholder="请选择" @change="selectChangeT">
+          <!--<div style="width: 100%;display: inline-block">-->
+            <el-select v-model="plaIdB" style="float: left;z-index: 999;" placeholder="请选择" @change="selectChangeT">
               <el-option
                 v-for="(t,i) in plaBArray"
                 :key="i"
@@ -31,7 +29,7 @@
                 :value="t.plId">
               </el-option>
             </el-select>
-          </div>
+        <!--  </div>-->
           <div>
             <tabs-bar-e ref="tabse" @showDialog="handlerBlank" @theDelivery="deliveryT" @uploadList="uploadT" @reportInfo="report" />
           </div>
@@ -167,36 +165,36 @@ export default {
     },
     handlerBlank(obj) {
       this.listBlank = null
-      if(obj.length > 0) {
-        const listBlank = obj[0]
-        const listInfo = {}
-        for(const i in listBlank) {
-          if(i.match(/\d+/g) != null) {
-            if(i.match(/\d+/g)[0] == obj[1]) {
-              eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + "'")
+      if(obj){
+        if(obj.length > 0) {
+          const listBlank = obj[0]
+          const listInfo = {}
+          for(const i in listBlank) {
+            if(i.match(/\d+/g) != null) {
+              if(i.match(/\d+/g)[0] == obj[1]) {
+                eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + "'")
+              }
             }
           }
+          this.listBlank = listInfo
+        } else {
+          this.$message({
+            message: "当前选中无数据！",
+            type: "warning"
+          });
         }
-        this.listBlank = listInfo
-        this.visibleBlank = true
-      } else {
-        this.$message({
-          message: "当前选中无数据！",
-          type: "warning"
-        });
       }
+      this.visibleBlank = true
     },
     // 更新列表
-    upload(val = {plId: this.plaIdS}) {
+    upload(val = { plId: this.plaIdS }) {
       const obj = this.$refs.tabs.qFilter()
       obj.plId = this.plaIdS
-      console.log(obj)
       this.$refs.list1.fetchData(obj)
     },
     // 更新列表
-    uploadT(val = {plId: this.plaIdB}) {
+    uploadT(val = { plId: this.plaIdB }) {
       const obj = this.$refs.tabse.qFilter()
-      console.log(obj)
       obj.plId = this.plaIdB
      this.$refs.list2.fetchData(obj)
     },

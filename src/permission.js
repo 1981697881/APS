@@ -17,7 +17,7 @@ NProgress.configure({
 
 const whiteList = ['/login'] // no redirect whitelist
 
-var hasMenu = true// 是否有路由
+var hasMenu = false// 是否有路由
 console.log(router)
 router.beforeEach(async(to, from, next) => {
   // start progress bar 加载进度条
@@ -78,13 +78,12 @@ router.afterEach(() => {
 function gotoRouter(to, next) {
   getRouter(store.getters.token) // 使用useid获取路由
     .then(res => {
-      res.data[0].map(val => {
+      res.data.map(val => {
         val.type = 1
       })
-      const asyncRouter = addRouter(res.data[0]) // 进行递归解析
+      const asyncRouter = addRouter(res.data) // 进行递归解析
       // 一定不能写在静态路由里面,否则会出现,访问动态路由404的情况.所以在这列添加
       asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
-      console.log(asyncRouter)
       return asyncRouter
     })
     .then(asyncRouter => {

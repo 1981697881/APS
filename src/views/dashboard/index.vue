@@ -7,15 +7,15 @@
       :closable="false"
     ></el-alert>
 
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
+ <!--   <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
+    <panel-group @handleSetLineChartData="handleSetLineChartData" />-->
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
     </el-row>
 
-    <el-row :gutter="32">
+   <!-- <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <raddar-chart />
@@ -43,7 +43,7 @@
       <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:30px;">
         <todo-list :placeholder="'公告通知'" />
       </el-col>
-    </el-row>
+    </el-row>-->
   </div>
 </template>
 

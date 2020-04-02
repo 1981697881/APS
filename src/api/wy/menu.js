@@ -1,12 +1,16 @@
 import request from '@/utils/request'
-
+import {
+  getToken
+} from '@/utils/auth' // get token from cookie
 export function getRouter(userId) {
   const data = {
     userId: userId
   }
   return request({
-    url: '/back/system/jur/getUserMenu.do',
-    method: 'post',
-    data
+    headers: {
+      'authorization': getToken('rx'),
+    },
+    url: '/sys-menu/getByUser',
+    method: 'get',
   })
 }

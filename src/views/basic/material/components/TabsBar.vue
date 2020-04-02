@@ -26,9 +26,10 @@
           <!--<el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAdd">新增</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAlter">修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="del">删除</el-button>-->
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleSync">同步</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >禁用</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >启用</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleSync">同步</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh"    @click="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary"  >禁用</el-button>
+          <el-button :size="'mini'" type="primary"  >启用</el-button>
         </el-button-group>
       </el-row>
     </el-form>
@@ -79,6 +80,9 @@ export default {
           type: "warning"
         });
       }
+    },
+    upload() {
+      this.$emit("uploadList")
     },
     handleAlter() {
       if (this.clickData.gid) {

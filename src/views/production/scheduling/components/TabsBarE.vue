@@ -1,7 +1,16 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'60px'" style="padding-top: 15px;">
+    <el-form v-model="search" :size="'mini'" :label-width="'60px'" >
       <el-row :gutter="24">
+        <el-button-group style="float:right;">
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
+          <!--<el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="report">汇报</el-button>-->
+          <el-button :size="'mini'" type="primary" icon="el-icon-printer" >打印</el-button>
+        </el-button-group>
+      </el-row>
+      <el-row :gutter="24" style="padding-top: 15px;">
         <el-col :span="8">
           <el-form-item :label="'日期'">
             <el-date-picker
@@ -18,20 +27,14 @@
           </el-form-item>
         </el-col>
         <el-col :span="3">
-          <el-form-item :label="'关键字'">
-            <el-input v-model="search.keyword" placeholder="输入关键字"/>
+          <el-form-item :label="'旧料号'">
+            <el-input v-model="search.oldCode" placeholder="输入关键字"/>
           </el-form-item>
         </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
-        <el-button-group style="float:right;padding-right: 15px;">
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="delivery">删除</el-button>
-          <!--<el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="report">汇报</el-button>-->
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" >打印</el-button>
-        </el-button-group>
+
       </el-row>
     </el-form>
   </div>
@@ -74,7 +77,7 @@
                     }]
                 },
                 search: {
-                    keyword: null
+                  oldCode: null,
                 }
             };
         },
@@ -128,9 +131,9 @@
           // 查询条件过滤
           qFilter() {
             let obj = {}
-            this.search.keyword != null || this.search.keyword != undefined ? obj.query = this.search.keyword : null
-            this.value[1] != null || this.value[1] != undefined ? obj.productionDateEnd = this.value[1] : null
-            this.value[0] != null || this.value[0] != undefined ? obj.productionDateStart = this.value[0] : null
+            this.search.oldCode != null && this.search.oldCode != undefined ? obj.oldCode = this.search.oldCode : null
+            this.value[1] != null && this.value[1] != undefined ? obj.productionDateEnd = this.value[1] : null
+            this.value[0] != null && this.value[0] != undefined ? obj.productionDateStart = this.value[0] : null
             return obj
           },
             // 关键字查询
@@ -153,6 +156,7 @@
           },
           upload() {
             this.$emit('uploadList')
+            this.search.oldCode = null
           },
           handleDialog(){
             this.$emit('showDialog')

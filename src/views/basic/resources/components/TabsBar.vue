@@ -29,7 +29,7 @@
             <el-dropdown-item command="2">生产线</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button style="float: right" :size="'mini'" type="primary" @click="upload">刷新</el-button>
+        <el-button style="float: right" :size="'mini'" icon="el-icon-refresh" type="primary" @click="upload">刷新</el-button>
         <el-button style="float: right" :size="'mini'" type="primary" >启用</el-button>
         <el-button style="float: right" :size="'mini'" type="primary" >禁用</el-button>
         <el-button style="float: right" :size="'mini'" type="primary" >资源使用情况</el-button>

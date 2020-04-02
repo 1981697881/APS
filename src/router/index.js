@@ -6,7 +6,6 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 import notpage from '@/views/404'
-
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -26,7 +25,6 @@ import notpage from '@/views/404'
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
-
 /**
  * constantRoutes
  * a base page that does not have permission requirements
@@ -54,7 +52,8 @@ export const StaticRouterMap = [{
       affix: true
     }
   }]
-}, {
+},
+/*  {
   path: '/basic',
   component: Layout,
   name: 'Basic',
@@ -133,14 +132,14 @@ export const StaticRouterMap = [{
       icon: "component"
     },
     children: [
-      /*{
+      /!*{
       path: 'prepare',
       component: () => import('@/views/production/prepare/index'),
       name: 'Prepare',
       meta: {
         title: '生产单管理'
       },
-    },*/
+    },*!/
       {
       path: 'scheduling',
       component: () => import('@/views/production/scheduling/index'),
@@ -257,7 +256,7 @@ export const StaticRouterMap = [{
         title: '库位看板'
       },
     },
-     /* {
+     /!* {
       path: 'materialback',
       component: () => import('@/views/warehouse/materialback/index'),
       name: 'Materialback',
@@ -321,7 +320,7 @@ export const StaticRouterMap = [{
       meta: {
         title: '发货差异报表'
       },
-    }*/
+    }*!/
     ]
   },
   {
@@ -363,7 +362,7 @@ export const StaticRouterMap = [{
         title: '项目订货情况分析表'
       },
     }
-      /*, {
+      /!*, {
        path: 'shipment',
        component: () => import('@/views/aftermarket/shipment/index'),
        name: 'Shipment',
@@ -378,9 +377,10 @@ export const StaticRouterMap = [{
        meta: {
          title: '订单执行统计'
        },
-     }*/
+     }*!/
     ]
-  },{
+  },
+  {
     path: '/attendance',
     component: Layout,
     name: 'Attendance',
@@ -403,7 +403,7 @@ export const StaticRouterMap = [{
         title: '排班'
       },
     },
-     /* {
+     /!* {
       path: 'punchcard',
       component: () => import('@/views/attendance/punchcard/index'),
       name: 'Punchcard',
@@ -417,7 +417,7 @@ export const StaticRouterMap = [{
       meta: {
         title: '请假管理'
       },
-    },*/
+    },*!/
       {
       path: 'salary',
       component: () => import('@/views/attendance/salary/index'),
@@ -464,7 +464,7 @@ export const StaticRouterMap = [{
         title: '看板管理'
       },
     }]
-  },
+  },*/
   /* {
     path: 'external-link',
     component: Layout,

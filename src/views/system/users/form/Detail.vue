@@ -24,7 +24,7 @@
         <el-col :span="12">
           <el-form-item :label="'对应职员'" prop="eid">
             <el-select v-model="form.eid" class="width-full" placeholder="请选择职员">
-              <el-option :label="t.username" :value="t.uid" v-for="(t,i) in levelFormat" :key="i"></el-option>
+              <el-option :label="t.name" :value="t.eid" v-for="(t,i) in levelFormat" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -84,7 +84,7 @@
   </div>
 </template>
 <script>
-    import {addUsers, alterUsers, getUsersTree, getUsersInfo} from "@/api/system/index"
+    import {addUsers, alterUsers, getUsersTree, getUsersInfo, getMenuList} from "@/api/system/index"
     import { getClerkList } from "@/api/basic/index"
     export default {
         props: {
@@ -100,49 +100,15 @@
         },
         data() {
             return {
-                data: [{
-                    label: '一级 1',
-                    children: [{
-                        label: '二级 1-1',
-                        children: [{
-                            label: '三级 1-1-1'
-                        }]
-                    }]
-                }, {
-                    label: '一级 2',
-                    children: [{
-                        label: '二级 2-1',
-                        children: [{
-                            label: '三级 2-1-1'
-                        }]
-                    }, {
-                        label: '二级 2-2',
-                        children: [{
-                            label: '三级 2-2-1'
-                        }]
-                    }]
-                }, {
-                    label: '一级 3',
-                    children: [{
-                        label: '二级 3-1',
-                        children: [{
-                            label: '三级 3-1-1'
-                        }]
-                    }, {
-                        label: '二级 3-2',
-                        children: [{
-                            label: '三级 3-2-1'
-                        }]
-                    }]
-                }],
+                data: [],
                 defaultProps: {
                     children: "children",
-                    label: "label",
+                    label: "text",
                     isLeaf: "leaf",
                     id: "menuId"
                 },
                 value: false,
-                Checkeds:[],
+                Checkeds: [],
                 form: {
                   uid: null,
                   username: null, // 名称
@@ -181,14 +147,19 @@
         mounted() {
           this.factchGroup()
           this.fetchFormat()
+          this.fetchMenu()
         },
         methods: {
           handleSelectionChange(val) {
             this.multipleSelection = val;
           },
-            handleClick(tab, event) {
-                console.log(tab, event);
-            },
+          handleClick(tab, event) {
+                console.log(tab, event)
+          },
+          getChecked() {
+            let array = this.$refs.tree1.getCheckedKeys();
+            return  array
+          },
             saveData(form) {
                 this.$refs[form].validate((valid) => {
                     //判断必填项
@@ -196,13 +167,11 @@
                       let obj = this.form
                       let mids = []
                       let gids = []
-                      this.$refs.tree1.getCheckedKeys().forEach(function(item, index) {
-                        console.log(item)
-                      })
                       this.multipleSelection.forEach(function(item, index) {
                         gids.push(item.gpId)
                       })
                       obj.gids = gids
+                      obj.mids = this.getChecked()
                         if (typeof (this.form.uid) != undefined && this.form.uid != null) {
                           alterUsers(obj).then(res => {
                                 this.$emit('hideDialog', false)
@@ -242,13 +211,18 @@
                 this.levelFormat = res.data.records
               });
             },
+            fetchMenu() {
+              getMenuList().then(res => {
+                this.data = res.data.treeVoList
+              });
+            },
             fetchData(val) {
               getUsersInfo(val).then(res => {
                   if(res.flag) {
                       this.form = res.data
                       let rows = this.list
                       let group = res.data.gids
-                    console.log(this.list)
+                      this.Checkeds = res.data.mids
                       if (rows) {
                           rows.forEach(row => {
                               for(const i in group) {

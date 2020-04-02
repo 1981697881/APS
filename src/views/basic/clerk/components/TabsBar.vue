@@ -31,6 +31,9 @@
         <el-col :span="2" >
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" >启用</el-button>
         </el-col>-->
+        <el-button-group style="float:right">
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh"    @click="upload">刷新</el-button>
+        </el-button-group>
       </el-row>
     </el-form>
   </div>
@@ -62,6 +65,9 @@ export default {
           type: "warning"
         })
       }
+    },
+    upload() {
+      this.$emit("uploadList")
     },
     // 关键字查询
     query() {
