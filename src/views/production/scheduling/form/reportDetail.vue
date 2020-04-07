@@ -17,7 +17,7 @@
         <el-col :span="12">
           <el-form-item :label="'生产线'" >
             <el-select v-model="form.plId" class="width-full" placeholder="生产线"  disabled >
-              <el-option :label="t.plName" readOnly="true" :value="t.plId" v-for="(t,i) in rArray" :key="i"></el-option>
+              <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -132,7 +132,7 @@
 </template>
 <script>
   import { updateProductNum } from "@/api/production/index";
-  import { getFinalGoods } from '@/api/basic/index'
+  import { getFinalGoods, getSemiFinishedProducts} from '@/api/basic/index'
   import {getToken} from '@/utils/auth' // get token from cookie
   import { PrintTwo } from '@/tools/doPrint'
   export default {
@@ -166,7 +166,7 @@
           let ss = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();
           _this.form.reportDate = yy + '-' + mm + '-' + dd + ' ' + hh + ':' + mf + ':' + ss;
         },
-        reporter: getToken('un'),
+        reporter: getToken('apsun'),
         rules: {
           productionQuantity: [
             {required: true, message: '请输入数量', trigger: 'blur'}
@@ -188,16 +188,18 @@
     created() {
     },
     mounted() {
-      this.fetchLine()
-      console.log(this.listInfo)
+      this.fetchLine(this.listInfo.isF)
       if (this.listInfo) {
         this.form = this.listInfo
-        this.form.oldCode = this.listInfo.color
+        this.form.plId = Number(this.listInfo.plId)
+        if(this.listInfo.isF == 0){
+          this.form.oldCode = this.listInfo.color
+        }
         this.getTime()
       }
     },
     methods: {
-      print(){
+      print() {
         this.visible = true
       },
       confirmPrint(){
@@ -220,10 +222,18 @@
           }
         })
       },
-      fetchLine() {
-        getFinalGoods().then(res => {
-          this.rArray = res.data
-        })
+      fetchLine(val) {
+        this.rArray = []
+        console.log(val == 1)
+        if(val == 0){
+          getFinalGoods().then(res => {
+            this.rArray = res.data
+          })
+        } else {
+          getSemiFinishedProducts().then(res => {
+            this.rArray = res.data
+          })
+        }
       },
     }
   };

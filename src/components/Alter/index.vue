@@ -34,8 +34,8 @@
     export default {
         data() {
             const validateOld = (rule, value, callback) => {
-                var ps=Cookies.get('ps');
-                if (value == ps) {
+                var apsps=Cookies.get('apsps');
+                if (value == apsps) {
                     callback()
                 } else {
                     callback(new Error('原密码不对'))

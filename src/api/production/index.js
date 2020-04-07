@@ -9,7 +9,7 @@ export function getSchedulingList(params, query) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -22,7 +22,7 @@ export function getSemiList(params, query) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -35,7 +35,7 @@ export function schedulingPreview(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -48,7 +48,7 @@ export function schedulingSave(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -61,7 +61,7 @@ export function schedulingAlter(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'put',
@@ -74,7 +74,7 @@ export function updateProductNum(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'put',

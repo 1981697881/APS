@@ -3,7 +3,7 @@
     <Tree ref="tree" class="list-tree" />
     <div class="list-container">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @delList="delList" @delGroup="delGroup" @showGroupDialog="groupDialog"  />
+        <tabs-bar @showDialog="handlerDialog" @delList="delList" @delGroup="delGroup" @uploadAll="uploadAll"  @showGroupDialog="groupDialog"  />
       </div>
       <list ref="list" @showDialog="handlerDialog"  />
     </div>
@@ -52,8 +52,8 @@ export default {
     }
   },
   mounted() {
-    this.$refs.list.fetchData();
-    this.$refs.tree.fetchData();
+    this.$refs.list.fetchData()
+    this.$refs.tree.fetchData()
   },
   methods: {
     hideWindow(val) {
@@ -75,6 +75,11 @@ export default {
     // 更新列表
     upload() {
       this.$refs.list.fetchData()
+    },
+    // 更新列表
+    uploadAll() {
+      this.$refs.list.fetchData()
+      this.$refs.tree.fetchData()
     },
     // 更新列表
     uploadGroup() {

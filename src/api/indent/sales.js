@@ -7,7 +7,7 @@ export function salesList(data) {
   const url = '/Admin/Order/list/' + data.pageNum + '/' + data.pageSize
   return request({
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
     },
     url: url,
     method: 'get',
@@ -18,7 +18,7 @@ export function saleInfo(data) {
   const url = '/order/getOrderGoodsById/' + data
   return request({
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
     },
     url: url,
     method: 'get',
@@ -29,7 +29,7 @@ export function auditOrder(data) {
   const url = '/Admin/order/auditOrder'
   return request({
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     transformRequest: [function (data) {
@@ -46,7 +46,7 @@ export function Dismissed(data) {
   const url = '/Admin/order/Dismissed/' + data
   return request({
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
     },
     url: url,
     method: 'put',
@@ -57,7 +57,7 @@ export function delivery(data) {
   const url = '/Admin/order/ship/' + data
   return request({
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
     },
     url: url,
     method: 'put',

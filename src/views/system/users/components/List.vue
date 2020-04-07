@@ -38,8 +38,7 @@ export default {
       columns: [
         { text: "uid", name: "uid", default: false},
         { text: "用户编码", name: "jobNum" },
-        { text: "用户名称", name: "username" },
-        { text: "用户组", name: "" },
+        { text: "登录账号", name: "username" },
         { text: "对应职员", name: "empName" },
           { text: "状态", name: "status" },
         { text: "说明", name: "description" },

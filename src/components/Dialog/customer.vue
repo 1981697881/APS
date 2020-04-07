@@ -167,7 +167,7 @@ export default {
       };
       customerList(data).then(res => {
         this.list = res.data;
-        console.log(this.list);
+        //console.log(this.list);
       });
     }
   }

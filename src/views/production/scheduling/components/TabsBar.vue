@@ -123,6 +123,7 @@ export default {
     },
     report() {
       if (this.clickData.taskId) {
+        this.clickData.isF = 0;
         this.$emit('reportInfo', this.clickData)
       } else {
         this.$message({
@@ -142,7 +143,7 @@ export default {
       this.value[0] != null && this.value[0] != undefined ? obj.productionDateStart = this.value[0] : null
       return obj
     },
-    //关键字查询
+    // 关键字查询
     query() {
       if((typeof this.search.keyword != null) && (this.search.keyword !='')) {
         this.$emit('uploadList')

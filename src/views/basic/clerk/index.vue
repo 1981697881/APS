@@ -15,8 +15,7 @@
       :width="'50%'"
       destroy-on-close
     >
-      <info @hideDialog="hideWindow" @uploadList="upload" ></info>
-
+      <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
     </el-dialog>
   </div>
 </template>
@@ -29,38 +28,35 @@ export default {
   components: {
     TabsBar,
     List,
-      Info
+    Info
   },
   data() {
     return {
       visible: null,
-      oid: null,
-        orderId: null,
-        createTime: null,
-      treeId: null, // null
-      floorId: null
+      listInfo: null
     };
   },
-    mounted() {
-        this.$refs.list.fetchData()
-    },
+  mounted() {
+    this.$refs.list.fetchData()
+  },
   methods: {
-      delivery(obj){
-          if(obj){
-              this.$refs.list.Delivery(obj.oid)
-          }
-      },
-      hideWindow(val){
-          this.visible = val
-      },
+    delivery(obj) {
+      if(obj) {
+        this.$refs.list.Delivery(obj.oid)
+      }
+    },
+    hideWindow(val) {
+      this.visible = val
+    },
     handlerDialog(obj){
-     // if(obj)
+      this.listInfo = null
+      if(obj)this.listInfo = obj
       this.visible = true
     },
-      //更新列表
-      upload(){
-          this.$refs.list.fetchData()
-      }
+    //更新列表
+    upload(){
+      this.$refs.list.fetchData()
+    }
   }
 };
 </script>

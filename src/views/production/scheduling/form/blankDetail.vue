@@ -130,6 +130,7 @@
       this.fetchLine()
       if (this.listBlank) {
        this.form = this.listBlank
+        this.form.plId = Number(this.listBlank.plId)
       }
     },
     methods: {

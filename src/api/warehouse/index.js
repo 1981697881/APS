@@ -9,7 +9,7 @@ export function getLibraryStatisticsList(data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -21,7 +21,7 @@ export function libraryStatisticsInfo(data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
     },
     method: 'get'
   })
@@ -32,7 +32,7 @@ export function getOutboundStatisticsList(data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -44,7 +44,7 @@ export function outboundStatisticsInfo(data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
     },
     method: 'get'
   })
@@ -55,7 +55,7 @@ export function getAdjustList(data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -67,7 +67,7 @@ export function getMovingframeList(data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',

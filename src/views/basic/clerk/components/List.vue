@@ -37,9 +37,9 @@ export default {
         { text: "职员编码", name: "jobNum" },
         { text: "职员名称", name: "name" },
         { text: "部门", name: "" },
-        { text: "联系地址", name: "" },
-          { text: "联系电话", name: "tel" },
-          { text: "描述", name: "" },
+        { text: "联系地址", name: "address" },
+        { text: "联系电话", name: "tel" },
+        { text: "描述", name: "remark" },
       ]
     };
   },
@@ -55,7 +55,7 @@ export default {
           this.fetchData()
       },
     dblclick(obj) {
-      /*this.$emit('showDialog',obj.row)*/
+        this.$emit('showDialog', obj.row)
     },
       Delivery(val){
           delClerk(val).then(res => {
@@ -68,7 +68,7 @@ export default {
       rowClick(obj) {
           this.$store.dispatch("list/setClickData", obj.row);
       },
-    fetchData(fid, type) {
+    fetchData() {
       this.loading = true;
       const data = {
           pageNum: this.list.current || 1,

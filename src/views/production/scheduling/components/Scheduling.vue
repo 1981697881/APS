@@ -12,7 +12,7 @@
        @dblclick="dblclick"
        @row-click="rowClick"
      />-->
-    <el-table :data="list" height="100%" border   stripe size="mini" :highlight-current-row="true"  @cell-dblclick="celldblclick" >
+    <el-table :data="list" height="100%" border   stripe size="mini" :highlight-current-row="true"  @cell-dblclick="celldblclick" @cell-click="cellclick" >
       <el-table-column prop="date" label="序号" align="center" type="index" sortable></el-table-column>
       <el-table-column
         v-for="(t,i) in columns"
@@ -74,12 +74,11 @@
           this.$emit('uploadList')
         });
       },
-      //监听单击某一行
-      rowClick(obj) {
-        this.$store.dispatch("list/setClickData", obj.row);
-      },
       celldblclick(row, column, cell, event) {
         this.$emit('showDialog', [row, column.property.match(/\d+/g)[0]])
+      },
+      cellclick(row, column, cell, event) {
+        this.$store.dispatch("list/setClickData", [row, column.property.match(/\d+/g)[0]])
       },
       fetchData(val) {
         const data = {
@@ -111,6 +110,7 @@
                 // 根据每个时间里的数据量生成数据行
                if(arr.length == index2) {
                  eval("obj.oldCode" + index + "='" + item2.color + "'")
+                 eval("obj.goodName" + index + "='" + item2.goodName + "'")
                  eval("obj.taskId" + index + "='" + item2.taskId + "'")
                  eval("obj.allocatedNum" + index + "='" + item2.allocatedNum + "'")
                  eval("obj.taskNum" + index + "='" + item2.taskNum + "'")
@@ -123,6 +123,7 @@
                } else {
                  // 根据每个时间插入数据列
                  eval("arr["+index2+"].oldCode" + index + "='" + item2.color + "'")
+                 eval("arr["+index2+"].goodName" + index + "='" + item2.goodName + "'")
                  eval("arr["+index2+"].taskId" + index + "='" + item2.taskId + "'")
                  eval("arr["+index2+"].allocatedNum" + index + "='" + item2.allocatedNum + "'")
                  eval("arr["+index2+"].taskNum" + index + "='" + item2.taskNum + "'")

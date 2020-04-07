@@ -15,7 +15,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'用户名称'" prop="username">
+          <el-form-item :label="'登录账号'" prop="username">
             <el-input v-model="form.username"></el-input>
           </el-form-item>
         </el-col>

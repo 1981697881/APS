@@ -17,12 +17,8 @@
               系统帮助
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
             <el-dropdown-item>切换用户</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>修改密码</el-dropdown-item>
-          </a>
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">退出系统</span>
           </el-dropdown-item>
@@ -52,7 +48,7 @@ export default {
     return {
       visible: null,
       fid: null,
-      name: getToken('un')
+      name: getToken('apsun')
     };
   },
   methods: {
@@ -61,7 +57,7 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      location.reload()
     }
   }
 }

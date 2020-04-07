@@ -6,7 +6,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
-          <!--<el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="report">汇报</el-button>-->
+          <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" >打印</el-button>
         </el-button-group>
       </el-row>
@@ -90,11 +90,22 @@
       },
         methods: {
           report() {
-            if (this.clickData.taskId) {
-              this.$emit('reportInfo', this.clickData)
+            const clickData = this.clickData
+              if(clickData.length > 0) {
+                const listBlank = clickData[0]
+                const listInfo = {}
+                for(const i in listBlank) {
+                  if(i.match(/\d+/g) != null) {
+                    if(i.match(/\d+/g)[0] == clickData[1]) {
+                      eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + "'")
+                    }
+                  }
+                }
+                listInfo.isF = 1
+              this.$emit('reportInfo', listInfo)
             } else {
               this.$message({
-                message: "无选中行",
+                message: "当前选中无数据！",
                 type: "warning"
               });
             }

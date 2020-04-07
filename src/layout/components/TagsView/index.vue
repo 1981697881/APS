@@ -42,7 +42,6 @@ export default {
   },
   computed: {
     visitedViews() {
-      console.log(this.$store.state)
       return this.$store.state.tagsView.visitedViews
     },
     routes() {

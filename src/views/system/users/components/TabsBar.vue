@@ -31,6 +31,7 @@
         </el-dropdown>
         <el-button style="float: right" :size="'mini'" type="primary" >权限管理</el-button>
         <el-button style="float: right" :size="'mini'" type="primary" >权限浏览</el-button>
+        <el-button style="float: right" :size="'mini'" type="primary" @click="upload" >刷新</el-button>
         <el-button style="float: right" :size="'mini'" type="primary" >启用</el-button>
         <el-button style="float: right" :size="'mini'" type="primary" >禁用</el-button>
         <el-button style="float: right" :size="'mini'" type="primary" >保存权限</el-button>
@@ -84,6 +85,9 @@ export default {
         }
 
       },
+    upload() {
+      this.$emit('uploadAll')
+    },
     handlerDel(command) {
       if(command=="1") {
         if (this.clickData.gpId) {

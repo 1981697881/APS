@@ -13,7 +13,7 @@ const mutations = {
 
 const actions = {
   setNode({commit}, node) {
-    console.log(node)
+
     commit('SET_NODE', node)
   },
 }

@@ -41,6 +41,9 @@ if (process.env.NODE_ENV === 'production') {
 Vue.use(ElementUI, { zhLocale })
 
 Vue.config.productionTip = false
+
+
+
 new Vue({
   el: '#app',
   router,
@@ -48,15 +51,18 @@ new Vue({
   render: h => h(App),
    created(){
      const data = {
-      username: Cookies.get('un'),
-      password: Cookies.get('ps')
+      username: Cookies.get('apsun'),
+      password: Cookies.get('apsps')
      }
     if(data.username && data.password){
-      if(Cookies.get('rx') =="undefined"){
+     var rs = Cookies.get('apsrx')
+
+      if(Cookies.get('apsrx') == "undefined"){
         this.$router.push(`/login?redirect=${this.$route.fullPath}`)
         store.dispatch('user/resetToken')
       }else{
-        login(data).then(res => {
+        //刷新登录
+      /*  login(data).then(res => {
           console.log(res.flag)
           if(!res.flag){
             this.$router.push(`/login?redirect=${this.$route.fullPath}`)
@@ -70,7 +76,7 @@ new Vue({
           })
           this.$router.push(`/login?redirect=${this.$route.fullPath}`)
           store.dispatch('user/resetToken')
-        })
+        })*/
       }
     }
     /* let routes = JSON.parse(localStorage.getItem('routes'))

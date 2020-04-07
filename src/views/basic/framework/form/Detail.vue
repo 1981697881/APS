@@ -29,8 +29,8 @@
               <el-option
                 v-for="(t,i) in pArray"
                 :key="i"
-                :label="t.permissionName"
-                :value="t.pid">
+                :label="t.deptName"
+                :value="t.deptId">
               </el-option>
             </el-select>
           </el-form-item>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import {FrameAdd,FrameAlter,getSuperior} from "@/api/basic/index";
+import {FrameAdd,FrameAlter,getFrameList} from "@/api/basic/index";
 
 export default {
   props: {
@@ -89,7 +89,7 @@ export default {
 
   },
   mounted() {
-    /*  this.fetchFormat();*/
+      this.fetchFormat();
     if (this.listInfo) {
       this.form = this.listInfo
     }
@@ -119,9 +119,14 @@ export default {
 
     },
       fetchFormat() {
+        const data = {
+          pageNum: 1,
+          pageSize: 1000
+        }
         //获取上级下拉
-          getSuperior().then(res => {
-              this.pArray = res.data;
+        getFrameList(data).then(res => {
+          console.log(res)
+              this.pArray = res.data.records;
           });
       },
   }

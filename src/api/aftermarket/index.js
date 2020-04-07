@@ -9,7 +9,7 @@ export function getSalesList(params, query) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -22,7 +22,7 @@ export function getSalesInfo(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
     },
     method: 'get',
     params: {
@@ -36,7 +36,7 @@ export function notarizeList(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -49,7 +49,7 @@ export function salesListSync(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',

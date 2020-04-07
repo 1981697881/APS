@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: '排产系统',
+      title: 'APS',
       logo: require('@/assets/logo/logo.png')
     }
   }

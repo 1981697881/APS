@@ -49,7 +49,7 @@ export default {
     }
   },
   mounted(){
-    console.log(this.needTagsView)
+
   },
   methods: {
     handleClickOutside() {

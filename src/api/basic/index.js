@@ -8,7 +8,7 @@ export function getFrameTree(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'get',
     params
@@ -21,7 +21,7 @@ export function getFrameList(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST'
@@ -34,7 +34,7 @@ export function FrameAdd(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -47,7 +47,7 @@ export function FrameAlter(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'put',
@@ -59,7 +59,7 @@ export function getFrameInfo(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'get',
     params
@@ -71,7 +71,7 @@ export function getSuperior(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'get',
     params
@@ -83,7 +83,7 @@ export function getCompany(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'get',
     params
@@ -95,7 +95,7 @@ export function delFrame(params) {
   return request({
     url: '/department/del/' + params.deptId,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'delete'
   })
@@ -107,7 +107,7 @@ export function getMaterialList(data) {
   return request({
       url: url,
       headers: {
-        'authorization': getToken('rx'),
+        'authorization': getToken('apsrx'),
         'Content-Type': 'application/json'
       },
       method: 'POST'
@@ -120,7 +120,7 @@ export function materialAdd(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -135,7 +135,7 @@ export function materialAlter(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'put',
@@ -150,7 +150,7 @@ export function syncMaterialInfo(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -163,7 +163,7 @@ export function getMaterialInfo(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'get',
   })
@@ -174,7 +174,7 @@ export function getMType(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'get',
     params
@@ -186,7 +186,7 @@ export function getUnit(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'get',
     params
@@ -199,7 +199,7 @@ export function delMaterial(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'delete'
   })
@@ -211,7 +211,7 @@ export function getClerkList(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST'
@@ -221,33 +221,45 @@ export function getClerkList(params) {
 // 职员管理-新增
 export function addClerk(params) {
   return request({
-    url: '/table/list',
+    url: '/employee/add',
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'POST',
+    data: params
+  })
+}
+// 职员管理-新增
+export function alterClerk(params) {
+  return request({
+    url: '/employee/update',
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'PUT',
+    data: params
   })
 }
 
 // 职员管理-获取详情
 export function clerkInfo(params) {
   return request({
-    url: '/table/list',
+    url: '/table/list' + params,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
-    method: 'get',
-    params
+    method: 'get'
   })
 }
 
 // 职员管理-获取部门下拉
 export function clerkDepartment(params) {
   return request({
-    url: '/table/list',
+    url: '/table/list' + params,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'get',
     params
@@ -259,7 +271,7 @@ export function delClerk(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'get',
     params
@@ -271,7 +283,7 @@ export function supplierList(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST'
@@ -283,7 +295,7 @@ export function addSupplier(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'get',
     params
@@ -295,7 +307,7 @@ export function supplierInfo(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'get',
     params
@@ -307,7 +319,7 @@ export function delSupplier(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'get',
     params
@@ -320,7 +332,7 @@ export function getInventory(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST'
@@ -332,7 +344,7 @@ export function syncInventory(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -349,7 +361,7 @@ export function getResourcesList(data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -364,7 +376,7 @@ export function getFinalGoods() {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
     },
     method: 'get'
   })
@@ -375,7 +387,7 @@ export function getSemiFinishedProducts() {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
     },
     method: 'get'
   })
@@ -386,7 +398,7 @@ export function resourcesAdd(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -399,7 +411,7 @@ export function resourcesAlter(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -412,7 +424,7 @@ export function resourcesInfo(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST'
@@ -425,7 +437,7 @@ export function delResources(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'post'
   })
@@ -436,7 +448,7 @@ export function productionLineList(data, query) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -450,7 +462,7 @@ export function productionLineAdd(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -463,7 +475,7 @@ export function productionLineAlter(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -476,7 +488,7 @@ export function productionLineInfo(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST'
@@ -489,7 +501,7 @@ export function delProductionLine(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'delete'
   })
@@ -500,7 +512,7 @@ export function regulationList(data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -513,7 +525,7 @@ export function regulationAdd(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -526,7 +538,7 @@ export function regulationAlter(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'put',
@@ -539,7 +551,7 @@ export function delRegulation(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('rx')
+      'authorization': getToken('apsrx')
     },
     method: 'delete'
   })

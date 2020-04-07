@@ -33,7 +33,7 @@ export function changePassword(data) {
   return request({
     headers: {
       'Content-Type': 'application/json',
-      'authorization': getToken('rx'),
+      'authorization': getToken('apsrx'),
     },
     url: '/user/changePassword',
     method: 'put',
