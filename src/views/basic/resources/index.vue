@@ -9,7 +9,7 @@
     </div>
     <el-dialog
       :visible.sync="visible"
-      title="用户信息"
+      title="用户设备信息"
       v-if="visible"
       :width="'40%'"
       destroy-on-close
@@ -67,7 +67,9 @@ export default {
       this.listInfo = null
       if (obj) {
         this.obj = JSON.parse(JSON.stringify(obj));
-        this.obj.workDay = this.obj.workDay.split(',')
+        this.obj.workDay = this.obj.workDay==''?[]:this.obj.workDay.split(',')
+        this.obj.tpId = this.obj.type.tpId
+        delete this.obj.type
         this.listInfo = this.obj
       }
       this.visible = true

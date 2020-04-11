@@ -33,7 +33,8 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: "uid", name: "uid",default:false },
+        { text: "uid", name: "uid",default: false },
+        { text: "deptIds", name: "deptIds",default: false },
         { text: "职员编码", name: "jobNum" },
         { text: "职员名称", name: "name" },
         { text: "部门", name: "" },
@@ -57,7 +58,8 @@ export default {
     dblclick(obj) {
         this.$emit('showDialog', obj.row)
     },
-      Delivery(val){
+      Delivery(val) {
+
           delClerk(val).then(res => {
               if(res.flag){
                   this.$emit('uploadList')

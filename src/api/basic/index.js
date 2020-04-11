@@ -230,7 +230,7 @@ export function addClerk(params) {
     data: params
   })
 }
-// 职员管理-新增
+// 职员管理-修改
 export function alterClerk(params) {
   return request({
     url: '/employee/update',
@@ -269,12 +269,11 @@ export function clerkDepartment(params) {
 // 职员管理-删除
 export function delClerk(params) {
   return request({
-    url: '/table/list',
+    url: '/employee/del/' + params,
     headers: {
       'authorization': getToken('apsrx')
     },
-    method: 'get',
-    params
+    method: 'delete',
   })
 }
 // 供应商管理-获取列表
@@ -366,7 +365,7 @@ export function getResourcesList(data) {
     },
     method: 'POST',
     data: {
-      tpCategory: '产线'
+      tpCategory: '产线设备'
     }
   })
 }

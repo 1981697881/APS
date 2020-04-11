@@ -40,6 +40,7 @@ export default {
         { text: "色号/旧料号", name: "color" },
         { text: "订单数量", name: "odPrNum" },
         { text: "计划数量", name: "allocatedNum" },
+        { text: "实际完工数量", name: "productionQuantity" },
         { text: "计划日期", name: "productionDate" },
         { text: "产品分类", name: "" },
         { text: "生产设备", name: "plName" },

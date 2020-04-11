@@ -10,14 +10,14 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'资源类别'" prop="tpId">
+          <el-form-item :label="'生产线'" prop="tpId">
             <el-select v-model="form.tpId" class="width-full" placeholder="类别">
               <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'生产线'" prop="plName">
+          <el-form-item :label="'生产设备'" prop="plName">
             <el-input v-model="form.plName"></el-input>
           </el-form-item>
         </el-col>
@@ -137,7 +137,7 @@
             {required: true, message: '请输入名稱', trigger: 'blur'},
           ],
           tpId: [
-            {required: true, message: '请选择等级', trigger: 'change'},
+            {required: true, message: '请选择产线', trigger: 'change'},
           ],
         },
       };
@@ -148,11 +148,10 @@
     mounted() {
       this.fetchFormat()
       if (this.listInfo) {
-        console.log(this.listInfo)
         this.form = this.listInfo
-        this.form.tpId = this.listInfo.type.tpId
-        delete this.form.type
+
       }
+      console.log(this.form)
     },
     methods: {
       handleClick(tab, event) {

@@ -9,9 +9,21 @@
         </el-col>
       </el-row>
       <el-row :gutter="20" >
-        <el-col :span="14" style="margin-left: 16%">
+        <el-col :span="12" >
           <el-form-item :label="'名称'" prop="tpName">
             <el-input v-model="form.tpName" ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" >
+          <el-form-item :label="'类别'" prop="type">
+            <el-select v-model="form.type" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -37,11 +49,22 @@
         form: {
           tpId: null,
           tpName: null, // 名称
-          tpCategory: '产线'
+          tpCategory: '产线设备',
+          type: ''
         },
+        options: [{
+          value: 0,
+          label: '成品线'
+        }, {
+          value: 1,
+          label: '半成品线'
+        }],
         rules: {
           tpName: [
             {required: true, message: '请输入名稱', trigger: 'blur'},
+          ],
+          type: [
+            {required: true, message: '请选择类别', trigger: 'change'},
           ],
         },
       };

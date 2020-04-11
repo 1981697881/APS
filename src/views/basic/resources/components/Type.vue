@@ -36,7 +36,7 @@
         loading: false,
         columns: [
           {text: "tpId", name: "tpId", default:false},
-          {text: "资源类别", name: "tpName"},
+          {text: "产线", name: "tpName"},
           {text: "category", name: "category", default:false},
         ],
         list: {},
@@ -64,7 +64,6 @@
           this.loading = false
           delete res.data.total
           this.list = res.data
-          console.log(res)
         });
       }
     }

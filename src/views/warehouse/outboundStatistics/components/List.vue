@@ -32,7 +32,7 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: '', name: '',default:false },
+        { text: 'gid', name: 'gid',default:false },
         { text: '日期', name: 'createTime' },
         { text: 'U9料号', name: 'goodCode' },
         { text: '色号', name: 'oldCode' },

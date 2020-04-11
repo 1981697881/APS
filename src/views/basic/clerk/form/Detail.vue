@@ -3,8 +3,8 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'uid'" style="display: none">
-            <el-input v-model="form.uid"></el-input>
+          <el-form-item :label="'eid'" style="display: none">
+            <el-input v-model="form.eid"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -22,8 +22,8 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'部门'" prop="roleLevel">
-            <el-select v-model="form.roleLevel" class="width-full" placeholder="请选择用户权限">
+          <el-form-item :label="'部门'" prop="">
+            <el-select v-model="form.deptIds" multiple class="width-full"  placeholder="请选择用户权限">
               <el-option :label="t.deptName" :value="t.deptId" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
@@ -67,10 +67,11 @@ export default {
   data() {
     return {
       form: {
-        uid: null,
+        eid: null,
         jobNum: null,
         address: null,
         tel: null,
+        deptIds: [],
         remark: null,
         name: null,// 名称
       },
@@ -83,7 +84,7 @@ export default {
           name: [
                 {required: true, message: '请输入名稱', trigger: 'blur'},
             ],
-            roleLevel: [
+          deptId: [
                 {required: true, message: '请选择部门', trigger: 'change'},
             ],
 
@@ -101,7 +102,7 @@ export default {
       this.$refs[form].validate((valid) => {
         // 判断必填项
         if (valid) {
-          if (typeof (this.form.rid) != undefined && this.form.rid != null) {
+          if (typeof (this.form.eid) != undefined && this.form.eid != null) {
             alterClerk(this.form).then(res => {
               this.$emit('hideDialog', false)
               this.$emit('uploadList')

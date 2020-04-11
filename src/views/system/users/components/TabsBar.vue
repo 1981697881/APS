@@ -91,7 +91,18 @@ export default {
     handlerDel(command) {
       if(command=="1") {
         if (this.clickData.gpId) {
-          this.$emit('delGroup', this.clickData.gpId)
+          this.$confirm('是否删除（' + this.clickData.gpName + '），删除后将无法恢复?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$emit('delGroup', this.clickData.gpId)
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });
+          });
         } else {
           this.$message({
             message: "无选中行",
@@ -100,7 +111,18 @@ export default {
         }
       }else if(command=="2") {
         if (this.clickData.uid) {
-          this.$emit('delList', this.clickData.uid)
+          this.$confirm('是否删除（' + this.clickData.empName + '），删除后将无法恢复?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$emit('delList', this.clickData.uid)
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });
+          });
         } else {
           this.$message({
             message: "无选中行",

@@ -42,7 +42,7 @@ export default {
   methods: {
     delivery(obj) {
       if(obj) {
-        this.$refs.list.Delivery(obj.oid)
+        this.$refs.list.Delivery(obj.eid)
       }
     },
     hideWindow(val) {

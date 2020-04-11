@@ -18,19 +18,23 @@
         </el-col>
         <el-col :span="4">
           <el-form-item :label="'关键字'">
-            <el-input v-model="search.keyword" />
+            <el-input v-model="search.keyword" placeholder="请输入内容"/>
           </el-form-item>
         </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
+        <el-button-group style="float:right">
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click.native="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
+        </el-button-group>
       </el-row>
     </el-form>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
-import {getMType} from "@/api/basic/index";
+import {exportAdjust} from "@/api/warehouse/index";
 export default {
     components: {},
     computed: {
@@ -82,6 +86,37 @@ export default {
 
           }
       },
+    upload() {
+      this.$emit('uploadList')
+      this.search.keyword = ''
+      this.value = ''
+    },
+    // 查询条件过滤
+    qFilter() {
+      let obj = {}
+      this.search.keyword != null || this.search.keyword != undefined ? obj.query = this.search.keyword : null
+      this.value[1] != null || this.value[1] != undefined ? obj.endDate = this.value[1] : null
+      this.value[0] != null || this.value[0] != undefined ? obj.startDate = this.value[0] : null
+      return obj
+    },
+    // 下载文件
+    download(res) {
+      if (!res.data) {
+        return
+      }
+      let url = window.URL.createObjectURL(new Blob([res.data]))
+      let link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = url
+      link.setAttribute('download', res.headers['content-disposition'].split('filename=')[1])
+      document.body.appendChild(link)
+      link.click()
+    },
+    exportData() {
+      exportAdjust(this.qFilter()).then(res => {
+        this.download(res)
+      })
+    },
     handleAlter() {
       if (this.clickData.gid) {
         this.$emit('showDialog',{

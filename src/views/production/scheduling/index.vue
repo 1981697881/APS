@@ -8,8 +8,8 @@
               <el-option
                 v-for="(t,i) in plaArray"
                 :key="i"
-                :label="t.plName"
-                :value="t.plId">
+                :label="t.tpName"
+                :value="t.tpId">
               </el-option>
             </el-select>
           <div>
@@ -25,8 +25,8 @@
               <el-option
                 v-for="(t,i) in plaBArray"
                 :key="i"
-                :label="t.plName"
-                :value="t.plId">
+                :label="t.tpName"
+                :value="t.tpId">
               </el-option>
             </el-select>
         <!--  </div>-->
@@ -111,10 +111,10 @@ export default {
 
   methods: {
     selectChangeO(val) {
-      this.upload({plId: val })
+      this.upload({tpId: val })
     },
     selectChangeT(val) {
-      this.uploadT({plId: val })
+      this.uploadT({tpId: val })
     },
     delivery(obj) {
       if(obj) {
@@ -129,17 +129,18 @@ export default {
     fetchFormat() {
       getFinalGoods().then(res => {
         if(res.flag) {
+          console.log(res)
           this.plaArray = res.data
-          this.plaIdS = res.data[0].plId
-          this.$refs.list1.fetchData({plId: this.plaIdS})
+          this.plaIdS = res.data[0].tpId
+          this.$refs.list1.fetchData({tpId: this.plaIdS})
         }
       })
       getSemiFinishedProducts().then(res => {
         if(res.flag) {
           this.plaBArray = res.data
-          this.plaIdB = res.data[0].plId
+          this.plaIdB = res.data[0].tpId
           const array = this.$refs.tabse.getODate()
-          this.$refs.list2.fetchData({plId: this.plaIdB, productionDateStart: array[0], productionDateEnd: array[1]})
+          this.$refs.list2.fetchData({tpId: this.plaIdB, productionDateStart: array[0], productionDateEnd: array[1]})
         }
       });
     },
@@ -187,15 +188,15 @@ export default {
       this.visibleBlank = true
     },
     // 更新列表
-    upload(val = { plId: this.plaIdS }) {
+    upload(val = { tpId: this.plaIdS }) {
       const obj = this.$refs.tabs.qFilter()
-      obj.plId = this.plaIdS
+      obj.tpId = this.plaIdS
       this.$refs.list1.fetchData(obj)
     },
     // 更新列表
-    uploadT(val = { plId: this.plaIdB }) {
+    uploadT(val = { tpId: this.plaIdB }) {
       const obj = this.$refs.tabse.qFilter()
-      obj.plId = this.plaIdB
+      obj.tpId = this.plaIdB
      this.$refs.list2.fetchData(obj)
     },
   }

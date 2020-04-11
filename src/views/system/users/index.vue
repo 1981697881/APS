@@ -90,7 +90,7 @@ export default {
       delUsers(val).then(res => {
         this.loading = false
         this.list = res.data
-        this.uploadGroup()
+        this.uploadAll()
       })
     },
     delGroup(val) {
@@ -98,7 +98,7 @@ export default {
       delGroup(val).then(res => {
         this.loading = false
         this.list = res.data
-        this.uploadGroup()
+        this.uploadAll()
       })
     }
 

@@ -108,12 +108,7 @@
           </el-col>
         </el-row>
         <el-row :gutter="20" type="flex" justify="center">
-          <el-col :span="12">
-            <el-form-item :label="'下单数量'">
-              <el-input v-model="num1"  label="请输入数量"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
+          <el-col :span="24">
             <el-form-item :label="'重复打印第几张'">
               <el-input v-model="num1"  label="请输入数量"></el-input>
             </el-form-item>

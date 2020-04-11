@@ -56,8 +56,19 @@ export default {
       },
       del() {
       if (this.clickData.trId) {
-        this.$emit('delList',{
-          trId: this.clickData.trId,
+        this.$confirm('是否删除（' + this.clickData.trName + '），删除后将无法恢复?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$emit('delList', {
+            trId: this.clickData.trId,
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
       } else {
         this.$message({

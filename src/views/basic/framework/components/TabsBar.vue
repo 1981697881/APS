@@ -49,13 +49,12 @@ export default {
     },
     del() {
       if (this.clickData.deptId) {
-        this.$confirm('是否删除' + this.clickData.name + '，删除后将无法恢复?', '提示', {
+        this.$confirm('是否删除' + this.clickData.deptName + '，删除后将无法恢复?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.loading = true;
-
+          this.$emit('del', this.clickData.deptId)
         }).catch(() => {
           this.$message({
             type: 'info',
