@@ -81,7 +81,7 @@
 <script>
 import { TabsBar, List ,Scheduling, TabsBarE } from "./components"
 import { Info, Report, Blank} from "./form"
-import { getFinalGoods, getSemiFinishedProducts } from "@/api/basic"
+import { getFinalGoodsType, getSemiFinishedProductsType } from "@/api/basic"
 export default {
   components: {
     TabsBar,
@@ -127,7 +127,7 @@ export default {
       }
     },
     fetchFormat() {
-      getFinalGoods().then(res => {
+      getFinalGoodsType().then(res => {
         if(res.flag) {
           console.log(res)
           this.plaArray = res.data
@@ -135,7 +135,7 @@ export default {
           this.$refs.list1.fetchData({tpId: this.plaIdS})
         }
       })
-      getSemiFinishedProducts().then(res => {
+      getSemiFinishedProductsType().then(res => {
         if(res.flag) {
           this.plaBArray = res.data
           this.plaIdB = res.data[0].tpId

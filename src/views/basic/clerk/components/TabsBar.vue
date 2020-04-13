@@ -61,7 +61,7 @@ export default {
     },
     alter() {
       if (this.clickData.eid) {
-        this.$emit('delList', this.clickData)
+        this.$emit('showDialog', this.clickData)
       } else {
         this.$message({
           message: "无选中行",

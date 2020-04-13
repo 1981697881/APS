@@ -54,24 +54,17 @@
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <!--<el-col :span="12">
-          <el-form-item :label="'所属类别'" prop="tpId">
-            <el-select v-model="form.tpId" class="width-full" placeholder="类别" @change="selectChange">
-              <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>-->
         <el-col :span="12">
-          <el-form-item :label="'生产线'" prop="plId">
-            <el-select v-model="form.plId" class="width-full" placeholder="生产线" >
-              <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray" :key="i"></el-option>
+          <el-form-item :label="'生产线'" prop="tpId">
+            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" @change="selectChange">
+              <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'生产类型'" prop="productionType">
-            <el-select v-model="form.productionType" class="width-full" placeholder="生产类型" >
-              <el-option :label="t.label" :value="t.value" v-for="(t,i) in options" :key="i"></el-option>
+          <el-form-item :label="'生产设备'" prop="plId">
+            <el-select v-model="form.plId" class="width-full" placeholder="生产设备" :disabled="disPl">
+              <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray"  :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -104,15 +97,22 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
+          <el-form-item :label="'生产类型'" prop="productionType">
+            <el-select v-model="form.productionType" class="width-full" placeholder="生产类型" >
+              <el-option :label="t.label" :value="t.value" v-for="(t,i) in options" :key="i"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
           <el-form-item :label="'备注'">
             <el-input v-model="form.remark"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <!--<el-col :span="12">
           <el-form-item :label="'任务警示'">
             <el-color-picker v-model="form.tips" show-alpha></el-color-picker>
           </el-form-item>
-        </el-col>
+        </el-col>-->
       </el-row>
       <!--<el-row :gutter="20">
 
@@ -165,7 +165,7 @@
 
 <script>
 import { schedulingSave, schedulingAlter } from "@/api/production/index";
-import { getResourcesList, productionLineList, getFinalGoods} from '@/api/basic/index'
+import { getFinalGoodsType, getFinalGoods} from '@/api/basic/index'
 import { getSalesInfo } from '@/api/aftermarket/index'
 
 export default {
@@ -179,11 +179,13 @@ export default {
     return {
       num1: 1,
       visible: false,
+      disPl: true,
       form: {
         taskId: null,
         tips: null,
         oldCode: null,
         plId: null,
+        tpId: null,
         isSemi: 0,
         taskNum: null,
         soNum: null,
@@ -204,10 +206,10 @@ export default {
           {required: true, message: '请输入数量', trigger: 'blur'},
         ],
         tpId: [
-          {required: true, message: '请选择类别', trigger: 'change'},
+          {required: true, message: '请选择产线', trigger: 'change'},
         ],
         plId: [
-          {required: true, message: '请选择产线', trigger: 'change'},
+          {required: true, message: '请选择设备', trigger: 'change'},
         ],
         productionDate: [
           {required: true, message: '请选择日期', trigger: 'change'},
@@ -248,11 +250,12 @@ export default {
   created() {
   },
   mounted() {
-    this.fetchLine()
+    this.fetchFormat()
     if (this.listInfo) {
       this.form = this.listInfo
       const listInfo = this.listInfo
       const form = this.form
+      this.fetchLine(this.form.tpId)
       this.options.forEach(function(item, index) {
         if (item.label == listInfo.productionType) {
           form.productionType = item.value
@@ -290,7 +293,10 @@ export default {
     },
     // 切换类别
     selectChange(val) {
-      this.fetchLine({tpId: val})
+      this.disPl = false
+      this.form.plId = null
+      this.rArray = []
+      this.fetchLine(val)
     },
     attempt() {},
     saveData(form) {
@@ -313,7 +319,7 @@ export default {
         }
       })
     },
-  /*  preview(form) {
+  /* preview(form) {
       this.$refs[form].validate((valid) => {
         // 判断必填项
         if (valid) {
@@ -363,25 +369,18 @@ export default {
         })
       }
     },
-    fetchData(val) {
-     /* saleInfo(val).then(res => {
-        this.list = res.data
-      })*/
-    },
     fetchFormat() {
-      const data = {
-        pageNum: this.list.current || 1,
-        pageSize: this.list.size || 1000
-      }
-      getResourcesList(data).then(res => {
+      getFinalGoodsType().then(res => {
         if(res.flag) {
-          this.pArray = res.data.records
+          this.pArray = res.data
         }
       })
     },
-    fetchLine() {
-      getFinalGoods().then(res => {
-        this.rArray = res.data
+    fetchLine(val) {
+      getFinalGoods(val).then(res => {
+        if(res.flag) {
+          this.rArray = res.data
+        }
       })
     },
   }

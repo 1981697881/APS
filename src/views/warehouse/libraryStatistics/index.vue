@@ -2,7 +2,7 @@
   <div class="app-list">
     <div class="list-containerOther">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @uploadList="upload" />
+        <tabs-bar @showDialog="handlerDialog" @uploadList="upload" @queryBtn="query"/>
       </div>
       <list ref="list" @showDialog="handlerDialog"  />
     </div>
@@ -46,6 +46,10 @@ export default {
       this.listInfo = null
       if (obj) this.listInfo = obj
       this.visible = true
+    },
+    // 查询
+    query(val) {
+      this.$refs.list.uploadPr(val)
     },
     // 更新列表
     upload() {

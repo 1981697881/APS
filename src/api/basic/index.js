@@ -370,8 +370,8 @@ export function getResourcesList(data) {
   })
 }
 // 生产资源-获取成品产线
-export function getFinalGoods() {
-  const url = '/production-line/list/endProduct'
+export function getFinalGoodsType() {
+  const url = '/type/list/endProductType'
   return request({
     url: url,
     headers: {
@@ -381,8 +381,30 @@ export function getFinalGoods() {
   })
 }
 // 生产资源-获取半成品产线
-export function getSemiFinishedProducts() {
-  const url = '/production-line/list/semiProductLine'
+export function getSemiFinishedProductsType() {
+  const url = '/type/list/semiProductType'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'get'
+  })
+}
+// 生产资源-获取成品生产设备
+export function getFinalGoods(data) {
+  const url = '/production-line/list/endProduct/' + data
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'get'
+  })
+}
+// 生产资源-获取半成品生产设备
+export function getSemiFinishedProducts(data) {
+  const url = '/production-line/list/semiProductLine/' + data
   return request({
     url: url,
     headers: {

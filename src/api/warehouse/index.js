@@ -4,7 +4,7 @@ import {
 } from '@/utils/auth'
 
 // 入库统计-获取列表
-export function getLibraryStatisticsList(data) {
+export function getLibraryStatisticsList(data, query) {
   const url = '/putOrder/list/' + data.pageNum + '/' + data.pageSize
   return request({
     url: url,
@@ -13,6 +13,7 @@ export function getLibraryStatisticsList(data) {
       'Content-Type': 'application/json'
     },
     method: 'POST',
+    data: query
   })
 }
 // 入库统计-获取详情
@@ -41,7 +42,7 @@ export function exportLibraryStatistics(data) {
   })
 }
 // 出库统计-获取列表
-export function getOutboundStatisticsList(data) {
+export function getOutboundStatisticsList(data, query) {
   const url = '/outOrder/list/' + data.pageNum + '/' + data.pageSize
   return request({
     url: url,
@@ -50,6 +51,7 @@ export function getOutboundStatisticsList(data) {
       'Content-Type': 'application/json'
     },
     method: 'POST',
+    data: query
   })
 }
 // 出库统计-获取详情
@@ -78,7 +80,7 @@ export function exportOutboundStatistics(data) {
   })
 }
 // 库存调整-获取列表
-export function getAdjustList(data) {
+export function getAdjustList(data, query) {
   const url = '/adjust/list/' + data.pageNum + '/' + data.pageSize
   return request({
     url: url,
@@ -87,6 +89,7 @@ export function getAdjustList(data) {
       'Content-Type': 'application/json'
     },
     method: 'POST',
+    data: query
   })
 }
 // 导出库存调整
@@ -104,7 +107,7 @@ export function exportAdjust(data) {
   })
 }
 // 移库-获取列表
-export function getMovingframeList(data) {
+export function getMovingframeList(data, query) {
   const url = '/warehouseMove/list/' + data.pageNum + '/' + data.pageSize
   return request({
     url: url,
@@ -113,6 +116,7 @@ export function getMovingframeList(data) {
       'Content-Type': 'application/json'
     },
     method: 'POST',
+    data: query
   })
 }
 // 导出移库

@@ -6,13 +6,15 @@
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
-              type="datetimerange"
-              :picker-options="pickerOptions"
+              type="daterange"
+              align="right"
+              class="input-class"
+              unlink-panels
               range-separator="至"
-              value-format="yyyy-MM-dd HH:mm:ss"
+              value-format="yyyy-MM-dd"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              align="right">
+              :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
         </el-col>
@@ -79,13 +81,13 @@ export default {
   mounted(){
 
   },
-  methods:{
-      //关键字查询
-      query(){
-          if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
-          }
-      },
+  methods: {
+    // 关键字查询
+    query() {
+      if((typeof this.search.keyword != null) && (this.search.keyword !='')){
+        this.$emit('queryBtn', this.qFilter())
+      }
+    },
     upload() {
       this.$emit('uploadList')
       this.search.keyword = ''
@@ -94,7 +96,7 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.keyword != null || this.search.keyword != undefined ? obj.query = this.search.keyword : null
+      this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
       this.value[1] != null || this.value[1] != undefined ? obj.endDate = this.value[1] : null
       this.value[0] != null || this.value[0] != undefined ? obj.startDate = this.value[0] : null
       return obj

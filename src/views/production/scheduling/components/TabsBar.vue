@@ -7,7 +7,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-printer" >打印</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint">打印</el-button>
         </el-button-group>
       </el-row>
       <el-row :gutter="24"  style="padding-top: 15px;">
@@ -56,6 +56,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { PrintSchedule } from '@/tools/doPrint'
 export default {
     components: {},
     computed: {
@@ -100,12 +101,23 @@ export default {
     };
   },
 
-  methods:{
+  methods: {
     delivery() {
       if (this.clickData.taskId) {
         this.$emit('theDelivery',{
           taskId: this.clickData.taskId,
         })
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    confirmPrint() {
+      if (this.selections.length > 0) {
+        PrintSchedule(this.selections)
+        LODOP.PREVIEW()
       } else {
         this.$message({
           message: "无选中行",

@@ -83,9 +83,9 @@ export default {
   },
   methods: {
     // 关键字查询
-    query(){
+    query() {
       if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
+        this.$emit('queryBtn', this.qFilter())
       }
     },
     upload() {
@@ -96,7 +96,7 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.keyword != null || this.search.keyword != undefined ? obj.query = this.search.keyword : null
+      this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
       this.value[1] != null || this.value[1] != undefined ? obj.endDate = this.value[1] : null
       this.value[0] != null || this.value[0] != undefined ? obj.startDate = this.value[0] : null
       return obj

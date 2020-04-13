@@ -59,10 +59,9 @@ export default {
         this.$emit('showDialog', obj.row)
     },
       Delivery(val) {
-
           delClerk(val).then(res => {
               if(res.flag){
-                  this.$emit('uploadList')
+                this.fetchData()
               }
           });
       },

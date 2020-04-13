@@ -19,16 +19,23 @@
             <el-input v-model="form.taskNum" readOnly="true"></el-input>
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'色号/旧料号'" prop="oldCode">
             <el-input v-model="form.oldCode"></el-input>
           </el-form-item>
         </el-col>
+      </el-row>
+      <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'生产线'" prop="plId">
-            <el-select v-model="form.plId" class="width-full" placeholder="生产线" >
+          <el-form-item :label="'生产线'" prop="tpId">
+            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" @change="selectChange">
+              <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'生产设备'" prop="plId">
+            <el-select v-model="form.plId" class="width-full" placeholder="生产设备" :disabled="disPl">
               <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
@@ -59,11 +66,11 @@
             <el-input v-model="form.remark"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <!--<el-col :span="12">
           <el-form-item :label="'任务警示'">
             <el-color-picker v-model="form.tips" show-alpha></el-color-picker>
           </el-form-item>
-        </el-col>
+        </el-col>-->
       </el-row>
     </el-form>
     <div slot="footer" style="text-align:center;padding-top: 15px">
@@ -74,8 +81,7 @@
 
 <script>
   import { schedulingSave, schedulingAlter } from "@/api/production/index";
-  import { getSemiFinishedProducts} from '@/api/basic/index'
-
+  import { getSemiFinishedProductsType, getSemiFinishedProducts} from '@/api/basic/index'
   export default {
     props: {
       listBlank: {
@@ -93,12 +99,14 @@
           isSemi: 1,
           oldCode: null,
           plId: null,
+          tpId: null,
           taskNum: null,
           allocatedNum: null,
           remark: null,
           productionType: null,
           productionDate: null
         },
+        disPl: true,
         rules: {
           oldCode: [
             {required: true, message: '请输入色号/旧料号', trigger: 'blur'},
@@ -120,6 +128,7 @@
         loading: false,
         list: [],
         rArray: [],
+        pArray: [],
         type: null,
         columns: null
       }
@@ -127,13 +136,23 @@
     created() {
     },
     mounted() {
-      this.fetchLine()
+      this.fetchFormat()
       if (this.listBlank) {
+        console.log(this.listBlank)
        this.form = this.listBlank
+        this.fetchLine(this.form.tpId)
         this.form.plId = Number(this.listBlank.plId)
+        this.form.tpId = Number(this.listBlank.tpId)
       }
     },
     methods: {
+      // 切换类别
+      selectChange(val) {
+        this.disPl = false
+        this.form.plId = null
+        this.rArray = []
+        this.fetchLine(val)
+      },
       saveData(form) {
         this.$refs[form].validate((valid) => {
           // 判断必填项
@@ -154,9 +173,18 @@
           }
         })
       },
-      fetchLine() {
-        getSemiFinishedProducts().then(res => {
-          this.rArray = res.data
+      fetchFormat() {
+        getSemiFinishedProductsType().then(res => {
+          if(res.flag) {
+            this.pArray = res.data
+          }
+        })
+      },
+      fetchLine(val) {
+        getSemiFinishedProducts(val).then(res => {
+          if(res.flag) {
+            this.rArray = res.data
+          }
         })
       },
     }

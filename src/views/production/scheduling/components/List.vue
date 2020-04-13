@@ -10,6 +10,7 @@
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
+       @selection-change="handleSelectionChange"
        @row-click="rowClick"
     />
   </div>
@@ -30,6 +31,7 @@ export default {
     return {
       loading: false,
       list: {},
+      multipleSelection: [],
       columns: [
         { text: "taskId", name: "taskId",default: false },
         { text: "plId", name: "plId",default: false },
@@ -52,6 +54,10 @@ export default {
     };
   },
   methods: {
+    // 监听多选 参数-所有选中的值
+    handleSelectionChange(val){
+      this.$store.dispatch('list/setSelections',val)
+    },
       //监听每页显示几条
       handleSize(val) {
           this.list.size = val
@@ -65,7 +71,6 @@ export default {
     dblclick(obj) {
       this.$emit('showDialog', obj.row)
     },
-
       //监听单击某一行
       rowClick(obj) {
           this.$store.dispatch("list/setClickData", obj.row);

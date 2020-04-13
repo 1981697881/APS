@@ -15,22 +15,24 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'生产线'" >
-            <el-select v-model="form.plId" class="width-full" placeholder="生产线"  disabled >
-              <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray" :key="i"></el-option>
-            </el-select>
+          <el-form-item :label="'色号'" >
+            <el-input v-model="form.oldCode" readOnly="true"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'品名'" >
-            <el-input v-model="form.goodName" readOnly="true"></el-input>
+          <el-form-item :label="'生产线'" prop="tpId">
+            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" disabled>
+              <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'色号'" >
-            <el-input v-model="form.oldCode" readOnly="true"></el-input>
+          <el-form-item :label="'生产设备'" prop="plId">
+            <el-select v-model="form.plId" class="width-full" placeholder="生产设备" disabled>
+              <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray"  :key="i"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -47,16 +49,27 @@
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <!--<el-col :span="12">
-          <el-form-item :label="'生产批号'" prop="allocatedNum">
-            <el-input v-model="form.allocatedNum"  ></el-input>
+        <el-col :span="12">
+          <el-form-item :label="'品名'" >
+            <el-input v-model="form.goodName" readOnly="true"></el-input>
           </el-form-item>
-        </el-col>-->
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'报工入库数量'" prop="estimatedStorage">
+            <el-input-number v-model="form.estimatedStorage"  :min="0" ></el-input-number>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'生产批号'" prop="lotNo">
+            <el-input v-model="form.lotNo"  ></el-input>
+          </el-form-item>
+        </el-col>
         <el-col :span="12">
           <el-form-item :label="'生产日期'" prop="productionDate">
             <div class="block" >
               <el-date-picker
-                disabled
                 v-model="form.productionDate"
                 type="date"
                 value-format="yyyy-MM-dd"
@@ -76,6 +89,7 @@
           <el-form-item :label="'汇报日期'" prop="reportDate">
             <div class="block" >
               <el-date-picker
+                disabled
                 v-model="form.reportDate"
                 type="date"
                 value-format="yyyy-MM-dd"
@@ -127,7 +141,7 @@
 </template>
 <script>
   import { updateProductNum } from "@/api/production/index";
-  import { getFinalGoods, getSemiFinishedProducts} from '@/api/basic/index'
+  import { getFinalGoodsType, getSemiFinishedProductsType, getSemiFinishedProducts, getFinalGoods} from '@/api/basic/index'
   import {getToken} from '@/utils/auth' // get token from cookie
   import { PrintTwo } from '@/tools/doPrint'
   export default {
@@ -146,8 +160,11 @@
           goodName: null,
           oldCode: null,
           plId: null,
+          tpId: null,
+          lotNo: null,
           taskNum: null,
           soNum: null,
+          estimatedStorage: null,
           reportDate: null,
           odPrNum: null,
         },
@@ -169,7 +186,7 @@
           reportDate: [
             {required: true, message: '请选择日期', trigger: 'change'}
           ],
-          allocatedNum: [
+          lotNo: [
             {required: true, message: '请选择批号', trigger: 'blur'}
           ],
         },
@@ -177,6 +194,7 @@
         loading: false,
         list: [],
         rArray: [],
+        pArray: [],
         type: null,
       }
     },
@@ -187,6 +205,7 @@
       if (this.listInfo) {
         this.form = this.listInfo
         this.form.plId = Number(this.listInfo.plId)
+        this.form.tpId = Number(this.listInfo.tpId)
         if(this.listInfo.isF == 0){
           this.form.oldCode = this.listInfo.color
         }
@@ -219,14 +238,27 @@
       },
       fetchLine(val) {
         this.rArray = []
-        console.log(val == 1)
         if(val == 0){
-          getFinalGoods().then(res => {
-            this.rArray = res.data
+          getFinalGoodsType().then(res => {
+            this.pArray = res.data
+            if(res.flag){
+              getFinalGoods(this.form.tpId).then(res2 => {
+                if(res2.flag) {
+                  this.rArray = res2.data
+                }
+              })
+            }
           })
         } else {
-          getSemiFinishedProducts().then(res => {
-            this.rArray = res.data
+          getSemiFinishedProductsType().then(res => {
+            this.pArray = res.data
+            if(res.flag){
+              getSemiFinishedProducts(this.form.tpId).then(res2 => {
+                if(res2.flag) {
+                  this.rArray = res2.data
+                }
+              })
+            }
           })
         }
       },

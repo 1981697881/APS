@@ -1,18 +1,7 @@
 <template>
   <div class="list-main box-shadow">
-    <!-- <list
-       class="list-main box-shadow"
-       :columns="columns"
-       :loading="loading"
-       :list="list"
-       index
-       type
-       @handle-size="handleSize"
-       @handle-current="handleCurrent"
-       @dblclick="dblclick"
-       @row-click="rowClick"
-     />-->
-    <el-table :data="list" height="100%" border   stripe size="mini" :highlight-current-row="true"  @cell-dblclick="celldblclick" @cell-click="cellclick" >
+    <el-table :data="list" height="100%" border   stripe size="mini" :highlight-current-row="true"  @cell-dblclick="celldblclick" @cell-click="cellclick"  @selection-change="handleSelectionChange">
+      <el-table-column type="selection"></el-table-column>
       <el-table-column prop="date" label="序号" align="center" type="index" sortable></el-table-column>
       <el-table-column
         v-for="(t,i) in columns"
@@ -56,6 +45,10 @@
       };
     },
     methods: {
+      // 监听多选 参数-所有选中的值
+      handleSelectionChange(val){
+        this.$store.dispatch('list/setSelections',val)
+      },
       //监听每页显示几条
       handleSize(val) {
         this.list.size = val
@@ -115,6 +108,7 @@
                  eval("obj.allocatedNum" + index + "='" + item2.allocatedNum + "'")
                  eval("obj.taskNum" + index + "='" + item2.taskNum + "'")
                  eval("obj.plId" + index + "='" + item2.plId + "'")
+                 eval("obj.tpId" + index + "='" + item2.tpId + "'")
                  eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
                  eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                  eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
@@ -128,6 +122,7 @@
                  eval("arr["+index2+"].allocatedNum" + index + "='" + item2.allocatedNum + "'")
                  eval("arr["+index2+"].taskNum" + index + "='" + item2.taskNum + "'")
                  eval("arr["+index2+"].plId" + index + "='" + item2.plId + "'")
+                 eval("arr["+index2+"].tpId" + index + "='" + item2.tpId + "'")
                  eval("arr["+index2+"].productionDate" + index + "='" + item2.productionDate + "'")
                  eval("arr["+index2+"].remark" + index + "='" + (item2.remark == null? '' : item2.remark) + "'")
                  eval("arr["+index2+"].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
