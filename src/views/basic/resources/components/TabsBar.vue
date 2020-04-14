@@ -30,9 +30,9 @@
           </el-dropdown-menu>
         </el-dropdown>
         <el-button style="float: right" :size="'mini'" icon="el-icon-refresh" type="primary" @click="upload">刷新</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >启用</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >禁用</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >资源使用情况</el-button>
+        <el-button style="float: right" :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
+        <el-button style="float: right" :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
+        <el-button style="float: right" :size="'mini'" icon="el-icon-view" type="primary" @click="usage">资源使用情况</el-button>
       </el-button-group>
     </el-form>
   </div>
@@ -129,6 +129,45 @@ export default {
         }
       }
 
+    },
+    disable() {
+      if (this.clickData.plId) {
+        this.$message({
+          message: "抱歉，功能尚未完善！",
+          type: "warning"
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    enable() {
+      if (this.clickData.plId) {
+        this.$message({
+          message: "抱歉，功能尚未完善！",
+          type: "warning"
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    usage() {
+      if (this.clickData.plId) {
+        this.$message({
+          message: "抱歉，功能尚未完善！",
+          type: "warning"
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
     },
   }
 };

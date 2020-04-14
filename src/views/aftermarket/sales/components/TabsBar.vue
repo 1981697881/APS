@@ -10,10 +10,11 @@
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
-        <el-button-group style="float:right">
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleSync">U9同步</el-button>
+        <el-button-group style="float:right;padding-right: 10px">
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="notarize">确认</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">确认</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
       </el-row>
     </el-form>
@@ -105,6 +106,28 @@ export default {
     }
   },
   methods: {
+    // 下载文件
+    download(res) {
+      if (!res.data) {
+        return
+      }
+      let url = window.URL.createObjectURL(new Blob([res.data]))
+      let link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = url
+      link.setAttribute('download', res.headers['content-disposition'].split('filename=')[1])
+      document.body.appendChild(link)
+      link.click()
+    },
+    exportData() {
+      this.$message({
+        message: "抱歉，功能尚未完善！",
+        type: "warning"
+      });
+      /* exportOutboundStatistics(this.qFilter()).then(res => {
+         this.download(res)
+       })*/
+    },
     changeDate(val) {
       this.form.businessDateEnd = val[1]
       this.form.businessDateStart = val[0]

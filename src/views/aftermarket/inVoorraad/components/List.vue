@@ -34,8 +34,7 @@ export default {
       columns: [
         { text: '', name: '',default:false },
         { text: '产品名称', name: '' },
-        { text: '色号', name: '' },
-        { text: '料号', name: '' },
+        { text: '旧料号', name: '' },
         { text: '库存数量', name: '' },
         { text: '待发数量', name: '' },
         { text: '剩余可发数量', name: '' },

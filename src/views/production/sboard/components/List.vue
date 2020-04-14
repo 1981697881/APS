@@ -28,7 +28,7 @@ export default {
       columns: [
         { text: "", name: "",default:false },
         { text: "设备", name: "" },
-        { text: "色号", name: "" },
+        { text: '旧料号', name: '' },
         { text: "数量", name: "" },
         { text: "状态", name: "" },
       ]

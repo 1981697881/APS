@@ -26,10 +26,10 @@
           <!--<el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAdd">新增</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAlter">修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="del">删除</el-button>-->
+          <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleSync">同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh"    @click="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary"  >禁用</el-button>
-          <el-button :size="'mini'" type="primary"  >启用</el-button>
         </el-button-group>
       </el-row>
     </el-form>
@@ -102,6 +102,32 @@ export default {
       handleAdd(){
           this.$emit('showDialog')
 
+    },
+    disable() {
+      if (this.clickData.gid) {
+        this.$message({
+          message: "抱歉，功能尚未完善！",
+          type: "warning"
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    enable() {
+      if (this.clickData.gid) {
+        this.$message({
+          message: "抱歉，功能尚未完善！",
+          type: "warning"
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
     },
   }
 };

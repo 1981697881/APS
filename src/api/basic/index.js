@@ -93,7 +93,7 @@ export function getCompany(params) {
 // 组织架构-删除
 export function delFrame(params) {
   return request({
-    url: '/department/del/' + params.deptId,
+    url: '/department/del/' + params,
     headers: {
       'authorization': getToken('apsrx')
     },

@@ -56,6 +56,7 @@ export default {
       },
     delList(val) {
       this.loading = true
+      console.log(val)
       delFrame(val).then(res => {
         this.loading = false
         this.list = res.data

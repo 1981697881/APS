@@ -33,10 +33,14 @@ export default {
       list: {},
       columns: [
         { text: 'gid', name: 'gid',default:false },
+        { text: '出库单号', name: '' },
         { text: '日期', name: 'createTime' },
         { text: 'U9料号', name: 'goodCode' },
         { text: '色号', name: 'oldCode' },
+        { text: '规格', name: '' },
+        { text: '批号', name: '' },
         { text: '数量', name: 'num' },
+        { text: '库位', name: '' },
         { text: '操作员', name: 'username' },
       ]
     };

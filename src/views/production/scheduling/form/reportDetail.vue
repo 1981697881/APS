@@ -108,23 +108,35 @@
       destroy-on-close
       append-to-body
     >
-      <el-form>
+      <el-form :rules="rules">
         <el-row :gutter="20" type="flex" justify="center">
           <el-col :span="12">
-            <el-form-item :label="'打印/张'">
-              <el-input v-model="num1" label="请输入数量"></el-input>
+            <el-form-item :label="'每托/桶或箱'">
+              <el-input-number v-model="apiece"  label="请输入数量" :min="0"></el-input-number>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'每托/桶或箱'">
-              <el-input v-model="num1"  label="请输入数量"></el-input>
+            <el-form-item :label="'打印/张'">
+              <el-input-number v-model="printingQuantity" label="请输入数量" :min="1"></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20" type="flex" justify="center">
-          <el-col :span="24">
+          <el-col :span="12">
+            <el-form-item :label="'打印模板'">
+              <el-select v-model="printModel" placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item :label="'重复打印第几张'">
-              <el-input v-model="num1"  label="请输入数量"></el-input>
+              <el-input-number v-model="repeat"  label="请输入数量" :min="0"></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
@@ -134,13 +146,13 @@
       </div>
     </el-dialog>
     <div slot="footer" style="text-align:center;padding-top: 15px">
-      <el-button type="primary" @click.native="saveData('form')">提交</el-button>
-      <el-button type="primary" @click.native="print">打印条码</el-button>
+      <el-button type="primary" v-if="isSavtBtn" @click.native="saveData('form')">提交</el-button>
+      <el-button type="primary" v-if="!isSavtBtn" @click.native="print">打印条码</el-button>
     </div>
   </div>
 </template>
 <script>
-  import { updateProductNum } from "@/api/production/index";
+  import { updateProductNum } from '@/api/production/index'
   import { getFinalGoodsType, getSemiFinishedProductsType, getSemiFinishedProducts, getFinalGoods} from '@/api/basic/index'
   import {getToken} from '@/utils/auth' // get token from cookie
   import { PrintTwo } from '@/tools/doPrint'
@@ -155,6 +167,7 @@
       return {
         num1: 1,
         visible: null,
+        isSavtBtn: true,
         form: {
           taskId: null,
           goodName: null,
@@ -168,6 +181,11 @@
           reportDate: null,
           odPrNum: null,
         },
+        repeat: 0,
+        printingQuantity: 1,
+        apiece: 0,
+        options: [],
+        printModel: null,
         getTime: function() {
           var _this = this;
           let yy = new Date().getFullYear();
@@ -185,6 +203,9 @@
           ],
           reportDate: [
             {required: true, message: '请选择日期', trigger: 'change'}
+          ],
+          printModel: [
+            {required: true, message: '请选择模板', trigger: 'change'}
           ],
           lotNo: [
             {required: true, message: '请选择批号', trigger: 'blur'}
@@ -216,11 +237,12 @@
       print() {
         this.visible = true
       },
-      confirmPrint(){
-        PrintTwo(
-          '商品包装码',
-          '3'
-        )
+      confirmPrint() {
+        // data: 数据
+        // printingQuantity: 打印品种
+        // apiece: 打印
+        // repeat: 重复打印第几张
+        PrintTwo(this.form, this.printingQuantity, this.apiece, this.repeat)
         LODOP.PREVIEW()
       },
       saveData(form) {
@@ -228,9 +250,12 @@
           // 判断必填项
           if (valid) {
               updateProductNum(this.form).then(res => {
-                this.$emit('hideReport', false)
-                this.$emit('uploadList')
-              });
+                if(res.flag) {
+                  this.isSavtBtn = false
+                  this.$emit('uploadList')
+                }
+                //this.$emit('hideReport', false)
+              })
           } else {
             return false
           }
@@ -239,6 +264,16 @@
       fetchLine(val) {
         this.rArray = []
         if(val == 0){
+          this.options = [{
+            value: '0',
+            label: '自有产品标签'
+          }, {
+            value: '1',
+            label: 'OEM产品_加固剂&防水宝标签'
+          }, {
+            value: '2',
+            label: 'OEM产品_美瓷胶标签'
+          }]
           getFinalGoodsType().then(res => {
             this.pArray = res.data
             if(res.flag){
@@ -250,6 +285,13 @@
             }
           })
         } else {
+          this.options = [{
+            value: '0',
+            label: '色石&Base标签'
+          }, {
+            value: '1',
+            label: '美瓷胶标签'
+          }]
           getSemiFinishedProductsType().then(res => {
             this.pArray = res.data
             if(res.flag){

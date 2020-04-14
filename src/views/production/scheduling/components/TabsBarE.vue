@@ -5,6 +5,8 @@
         <el-button-group style="float:right;">
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="suspended">暂停</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint">打印</el-button>
@@ -167,9 +169,62 @@
           },
           delivery() {
             if (this.clickData.taskId) {
-              this.$emit('theDelivery',{
+              this.$message({
+                message: "抱歉，功能尚未完善！",
+                type: "warning"
+              });
+             /* this.$emit('theDelivery',{
                 taskId: this.clickData.taskId,
-              })
+              })*/
+            } else {
+              this.$message({
+                message: "无选中行",
+                type: "warning"
+              });
+            }
+          },
+          suspended() {
+            if (this.clickData.taskId) {
+              this.$message({
+                message: "抱歉，功能尚未完善！",
+                type: "warning"
+              });
+            } else {
+              this.$message({
+                message: "无选中行",
+                type: "warning"
+              });
+            }
+          },
+          over() {
+            const clickData = this.clickData
+            if(clickData.length > 0) {
+              const listBlank = clickData[0]
+              const listInfo = {}
+              for(const i in listBlank) {
+                if(i.match(/\d+/g) != null) {
+                  if(i.match(/\d+/g)[0] == clickData[1]) {
+                    eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + "'")
+                  }
+                }
+              }
+              console.log(listInfo)
+              listInfo.isF = 1
+              this.$confirm('是否结束(' + listInfo.oldCode + ')，结束后将无法恢复?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                this.$message({
+                  message: "抱歉，功能尚未完善！",
+                  type: "warning"
+                });
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: '已取消删除'
+                });
+              });
             } else {
               this.$message({
                 message: "无选中行",

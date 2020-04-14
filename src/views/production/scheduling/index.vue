@@ -155,13 +155,14 @@ export default {
     },
     handlerDialog(obj) {
       this.listInfo = null
-      console.log(obj)
-      if(obj) this.listInfo = obj
+      const info = JSON.parse(JSON.stringify(obj))
+      if(obj) this.listInfo = info
       this.visible = true
     },
     report(obj) {
       this.listInfo = null
-      if(obj) this.listInfo = obj
+      const info = JSON.parse(JSON.stringify(obj))
+      if(obj) this.listInfo = info
       this.visibleR = true
     },
     handlerBlank(obj) {

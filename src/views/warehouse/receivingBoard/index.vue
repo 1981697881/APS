@@ -2,9 +2,9 @@
   <div class="app-list">
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
-    <!--  <div>
+      <div>
         <tabs-bar @uploadList="upload"/>
-      </div>-->
+      </div>
       <list ref="list"/>
     </div>
   </div>

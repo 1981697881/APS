@@ -29,14 +29,14 @@ export default {
       floorId: null
     };
   },
-    mounted() {
-        this.$refs.list.fetchData()
-    },
+  mounted() {
+    this.$refs.list.fetchData()
+  },
   methods: {
-      //更新列表
-      upload(){
-          this.$refs.list.fetchData()
-      }
+    // 更新列表
+    upload() {
+      this.$refs.list.fetchData()
+    }
   }
 };
 </script>

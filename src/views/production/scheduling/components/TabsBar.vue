@@ -5,6 +5,8 @@
         <el-button-group style="float:right;padding-right: 15px;">
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="suspended">暂停</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint">打印</el-button>
@@ -56,7 +58,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { PrintSchedule } from '@/tools/doPrint'
+import { PrintSchedule} from '@/tools/doPrint'
 export default {
     components: {},
     computed: {
@@ -104,9 +106,13 @@ export default {
   methods: {
     delivery() {
       if (this.clickData.taskId) {
-        this.$emit('theDelivery',{
+        this.$message({
+          message: "抱歉，功能尚未完善！",
+          type: "warning"
+        });
+        /*this.$emit('theDelivery',{
           taskId: this.clickData.taskId,
-        })
+        })*/
       } else {
         this.$message({
           message: "无选中行",
@@ -118,6 +124,43 @@ export default {
       if (this.selections.length > 0) {
         PrintSchedule(this.selections)
         LODOP.PREVIEW()
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    suspended() {
+      if (this.clickData.taskId) {
+        this.$message({
+          message: "抱歉，功能尚未完善！",
+          type: "warning"
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    over() {
+      if (this.clickData.taskId) {
+        this.$confirm('是否结束(' + this.clickData.taskNum + ')，结束后将无法恢复?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            message: "抱歉，功能尚未完善！",
+            type: "warning"
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       } else {
         this.$message({
           message: "无选中行",

@@ -6,8 +6,8 @@
         <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAlter">修改</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="del">删除</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
-        <el-button :size="'mini'" type="primary"  >禁用</el-button>
-        <el-button :size="'mini'" type="primary"  >启用</el-button>
+        <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
+        <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
       </el-button-group>
     </el-form>
   </div>
@@ -49,7 +49,7 @@ export default {
     },
     del() {
       if (this.clickData.deptId) {
-        this.$confirm('是否删除' + this.clickData.deptName + '，删除后将无法恢复?', '提示', {
+        this.$confirm('是否删除(' + this.clickData.deptName + ')，删除后将无法恢复?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -77,7 +77,33 @@ export default {
           type: "warning"
         });
       }
-    }
+    },
+    disable() {
+      if (this.clickData.deptId) {
+        this.$message({
+          message: "抱歉，功能尚未完善！",
+          type: "warning"
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    enable() {
+      if (this.clickData.deptId) {
+        this.$message({
+          message: "抱歉，功能尚未完善！",
+          type: "warning"
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
   }
 };
 </script>
