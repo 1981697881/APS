@@ -155,7 +155,7 @@
   import { updateProductNum } from '@/api/production/index'
   import { getFinalGoodsType, getSemiFinishedProductsType, getSemiFinishedProducts, getFinalGoods} from '@/api/basic/index'
   import {getToken} from '@/utils/auth' // get token from cookie
-  import { PrintTwo } from '@/tools/doPrint'
+  import { PrintTwo, PrintAccount} from '@/tools/doPrint'
   export default {
     props: {
       listInfo: {
@@ -222,6 +222,7 @@
     created() {
     },
     mounted() {
+      console.log(this.listInfo)
       this.fetchLine(this.listInfo.isF)
       if (this.listInfo) {
         this.form = this.listInfo
@@ -238,12 +239,24 @@
         this.visible = true
       },
       confirmPrint() {
+        if(this.printModel != null){
         // data: 数据
         // printingQuantity: 打印品种
         // apiece: 打印
         // repeat: 重复打印第几张
-        PrintTwo(this.form, this.printingQuantity, this.apiece, this.repeat)
-        LODOP.PREVIEW()
+        // printModel: 打印模板
+          if(this.printModel == 0) {
+            PrintAccount(this.form, this.printingQuantity, this.apiece, this.repeat)
+          }else{
+            PrintTwo(this.form, this.printingQuantity, this.apiece, this.repeat, this.printModel)
+          }
+          LODOP.PREVIEW()
+        }else{
+          this.$message({
+            message: "请选择打印模板",
+            type: "warning"
+          })
+        }
       },
       saveData(form) {
         this.$refs[form].validate((valid) => {
@@ -286,10 +299,10 @@
           })
         } else {
           this.options = [{
-            value: '0',
+            value: '3',
             label: '色石&Base标签'
           }, {
-            value: '1',
+            value: '4',
             label: '美瓷胶标签'
           }]
           getSemiFinishedProductsType().then(res => {

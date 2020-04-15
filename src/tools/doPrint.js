@@ -1,7 +1,7 @@
 import {getLodop} from '@/tools/LodopFuncs'
 // 自有产品标签
-const PrintAccount = (data, codetype, url, code) => {
-  let qrAccount = `${url}/#/?type=${codetype}&code=${code}`
+const PrintAccount = (data, printingQuantity, apiece, repeat) => {
+  let qrAccount = `123`
   // 调用打印对象
   LODOP = getLodop()
   // 序号
@@ -9,93 +9,106 @@ const PrintAccount = (data, codetype, url, code) => {
   LODOP.SET_PRINT_PAGESIZE(1, '95mm', '65mm', '');
   /*  LODOP.SET_SHOW_MODE('LANDSCAPE_DEFROTATED', 1);
     LODOP.SET_PRINT_STYLEA(2, 'AngleOfPageInside', 180);*/
-  LODOP.SET_PRINT_STYLE('FontSize', 16);
-  LODOP.ADD_PRINT_TEXT('1mm', '25mm', '50mm', '10mm', '石材调专用底漆');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('13mm', '17mm', '50mm', '10mm', data.oldCode);
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 1);
-  LODOP.ADD_PRINT_BARCODE('11mm', '75mm', '13mm', '13mm', 'QRCode', qrAccount)
-  LODOP.SET_PRINT_STYLE('FontSize', 10);
-  LODOP.ADD_PRINT_TEXT('22mm', '17mm', '29mm', '10mm', 'HG/T 4343-2012');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('26mm', '17mm', '29mm', '10mm', 'GB 24408-2009');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.SET_PRINT_STYLE('FontSize', 12);
-  LODOP.ADD_PRINT_TEXT('23mm', '65mm', '30mm', '10mm', '不稀释');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('33mm', '17mm', '29mm', '10mm', data.productionDate);
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('33mm', '64mm', '30mm', '10mm', data.lotNo);
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('42mm', '17mm', '29mm', '10mm', ' 12个月');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('42mm', '65mm', '30mm', '10mm', ' 9kg');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.SET_PRINT_STYLE('FontSize', 10);
-  LODOP.ADD_PRINT_TEXT('52mm', '17mm', '46mm', '10mm', '产地:上海');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('57mm', '17mm', '46mm', '10mm', ' 料号:610251.B009649P18');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-
-  // LODOP.ADD_PRINT_TEXT(159, 11, 163, 42, qrAccount)
-  // LODOP.SET_PRINT_STYLEA(0, 'FontSize', 11)
+  console.log(printingQuantity)
+  for (var i = 0; i < printingQuantity; i++) {
+    LODOP.SET_PRINT_STYLE('FontSize', 16);
+    LODOP.ADD_PRINT_TEXT('1mm', '25mm', '50mm', '10mm', '石材调专用底漆');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('13mm', '17mm', '50mm', '10mm', data.oldCode);
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 1);
+    LODOP.ADD_PRINT_BARCODE('11mm', '75mm', '13mm', '13mm', 'QRCode', qrAccount)
+    LODOP.SET_PRINT_STYLE('FontSize', 10);
+    LODOP.ADD_PRINT_TEXT('22mm', '17mm', '29mm', '10mm', 'HG/T 4343-2012');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('26mm', '17mm', '29mm', '10mm', 'GB 24408-2009');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.SET_PRINT_STYLE('FontSize', 12);
+    LODOP.ADD_PRINT_TEXT('23mm', '65mm', '30mm', '10mm', '不稀释');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('33mm', '17mm', '29mm', '10mm', data.productionDate);
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('33mm', '64mm', '30mm', '10mm', data.lotNo);
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('42mm', '17mm', '29mm', '10mm', ' 12个月');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('42mm', '65mm', '30mm', '10mm', ' 9kg');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.SET_PRINT_STYLE('FontSize', 10);
+    LODOP.ADD_PRINT_TEXT('52mm', '17mm', '46mm', '10mm', '产地:上海');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('57mm', '17mm', '46mm', '10mm', ' 料号:610251.B009649P18');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    //分页
+    LODOP.NewPage();
+  }
 }
 // OEM成品 半成品标签
-const PrintTwo = (data, codetype, url, code) => {
-  let qrAccount = `${url}/#/?type=${codetype}&code=${code}`
+const PrintTwo = (data, printingQuantity, apiece, repeat, printModel) => {
+  console.log(printingQuantity)
+  let qrAccount = `123`
   // 调用打印对象
   LODOP = getLodop()
-  // 序号
-  LODOP.PRINT_INITA(0, 0, 50, 50, '100*70标签');
-  LODOP.SET_PRINT_PAGESIZE(1, '100mm', '70mm', '');
-  //表格线
-  LODOP.ADD_PRINT_LINE('3mm', '2mm', '3mm', '96mm', 0, 1);
-  //上横线
-  LODOP.ADD_PRINT_LINE('3mm', '2mm', '67mm', '2mm', 0, 1);
-  // 最左竖线
-  LODOP.ADD_PRINT_LINE('3mm', '96mm', '67mm', '96mm', 0, 1);
-  // 最右竖线
-  LODOP.ADD_PRINT_LINE('67mm', '2mm', '67mm', '96mm', 0, 1);
-  // 下横线
-  LODOP.SET_PRINT_STYLE('FontSize', 14);
-  LODOP.ADD_PRINT_TEXT('10mm', '2mm', '19mm', '10mm', '旧料号');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('10mm', '21mm', '45mm', '10mm', data.oldCode);
-  LODOP.ADD_PRINT_BARCODE('6mm', '75mm', '21mm', '21mm', 'QRCode', qrAccount)
-  LODOP.ADD_PRINT_TEXT('30mm', '2mm', '19mm', '10mm', '生产');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('36mm', '2mm', '19mm', '10mm', '日期');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('33mm', '20mm', '30mm', '10mm', data.productionDate);
-  LODOP.ADD_PRINT_TEXT('33mm', '48.3mm', '19mm', '10mm', '批号');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('33mm', '67.3mm', '32mm', '10mm', data.lotNo);
+  for (var i = 0; i < printingQuantity; i++) {
+    // 序号
+    LODOP.PRINT_INITA(0, 0, 50, 50, '100*70标签');
+    LODOP.SET_PRINT_PAGESIZE(1, '100mm', '70mm', '');
+    //表格线
+    LODOP.ADD_PRINT_LINE('3mm', '2mm', '3mm', '96mm', 0, 1);
+    //上横线
+    LODOP.ADD_PRINT_LINE('3mm', '2mm', '67mm', '2mm', 0, 1);
+    // 最左竖线
+    LODOP.ADD_PRINT_LINE('3mm', '96mm', '67mm', '96mm', 0, 1);
+    // 最右竖线
+    LODOP.ADD_PRINT_LINE('67mm', '2mm', '67mm', '96mm', 0, 1);
+    // 下横线
+    LODOP.SET_PRINT_STYLE('FontSize', 14);
+    LODOP.ADD_PRINT_TEXT('10mm', '2mm', '19mm', '10mm', '旧料号');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('10mm', '21mm', '45mm', '10mm', data.oldCode);
+    LODOP.ADD_PRINT_BARCODE('6mm', '75mm', '21mm', '21mm', 'QRCode', qrAccount)
+    LODOP.ADD_PRINT_TEXT('30mm', '2mm', '19mm', '10mm', '生产');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('36mm', '2mm', '19mm', '10mm', '日期');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('33mm', '20mm', '30mm', '10mm', data.productionDate);
+    LODOP.ADD_PRINT_TEXT('33mm', '48.3mm', '19mm', '10mm', '批号');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('33mm', '67.3mm', '32mm', '10mm', data.lotNo);
 
-  LODOP.ADD_PRINT_TEXT('54mm', '2mm', '19mm', '10mm', '料号');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.SET_PRINT_STYLE('FontSize', 8);
-  LODOP.ADD_PRINT_TEXT('56mm', '20mm', '30mm', '10mm', data.oldCode);
-  LODOP.SET_PRINT_STYLE('FontSize', 14);
-  /*LODOP.ADD_PRINT_TEXT('53mm', '48.3mm', '19mm', '10mm', '净含量');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);*/
-  LODOP.ADD_PRINT_TEXT('51mm', '48.3mm', '19mm', '10mm', '每箱');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('57mm', '48.3mm', '19mm', '10mm', '数量');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.SET_PRINT_STYLE('FontSize', 16);
-  LODOP.ADD_PRINT_TEXT('53mm', '65.3mm', '30mm', '10mm', data.oldCode);
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  //第一行横线
-  LODOP.ADD_PRINT_LINE('24.3mm', '2mm', '24.3mm', '96mm', 0, 1);
-  //第二行横线
-  LODOP.ADD_PRINT_LINE('45.6mm', '2mm', '45.6mm', '96mm', 0, 1);
-  //中间第一竖线
-  LODOP.ADD_PRINT_LINE('3mm', '19mm', '67mm', '19mm', 0, 1);
-  //中间第二竖线
-  LODOP.ADD_PRINT_LINE('24.3mm', '47.5mm', '67mm', '47.5mm', 0, 1);
-  //中间第三竖线
-  LODOP.ADD_PRINT_LINE('24.3mm', '66.5mm', '67mm', '66.5mm', 0, 1);
-  // 最右竖线
+    LODOP.ADD_PRINT_TEXT('54mm', '2mm', '19mm', '10mm', '料号');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.SET_PRINT_STYLE('FontSize', 8);
+    LODOP.ADD_PRINT_TEXT('56mm', '20mm', '30mm', '10mm', data.oldCode);
+    LODOP.SET_PRINT_STYLE('FontSize', 14);
+    if (printModel == 1) {
+      LODOP.ADD_PRINT_TEXT('53mm', '48.3mm', '19mm', '10mm', '净含量');
+      LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    } else if (printModel == 3) {
+      LODOP.ADD_PRINT_TEXT('53mm', '48.3mm', '19mm', '10mm', '净重量');
+      LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    } else {
+      LODOP.ADD_PRINT_TEXT('51mm', '48.3mm', '19mm', '10mm', '每箱');
+      LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+      LODOP.ADD_PRINT_TEXT('57mm', '48.3mm', '19mm', '10mm', '数量');
+      LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+      LODOP.SET_PRINT_STYLE('FontSize', 16);
+    }
+    LODOP.ADD_PRINT_TEXT('53mm', '65.3mm', '30mm', '10mm', data.oldCode);
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    //第一行横线
+    LODOP.ADD_PRINT_LINE('24.3mm', '2mm', '24.3mm', '96mm', 0, 1);
+    //第二行横线
+    LODOP.ADD_PRINT_LINE('45.6mm', '2mm', '45.6mm', '96mm', 0, 1);
+    //中间第一竖线
+    LODOP.ADD_PRINT_LINE('3mm', '19mm', '67mm', '19mm', 0, 1);
+    //中间第二竖线
+    LODOP.ADD_PRINT_LINE('24.3mm', '47.5mm', '67mm', '47.5mm', 0, 1);
+    //中间第三竖线
+    LODOP.ADD_PRINT_LINE('24.3mm', '66.5mm', '67mm', '66.5mm', 0, 1);
+    // 最右竖线
+    // 分页
+    LODOP.NewPage();
+  }
 }
 // 外购物料标签
 const PrintThree = (qrTitle, codetype, url, code) => {
@@ -320,6 +333,7 @@ const PrintSchedule = (data, codetype, url, code) => {
 // 半成品排产信息
 const PrintSemi = (data, codetype, url, code) => {
   console.log(data)
+
   function getByteLen(val) {
     var len = 0;
     for (var i = 0; i < val.length; i++) {
@@ -436,4 +450,19 @@ const PrintSemi = (data, codetype, url, code) => {
     }
   }
 }
-export {PrintAccount, PrintTwo, PrintThree, PrintSchedule, PrintSemi}
+const PrintStorage = (data, codetype, url, code) => {
+
+  for (var i = 0; i < data.length; i++) { //每页最多打印六条
+    //左边栏
+    let qrAccount = data[i]
+    LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",7);
+    LODOP.ADD_PRINT_BARCODE("1mm", "2mm", "40mm", "40mm", 'QRCode', qrAccount)
+    LODOP.ADD_PRINT_TEXT("35mm", "0mm", "40mm", "8mm", data[i].piName);
+    LODOP.SET_PRINT_STYLEA(0, "Alignment", 2);
+    LODOP.SET_PRINT_STYLEA(0, "FontSize", 13);
+    LODOP.SET_PRINT_PAGESIZE(1, '40mm', '40mm');
+    //分页
+    LODOP.NewPage();
+  }
+}
+export {PrintAccount, PrintTwo, PrintThree, PrintSchedule, PrintSemi, PrintStorage}

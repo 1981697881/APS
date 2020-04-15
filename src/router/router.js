@@ -14,6 +14,7 @@ const map = {
   'resources': () => import('@/views/basic/resources'),
   'regulation': () => import('@/views/basic/regulation'),
   'barcode': () => import('@/views/basic/barcode'),
+  'storageLocation': () => import('@/views/basic/storageLocation'),
 
   'prepare': () => import('@/views/production/prepare'),
   'scheduling': () => import('@/views/production/scheduling'),

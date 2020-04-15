@@ -577,3 +577,15 @@ export function delRegulation(params) {
     method: 'delete'
   })
 }
+// 库位管理-获取列表
+export function getStorageList(data) {
+  const url = '/position/list/' + data.pageNum + '/' + data.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST'
+  })
+}
