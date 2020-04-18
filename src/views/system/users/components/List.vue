@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getUsersList} from "@/api/system/index";
+import { getUsersList, delUsers} from "@/api/system/index";
 import List from "@/components/List";
 
 export default {
@@ -61,9 +61,16 @@ export default {
       },
     // 弹窗拖拽
     handleDrag() {
-      this.$refs.select.blur();
+      this.$refs.select.blur()
     },
-    closedDialog() {},
+    Delivery(val) {
+      delUsers(val).then(res => {
+        if(res.flag){
+          this.$store.dispatch("list/setClickData", '');
+          this.fetchData()
+        }
+      })
+    },
     dblclick(obj) {
         this.$emit('showDialog', obj.row)
     },

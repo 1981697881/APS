@@ -65,24 +65,27 @@ export default {
     dblclick(obj) {
       this.$emit('showDialog',obj.row)
     },
-      Delivery(val){
-          delivery(val).then(res => {
-              this.$emit('uploadList')
-          });
-      },
-      //监听单击某一行
-      rowClick(obj) {
-          this.$store.dispatch("list/setClickData", obj.row);
-      },
+    Delivery(val){
+      delivery(val).then(res => {
+        if(res.flag){
+          this.$store.dispatch("list/setClickData", '');
+          this.fetchData();
+        }
+      });
+    },
+    // 监听单击某一行
+    rowClick(obj) {
+      this.$store.dispatch("list/setClickData", obj.row);
+    },
     fetchData(fid, type) {
       this.loading = true;
       const data = {
       /*  fid: fid,
         type: type,*/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
+        pageNum: this.list.current || 1,
+        pageSize: this.list.size || 50
       };
-        salesList(data).then(res => {
+      salesList(data).then(res => {
         this.loading = false;
         this.list = res.data;
       });

@@ -25,12 +25,13 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20">
+      <!--<el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'组织编码'" prop="roleName">
             <el-input v-model="form.orgCode"></el-input>
           </el-form-item>
         </el-col>
+      </el-row>-->
         <el-row :gutter="20">
           <el-col :span="24">
             <el-form-item :label="'创建时间'">
@@ -39,7 +40,7 @@
                 type="daterange"
                 :picker-options="pickerOptions"
                 range-separator="至"
-                value-format="yyyy-MM-dd"
+                value-format="yyyy/MM/dd"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
                 align="right">
@@ -55,7 +56,7 @@
                 type="daterange"
                 :picker-options="pickerOptions"
                 range-separator="至"
-                value-format="yyyy-MM-dd"
+                value-format="yyyy/MM/dd"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
                 align="right">
@@ -63,7 +64,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-      </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">
       <el-button type="primary" @click="saveData('form')">同步</el-button>
@@ -78,15 +78,15 @@
     data() {
       return {
         form: {
-          code: null,
-          code1: null, // 名称
-          code2:null,
-          createdOnEnd:null,
-          createdOnStart:null,
-          modifyOnEnd:null,
-          modifyOnStart:null,
-          name:null,
-          orgCode:null,
+          code: '',
+          code1: '', // 名称
+          code2: '',
+          createdOnEnd: '',
+          createdOnStart: '',
+          modifyOnEnd: '',
+          modifyOnStart: '',
+          name: '',
+          orgCode: '',
         },
         value1: '',
         value2: '',
@@ -137,12 +137,12 @@
             this.form.modifyOnEnd = null
             this.form.modifyOnStart = null
             if(this.value1 != null && this.value1 != '') {
-              this.form.createdOnEnd = this.value1[0]
-              this.form.createdOnStart = this.value1[1]
+              this.form.createdOnEnd = this.value1[1]
+              this.form.createdOnStart = this.value1[0]
             }
             if(this.value2 != null && this.value2 != '') {
-              this.form.modifyOnEnd = this.value2[0]
-              this.form.modifyOnStart = this.value2[1]
+              this.form.modifyOnEnd = this.value2[1]
+              this.form.modifyOnStart = this.value2[0]
             }
             syncMaterialInfo(this.form).then(res => {
                 this.$emit('hideDialog', false)

@@ -12,6 +12,7 @@
       title="用户设备信息"
       v-if="visible"
       :width="'40%'"
+      v-dialogDrag
       destroy-on-close
     >
       <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
@@ -20,6 +21,7 @@
       :visible.sync="visible2"
       title="生产线信息"
       v-if="visible2"
+      v-dialogDrag
       :width="'40%'"
       destroy-on-close
     >
@@ -30,7 +32,7 @@
 <script>
 import { Type, TabsBar, List } from "./components";
 import { Info, TDetail } from "./form";
-import { delProductionLine, delResources} from "@/api/basic/index";
+
 export default {
   components: {
     Type,
@@ -76,7 +78,10 @@ export default {
     },
     groupDialog(obj) {
       this.gpInfo = null
-      if(obj) this.gpInfo = obj
+      if(obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.gpInfo = info
+      }
       this.visible2 = true
     },
     uploadAll() {
@@ -92,22 +97,14 @@ export default {
       this.$refs.tree.fetchData()
     },
     delList(val) {
-      this.loading = true
-      delProductionLine(val).then(res => {
-        if(res.flag) {
-          this.loading = false
-          this.upload()
-        }
-      })
+      if(val) {
+        this.$refs.list.Delivery(val)
+      }
     },
     delType(val) {
-      this.loading = true
-      delResources(val).then(res => {
-        if(res.flag) {
-          this.loading = false
-          this.uploadGroup()
-        }
-      })
+      if(val) {
+        this.$refs.tree.Delivery(val)
+      }
     }
 
   }

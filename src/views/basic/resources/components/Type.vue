@@ -15,7 +15,7 @@
 
 <script>
   import {mapGetters} from "vuex";
-  import {getResourcesList} from "@/api/basic/index";
+  import {getResourcesList, delResources} from "@/api/basic/index";
   import List from "@/components/List";
   export default {
     components: {
@@ -53,6 +53,14 @@
       rowClick(obj) {
         this.$emit('queryList', obj.row.tpId)
         this.$store.dispatch("list/setClickData", obj.row)
+      },
+      Delivery(val) {
+        delResources(val).then(res => {
+          if(res.flag){
+            this.$store.dispatch("list/setClickData", '');
+            this.fetchData()
+          }
+        })
       },
       fetchData() {
         this.loading = true;

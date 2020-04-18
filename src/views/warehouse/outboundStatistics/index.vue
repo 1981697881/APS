@@ -10,6 +10,7 @@
       :visible.sync="visible"
       title="用户信息"
       v-if="visible"
+      v-dialogDrag
       :width="'40%'"
       destroy-on-close
     >
@@ -44,7 +45,10 @@ export default {
     },
     handlerDialog(obj) {
       this.listInfo = null
-      if (obj) this.listInfo = obj
+      if(obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
       this.visible = true
     },
     // 查询

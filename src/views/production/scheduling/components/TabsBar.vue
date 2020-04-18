@@ -9,7 +9,18 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint">打印</el-button>
+          <el-popover
+            placement="bottom"
+            width="200"
+            :size="'mini'"
+            v-model="visible">
+            <p>请选择需要打印的内容</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="primary" @click="confirmPrint">打印单据</el-button>
+              <el-button type="success" size="mini" @click="visible = false">打印标签</el-button>
+            </div>
+            <el-button :size="'mini'" type="primary" icon="el-icon-printer" slot="reference"  >打印</el-button>
+          </el-popover>
         </el-button-group>
       </el-row>
       <el-row :gutter="24"  style="padding-top: 15px;">
@@ -46,7 +57,14 @@
         </el-col>
         <el-col :span="3">
           <el-form-item :label="'生产状态'" :label-width="'70px'">
-            <el-input v-model="search.allocatedStatus" placeholder="输入关键字"/>
+            <el-select v-model="search.allocatedStatus" placeholder="请选择" @change="selectChange">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -57,43 +75,60 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { PrintSchedule} from '@/tools/doPrint'
+import { mapGetters } from "vuex"
+import { PrintSchedule } from '@/tools/doPrint'
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
+  components: {},
+  computed: {
+    ...mapGetters(["node","clickData","selections"])
+  },
   data() {
     return {
-        value: '',
-        pickerOptions: {
-            shortcuts: [{
-                text: '最近一周',
-                onClick(picker) {
-                    const end = new Date();
-                    const start = new Date();
-                    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-                    picker.$emit('pick', [start, end]);
-                }
-            }, {
-                text: '最近一个月',
-                onClick(picker) {
-                    const end = new Date();
-                    const start = new Date();
-                    start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-                    picker.$emit('pick', [start, end]);
-                }
-            }, {
-                text: '最近三个月',
-                onClick(picker) {
-                    const end = new Date();
-                    const start = new Date();
-                    start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-                    picker.$emit('pick', [start, end]);
-                }
-            }]
-        },
+      value: '',
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
+      options: [{
+        value: '待生产',
+        label: '待生产'
+      }, {
+        value: '生产中',
+        label: '生产中'
+      }, {
+        value: '已暂停',
+        label: '已暂停'
+      }, {
+        value: '已停止',
+        label: '已停止'
+      }, {
+        value: '生产完毕',
+        label: '生产完毕'
+      }],
+      visible: false,
       search: {
         allocatedStatus: null,
         oldCode: null,
@@ -104,6 +139,9 @@ export default {
   },
 
   methods: {
+    selectChange(val) {
+        this.$emit('uploadList')
+    },
     delivery() {
       if (this.clickData.taskId) {
         this.$message({
@@ -169,12 +207,12 @@ export default {
       }
     },
     upload() {
-      this.$emit('uploadList')
       this.search.allocatedStatus = null
       this.search.oldCode = null
       this.search.soName = null
       this.search.taskNum = null
       this.value = []
+      this.$emit('uploadList')
     },
     report() {
       if (this.clickData.taskId) {
@@ -190,21 +228,20 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.allocatedStatus == null && this.search.allocatedStatus == '' ? obj.allocatedStatus = this.search.allocatedStatus : null
-      this.search.oldCode == null && this.search.oldCode == '' ? obj.oldCode = this.search.oldCode : null
-      this.search.soName == null && this.search.soName == '' ? obj.soName = this.search.soName : null
-      this.search.taskNum == null && this.search.taskNum == '' ? obj.taskNum = this.search.taskNum : null
+      this.search.allocatedStatus != null && this.search.allocatedStatus != '' ? obj.allocatedStatus = this.search.allocatedStatus : null
+      this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
+      this.search.soName != null && this.search.soName != '' ? obj.soName = this.search.soName : null
+      this.search.taskNum != null && this.search.taskNum != '' ? obj.taskNum = this.search.taskNum : null
       this.value[1] != null && this.value[1] != undefined ? obj.productionDateEnd = this.value[1] : null
       this.value[0] != null && this.value[0] != undefined ? obj.productionDateStart = this.value[0] : null
+      console.log(obj)
       return obj
     },
     // 关键字查询
     query() {
-      if((typeof this.search.keyword != null) && (this.search.keyword !='')) {
-        this.$emit('uploadList')
-      }
+      this.$emit('uploadList')
     },
-    handleDialog(){
+    handleDialog() {
       this.$emit('showDialog')
     }
   }

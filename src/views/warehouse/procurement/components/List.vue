@@ -36,11 +36,11 @@ export default {
         { text: '交货日期', name: '' },
         { text: '料号', name: '' },
         { text: '色号', name: '' },
-        { text: '料品名称', name: '' },
+        { text: '料品名称', name: 'goodName' },
         { text: '料品规格', name: '' },
         { text: '计划数量', name: '' },
         { text: '订单日期', name: '' },
-        { text: '单据编号', name: '' },
+        { text: '单据编号', name: 'purNum' },
       ]
     };
   },
@@ -62,18 +62,32 @@ export default {
       rowClick(obj) {
           this.$store.dispatch("list/setClickData", obj.row);
       },
-    fetchData(fid, type) {
-     /* this.loading = true;*/
-      const data = {
-      /*  fid: fid,
-        type: type,*/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
-      };
-    /*  getProcurementList(data).then(res => {
+    fetchData(val, data = {
+      pageNum: this.list.current || 1,
+      pageSize: this.list.size || 50
+    }) {
+      this.loading = true
+      getProcurementList(data, val).then(res => {
         this.loading = false;
-        this.list = res.data;
-      });*/
+        if(res.flag && res.data != null) {
+          this.list = res.data;
+          let record = res.data.records
+          let obj = []
+          for(const i in record) {
+            for(const a in record[i].detail) {
+              record[i].detail[a].purNum = record[i].purNum
+              obj.push(record[i].detail[a])
+            }
+          }
+          this.list = {
+            current: res.data.current,
+            pages: res.data.pages,
+            size: res.data.size,
+            total: res.data.total,
+            records: obj
+          }
+        }
+      })
     }
   }
 };

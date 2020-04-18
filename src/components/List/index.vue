@@ -3,11 +3,12 @@
     <el-table
       :data="list.records"
       border
-      stripe
+      :stripe="timeColor?false : true"
       size="mini"
       :highlight-current-row="true"
       @row-dblclick="dblclick"
       @row-click="rowClick"
+      :row-class-name="tableRowClassName"
        @selection-change="handleSelectionChange"
       :height="height"
       :show-summary="showSummary"
@@ -76,6 +77,11 @@ export default {
       type: Boolean,
       default: false
     },
+    // 是否开启多选
+    timeColor: {
+      type: Boolean,
+      default: false
+    },
     loading: {
       type: Boolean,
       default: false
@@ -97,9 +103,21 @@ export default {
     }
   },
   methods: {
-    //监听多选 参数-所有选中的值
+    tableRowClassName({row, rowIndex}) {
+      if (row.allocatedStatus === '加急') {
+        return 'urgent-row';
+      } else if (row.allocatedStatus === '暂停') {
+        return 'suspended-row';
+      }else if (row.allocatedStatus === '延误') {
+        return 'delay-row';
+      }else if (row.allocatedStatus === '日期冲突') {
+        return 'conflict-row';
+      }
+      return '';
+    },
+    // 监听多选 参数-所有选中的值
     handleSelectionChange(val){
-       this.$store.dispatch('list/setSelections',val)
+      this.$store.dispatch('list/setSelections',val)
     },
     getSummaries(param) {
       const { columns, data } = param;
@@ -158,4 +176,22 @@ export default {
     /* color: #f19944; */ /* 设置文字颜色，可以选择不设置 */
   }
 
+</style>
+<style>
+  .el-table .urgent-row {
+    background: red;
+    color: #f19944;
+  }
+  .el-table .suspended-row {
+    background: blue;
+    color: #f19944;
+  }
+  .el-table .delay-row {
+    background: orange;
+    color: #f19944;
+  }
+  .el-table .conflict-row {
+    background: purple;
+    color: #f19944;
+  }
 </style>

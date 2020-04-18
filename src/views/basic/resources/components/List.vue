@@ -18,7 +18,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { productionLineList} from "@/api/basic/index";
+import { productionLineList, delProductionLine} from "@/api/basic/index";
 import List from "@/components/List";
 
 export default {
@@ -65,7 +65,14 @@ export default {
     handleDrag() {
       this.$refs.select.blur();
     },
-    closedDialog() {},
+    Delivery(val) {
+      delProductionLine(val).then(res => {
+        if(res.flag){
+          this.$store.dispatch("list/setClickData", '');
+          this.fetchData()
+        }
+      })
+    },
     dblclick(obj) {
         this.$emit('showDialog', obj.row)
     },

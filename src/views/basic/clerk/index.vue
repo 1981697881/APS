@@ -12,6 +12,7 @@
       :visible.sync="visible"
       title="基本信息"
       v-if="visible"
+      v-dialogDrag
       :width="'50%'"
       destroy-on-close
     >
@@ -45,12 +46,19 @@ export default {
         this.$refs.list.Delivery(obj.eid)
       }
     },
+    // 弹窗拖拽
+    handleDrag() {
+      this.$refs.select.blur();
+    },
     hideWindow(val) {
       this.visible = val
     },
-    handlerDialog(obj){
+    handlerDialog(obj) {
       this.listInfo = null
-      if(obj)this.listInfo = obj
+      if(obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
       this.visible = true
     },
     //更新列表

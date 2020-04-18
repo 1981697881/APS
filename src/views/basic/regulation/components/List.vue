@@ -58,9 +58,10 @@ export default {
     },
       Delivery(val){
         delRegulation(val).then(res => {
-              if(res.flag) {
-                  this.fetchData()
-              }
+          if(res.flag){
+            this.$store.dispatch("list/setClickData", '');
+            this.fetchData();
+          }
           });
       },
       //监听单击某一行

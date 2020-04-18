@@ -21,8 +21,7 @@ import '@/permission' // permission control
 
 import Cookies from 'js-cookie'
 import {login,logout} from '@/api/user'
-
-
+import '@/utils/dialog'
 
 /**
  * If you don't want to use mock-server
@@ -56,7 +55,6 @@ new Vue({
      }
     if(data.username && data.password){
      var rs = Cookies.get('apsrx')
-
       if(Cookies.get('apsrx') == "undefined"){
         this.$router.push(`/login?redirect=${this.$route.fullPath}`)
         store.dispatch('user/resetToken')

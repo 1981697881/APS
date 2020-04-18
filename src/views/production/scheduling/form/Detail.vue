@@ -104,19 +104,21 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
+          <el-form-item :label="'任务警示'">
+            <el-radio-group v-model="radio">
+              <el-radio :label="3">加急</el-radio>
+              <el-radio :label="6">暂停</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
           <el-form-item :label="'备注'">
             <el-input v-model="form.remark"></el-input>
           </el-form-item>
         </el-col>
-        <!--<el-col :span="12">
-          <el-form-item :label="'任务警示'">
-            <el-color-picker v-model="form.tips" show-alpha></el-color-picker>
-          </el-form-item>
-        </el-col>-->
       </el-row>
-      <!--<el-row :gutter="20">
-
-      </el-row>-->
       <!-- <el-row :gutter="20">
         <el-table :data="list" border :height="'250px'" stripe size="mini" :highlight-current-row="true" >
           <el-table-column prop="date" label="序号"  align="center" type="index" sortable></el-table-column>
@@ -177,6 +179,7 @@ export default {
   },
   data() {
     return {
+      radio: null,
       num1: 1,
       visible: false,
       disPl: true,

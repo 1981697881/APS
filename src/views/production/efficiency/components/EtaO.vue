@@ -58,7 +58,10 @@
             },
             Delivery(val){
                 delivery(val).then(res => {
-                    this.$emit('uploadList')
+                  if(res.flag){
+                    this.$store.dispatch("list/setClickData", '');
+                    this.fetchData();
+                  }
                 });
             },
             //监听单击某一行

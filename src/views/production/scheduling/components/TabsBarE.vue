@@ -163,9 +163,7 @@
           },
             // 关键字查询
           query() {
-            if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-              this.$emit('uploadList')
-            }
+            this.$emit('uploadList')
           },
           delivery() {
             if (this.clickData.taskId) {

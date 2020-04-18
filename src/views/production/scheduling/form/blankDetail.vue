@@ -66,11 +66,14 @@
             <el-input v-model="form.remark"></el-input>
           </el-form-item>
         </el-col>
-        <!--<el-col :span="12">
+        <el-col :span="12">
           <el-form-item :label="'任务警示'">
-            <el-color-picker v-model="form.tips" show-alpha></el-color-picker>
+            <el-radio-group v-model="radio">
+              <el-radio :label="3">加急</el-radio>
+              <el-radio :label="6">暂停</el-radio>
+            </el-radio-group>
           </el-form-item>
-        </el-col>-->
+        </el-col>
       </el-row>
     </el-form>
     <div slot="footer" style="text-align:center;padding-top: 15px">
@@ -91,6 +94,7 @@
     },
     data() {
       return {
+        radio: null,
         num1: 1,
         visible: false,
         form: {

@@ -52,6 +52,7 @@
       :visible.sync="visible"
       title="基本信息"
       v-if="visible"
+      v-dialogDrag
       :width="'80%'"
       destroy-on-close
     >
@@ -61,6 +62,7 @@
       :visible.sync="visibleBlank"
       title="基本信息"
       v-if="visibleBlank"
+      v-dialogDrag
       :width="'80%'"
       destroy-on-close
     >
@@ -70,6 +72,7 @@
       :visible.sync="visibleR"
       title="汇报信息"
       v-if="visibleR"
+      v-dialogDrag
       :width="'80%'"
       destroy-on-close
     >
@@ -155,14 +158,18 @@ export default {
     },
     handlerDialog(obj) {
       this.listInfo = null
-      const info = JSON.parse(JSON.stringify(obj))
-      if(obj) this.listInfo = info
+      if(obj){
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
       this.visible = true
     },
     report(obj) {
       this.listInfo = null
-      const info = JSON.parse(JSON.stringify(obj))
-      if(obj) this.listInfo = info
+      if(obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
       this.visibleR = true
     },
     handlerBlank(obj) {
@@ -192,13 +199,14 @@ export default {
     upload(val = { tpId: this.plaIdS }) {
       const obj = this.$refs.tabs.qFilter()
       obj.tpId = this.plaIdS
+      console.log(obj)
       this.$refs.list1.fetchData(obj)
     },
     // 更新列表
     uploadT(val = { tpId: this.plaIdB }) {
       const obj = this.$refs.tabse.qFilter()
       obj.tpId = this.plaIdB
-     this.$refs.list2.fetchData(obj)
+      this.$refs.list2.fetchData(obj)
     },
   }
 };

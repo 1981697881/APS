@@ -3,6 +3,7 @@
     title="房产选择"
     :visible.sync="visible"
     width="60%"
+    v-dialogDrag
     v-if="visible"
     destroy-on-close
     append-to-body

@@ -60,6 +60,7 @@
       title="下单数量"
       v-if="visible"
       :width="'30%'"
+      v-dialogDrag
       destroy-on-close
       append-to-body
     >

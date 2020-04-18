@@ -22,16 +22,48 @@
       :visible.sync="visible"
       title="确认信息"
       v-if="visible"
+      v-dialogDrag
       :width="'50%'"
       destroy-on-close
     >
-        <el-form :model="form" ref="form" label-width="60px" :size="'mini'">
-          <el-row :gutter="20">
+        <el-form :model="form" ref="form" label-width="120px" :size="'mini'">
+          <el-row :gutter="20" >
             <el-col :span="12">
               <el-form-item :label="'单号'" >
                 <el-input v-model="form.docNo"></el-input>
               </el-form-item>
             </el-col>
+            <el-col :span="12">
+              <el-form-item :label="'组织编码'" >
+                <el-input v-model="form.orgCode"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item :label="'物料名'" >
+                <el-input v-model="form.itemName"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item :label="'物料编码'" >
+                <el-input v-model="form.itemCode"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item :label="'客户名称'" >
+                <el-input v-model="form.customerName"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item :label="'客户编码'" >
+                <el-input v-model="form.customeCode"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20">
             <el-col :span="24" >
               <el-form-item :label="'日期'" >
                 <el-date-picker
@@ -68,9 +100,14 @@ export default {
     return {
       visible: null,
       form: {
-        docNo: null,
-        businessDateStart: null,
-        businessDateEnd: null,
+        docNo: '',
+        customeCode: '',
+        customerName: '',
+        itemCode: '',
+        itemName: '',
+        orgCode: '',
+        businessDateStart: '',
+        businessDateEnd: '',
         value: [],
       },
       pickerOptions: {
@@ -145,7 +182,7 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.keyword != null || this.search.keyword != undefined ? obj.docNo = this.search.keyword : null
+      this.search.keyword != null && this.search.keyword != '' ? obj.docNo = this.search.keyword : null
       return obj
     },
     // 关键字查询

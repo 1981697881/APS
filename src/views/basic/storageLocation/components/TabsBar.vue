@@ -21,26 +21,24 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { PrintStorage} from '@/tools/doPrint'
+import { PrintStorage } from '@/tools/doPrint'
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
+  components: {},
+  computed: {
+    ...mapGetters(["node","clickData","selections"])
+  },
   data() {
     return {
       search: {
-          keyword: null
+        keyword: null
       }
     };
   },
 
-  methods:{
-    //关键字查询
+  methods: {
+    // 关键字查询
     query(){
-      if((typeof this.search.keyword != null) && (this.search.keyword !='')){
         this.$emit('queryBtn', this.qFilter())
-      }
     },
     upload() {
       this.$emit('uploadList')

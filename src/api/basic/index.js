@@ -577,6 +577,19 @@ export function delRegulation(params) {
     method: 'delete'
   })
 }
+// 商品-打印查询
+export function getGoodPrints(params) {
+  const url = '/goods/getPrintInfoById'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
 // 库位管理-获取列表
 export function getStorageList(data) {
   const url = '/position/list/' + data.pageNum + '/' + data.pageSize

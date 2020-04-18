@@ -11,6 +11,7 @@
       :visible.sync="visible"
       title="用户信息"
       v-if="visible"
+      v-dialogDrag
       :width="'40%'"
       destroy-on-close
     >
@@ -21,6 +22,7 @@
       :visible.sync="visible2"
       title="用户组信息"
       v-if="visible2"
+      v-dialogDrag
       :width="'40%'"
       destroy-on-close
     >
@@ -33,7 +35,6 @@
 <script>
 import { Tree, TabsBar, List } from "./components";
 import { Info, Group } from "./form";
-import { delGroup, delUsers} from "@/api/system/index";
 export default {
   components: {
     Tree,
@@ -64,12 +65,18 @@ export default {
     },
     handlerDialog(obj) {
       this.listInfo = null
-      if(obj)this.listInfo = obj
+      if(obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
       this.visible = true
     },
     groupDialog(obj) {
       this.gpInfo = null
-      if(obj)this.gpInfo = obj
+      if(obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.gpInfo = info
+      }
       this.visible2 = true
     },
     // 更新列表
@@ -86,20 +93,14 @@ export default {
       this.$refs.tree.fetchData()
     },
     delList(val) {
-      this.loading = true
-      delUsers(val).then(res => {
-        this.loading = false
-        this.list = res.data
-        this.uploadAll()
-      })
+      if(val) {
+        this.$refs.list.Delivery(val)
+      }
     },
     delGroup(val) {
-      this.loading = true
-      delGroup(val).then(res => {
-        this.loading = false
-        this.list = res.data
-        this.uploadAll()
-      })
+      if(val) {
+        this.$refs.tree.Delivery(val)
+      }
     }
 
   }

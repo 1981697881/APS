@@ -119,9 +119,7 @@ export default {
     },
     // 关键字查询
     query() {
-      if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-        this.$emit('queryBtn', this.qFilter())
-      }
+      this.$emit('queryBtn', this.qFilter())
     },
     handleAlter() {
       if (this.clickData.gid) {

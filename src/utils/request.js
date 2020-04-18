@@ -99,8 +99,9 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.msg || 'Error'))
     } else {
+
       if(res.msg!="登陆成功" && res.msg!=null){
-        if(res.status==20000){
+        if(res.status == 20000){
           Message({
             message:res.msg,
             type:'success',

@@ -7,6 +7,7 @@
       :list="list"
       index
       type
+       timeColor
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -54,32 +55,33 @@ export default {
     };
   },
   methods: {
+
     // 监听多选 参数-所有选中的值
     handleSelectionChange(val){
       this.$store.dispatch('list/setSelections',val)
     },
-      //监听每页显示几条
-      handleSize(val) {
-          this.list.size = val
-          this.fetchData();
-      },
-      //监听当前页
-      handleCurrent(val) {
-          this.list.current = val;
-          this.fetchData();
-      },
+    // 监听每页显示几条
+    handleSize(val) {
+      this.list.size = val
+      this.fetchData();
+    },
+    // 监听当前页
+    handleCurrent(val) {
+      this.list.current = val;
+      this.fetchData();
+    },
     dblclick(obj) {
       this.$emit('showDialog', obj.row)
     },
-      //监听单击某一行
-      rowClick(obj) {
-          this.$store.dispatch("list/setClickData", obj.row);
-      },
+    // 监听单击某一行
+    rowClick(obj) {
+      this.$store.dispatch("list/setClickData", obj.row);
+    },
     fetchData(val) {
       this.loading = true
       const data = {
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
+        pageNum: this.list.current || 1,
+        pageSize: this.list.size || 50
       }
       let obj = {}
       val != null || val != undefined ? obj = val : null
@@ -97,3 +99,4 @@ export default {
   height: calc((100vh - 330px));
 }
 </style>
+

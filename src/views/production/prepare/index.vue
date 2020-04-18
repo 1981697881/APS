@@ -11,6 +11,7 @@
     <el-dialog
       :visible.sync="visible"
       title="基本信息"
+      v-dialogDrag
       v-if="visible"
       :width="'50%'"
       destroy-on-close

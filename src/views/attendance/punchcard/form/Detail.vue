@@ -59,6 +59,7 @@
       :visible.sync="visible"
       title="下单数量"
       v-if="visible"
+      v-dialogDrag
       :width="'30%'"
       destroy-on-close
       append-to-body

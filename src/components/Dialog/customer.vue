@@ -3,6 +3,7 @@
     title="客户资料"
     :visible.sync="visible"
     width="70%"
+    v-dialogDrag
     v-if="visible"
     destroy-on-close
     append-to-body

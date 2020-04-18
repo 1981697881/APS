@@ -11,6 +11,7 @@
       :visible.sync="visible"
       title="基本信息"
       v-if="visible"
+      v-dialogDrag
       :width="'40%'"
       destroy-on-close
     >
@@ -28,7 +29,7 @@ export default {
     Tree,
     TabsBar,
     List,
-      Info
+    Info
   },
   data() {
     return {
@@ -39,15 +40,18 @@ export default {
     }
   },
     mounted() {
-        this.$refs.list.fetchData()
+      this.$refs.list.fetchData()
     },
   methods: {
-      hideWindow(val){
+      hideWindow(val) {
           this.visible = val
       },
-      handlerDialog(obj){
+      handlerDialog(obj) {
         this.listInfo = null
-          if(obj)this.listInfo = obj
+        if(obj) {
+          const info = JSON.parse(JSON.stringify(obj))
+          this.listInfo = info
+        }
           this.visible = true
       },
       //更新列表
@@ -67,8 +71,6 @@ export default {
       // 触发列表的获取数据函数（原为像list组件传入id并监听变动在list组件里触发函数，已销毁）
       this.$refs.list.fetchData(node.data.fid,node.data.type)
     },
-
-
   }
 };
 </script>

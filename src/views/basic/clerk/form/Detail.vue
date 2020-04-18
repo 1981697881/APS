@@ -45,7 +45,6 @@
             <el-input v-model="form.remark"></el-input>
           </el-form-item>
         </el-col>
-
       </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">

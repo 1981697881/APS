@@ -59,9 +59,10 @@ export default {
     },
       Delivery(val){
           delSupplier(val).then(res => {
-              if(res.data){
-                  this.$emit('uploadList')
-              }
+            if(res.flag){
+              this.$store.dispatch("list/setClickData", '');
+              this.fetchData();
+            }
           });
       },
       //监听单击某一行

@@ -11,19 +11,19 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'用户编码'" prop="jobNum">
-            <el-input v-model="form.jobNum"></el-input>
+            <el-input v-model="form.jobNum" readOnly></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'登录账号'" prop="username">
-            <el-input v-model="form.username"></el-input>
+            <el-input v-model="form.username" :readOnly="visible"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'对应职员'" prop="eid">
-            <el-select v-model="form.eid" class="width-full" placeholder="请选择职员">
+            <el-select v-model="form.eid" class="width-full" placeholder="请选择职员" @change="changeCheck">
               <el-option :label="t.name" :value="t.eid" v-for="(t,i) in levelFormat" :key="i"></el-option>
             </el-select>
           </el-form-item>
@@ -125,6 +125,7 @@
                 activeName: 'first',
                 pidS: [],
                 list: [],
+                 visible: false,
                 rules: {
                   username: [
                         {required: true, message: '请输入名稱', trigger: 'blur'},
@@ -150,6 +151,14 @@
           this.fetchMenu()
         },
         methods: {
+          changeCheck(val) {
+            const levelFormat = this.levelFormat
+            levelFormat.forEach((item, index)=>{
+             if( val == item.eid ) {
+               this.form.jobNum = item.jobNum
+             }
+            })
+          },
           handleSelectionChange(val) {
             this.multipleSelection = val;
           },
@@ -196,6 +205,7 @@
                 this.loading = false
                 this.list = res.data
                 if (this.listInfo) {
+                  this.visible = true
                   this.fetchData(this.listInfo.uid)
                 }
               }
@@ -205,7 +215,7 @@
             fetchFormat() {
               const data = {
                 pageNum: this.list.current || 1,
-                pageSize: this.list.size || 500
+                pageSize: this.list.size || 1500
               };
               getClerkList(data).then(res => {
                 this.levelFormat = res.data.records

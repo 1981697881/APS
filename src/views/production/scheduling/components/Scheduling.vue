@@ -64,7 +64,10 @@
       },
       Delivery(val) {
         delivery(val).then(res => {
-          this.$emit('uploadList')
+          if(res.flag){
+            this.$store.dispatch("list/setClickData", '');
+            this.fetchData();
+          }
         });
       },
       celldblclick(row, column, cell, event) {

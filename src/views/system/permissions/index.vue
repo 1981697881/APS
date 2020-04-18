@@ -11,6 +11,7 @@
       :visible.sync="visible"
       title="基本信息"
       v-if="visible"
+      v-dialogDrag
       :width="'40%'"
       destroy-on-close
     >

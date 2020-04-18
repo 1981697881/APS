@@ -12,6 +12,7 @@
       :visible.sync="visible"
       title="基本信息"
       v-if="visible"
+      v-dialogDrag
       :width="'50%'"
       destroy-on-close
     >
@@ -23,6 +24,7 @@
       title="同步信息"
       v-if="visible2"
       :width="'50%'"
+      v-dialogDrag
       destroy-on-close
     >
       <sync-info @hideDialog="hideSyncWindow"  @uploadList="upload" ></sync-info>
@@ -40,31 +42,31 @@ export default {
     TabsBar,
     List,
     syncInfo,
-      Info
+    Info
   },
   data() {
     return {
       visible: null,
       visible2: null,
       gid: null,
-        orderId: null,
-        createTime: null,
-      treeId: null, // null
+      orderId: null,
+      createTime: null,
+      treeId: null,
       floorId: null
     };
   },
-    mounted() {
-        this.$refs.list.fetchData()
-    },
+  mounted() {
+    this.$refs.list.fetchData()
+  },
   methods: {
-      delivery(obj){
-          if(obj){
-              this.$refs.list.Delivery(obj.gid)
-          }
-      },
-      hideWindow(val){
-          this.visible = val
-      },
+    delivery(obj) {
+      if(obj) {
+        this.$refs.list.Delivery(obj.gid)
+      }
+    },
+    hideWindow(val){
+      this.visible = val
+    },
     handlerDialog(obj){
       if(obj)this.gid = obj.gid
       this.visible = true
@@ -76,10 +78,10 @@ export default {
       if(obj)this.gid = obj.gid
       this.visible2 = true
     },
-      //更新列表
-      upload(){
-          this.$refs.list.fetchData()
-      }
+    // 更新列表
+    upload(){
+      this.$refs.list.fetchData()
+    }
   }
 };
 </script>
