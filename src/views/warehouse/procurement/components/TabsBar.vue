@@ -13,6 +13,7 @@
         <el-button-group style="float:right;padding-right: 10px">
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
       </el-row>
@@ -90,6 +91,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { syncPOInfoQuery } from "@/api/warehouse/index";
+import { PrintThree } from '@/tools/doPrint'
 export default {
   components: {},
   computed: {
@@ -218,6 +220,17 @@ export default {
         this.$emit('showDialog',{
           gid: this.clickData.gid,
         })
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    print() {
+      if (this.selections.length>0) {
+        PrintThree(this.selections)
+        LODOP.PREVIEW()
       } else {
         this.$message({
           message: "无选中行",

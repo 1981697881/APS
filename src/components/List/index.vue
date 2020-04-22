@@ -44,7 +44,7 @@
         @size-change="handleSize"
         @current-change="handleCurrent"
         :current-page="list.current"
-        :page-sizes="[50, 100, 250, 500]"
+        :page-sizes="[50, 100, 250, 500, 1000, 5000]"
         :page-size="list.size"
         :page-count="list.pages?list.pages:0"
         layout="total, sizes, prev, pager, next, jumper"
@@ -177,21 +177,21 @@ export default {
   }
 
 </style>
-<style>
+<style>                                                                                                                                                            <el-radio :label="8" style="color:#8032a4" disabled>冲突</el-radio>
   .el-table .urgent-row {
-    background: red;
+    background: #7b1424;
     color: #f19944;
   }
   .el-table .suspended-row {
-    background: blue;
+    background: #3b199a;
     color: #f19944;
   }
   .el-table .delay-row {
-    background: orange;
+    background: #dc9118;
     color: #f19944;
   }
   .el-table .conflict-row {
-    background: purple;
+    background: #8032a4;
     color: #f19944;
   }
 </style>

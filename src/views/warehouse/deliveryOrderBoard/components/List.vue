@@ -39,7 +39,7 @@ export default {
         { text: '单据编号', name: '' },
         { text: '料品名称', name: '' },
         { text: '料号', name: '' },
-        { text: '色号', name: '' },
+        { text: '旧料号', name: '' },
         { text: '规格', name: '' },
         { text: '出货数量', name: '' }
 

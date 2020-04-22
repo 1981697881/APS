@@ -4,6 +4,7 @@ const PrintAccount = (data, printingQuantity, apiece, repeat) => {
   let qrAccount = `/` + data.goodCode + `/` + data.oldCode + `/` + data.productionDate + `/` + data.lotNo + `/` + data.spec
   // 调用打印对象
   LODOP = getLodop()
+  console.log(qrAccount)
   // 序号
   LODOP.PRINT_INITA(0, 0, 50, 50, '成品_自有产品标签');
   LODOP.SET_PRINT_PAGESIZE(1, '95mm', '65mm', '');
@@ -46,11 +47,11 @@ const PrintAccount = (data, printingQuantity, apiece, repeat) => {
 // OEM成品 半成品标签
 const PrintTwo = (data, printingQuantity, apiece, repeat, printModel) => {
   let qrAccount = `/` + data.goodCode + `/` + data.oldCode + `/` + data.productionDate + `/` + data.lotNo + `/` + data.spec
+  LODOP.PRINT_INITA(0, 0, 50, 50, '100*70标签');
   // 调用打印对象
   LODOP = getLodop()
   for (var i = 0; i < printingQuantity; i++) {
     // 序号
-    LODOP.PRINT_INITA(0, 0, 50, 50, '100*70标签');
     LODOP.SET_PRINT_PAGESIZE(1, '100mm', '70mm', '');
     //表格线
     LODOP.ADD_PRINT_LINE('3mm', '2mm', '3mm', '96mm', 0, 1);
@@ -112,57 +113,121 @@ const PrintTwo = (data, printingQuantity, apiece, repeat, printModel) => {
   }
 }
 // 外购物料标签
-const PrintThree = (qrTitle, codetype, url, code) => {
-  let qrAccount = `${url}/#/?type=${codetype}&code=${code}`
+const PrintThree = (data, codetype, url, code) => {
   // 调用打印对象
   LODOP = getLodop()
-  //序号
-  LODOP.PRINT_INITA(0, 0, 50, 50, '100*70标签');
-  LODOP.SET_PRINT_PAGESIZE(1, '100mm', '70mm', '');
-  //表格线
-  LODOP.ADD_PRINT_LINE('3mm', '2mm', '3mm', '96mm', 0, 1);
-  //上横线
-  LODOP.ADD_PRINT_LINE('3mm', '2mm', '67mm', '2mm', 0, 1);
-  // 最左竖线
-  LODOP.ADD_PRINT_LINE('3mm', '96mm', '67mm', '96mm', 0, 1);
-  // 最右竖线
-  LODOP.ADD_PRINT_LINE('67mm', '2mm', '67mm', '96mm', 0, 1);
-  // 下横线
-  LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",7);
-  LODOP.ADD_PRINT_BARCODE('20mm', '63mm', '34mm', '34mm', 'QRCode', qrAccount)
-  LODOP.SET_PRINT_STYLE('FontSize', 14);
-  LODOP.ADD_PRINT_TEXT('7mm', '2mm', '24mm', '10mm', '旧料号');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('7mm', '26mm', '37mm', '10mm', 'SYL18G5C');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('20mm', '2mm', '24mm', '10mm', '料  号');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('20mm', '26mm', '37mm', '10mm', '303YS2180501');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('33mm', '2mm', '24mm', '10mm', '批  号');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('33mm', '26mm', '37mm', '10mm', '01200116022');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('46mm', '2mm', '24mm', '10mm', '重  量');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('46mm', '26mm', '37mm', '10mm', '18KG');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('59mm', '2mm', '24mm', '10mm', '入库日期');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  LODOP.ADD_PRINT_TEXT('59mm', '26mm', '37mm', '10mm', '2020-01-16');
-  LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-  //第一行横线
-  LODOP.ADD_PRINT_LINE('15.8mm', '2mm', '15.8mm', '62.8mm', 0, 1);
-  //第二行横线
-  LODOP.ADD_PRINT_LINE('28.6mm', '2mm', '28.6mm', '62.8mm', 0, 1);
-  //第三行横线
-  LODOP.ADD_PRINT_LINE('41.4mm', '2mm', '41.4mm', '62.8mm', 0, 1);
-  //第四行横线
-  LODOP.ADD_PRINT_LINE('54.2mm', '2mm', '54.2mm', '62.8mm', 0, 1);
-  //中间第一竖线
-  LODOP.ADD_PRINT_LINE('3mm', '25.2mm', '67mm', '25.2mm', 0, 1);
-  //中间第二竖线
-  LODOP.ADD_PRINT_LINE('3mm', '62.8mm', '67mm', '62.8mm', 0, 1);
+  LODOP.PRINT_INITA(0, 0, 100, 70, '100*70标签');
+  for (var i = 0; i < data.length; i++) {
+    console.log(i)
+    let qrAccount = data[i].barcode
+    //序号
+
+    LODOP.SET_PRINT_PAGESIZE(1, '100mm', '70mm', '');
+    //表格线
+    LODOP.ADD_PRINT_LINE('3mm', '2mm', '3mm', '96mm', 0, 1);
+    //上横线
+    LODOP.ADD_PRINT_LINE('3mm', '2mm', '67mm', '2mm', 0, 1);
+    // 最左竖线
+    LODOP.ADD_PRINT_LINE('3mm', '96mm', '67mm', '96mm', 0, 1);
+    // 最右竖线
+    LODOP.ADD_PRINT_LINE('67mm', '2mm', '67mm', '96mm', 0, 1);
+    // 下横线
+    LODOP.SET_PRINT_STYLEA(0, "QRCodeVersion", 7);
+    LODOP.ADD_PRINT_BARCODE('20mm', '63mm', '34mm', '34mm', 'QRCode', qrAccount)
+    LODOP.SET_PRINT_STYLE('FontSize', 12);
+    LODOP.ADD_PRINT_TEXT('7mm', '2mm', '24mm', '10mm', '旧料号');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('7mm', '26mm', '37mm', '10mm', data[i].oldCode);
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('20mm', '2mm', '24mm', '10mm', '料  号');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('20mm', '26mm', '37mm', '10mm', data[i].goodCode);
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('33mm', '2mm', '24mm', '10mm', '批  号');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('33mm', '26mm', '37mm', '10mm', '');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('46mm', '2mm', '24mm', '10mm', '重  量');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('46mm', '26mm', '37mm', '10mm', data[i].spec);
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('59mm', '2mm', '24mm', '10mm', '入库日期');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('59mm', '26mm', '37mm', '10mm', '');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    //第一行横线
+    LODOP.ADD_PRINT_LINE('15.8mm', '2mm', '15.8mm', '62.8mm', 0, 1);
+    //第二行横线
+    LODOP.ADD_PRINT_LINE('28.6mm', '2mm', '28.6mm', '62.8mm', 0, 1);
+    //第三行横线
+    LODOP.ADD_PRINT_LINE('41.4mm', '2mm', '41.4mm', '62.8mm', 0, 1);
+    //第四行横线
+    LODOP.ADD_PRINT_LINE('54.2mm', '2mm', '54.2mm', '62.8mm', 0, 1);
+    //中间第一竖线
+    LODOP.ADD_PRINT_LINE('3mm', '25.2mm', '67mm', '25.2mm', 0, 1);
+    //中间第二竖线
+    LODOP.ADD_PRINT_LINE('3mm', '62.8mm', '67mm', '62.8mm', 0, 1);
+    //分页
+    LODOP.NewPage();
+  }
+}
+// 物料标签
+const PrintFour = (data, codetype, url, code) => {
+  // 调用打印对象
+  LODOP = getLodop()
+  LODOP.PRINT_INITA(0, 0, 100, 70, '100*70标签');
+  for (var i = 0; i < data.length; i++) {
+    let qrAccount = data[i].barcode;
+    // 序号
+
+    LODOP.SET_PRINT_PAGESIZE(1, '100mm', '70mm', '');
+    //表格线
+    LODOP.ADD_PRINT_LINE('3mm', '2mm', '3mm', '96mm', 0, 1);
+    //上横线
+    LODOP.ADD_PRINT_LINE('3mm', '2mm', '67mm', '2mm', 0, 1);
+    // 最左竖线
+    LODOP.ADD_PRINT_LINE('3mm', '96mm', '67mm', '96mm', 0, 1);
+    // 最右竖线
+    LODOP.ADD_PRINT_LINE('67mm', '2mm', '67mm', '96mm', 0, 1);
+    // 下横线
+    LODOP.SET_PRINT_STYLEA(0, "QRCodeVersion", 7);
+    LODOP.ADD_PRINT_BARCODE('20mm', '63mm', '34mm', '34mm', 'QRCode', qrAccount)
+    LODOP.SET_PRINT_STYLE('FontSize', 12);
+    LODOP.ADD_PRINT_TEXT('11mm', '2mm', '24mm', '10mm', '旧料号');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('11mm', '26mm', '37mm', '10mm', data[i].oldCode);
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('32mm', '2mm', '24mm', '10mm', '料  号');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('32mm', '26mm', '37mm', '10mm', data[i].goodCode);
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+   /* LODOP.ADD_PRINT_TEXT('33mm', '2mm', '24mm', '10mm', '批  号');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('33mm', '26mm', '37mm', '10mm', '');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);*/
+    LODOP.ADD_PRINT_TEXT('54mm', '2mm', '24mm', '10mm', '规  格');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('54mm', '26mm', '37mm', '10mm', data[i].spec);
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    /*LODOP.ADD_PRINT_TEXT('59mm', '2mm', '24mm', '10mm', '入库日期');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('59mm', '26mm', '37mm', '10mm', '');
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);*/
+    //第一行横线
+    LODOP.ADD_PRINT_LINE('23.8mm', '2mm', '23.8mm', '62.8mm', 0, 1);
+    //第二行横线
+    LODOP.ADD_PRINT_LINE('43.6mm', '2mm', '43.6mm', '62.8mm', 0, 1);
+   /* //第三行横线
+    LODOP.ADD_PRINT_LINE('41.4mm', '2mm', '41.4mm', '62.8mm', 0, 1);
+    //第四行横线
+    LODOP.ADD_PRINT_LINE('54.2mm', '2mm', '54.2mm', '62.8mm', 0, 1);*/
+    //中间第一竖线
+    LODOP.ADD_PRINT_LINE('3mm', '25.2mm', '67mm', '25.2mm', 0, 1);
+    //中间第二竖线
+    LODOP.ADD_PRINT_LINE('3mm', '62.8mm', '67mm', '62.8mm', 0, 1);
+    //分页
+    LODOP.NewPage();
+  }
 }
 // 成品排产信息
 const PrintSchedule = (data, codetype, url, code) => {
@@ -455,7 +520,8 @@ const PrintSemi = (data, codetype, url, code) => {
 const PrintStorage = (data, codetype, url, code) => {
   for (var i = 0; i < data.length; i++) { //每页最多打印六条
     //左边栏
-    let qrAccount = data[i]
+    let qrAccount = data[i].barcode
+    console.log(qrAccount)
     LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",7);
     LODOP.ADD_PRINT_BARCODE("1mm", "2mm", "40mm", "40mm", 'QRCode', qrAccount)
     LODOP.ADD_PRINT_TEXT("35mm", "0mm", "40mm", "8mm", data[i].piName);
@@ -466,4 +532,4 @@ const PrintStorage = (data, codetype, url, code) => {
     LODOP.NewPage();
   }
 }
-export {PrintAccount, PrintTwo, PrintThree, PrintSchedule, PrintSemi, PrintStorage}
+export {PrintAccount, PrintTwo, PrintThree, PrintSchedule, PrintSemi, PrintStorage, PrintFour}

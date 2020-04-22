@@ -39,7 +39,6 @@ export default {
         { text: "订单数量", name: "" },
         { text: "物料编码", name: "" },
         { text: "物料名称", name: "" },
-        { text: "色号", name: "" },
         { text: "旧料号", name: "" },
         { text: "厂务预计出货日期", name: "" },
         { text: "客户", name: "" },

@@ -37,7 +37,7 @@
         columns: [
           { text: 'gid', name: 'gid',default:false },
           { text: 'U9料号', name: 'goodCode' },
-          { text: '色号', name: 'oldCode' },
+          { text: '旧料号', name: 'oldCode' },
           { text: '规格', name: '' },
           { text: '批号', name: 'lotNo' },
           { text: '数量', name: 'num' },

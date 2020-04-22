@@ -26,6 +26,7 @@
           <!--<el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAdd">新增</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAlter">修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="del">删除</el-button>-->
+          <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleSync">同步</el-button>
@@ -36,8 +37,8 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import {getMType} from "@/api/basic/index";
+import { mapGetters } from 'vuex'
+import { PrintFour } from '@/tools/doPrint'
 export default {
     components: {},
     computed: {
@@ -122,6 +123,18 @@ export default {
           message: "抱歉，功能尚未完善！",
           type: "warning"
         });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    print() {
+        console.log(this.selections)
+      if (this.selections.length>0) {
+        PrintFour(this.selections)
+        LODOP.PREVIEW()
       } else {
         this.$message({
           message: "无选中行",

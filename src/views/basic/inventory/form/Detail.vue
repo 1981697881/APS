@@ -27,7 +27,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'色号'" prop="roleName">
+          <el-form-item :label="'旧料号'" prop="roleName">
             <el-input v-model="form.roleName"></el-input>
           </el-form-item>
         </el-col>

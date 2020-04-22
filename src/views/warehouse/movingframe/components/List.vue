@@ -35,7 +35,7 @@ export default {
         { text: '', name: '',default:false },
         { text: '日期', name: 'moveTime' },
         { text: 'U9料号', name: 'goodCode' },
-        { text: '色号', name: 'oldCode' },
+        { text: '旧料号', name: 'oldCode' },
         { text: '原仓位', name: 'pastPositionName' },
         { text: '数量', name: 'pastNum' },
         { text: '现仓位', name: 'nowPositionName' },

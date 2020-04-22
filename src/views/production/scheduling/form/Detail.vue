@@ -108,6 +108,8 @@
             <el-radio-group v-model="radio">
               <el-radio :label="3">加急</el-radio>
               <el-radio :label="6">暂停</el-radio>
+              <el-radio :label="7" readOnly>暂停</el-radio>
+              <el-radio :label="8" readOnly>暂停</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>

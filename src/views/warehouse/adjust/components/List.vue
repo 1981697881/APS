@@ -37,7 +37,7 @@ export default {
         { text: '日期', name: 'adjustTime' },
         { text: '仓位', name: '' },
         { text: 'U9料号', name: '' },
-        { text: '色号', name: '' },
+        { text: '旧料号', name: '' },
         { text: '数量', name: 'pastNum' },
         { text: '调后U9料号', name: '' },
         { text: '调后色号', name: '' },

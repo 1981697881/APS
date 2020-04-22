@@ -36,11 +36,11 @@ export default {
         { text: '出库单号', name: '' },
         { text: '日期', name: 'createTime' },
         { text: 'U9料号', name: 'goodCode' },
-        { text: '色号', name: 'oldCode' },
-        { text: '规格', name: '' },
-        { text: '批号', name: '' },
+        { text: '旧料号', name: 'oldCode' },
+        { text: '规格', name: 'spec' },
+        { text: '批号', name: 'lotNo' },
         { text: '数量', name: 'num' },
-        { text: '库位', name: '' },
+        { text: '库位', name: 'positionName' },
         { text: '操作员', name: 'username' },
       ]
     };

@@ -46,6 +46,7 @@ export default {
         { text: "实际完工数量", name: "productionQuantity" },
         { text: "计划日期", name: "productionDate" },
         { text: "产品分类", name: "" },
+        { text: "批号", name: "lotNo" },
         { text: "生产设备", name: "plName" },
         { text: "生产类型", name: "productionType" },
         { text: "生产状态", name: "allocatedStatus" },

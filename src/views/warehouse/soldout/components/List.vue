@@ -40,7 +40,6 @@ export default {
           { text: "审核时间", name: "" },
           { text: "物料编码", name: "" },
           { text: "物料名称", name: "" },
-        { text: "色号", name: "" },
         { text: "旧料号", name: "" },
         { text: "仓库", name: "" },
         { text: "仓位", name: "" },

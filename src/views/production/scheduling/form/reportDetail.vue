@@ -15,7 +15,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'色号'" >
+          <el-form-item :label="'旧料号'" >
             <el-input v-model="form.oldCode" readOnly="true"></el-input>
           </el-form-item>
         </el-col>

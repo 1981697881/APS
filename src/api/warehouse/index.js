@@ -18,7 +18,7 @@ export function getLibraryStatisticsList(data, query) {
 }
 // 入库统计-获取详情
 export function libraryStatisticsInfo(data) {
-  const url = '/putOrder/list/' + data.pageNum + '/' + data.pageSize + '/' + data.id
+  const url = '/putOrder/getById/' + data.pageNum + '/' + data.pageSize + '/' + data.id
   return request({
     url: url,
     headers: {

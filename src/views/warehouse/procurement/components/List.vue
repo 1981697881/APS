@@ -6,10 +6,12 @@
       :loading="loading"
       :list="list"
       index
+       type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
        @row-click="rowClick"
+       @selection-change="handleSelectionChange"
     />
 
   </div>
@@ -33,13 +35,13 @@ export default {
       list: {},
       columns: [
         { text: '', name: '',default:false },
-        { text: '交货日期', name: '' },
-        { text: '料号', name: '' },
-        { text: '色号', name: '' },
+        { text: '交货日期', name: 'planArriveDate' },
+        { text: '料号', name: 'goodCode' },
+        { text: '旧料号', name: 'color' },
         { text: '料品名称', name: 'goodName' },
-        { text: '料品规格', name: '' },
-        { text: '计划数量', name: '' },
-        { text: '订单日期', name: '' },
+        { text: '料品规格', name: 'spec' },
+        { text: '计划数量', name: 'num' },
+        { text: '订单日期', name: 'createTime' },
         { text: '单据编号', name: 'purNum' },
       ]
     };
@@ -55,6 +57,10 @@ export default {
           this.list.current = val;
           this.fetchData();
       },
+    // 监听多选 参数-所有选中的值
+    handleSelectionChange(val){
+      this.$store.dispatch('list/setSelections', val)
+    },
     dblclick(obj) {
       //this.$emit('showDialog',obj.row)
     },
@@ -76,6 +82,7 @@ export default {
           for(const i in record) {
             for(const a in record[i].detail) {
               record[i].detail[a].purNum = record[i].purNum
+              record[i].detail[a].createTime = record[i].createTime
               obj.push(record[i].detail[a])
             }
           }

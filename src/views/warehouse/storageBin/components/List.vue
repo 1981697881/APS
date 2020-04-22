@@ -36,7 +36,7 @@ export default {
         { text: '区域位置', name: '' },
         { text: 'U9料号', name: '' },
         { text: '物料名称', name: '' },
-        { text: '色号', name: '' },
+        { text: '旧料号', name: '' },
         { text: '批号', name: '' },
         { text: '包装规格(KG/桶)', name: '' },
         { text: '数量', name: '' },
