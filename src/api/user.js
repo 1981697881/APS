@@ -35,8 +35,8 @@ export function changePassword(data) {
       'Content-Type': 'application/json',
       'authorization': getToken('apsrx'),
     },
-    url: '/user/changePassword',
-    method: 'put',
+    url: '/user/changePass',
+    method: 'post',
     data
   })
 }

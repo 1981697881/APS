@@ -50,7 +50,7 @@ export default {
         { text: "生产设备", name: "plName" },
         { text: "生产类型", name: "productionType" },
         { text: "生产状态", name: "allocatedStatus" },
-        { text: "任务警示", name: "" },
+        { text: "任务警示", name: "alertStatus", formatt: 'taskWarning' },
         { text: "备注", name: "remark" },
       ]
     };

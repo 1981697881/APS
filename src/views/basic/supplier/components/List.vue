@@ -34,8 +34,8 @@ export default {
       list: {},
       columns: [
         { text: "oid", name: "oid",default:false },
-        { text: "供应商编码", name: "" },
-        { text: "供应商名称", name: "" },
+        { text: "承运商编码", name: "" },
+        { text: "承运商名称", name: "" },
         { text: "联系人", name: "" },
         { text: "联系地址", name: "" },
           { text: "联系电话", name: "" },

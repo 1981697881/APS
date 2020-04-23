@@ -17,14 +17,25 @@
               系统帮助
             </el-dropdown-item>
           </router-link>
-            <el-dropdown-item>切换用户</el-dropdown-item>
-            <el-dropdown-item>修改密码</el-dropdown-item>
+          <el-dropdown-item>
+            <span style="display:block;" @click="alterPWD">修改密码</span>
+          </el-dropdown-item>
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">退出系统</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <el-dialog
+      :visible.sync="visible"
+      title="修改密码"
+      v-if="visible"
+      :width="'70%'"
+      destroy-on-close
+    >
+      <alter></alter>
+
+    </el-dialog>
   </div>
 </template>
 
@@ -32,11 +43,13 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import Alter from '@/components/Alter'
 import {getToken} from '@/utils/auth' // get token from cookie
 export default {
   components: {
     Breadcrumb,
     Hamburger,
+    Alter
   },
   computed: {
     ...mapGetters([
@@ -54,6 +67,9 @@ export default {
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
+    },
+    alterPWD() {
+      this.visible = true
     },
     async logout() {
       await this.$store.dispatch('user/logout')

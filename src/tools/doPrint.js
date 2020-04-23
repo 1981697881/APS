@@ -177,7 +177,7 @@ const PrintFour = (data, codetype, url, code) => {
   LODOP = getLodop()
   LODOP.PRINT_INITA(0, 0, 100, 70, '100*70标签');
   for (var i = 0; i < data.length; i++) {
-    let qrAccount = data[i].barcode;
+    let qrAccount = data[i].qrCode;
     // 序号
 
     LODOP.SET_PRINT_PAGESIZE(1, '100mm', '70mm', '');
@@ -191,7 +191,7 @@ const PrintFour = (data, codetype, url, code) => {
     LODOP.ADD_PRINT_LINE('67mm', '2mm', '67mm', '96mm', 0, 1);
     // 下横线
     LODOP.SET_PRINT_STYLEA(0, "QRCodeVersion", 7);
-    LODOP.ADD_PRINT_BARCODE('20mm', '63mm', '34mm', '34mm', 'QRCode', qrAccount)
+    LODOP.ADD_PRINT_BARCODE('20mm', '65mm', '34mm', '34mm', 'QRCode', qrAccount)
     LODOP.SET_PRINT_STYLE('FontSize', 12);
     LODOP.ADD_PRINT_TEXT('11mm', '2mm', '24mm', '10mm', '旧料号');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);

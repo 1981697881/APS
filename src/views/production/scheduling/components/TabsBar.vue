@@ -9,7 +9,8 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
-          <el-popover
+          <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint" >打印</el-button>
+          <!--<el-popover
             placement="bottom"
             width="200"
             :size="'mini'"
@@ -20,7 +21,7 @@
               <el-button type="success" size="mini" @click="visible = false">打印标签</el-button>
             </div>
             <el-button :size="'mini'" type="primary" icon="el-icon-printer" slot="reference"  >打印</el-button>
-          </el-popover>
+          </el-popover>-->
         </el-button-group>
       </el-row>
       <el-row :gutter="24"  style="padding-top: 15px;">

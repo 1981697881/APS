@@ -51,8 +51,10 @@ export default {
         { text: "deptId", name: "deptId", default: false},
         { text: "编码", name: "deptCode" },
         { text: "名称", name: "deptName" },
-        { text: "上级组织", name: "deptParent" },
+        { text: "上级组织", name: "deptParent", default: false },
+        { text: "上级组织", name: "deptParentName" },
         { text: "组织属性", name: "orgAttr" },
+        { text: "状态", name: "isDel" },
       ]
     };
   },

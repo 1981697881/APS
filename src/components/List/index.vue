@@ -22,6 +22,7 @@
         v-for="(t,i) in columns"
         :key="i"
         :prop="t.name"
+        :formatter="t.formatt!=undefined?taskWarning : null"
         v-if="t.default!=undefined?t.default:true"
         :label="t.text"
         :width="t.width?t.width:(selfAdaption?'':'120px')"
@@ -98,19 +99,34 @@ export default {
     },
     //是否自定义高度 默认100%
     height:{
-      type:String,
-      default:"100%"
+      type: String,
+      default: "100%"
     }
   },
   methods: {
+    formatSex(row, column) {
+    },
+    taskWarning(row, column) {
+      let stau = ''
+      if(row.isDel == 0) {
+        stau = ''
+      }else if(row.isDel == 1) {
+        stau = ''
+      }else if(row.isDel == 2) {
+        stau = ''
+      }else{
+        stau = ''
+      }
+      return  stau
+    },
     tableRowClassName({row, rowIndex}) {
-      if (row.allocatedStatus === '加急') {
+      if (row.alertStatus === '加急') {
         return 'urgent-row';
-      } else if (row.allocatedStatus === '暂停') {
+      } else if (row.alertStatus === '暂停') {
         return 'suspended-row';
-      }else if (row.allocatedStatus === '延误') {
+      }else if (row.alertStatus === '延误') {
         return 'delay-row';
-      }else if (row.allocatedStatus === '日期冲突') {
+      }else if (row.alertStatus === '日期冲突') {
         return 'conflict-row';
       }
       return '';
