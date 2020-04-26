@@ -38,8 +38,8 @@ export default {
         { text: "承运商名称", name: "" },
         { text: "联系人", name: "" },
         { text: "联系地址", name: "" },
-          { text: "联系电话", name: "" },
-          { text: "描述", name: "" },
+        { text: "联系电话", name: "" },
+        { text: "描述", name: "" },
       ]
     };
   },

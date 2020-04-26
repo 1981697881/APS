@@ -72,7 +72,9 @@
                         this.loading = true
                         this.$store.dispatch('user/changePassword', this.form).then(res => {
                             if(res.flag){
-                                this.$router.push('/login')
+                              setTimeout(() =>{
+                                location.reload()
+                              },1000);
                             }
                             this.loading = false
                         }).catch(() => {

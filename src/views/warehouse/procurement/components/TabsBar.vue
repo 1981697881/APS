@@ -3,7 +3,7 @@
     <el-form  :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
         <el-col :span="6">
-          <el-form-item :label="'单号'">
+          <el-form-item :label="'关键字'">
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>

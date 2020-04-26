@@ -81,3 +81,16 @@ export function updateProductNum(params) {
     data: params
   })
 }
+// 生产排程-录入批号
+export function updateLotNo(params) {
+  const url = '/task-scheduling/submitLotNo'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: params
+  })
+}

@@ -5,7 +5,6 @@
         <el-button-group style="float:right;padding-right: 15px;">
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="suspended">暂停</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
@@ -170,19 +169,6 @@ export default {
         });
       }
     },
-    suspended() {
-      if (this.clickData.taskId) {
-        this.$message({
-          message: "抱歉，功能尚未完善！",
-          type: "warning"
-        });
-      } else {
-        this.$message({
-          message: "无选中行",
-          type: "warning"
-        });
-      }
-    },
     over() {
       if (this.clickData.taskId) {
         this.$confirm('是否结束(' + this.clickData.taskNum + ')，结束后将无法恢复?', '提示', {
@@ -217,8 +203,15 @@ export default {
     },
     report() {
       if (this.clickData.taskId) {
-        this.clickData.isF = 0;
-        this.$emit('reportInfo', this.clickData)
+        if (this.clickData.allocatedStatus == '生产完毕') {
+          this.clickData.isF = 0
+          this.clickData.isOver = 1
+          this.$emit('reportInfo', this.clickData)
+        } else {
+          this.clickData.isF = 0
+          this.clickData.isOver = 0
+          this.$emit('reportInfo', this.clickData)
+        }
       } else {
         this.$message({
           message: "无选中行",

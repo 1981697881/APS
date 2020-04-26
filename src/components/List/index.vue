@@ -92,12 +92,12 @@ export default {
       type: Boolean,
       default: false
     },
-    //是否自适应宽度，不自适应宽度默认为120px
+    // 是否自适应宽度，不自适应宽度默认为120px
     selfAdaption: {
       type: Boolean,
       default: true
     },
-    //是否自定义高度 默认100%
+    // 是否自定义高度 默认100%
     height:{
       type: String,
       default: "100%"
@@ -108,28 +108,31 @@ export default {
     },
     taskWarning(row, column) {
       let stau = ''
-      if(row.isDel == 0) {
-        stau = ''
-      }else if(row.isDel == 1) {
-        stau = ''
-      }else if(row.isDel == 2) {
-        stau = ''
+      if(row.alertStatus == 1) {
+        stau = '延误'
+      }else if(row.alertStatus == 2) {
+        stau = '冲突'
+      }else if(row.alertStatus == 3) {
+        stau = '加急'
+      }else if(row.alertStatus == 4) {
+        stau = '暂停'
       }else{
         stau = ''
       }
       return  stau
     },
     tableRowClassName({row, rowIndex}) {
-      if (row.alertStatus === '加急') {
+      if (row.alertStatus == 3) {
         return 'urgent-row';
-      } else if (row.alertStatus === '暂停') {
+      } else if (row.alertStatus == 4) {
         return 'suspended-row';
-      }else if (row.alertStatus === '延误') {
+      }else if (row.alertStatus == 1) {
         return 'delay-row';
-      }else if (row.alertStatus === '日期冲突') {
+      }else if (row.alertStatus == 2) {
         return 'conflict-row';
+      }else{
+        return '';
       }
-      return '';
     },
     // 监听多选 参数-所有选中的值
     handleSelectionChange(val){
@@ -193,21 +196,21 @@ export default {
   }
 
 </style>
-<style>                                                                                                                                                            <el-radio :label="8" style="color:#8032a4" disabled>冲突</el-radio>
-  .el-table .urgent-row {
+<style>
+  .urgent-row {
     background: #7b1424;
-    color: #f19944;
+    color: #fcfcfc;
   }
-  .el-table .suspended-row {
+  .suspended-row {
     background: #3b199a;
-    color: #f19944;
+    color: #fcfcfc;
   }
-  .el-table .delay-row {
+  .delay-row {
     background: #dc9118;
-    color: #f19944;
+    color: #fcfcfc;
   }
-  .el-table .conflict-row {
+  .conflict-row {
     background: #8032a4;
-    color: #f19944;
+    color: #fcfcfc;
   }
 </style>

@@ -136,8 +136,9 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'重复打印第几张'">
-              <el-input-number v-model="repeat"  label="请输入数量" :min="0"></el-input-number>
+            <el-form-item :label="'打印批号'">
+              <!--<el-input-number v-model="repeat"  label="请输入数量" :min="0"></el-input-number>-->
+                <el-input v-model="lotNo"  ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -147,13 +148,13 @@
       </div>
     </el-dialog>
     <div slot="footer" style="text-align:center;padding-top: 15px">
-      <el-button type="primary" @click.native="saveData('form')">提交</el-button>
+      <el-button type="primary" v-if="isOver" @click.native="saveData('form')">提交</el-button>
       <el-button type="primary" @click.native="print('form')">打印条码</el-button>
     </div>
   </div>
 </template>
 <script>
-  import { updateProductNum } from '@/api/production/index'
+  import { updateProductNum, updateLotNo } from '@/api/production/index'
   import { getFinalGoodsType, getSemiFinishedProductsType, getSemiFinishedProducts, getFinalGoods, getGoodPrints} from '@/api/basic/index'
   import { getToken } from '@/utils/auth' // get token from cookie
   import { PrintTwo, PrintAccount} from '@/tools/doPrint'
@@ -169,6 +170,7 @@
         num1: 1,
         visible: null,
         isSavtBtn: true,
+        isOver: false,
         form: {
           taskId: null,
           goodName: null,
@@ -182,6 +184,7 @@
           reportDate: null,
           odPrNum: null,
         },
+        lotNo: null,
         repeat: 0,
         printingQuantity: 1,
         apiece: 0,
@@ -231,46 +234,79 @@
         if(this.listInfo.isF == 0){
           this.form.oldCode = this.listInfo.color
         }
+        if(this.listInfo.isOver == 1){
+          this.isOver = false
+        }else{
+          this.isOver = true
+        }
         this.getTime()
       }
     },
     methods: {
-      print(form) {
-        this.$refs[form].validate((valid) => {
-            // 判断必填项
-            if (valid) {
-              this.visible = true
-            } else {
-              this.$message({
-                message: "请填写批号",
-                type: "warning"
-              })
-            }
-        })
+      print() {
+        this.lotNo = this.form.lotNo
+        // 判断必填项
+        if (this.lotNo != null && this.lotNo != undefined) {
+          this.visible = true
+        } else {
+          this.$message({
+            message: "请填写批号",
+            type: "warning"
+          })
+        }
       },
       confirmPrint() {
-        if(this.printModel != null) {
-        // data: 数据
-        // printingQuantity: 打印品种
-        // apiece: 打印
-        // repeat: 重复打印第几张
-        // printModel: 打印模板
-          getGoodPrints([this.form.gid]).then(res => {
-            if(res.flag) {
-              var obj = res.data
-              Object.assign(this.form, obj[0]);
-              if(this.printModel == 0) {
-                PrintAccount(this.form, this.printingQuantity, this.apiece, this.repeat)
-                LODOP.PREVIEW()
-              }else{
-                PrintTwo(this.form, this.printingQuantity, this.apiece, this.repeat, this.printModel)
-                LODOP.PREVIEW()
+        if(this.printModel != null && this.lotNo != null) {
+            console.log(this.listInfo)
+          if(this.listInfo.lotNo != null && this.listInfo.lotNo != '') {
+            // data: 数据
+            // printingQuantity: 打印品种
+            // apiece: 打印
+            // repeat: 重复打印第几张
+            // printModel: 打印模板
+            getGoodPrints([this.form.gid]).then(res => {
+              if(res.flag) {
+                var obj = res.data
+                Object.assign(this.form, obj[0]);
+                if(this.printModel == 0) {
+                  PrintAccount(this.form, this.printingQuantity, this.apiece, this.repeat)
+                  LODOP.PREVIEW()
+                }else{
+                  PrintTwo(this.form, this.printingQuantity, this.apiece, this.repeat, this.printModel)
+                  LODOP.PREVIEW()
+                }
               }
-            }
-          })
+            })
+          }else{
+            updateLotNo({taskId: this.form.taskId, lotNo: this.lotNo}).then(reso => {
+              if(reso.flag) {
+                this.form.lotNo = this.lotNo
+                // data: 数据
+                // printingQuantity: 打印品种
+                // apiece: 打印
+                // repeat: 重复打印第几张
+                // printModel: 打印模板
+                getGoodPrints([this.form.gid]).then(res => {
+                  if(res.flag) {
+                    var obj = res.data
+                    Object.assign(this.form, obj[0]);
+                    if(this.printModel == 0) {
+                      PrintAccount(this.form, this.printingQuantity, this.apiece, this.repeat)
+                      LODOP.PREVIEW()
+                    }else{
+                      PrintTwo(this.form, this.printingQuantity, this.apiece, this.repeat, this.printModel)
+                      LODOP.PREVIEW()
+                    }
+                  }
+                })
+              }
+            })
+          }
+          this.$emit('uploadList')
+          this.$emit('hideReport', false)
         }else{
           this.$message({
-            message: "请选择打印模板",
+            message: "模板和批号必填",
             type: "warning"
           })
         }

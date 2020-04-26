@@ -55,10 +55,13 @@ const actions = {
   changePassword({ commit }, info) {
     return new Promise((resolve, reject) => {
       changePassword(info).then(response => {
-          commit('SET_TOKEN', '')
-          removeToken()
-          resetRouter()
-          resolve(response)
+        commit('SET_TOKEN', '')
+        //removeToken('plper')
+        removeToken('apsrx')
+        removeToken('apsps')
+        removeToken('apsun')
+        resetRouter()
+        resolve(response)
       }).catch(error => {
         reject(error)
       })

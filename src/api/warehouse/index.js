@@ -212,4 +212,17 @@ export function syncShipInfo(params) {
     data: params
   })
 }
+// 采购计划-打印
+export function procurementBarcode(params) {
+  const url = '/barcode/barcodePurchaseOrder'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
 
