@@ -14,6 +14,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleShow">补充信息</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
       </el-row>
@@ -90,7 +91,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { syncPOInfoQuery } from "@/api/warehouse/index";
+import { syncPOInfoQuery, procurementBarcode } from "@/api/warehouse/index";
 import { PrintThree } from '@/tools/doPrint'
 export default {
   components: {},
@@ -215,11 +216,9 @@ export default {
     query() {
       this.$emit('queryBtn', this.qFilter())
     },
-    handleAlter() {
-      if (this.clickData.gid) {
-        this.$emit('showDialog',{
-          gid: this.clickData.gid,
-        })
+    handleShow() {
+      if (this.clickData.puDeId) {
+        this.$emit('showDialog', this.clickData)
       } else {
         this.$message({
           message: "无选中行",
@@ -227,10 +226,34 @@ export default {
         });
       }
     },
+    handleAlter() {
+      if (this.clickData.puDeId) {
+        this.$emit('showDialog', this.clickData)
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+
     print() {
       if (this.selections.length>0) {
-        PrintThree(this.selections)
-        LODOP.PREVIEW()
+        console.log(this.selections)
+        let selections = this.selections
+        let array = []
+        selections.forEach((item, index) =>{
+          let obj = {}
+          eval("obj.printId=" + item.puDeId)
+          eval("obj.printNum=" + 1 )
+          eval("obj.type=" + 1)
+          array.push(obj)
+        })
+        procurementBarcode({barcodeList: array}).then(res => {
+         console.log(res)
+          /* PrintThree(this.selections)
+        LODOP.PREVIEW()*/
+        })
       } else {
         this.$message({
           message: "无选中行",

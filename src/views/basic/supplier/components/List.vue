@@ -18,7 +18,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { supplierList} from "@/api/basic/index";
+import { supplierList, delSupplier} from "@/api/basic/index";
 import List from "@/components/List";
 
 export default {
@@ -33,13 +33,13 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: "oid", name: "oid",default:false },
-        { text: "承运商编码", name: "" },
-        { text: "承运商名称", name: "" },
-        { text: "联系人", name: "" },
-        { text: "联系地址", name: "" },
-        { text: "联系电话", name: "" },
-        { text: "描述", name: "" },
+        { text: "loPrId", name: "loPrId",default:false },
+        { text: "承运商编码", name: "loPrCode" },
+        { text: "承运商名称", name: "loPrName" },
+        { text: "联系人", name: "contact" },
+        { text: "联系地址", name: "addr" },
+        { text: "联系电话", name: "tel" },
+        { text: "描述", name: "description" },
       ]
     };
   },
@@ -55,27 +55,32 @@ export default {
           this.fetchData()
       },
     dblclick(obj) {
-      /*this.$emit('showDialog', obj.row)*/
+      this.$emit('showDialog', obj.row)
     },
-      Delivery(val){
-          delSupplier(val).then(res => {
-            if(res.flag){
-              this.$store.dispatch("list/setClickData", '');
-              this.fetchData();
-            }
-          });
-      },
-      //监听单击某一行
-      rowClick(obj) {
-          this.$store.dispatch("list/setClickData", obj.row);
-      },
-    fetchData(fid, type) {
+    Delivery(val) {
+      delSupplier(val).then(res => {
+        if(res.flag){
+          this.$store.dispatch("list/setClickData", '');
+          this.fetchData();
+        }
+      });
+    },
+    uploadPr(val) {
+      this.fetchData(val, {
+        pageNum: 1,
+        pageSize: this.list.size || 50
+      })
+    },
+    //监听单击某一行
+    rowClick(obj) {
+      this.$store.dispatch("list/setClickData", obj.row);
+    },
+    fetchData(val, data = {
+      pageNum: this.list.current || 1,
+      pageSize: this.list.size || 50
+    }) {
       this.loading = true;
-      const data = {
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
-      };
-        supplierList(data).then(res => {
+        supplierList(data, val).then(res => {
         this.loading = false;
         this.list = res.data;
       });

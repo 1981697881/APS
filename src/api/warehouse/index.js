@@ -225,4 +225,16 @@ export function procurementBarcode(params) {
     data: params
   })
 }
-
+// 采购计划-维护信息
+export function procurementUpdate(params) {
+  const url = '/purchaseOrderDetail/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: params
+  })
+}

@@ -3,28 +3,38 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar @uploadList="upload"/>
+        <tabs-bar @uploadList="upload"  @showDialog="handlerDialog"/>
       </div>
       <list ref="list"/>
     </div>
+    <el-dialog
+      :visible.sync="visible"
+      title="基本信息"
+      v-if="visible"
+      v-dialogDrag
+      :width="'30%'"
+      destroy-on-close
+    >
+      <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
+
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { TabsBar, List } from "./components";
-
+import { Info, } from "./form";
 export default {
   components: {
     TabsBar,
     List,
+    Info
   },
   data() {
     return {
       visible: null,
       visible2: null,
-      gid: null,
-        orderId: null,
-        createTime: null,
+      listInfo: null,
       treeId: null, // null
       floorId: null
     };
@@ -33,6 +43,18 @@ export default {
     this.$refs.list.fetchData()
   },
   methods: {
+    hideWindow(val) {
+      this.visible = val
+    },
+    handlerDialog(obj) {
+      console.log(obj)
+      this.listInfo = null
+      if (obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
+      this.visible = true
+    },
     // 更新列表
     upload() {
       this.$refs.list.fetchData()

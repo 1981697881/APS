@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @delList="delivery" @uploadList="upload"/>
+        <tabs-bar @showDialog="handlerDialog" @delList="delivery" @uploadList="upload" @queryBtn="query"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog"/>
     </div>
@@ -16,7 +16,7 @@
       :width="'50%'"
       destroy-on-close
     >
-      <info @hideDialog="hideWindow" @uploadList="upload" ></info>
+      <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
 
     </el-dialog>
   </div>
@@ -30,38 +30,45 @@ export default {
   components: {
     TabsBar,
     List,
-      Info
+    Info
   },
   data() {
     return {
       visible: null,
       oid: null,
-        orderId: null,
-        createTime: null,
+      listInfo: null,
       treeId: null, // null
       floorId: null
     };
   },
-    mounted() {
-        this.$refs.list.fetchData()
-    },
+  mounted() {
+    this.$refs.list.fetchData()
+  },
   methods: {
-      delivery(obj){
-          if(obj){
-              this.$refs.list.Delivery(obj.oid)
-          }
-      },
-      hideWindow(val){
-          this.visible = val
-      },
-    handlerDialog(obj){
-     // if(obj)
+    delivery(obj) {
+      if(obj) {
+        this.$refs.list.Delivery(obj)
+      }
+    },
+    hideWindow(val) {
+      this.visible = val
+    },
+    handlerDialog(obj) {
+      this.listInfo = null
+      if(obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
       this.visible = true
     },
-      //更新列表
-      upload(){
-          this.$refs.list.fetchData()
-      }
+    // 查询
+    query(val) {
+      this.$refs.list.uploadPr(val)
+    },
+    // 更新列表
+    upload() {
+      this.$refs.list.fetchData()
+    }
   }
 };
 </script>

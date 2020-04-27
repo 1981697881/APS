@@ -276,52 +276,54 @@ export function delClerk(params) {
     method: 'delete',
   })
 }
-// 供应商管理-获取列表
-export function supplierList(params) {
-  const url = '/supplier/list/' + params.pageNum + '/' + params.pageSize
+// 承运商管理-获取列表
+export function supplierList(params, query) {
+  const url = '/logistics-providers/list/' + params.pageNum + '/' + params.pageSize
   return request({
     url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    method: 'POST'
+    method: 'POST',
+    data: query
   })
 }
 
-// 供应商管理-新增
+// 承运商管理-新增
 export function addSupplier(params) {
   return request({
-    url: '/table/list',
+    url: '/logistics-providers/add',
     headers: {
-      'authorization': getToken('apsrx')
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'post',
+    data: params
   })
 }
-
-// 供应商管理-获取详情
-export function supplierInfo(params) {
+// 承运商管理-修改
+export function alterSupplier(params) {
   return request({
-    url: '/table/list',
+    url: '/logistics-providers/update',
     headers: {
-      'authorization': getToken('apsrx')
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
     },
-    method: 'get',
-    params
+    method: 'PUT',
+    data: params
   })
 }
 
-// 供应商管理-删除
+// 承运商管理-删除
 export function delSupplier(params) {
+  const url = '/logistics-providers/del/' + params
   return request({
-    url: '/table/list',
+    url: url,
     headers: {
       'authorization': getToken('apsrx')
     },
-    method: 'get',
-    params
+    method: 'delete'
   })
 }
 
@@ -353,7 +355,6 @@ export function syncInventory(params) {
   })
 }
 
-// 供应商管理-删除
 // 生产资源-获取列表
 export function getResourcesList(data) {
   const url = '/type/list/' + data.pageNum + '/' + data.pageSize

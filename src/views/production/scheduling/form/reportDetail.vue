@@ -138,7 +138,7 @@
           <el-col :span="12">
             <el-form-item :label="'打印批号'">
               <!--<el-input-number v-model="repeat"  label="请输入数量" :min="0"></el-input-number>-->
-                <el-input v-model="lotNo"  ></el-input>
+                <el-input v-model="lotNo"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
