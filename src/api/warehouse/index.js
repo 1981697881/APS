@@ -186,6 +186,20 @@ export function syncPOInfoQuery(params) {
     data: params
   })
 }
+// 采购入库计划-导出
+export function exportProcurement(data) {
+  const url = '/excel/export/purchase'
+  return request({
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    responseType: 'blob',
+    url: url,
+    method: 'post',
+    data: data
+  })
+}
 // 出货计划-获取列表
 export function getRecipientsList(data, query) {
   const url = '/ship-order/list/' + data.pageNum + '/' + data.pageSize
@@ -210,6 +224,20 @@ export function syncShipInfo(params) {
     },
     method: 'post',
     data: params
+  })
+}
+// 出货计划-导出
+export function exportRecipients(data) {
+  const url = '/excel/export/shipOrder'
+  return request({
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    responseType: 'blob',
+    url: url,
+    method: 'post',
+    data: data
   })
 }
 // 采购计划-打印

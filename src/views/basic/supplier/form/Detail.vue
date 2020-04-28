@@ -96,7 +96,7 @@ export default {
       this.$refs[form].validate((valid) => {
         // 判断必填项
         if (valid) {
-          if (typeof (this.form.rid) != undefined && this.form.rid != null) {
+          if (typeof (this.form.loPrId) != undefined && this.form.loPrId != null) {
             alterSupplier(this.form).then(res => {
               this.$emit('hideDialog', false)
               this.$emit('uploadList')

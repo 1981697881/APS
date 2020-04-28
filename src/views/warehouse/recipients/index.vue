@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar @uploadList="upload"/>
+        <tabs-bar @uploadList="upload" @queryBtn="query"/>
       </div>
       <list ref="list"/>
     </div>
@@ -36,7 +36,11 @@ export default {
       //更新列表
       upload(){
           this.$refs.list.fetchData()
-      }
+      },
+    // 查询
+    query(val) {
+      this.$refs.list.uploadPr(val)
+    },
   }
 };
 </script>

@@ -56,3 +56,17 @@ export function salesListSync(params) {
     data: params
   })
 }
+// 销售计划-导出
+export function exportSales(data) {
+  const url = '/excel/export/saleOrder'
+  return request({
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    responseType: 'blob',
+    url: url,
+    method: 'post',
+    data: data
+  })
+}

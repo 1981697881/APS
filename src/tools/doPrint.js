@@ -145,15 +145,15 @@ const PrintThree = (data, codetype, url, code) => {
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT('33mm', '2mm', '24mm', '10mm', '批  号');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-    LODOP.ADD_PRINT_TEXT('33mm', '26mm', '37mm', '10mm', '');
+    LODOP.ADD_PRINT_TEXT('33mm', '26mm', '37mm', '10mm', data[i].lotNo);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT('46mm', '2mm', '24mm', '10mm', '重  量');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-    LODOP.ADD_PRINT_TEXT('46mm', '26mm', '37mm', '10mm', data[i].spec);
+    LODOP.ADD_PRINT_TEXT('46mm', '26mm', '37mm', '10mm', data[i].weight);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT('59mm', '2mm', '24mm', '10mm', '入库日期');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-    LODOP.ADD_PRINT_TEXT('59mm', '26mm', '37mm', '10mm', '');
+    LODOP.ADD_PRINT_TEXT('59mm', '26mm', '37mm', '10mm', data[i].putTime);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     //第一行横线
     LODOP.ADD_PRINT_LINE('15.8mm', '2mm', '15.8mm', '62.8mm', 0, 1);

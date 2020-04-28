@@ -90,7 +90,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { salesListSync } from "@/api/aftermarket/index"
+import { salesListSync, exportSales} from "@/api/aftermarket/index"
 export default {
   components: {},
   computed: {
@@ -157,13 +157,9 @@ export default {
       link.click()
     },
     exportData() {
-      this.$message({
-        message: "抱歉，功能尚未完善！",
-        type: "warning"
-      });
-      /* exportOutboundStatistics(this.qFilter()).then(res => {
-         this.download(res)
-       })*/
+      exportSales(this.qFilter()).then(res => {
+        this.download(res)
+      })
     },
     changeDate(val) {
       this.form.businessDateEnd = val[1]
@@ -187,9 +183,7 @@ export default {
     },
     // 关键字查询
     query(){
-      if((typeof this.search.keyword != null) && (this.search.keyword !='')) {
-        this.$emit('uploadList', this.qFilter())
-      }
+      this.$emit('uploadList', this.qFilter())
     },
     confirm(form) {
       this.$refs[form].validate((valid) => {

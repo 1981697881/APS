@@ -91,7 +91,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { syncPOInfoQuery, procurementBarcode } from "@/api/warehouse/index";
+import { syncPOInfoQuery, procurementBarcode, exportProcurement} from "@/api/warehouse/index";
 import { PrintThree } from '@/tools/doPrint'
 export default {
   components: {},
@@ -141,7 +141,7 @@ export default {
       },
       search: {
         keyword: null,
-        type:null
+        type: null
       }
     };
   },
@@ -198,19 +198,13 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
-      this.value[1] != null || this.value[1] != undefined ? obj.endDate = this.value[1] : null
-      this.value[0] != null || this.value[0] != undefined ? obj.startDate = this.value[0] : null
+      this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
       return obj
     },
     exportData() {
-      this.$message({
-        message: "抱歉，功能尚未完善！",
-        type: "warning"
-      });
-     /* exportOutboundStatistics(this.qFilter()).then(res => {
+      exportProcurement(this.qFilter()).then(res => {
         this.download(res)
-      })*/
+      })
     },
     // 关键字查询
     query() {
@@ -250,9 +244,8 @@ export default {
           array.push(obj)
         })
         procurementBarcode({barcodeList: array}).then(res => {
-         console.log(res)
-          /* PrintThree(this.selections)
-        LODOP.PREVIEW()*/
+          PrintThree(res.data)
+          LODOP.PREVIEW()
         })
       } else {
         this.$message({
