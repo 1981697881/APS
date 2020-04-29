@@ -146,20 +146,7 @@ export function getLocationBoardList(data, query) {
     data: query
   })
 }
-// 库位看板-导出
-export function exportLocationBoard(data) {
-  const url = '/excel/export/position'
-  return request({
-    headers: {
-      'authorization': getToken('apsrx'),
-      'Content-Type': 'application/json'
-    },
-    responseType: 'blob',
-    url: url,
-    method: 'post',
-    data: data
-  })
-}
+
 // 采购入库计划-获取列表
 export function getProcurementList(data, query) {
   const url = '/purchase-order/list/' + data.pageNum + '/' + data.pageSize
@@ -188,7 +175,7 @@ export function syncPOInfoQuery(params) {
 }
 // 采购入库计划-导出
 export function exportProcurement(data) {
-  const url = '/excel/export/purchase'
+  const url = '/excel/export/purchaseOrder'
   return request({
     headers: {
       'authorization': getToken('apsrx'),
@@ -264,5 +251,45 @@ export function procurementUpdate(params) {
     },
     method: 'put',
     data: params
+  })
+}
+// 盘点信息-获取列表
+export function getStorageBinList(data, query) {
+  const url = '/position/table/' + data.pageNum + '/' + data.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
+  })
+}
+// 盘点信息-导出
+export function exportStorageBin(data) {
+  const url = '/excel/export/position'
+  return request({
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    responseType: 'blob',
+    url: url,
+    method: 'post',
+    data: data
+  })
+}
+// 出货看板-获取列表
+export function getDeliveryOrderBoardList(data, query) {
+  const url = '/ship-order/board/' + data.pageNum + '/' + data.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
   })
 }

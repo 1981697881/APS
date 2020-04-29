@@ -68,11 +68,11 @@
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'任务警示'">
-            <el-radio-group v-model="radio">
-              <el-radio :label="3" style="color:#7b1424">加急</el-radio>
-              <el-radio :label="4" style="color:#3b199a">暂停</el-radio>
-              <el-radio :label="1" style="color:#dc9118" disabled>延误</el-radio>
-              <el-radio :label="2" style="color:#8032a4" disabled>冲突</el-radio>
+            <el-radio-group v-model="form.alertStatus">
+              <el-radio :label=3 style="color:#7b1424">加急</el-radio>
+              <el-radio :label=4 style="color:#3b199a">暂停</el-radio>
+              <el-radio :label=1 style="color:#dc9118" disabled>延误</el-radio>
+              <el-radio :label=2 style="color:#8032a4" disabled>冲突</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
@@ -104,6 +104,7 @@
           tips: null,
           isSemi: 1,
           oldCode: null,
+          alertStatus: null,
           plId: null,
           tpId: null,
           taskNum: null,

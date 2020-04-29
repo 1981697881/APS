@@ -36,7 +36,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import {getMType} from "@/api/basic/index";
+import {exportStorageBin} from "@/api/warehouse/index";
 export default {
     components: {},
     computed: {
@@ -103,23 +103,19 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
-      this.value[1] != null || this.value[1] != undefined ? obj.endDate = this.value[1] : null
-      this.value[0] != null || this.value[0] != undefined ? obj.startDate = this.value[0] : null
+      this.search.keyword != null && this.search.keyword != '' ? obj.oldCode = this.search.keyword : null
+      this.value[1] != null && this.value[1] != undefined ? obj.endDate = this.value[1] : null
+      this.value[0] != null && this.value[0] != undefined ? obj.startDate = this.value[0] : null
       return obj
     },
     exportData() {
-      this.$message({
-        message: "抱歉，功能尚未完善！",
-        type: "warning"
-      });
-      /* exportOutboundStatistics(this.qFilter()).then(res => {
-         this.download(res)
-       })*/
+      exportStorageBin(this.qFilter()).then(res => {
+        this.download(res)
+      })
     },
     // 关键字查询
     query() {
-        this.$emit('queryBtn', this.qFilter())
+      this.$emit('queryBtn', this.qFilter())
     },
     handleAlter() {
       if (this.clickData.gid) {

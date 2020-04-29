@@ -12,7 +12,6 @@
         </el-col>
         <el-button-group style="float:right">
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click.native="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
       </el-row>
     </el-form>
@@ -20,7 +19,6 @@
 </template>
 <script>
 import { mapGetters } from "vuex"
-import { exportLocationBoard } from "@/api/warehouse/index"
 export default {
     components: {},
     computed: {
@@ -37,24 +35,6 @@ export default {
 
   },
   methods:{
-    // 下载文件
-    download(res) {
-      if (!res.data) {
-        return
-      }
-      let url = window.URL.createObjectURL(new Blob([res.data]))
-      let link = document.createElement('a')
-      link.style.display = 'none'
-      link.href = url
-      link.setAttribute('download', res.headers['content-disposition'].split('filename=')[1])
-      document.body.appendChild(link)
-      link.click()
-    },
-    exportData() {
-      exportLocationBoard(this.qFilter()).then(res => {
-        this.download(res)
-      })
-    },
     upload() {
       this.$emit('uploadList')
       this.search.keyword = ''

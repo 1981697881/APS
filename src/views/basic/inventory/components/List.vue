@@ -17,35 +17,35 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { getInventory } from "@/api/basic/index";
-import List from "@/components/List";
+import { mapGetters } from 'vuex';
+import { getInventory } from '@/api/basic/index';
+import List from '@/components/List';
 
 export default {
   components: {
     List
   },
   computed: {
-    ...mapGetters(["node"])
+    ...mapGetters(['node'])
   },
   data() {
     return {
       loading: false,
       list: {},
       columns: [
-        { text: "oid", name: "oid", default: false },
-        { text: "批号", name: "lotNo" },
-        { text: "名称", name: "goodName" },
-        { text: "编码", name: "goodCode" },
-        { text: "类别", name: "" },
-        { text: "规格", name: "" },
-          { text: "安全数量", name: "" },
-          { text: "计量单位", name: "" },
-          { text: "即时库存", name: "" },
-          { text: "仓库", name: "whName" },
-          { text: "仓位", name: "binName" },
-
-          { text: "旧料号", name: "" },
+        { text: 'oid', name: 'oid', default: false },
+        { text: '批号', name: 'lotNo' },
+        { text: '名称', name: 'goodName' },
+        { text: '编码', name: 'goodCode' },
+        { text: '类别', name: '' },
+        { text: '规格', name: 'spec' },
+        { text: '安全数量', name: '' },
+        { text: '计量单位', name: '' },
+        { text: '即时库存', name: 'evenNum' },
+        { text: 'U9库存', name: 'num' },
+        { text: '仓库', name: 'whName' },
+        { text: '仓位', name: 'positionName' },
+        { text: '旧料号', name: 'oldCode' },
       ]
     };
   },
@@ -65,7 +65,7 @@ export default {
     },
       //监听单击某一行
       rowClick(obj) {
-          this.$store.dispatch("list/setClickData", obj.row);
+          this.$store.dispatch('list/setClickData', obj.row);
       },
     fetchData(fid, type) {
      this.loading = true;

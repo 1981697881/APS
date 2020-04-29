@@ -1,10 +1,8 @@
 import {getLodop} from '@/tools/LodopFuncs'
 // 自有产品标签
 const PrintAccount = (data, printingQuantity, apiece, repeat) => {
-  let qrAccount = `/` + data.goodCode + `/` + data.oldCode + `/` + data.productionDate + `/` + data.lotNo + `/` + data.spec
   // 调用打印对象
   LODOP = getLodop()
-  console.log(qrAccount)
   // 序号
   LODOP.PRINT_INITA(0, 0, 50, 50, '成品_自有产品标签');
   LODOP.SET_PRINT_PAGESIZE(1, '95mm', '65mm', '');
@@ -18,7 +16,7 @@ const PrintAccount = (data, printingQuantity, apiece, repeat) => {
     LODOP.ADD_PRINT_TEXT('13mm', '17mm', '50mm', '10mm', data.oldCode);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 1);
     LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",7);
-    LODOP.ADD_PRINT_BARCODE('11mm', '75mm', '13mm', '13mm', 'QRCode', qrAccount)
+    LODOP.ADD_PRINT_BARCODE('11mm', '75mm', '13mm', '13mm', 'QRCode', data.qrCode)
     LODOP.SET_PRINT_STYLE('FontSize', 10);
     LODOP.ADD_PRINT_TEXT('22mm', '17mm', '29mm', '10mm', data.executiveStandard);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
@@ -46,7 +44,6 @@ const PrintAccount = (data, printingQuantity, apiece, repeat) => {
 }
 // OEM成品 半成品标签
 const PrintTwo = (data, printingQuantity, apiece, repeat, printModel) => {
-  let qrAccount = `/` + data.goodCode + `/` + data.oldCode + `/` + data.productionDate + `/` + data.lotNo + `/` + data.spec
   LODOP.PRINT_INITA(0, 0, 50, 50, '100*70标签');
   // 调用打印对象
   LODOP = getLodop()
@@ -67,7 +64,7 @@ const PrintTwo = (data, printingQuantity, apiece, repeat, printModel) => {
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT('10mm', '21mm', '45mm', '10mm', data.oldCode);
     LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",7);
-    LODOP.ADD_PRINT_BARCODE('4mm', '75mm', '21mm', '21mm', 'QRCode', qrAccount)
+    LODOP.ADD_PRINT_BARCODE('4mm', '75mm', '21mm', '21mm', 'QRCode', data.qrCode)
     LODOP.ADD_PRINT_TEXT('30mm', '2mm', '19mm', '10mm', '生产');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT('36mm', '2mm', '19mm', '10mm', '日期');

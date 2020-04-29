@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { delMaterial,getMaterialList} from '@/api/basic/index'
+import {getStorageBinList} from '@/api/warehouse/index'
 import List from '@/components/List'
 
 export default {
@@ -33,14 +33,14 @@ export default {
       list: {},
       columns: [
         { text: '', name: '',default:false },
-        { text: '区域位置', name: '' },
-        { text: 'U9料号', name: '' },
-        { text: '物料名称', name: '' },
-        { text: '旧料号', name: '' },
-        { text: '批号', name: '' },
-        { text: '包装规格(KG/桶)', name: '' },
-        { text: '数量', name: '' },
-        { text: '入库日期', name: '' },
+        { text: '区域位置', name: 'positionName' },
+        { text: 'U9料号', name: 'goodCode' },
+        { text: '物料名称', name: 'goodName' },
+        { text: '旧料号', name: 'oldCode' },
+        { text: '批号', name: 'lotNo' },
+        { text: '包装规格(KG/桶)', name: 'spec' },
+        { text: '数量', name: 'num' },
+        { text: '入库日期', name: 'createTime' },
       ]
     };
   },
@@ -58,19 +58,22 @@ export default {
     dblclick(obj) {
       // this.$emit('showDialog',obj.row)
     },
+    uploadPr(val) {
+      this.fetchData(val, {
+        pageNum: 1,
+        pageSize: this.list.size || 50
+      })
+    },
     // 监听单击某一行
     rowClick(obj) {
       this.$store.dispatch("list/setClickData", obj.row);
     },
-    fetchData(fid, type) {
+    fetchData(val, data = {
+      pageNum: this.list.current || 1,
+      pageSize: this.list.size || 50
+    }) {
       this.loading = true;
-      const data = {
-      /*  fid: fid,
-        type: type,*/
-        pageNum: this.list.current || 1,
-        pageSize: this.list.size || 50
-      };
-      getMaterialList(data).then(res => {
+      getStorageBinList(data, val).then(res => {
         this.loading = false;
         this.list = res.data;
       });

@@ -198,19 +198,15 @@ export default {
 </style>
 <style>
   .urgent-row {
-    background: #7b1424;
-    color: #fcfcfc;
+    color: #7b1424;
   }
   .suspended-row {
-    background: #3b199a;
-    color: #fcfcfc;
+    color: #3b199a;
   }
   .delay-row {
-    background: #dc9118;
-    color: #fcfcfc;
+    color: #dc9118;
   }
   .conflict-row {
-    background: #8032a4;
-    color: #fcfcfc;
+    color: #8032a4;
   }
 </style>

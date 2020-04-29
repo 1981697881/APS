@@ -83,7 +83,7 @@
         </el-row>
       </el-form>
       <div slot="footer" style="text-align:center;padding-top: 15px">
-        <el-button type="primary" @click.native="confirm('form')">确认</el-button>
+        <el-button type="primary" @click.native="confirm('form')" v-loading.fullscreen.lock="fullscreenLoading">确认</el-button>
       </div>
     </el-dialog>
   </div>
@@ -99,6 +99,7 @@ export default {
   data() {
     return {
       visible: null,
+      fullscreenLoading: false,
       form: {
         docNo: '',
         supplierCode: '',
@@ -193,21 +194,23 @@ export default {
       return obj
     },
     exportData() {
-       exportRecipients(this.qFilter()).then(res => {
-         this.download(res)
-       })
+      exportRecipients(this.qFilter()).then(res => {
+        this.download(res)
+      })
     },
     confirm(form) {
+      this.fullscreenLoading = true
       this.$refs[form].validate((valid) => {
         // 判断必填项
         if (valid) {
-      /*    if(this.form.value.length > 0) {*/
-            delete this.form.value
-            syncShipInfo(this.form).then(res => {
-              this.visible = false
-              this.upload()
-            })
-         /* }else{
+          /*   if(this.form.value.length > 0) {*/
+          delete this.form.value
+          syncShipInfo(this.form).then(res => {
+            this.fullscreenLoading = false
+            this.visible = false
+            this.upload()
+          })
+          /* }else{
             this.$message({
               message: "请选择时间",
               type: "warning"

@@ -2,8 +2,24 @@
   <div class="list-header">
     <el-form  :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
-        <el-col :span="6">
-          <el-form-item :label="'订单单号'">
+        <el-col :span="7">
+          <el-form-item :label="'日期'">
+            <el-date-picker
+              v-model="value"
+              type="daterange"
+              align="right"
+              class="input-class"
+              unlink-panels
+              range-separator="至"
+              value-format="yyyy-MM-dd"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions">
+            </el-date-picker>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item :label="'关键字'">
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>
@@ -90,7 +106,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { salesListSync, exportSales} from "@/api/aftermarket/index"
+import { salesListSync, exportSales, notarizeList} from "@/api/aftermarket/index"
 export default {
   components: {},
   computed: {
@@ -110,6 +126,7 @@ export default {
         businessDateEnd: '',
         value: [],
       },
+      value: '',
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -167,7 +184,12 @@ export default {
     },
     notarize() {
       if (this.clickData.soId) {
-        this.$emit('showDialog', this.clickData)
+        notarizeList({soId: this.clickData.soId}).then(res => {
+          if(res.flag) {
+            this.upload()
+          }
+        })
+        /*this.$emit('showDialog', this.clickData)*/
       } else {
         this.$message({
           message: "无选中行",
@@ -179,10 +201,12 @@ export default {
     qFilter() {
       let obj = {}
       this.search.keyword != null && this.search.keyword != '' ? obj.docNo = this.search.keyword : null
+      this.value[1] != null && this.value[1] != undefined ? obj.businessDateEnd = this.value[1] : null
+      this.value[0] != null && this.value[0] != undefined ? obj.businessDateStart = this.value[0] : null
       return obj
     },
     // 关键字查询
-    query(){
+    query() {
       this.$emit('uploadList', this.qFilter())
     },
     confirm(form) {
@@ -209,6 +233,7 @@ export default {
     upload() {
       this.$emit('uploadList')
       this.search.keyword = ''
+      this.value = ''
     },
     handleSync() {
       this.visible = true

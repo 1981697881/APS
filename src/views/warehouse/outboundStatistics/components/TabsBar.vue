@@ -36,7 +36,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import {exportOutboundStatistics} from '@/api/warehouse/index';
+import { exportOutboundStatistics } from '@/api/warehouse/index';
 export default {
     components: {},
     computed: {

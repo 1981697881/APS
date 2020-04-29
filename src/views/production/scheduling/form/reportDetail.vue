@@ -257,7 +257,6 @@
       },
       confirmPrint() {
         if(this.printModel != null && this.lotNo != null) {
-            console.log(this.listInfo)
           if(this.listInfo.lotNo != null && this.listInfo.lotNo != '') {
             // data: 数据
             // printingQuantity: 打印品种

@@ -10,6 +10,9 @@
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
+        <el-button-group style="float:right">
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click.native="upload">刷新</el-button>
+        </el-button-group>
       </el-row>
     </el-form>
   </div>
@@ -25,21 +28,29 @@ export default {
   data() {
     return {
       search: {
-          keyword: null,
-          type:null
+        keyword: null,
       }
     };
   },
-  mounted(){
+  mounted() {
 
   },
-  methods:{
-      //关键字查询
-      query(){
-          if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
-          }
-      },
+  methods: {
+    // 关键字查询
+    query() {
+      this.$emit('queryBtn', this.qFilter())
+    },
+    upload() {
+      this.$emit('uploadList')
+      this.search.keyword = ''
+      this.value = ''
+    },
+    // 查询条件过滤
+    qFilter() {
+      let obj = {}
+      this.search.keyword != null && this.search.keyword != '' ? obj.shipNo = this.search.keyword : null
+      return obj
+    },
     handleAlter() {
       if (this.clickData.gid) {
         this.$emit('showDialog',{
