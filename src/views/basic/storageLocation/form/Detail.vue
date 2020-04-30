@@ -59,8 +59,9 @@
       </el-container>
     </el-container>
     <div slot="footer" style="text-align:center;padding-top: 15px;">
+        <el-button type="success" @click="createData">新增</el-button>
         <el-button type="primary" @click="saveData('form')">保存</el-button>
-        <el-button type="primary" @click="createData">新增</el-button>
+
       </div>
     <el-dialog
       :visible.sync="visible"
@@ -108,14 +109,14 @@ export default {
         positionName: null, // 名称
         positionCode: null,
         piId: null,
-        parent: -1,
         type: 1,
       },
+      row: null,
       form: {
         positionName: null, // 名称
         positionCode: null,
         piId: null,
-        parent: 1,
+        parent: null,
         type: 2,
       },
       loading: false,
@@ -152,7 +153,6 @@ export default {
         positionName: null, // 名称
         positionCode: null,
         piId: null,
-        parent: -1,
         type: 1,
       }
       this.visible = true
@@ -163,11 +163,16 @@ export default {
     },
     // 监听单击某一行
     rowClick1(obj) {
-      this.loading = true;
-      getAreaTree(obj.piId).then(res => {
-        if(res.flag){
-          this.loading = false;
-          this.list2 = res.data;
+
+      this.row = obj
+      this.formatArea(obj.piId)
+    },
+    formatArea(val) {
+      this.loading = true
+      getAreaTree(val).then(res => {
+        if(res.flag) {
+          this.loading = false
+          this.list2 = res.data
         }
       });
     },
@@ -187,7 +192,7 @@ export default {
         positionName: null, // 名称
         positionCode: null,
         piId: null,
-        parent: 1,
+        parent: null,
         type: 2,
       }
     },
@@ -196,15 +201,29 @@ export default {
         //判断必填项
         if (valid) {
           // 修改
-          if (typeof (this.form.piId) != undefined && this.form.piId != null) {
-            warehouseAlter(this.form).then(res => {
-              this.fetchData()
-            });
-            // 保存
-          }else{
-            warehouseAdd(this.form).then(res => {
-              this.fetchData()
-            });
+          if(typeof (this.row.piId) != undefined && this.row.piId != null){
+            if (typeof (this.form.piId) != undefined && this.form.piId != null) {
+              warehouseAlter({
+                type: this.form.type,
+                piName: this.form.positionName,
+                piId: this.form.piId,
+                parent: this.row.piId,
+                piCode: this.form.positionCode
+              }).then(res => {
+                this.formatArea(this.row.piId)
+              });
+              // 保存
+            }else{
+              warehouseAdd({
+                type: this.form.type,
+                piName: this.form.positionName,
+                piId: this.form.piId,
+                parent: this.row.piId,
+                piCode: this.form.positionCode
+              }).then(res => {
+                this.formatArea(this.row.piId)
+              });
+            }
           }
         }else {
           return false;
@@ -217,15 +236,27 @@ export default {
         if (valid) {
           // 修改
           if (typeof (this.form2.piId) != undefined && this.form2.piId != null) {
-            warehouseAlter(this.form2).then(res => {
+            warehouseAlter({
+              type: this.form2.type,
+              piName: this.form2.positionName,
+              piId: this.form2.piId,
+              piCode: this.form2.positionCode
+            }).then(res => {
               if(res.flag){
+                this.visible = false
                 this.fetchData()
               }
             });
             // 保存
           } else {
-            warehouseAdd(this.form2).then(res => {
+            warehouseAdd({
+              type: this.form2.type,
+              piName: this.form2.positionName,
+              piId: this.form2.piId,
+              piCode: this.form2.positionCode
+            }).then(res => {
               if(res.flag){
+                this.visible = false
                 this.fetchData()
               }
             });

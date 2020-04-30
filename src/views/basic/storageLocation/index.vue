@@ -44,13 +44,13 @@ export default {
     this.$refs.list.fetchData()
   },
   methods: {
-    hideWindow(val){
+    hideWindow(val) {
       this.visible = val
     },
-    handlerDialog(obj){
+    handlerDialog(obj) {
       this.visible = true
     },
-    //更新列表
+    // 更新列表
     upload(){
       this.$refs.list.fetchData()
     }
