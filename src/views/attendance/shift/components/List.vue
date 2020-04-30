@@ -54,10 +54,11 @@
               <el-checkbox v-model="form.checked"></el-checkbox>
             </el-form-item>
           </el-col>
-
           <el-col :span="24">
-            <el-form-item :label="'接收人员'" prop="roleName">
-              <el-table class="list-main" :data="list" border size="mini" :highlight-current-row="true"   @row-click="rowClick">
+            <div style="margin-top: 20px">
+              <el-button @click="setRow">添加</el-button>
+            </div>
+              <el-table class="list-main" :data="list" border size="mini" :highlight-current-row="true"  @dblclick="dblclick" @row-click="rowClick">
                 <el-table-column
                   v-for="(t,i) in columns"
                   :key="i"
@@ -68,7 +69,6 @@
                   :width="t.width?t.width:''"
                 ></el-table-column>
               </el-table>
-            </el-form-item>
           </el-col>
         </el-col>
       </el-row>
@@ -77,97 +77,97 @@
 </template>
 
 <script>
-    import {FrameAdd,updateRoles,getSuperior,getCompany} from "@/api/system/permissions";
-    export default {
-        props: {
-            rid: {
-                type: Number,
-                default: null
+  import {FrameAdd,updateRoles,getSuperior,getCompany} from "@/api/system/permissions";
+  export default {
+    props: {
+      rid: {
+        type: Number,
+        default: null
+      }
+    },
+    data() {
+      return {
+        form: {
+          checked: true,
+          rid: null,
+          roleName: null, // 名称
+          roleLevel:null,
+        },
+        pidS: [],
+        list: [],
+        columns: [
+          { text: "上班时间", name: "" },
+          { text: "段内休息", name: "" },
+          { text: "下班时间", name: "" },
+          { text: "出勤类型", name: "" }
+        ],
+        pArray:[],
+        rules: {
+          roleName: [
+            {required: true, message: '请输入名稱', trigger: 'blur'},
+          ],
+          roleLevel: [
+            {required: true, message: '请选择等级', trigger: 'change'},
+          ],
+        },
+      };
+    },
+    created() {
+    },
+    mounted() {
+    },
+    methods: {
+      setList(val) {
+        this.list.push(val)
+      },
+      setRow() {
+        this.$emit('showDialog')
+      },
+      reset() {
+        this.$refs.form.resetFields()
+      },
+      dblclick(obj) {
+        this.$emit('showDialog', obj.row)
+      },
+      //监听单击某一行
+      rowClick(obj) {
+        this.$store.dispatch("list/setClickData", obj);
+      },
+      saveData(form) {
+        this.$refs[form].validate((valid) => {
+          //判断必填项
+          if (valid) {
+            //修改
+            if (typeof (this.form.rid) != undefined && this.form.rid != null) {
+              updateRoles(this.form).then(res => {
+                this.$emit('hideDialog', false)
+                this.$emit('uploadList')
+              });
+              //保存
+            }else{
+              FrameAdd(this.form).then(res => {
+                this.$emit('hideDialog', false)
+                this.$emit('uploadList')
+              });
             }
-        },
-        data() {
-            return {
-                form: {
-                  checked: true,
-                    rid: null,
-                    roleName: null, // 名称
-                    roleLevel:null,
-                },
-                pidS:[],
-                columns: [
-                    { text: "上班时间", name: "" },
-                    { text: "段内休息", name: "" },
-                    { text: "下班时间", name: "" },
-                    { text: "出勤类型", name: "" }
-                ],
-                pArray:[],
-                rules: {
-                    roleName: [
-                        {required: true, message: '请输入名稱', trigger: 'blur'},
-                    ],
-                    roleLevel: [
-                        {required: true, message: '请选择等级', trigger: 'change'},
-                    ],
-
-                },
-                levelFormat: [[1,'一级'],[2,'二级']]
-            };
-        },
-        created() {
-            this.form.rid=this.rid
-        },
-        mounted() {
-            this.fetchFormat();
-            if (this.form.rid) {
-
-            }
-        },
-        methods: {
-            //监听单击某一行
-            rowClick(obj) {
-                this.checkDate=obj;
-                this.$emit('showTree',obj)
-                this.$store.dispatch("list/setClickData", obj);
-            },
-            saveData(form) {
-                this.$refs[form].validate((valid) => {
-                    //判断必填项
-                    if (valid) {
-                        //修改
-                        if (typeof (this.form.rid) != undefined && this.form.rid != null) {
-                            updateRoles(this.form).then(res => {
-                                this.$emit('hideDialog', false)
-                                this.$emit('uploadList')
-                            });
-                            //保存
-                        }else{
-                            FrameAdd(this.form).then(res => {
-                                this.$emit('hideDialog', false)
-                                this.$emit('uploadList')
-                            });
-                        }
-
-
-                    }else {
-                        return false;
-                    }
-                })
-
-            },
-            fetchFormat() {
-                //获取公司、上级下拉
-                getSuperior().then(res => {
-                    this.pArray = res.data;
-                });
-                getCompany().then(res => {
-                    this.pArray = res.data;
-                });
-            },
-            fetchData(val) {
-
-            }
-        }
-    };
+          }else {
+            return false;
+          }
+        })
+      },
+      fetchFormat() {
+        //获取公司、上级下拉
+        getSuperior().then(res => {
+          this.pArray = res.data;
+        });
+        getCompany().then(res => {
+          this.pArray = res.data;
+        });
+      },
+      fetchData(val) {
+      }
+    }
+  };
 </script>
 
 <style>

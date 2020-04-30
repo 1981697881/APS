@@ -11,9 +11,9 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
         <el-button-group style="float:right">
+          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAdd">仓库编辑</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
-          <!--<el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>-->
         </el-button-group>
       </el-row>
     </el-form>
@@ -49,6 +49,9 @@ export default {
       let obj = {}
       this.search.keyword != null || this.search.keyword != undefined ? obj.keyword = this.search.keyword : null
       return obj
+    },
+    handlerAdd() {
+      this.$emit("showDialog")
     },
     // 下载文件
     download(res) {

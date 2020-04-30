@@ -39,7 +39,7 @@ export default {
       }
     },
       handlerAdd() {
-      this.$emit("showDialog",{rid:null})
+        this.$emit("reset")
     },
       del() {
           if (this.clickData.reOdId) {

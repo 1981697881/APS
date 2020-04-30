@@ -13,12 +13,10 @@
     </el-table>
   </div>
 </template>
-
 <script>
     import { mapGetters } from "vuex";
     import {getFrameList,delFrame} from "@/api/basic/index";
     import List from "@/components/List";
-
     export default {
         components: {
             List
@@ -73,7 +71,6 @@
             },
             fetchData(fid, type) {
                 //this.loading = true;
-
                 const data = {
                     /*  fid: fid,
                       type: type,*/

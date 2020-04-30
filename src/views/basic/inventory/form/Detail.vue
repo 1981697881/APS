@@ -67,7 +67,7 @@
       </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">
-        <el-button type="primary" @click="saveData('form')">同步</el-button>
+        <el-button type="primary" @click="saveData('form')" v-loading.fullscreen.lock="fullscreenLoading">同步</el-button>
       </div>
   </div>
 </template>
@@ -91,6 +91,7 @@ export default {
         oldCode:null,
       },
         pidS:[],
+      fullscreenLoading: false,
         pArray:[],
         rules: {
           goodCode: [
@@ -115,17 +116,19 @@ export default {
   },
   methods: {
     saveData(form) {
-        this.$refs[form].validate((valid) => {
-            //判断必填项
-            if (valid) {
-              syncInventory(this.form).then(res => {
-                        this.$emit('hideDialog', false)
-                        this.$emit('uploadList')
-                    });
-            }else {
-                return false;
-            }
-        })
+      this.$refs[form].validate((valid) => {
+        // 判断必填项
+        if (valid) {
+          this.fullscreenLoading = true
+          syncInventory(this.form).then(res => {
+            this.fullscreenLoading = false
+            this.$emit('hideDialog', false)
+            this.$emit('uploadList')
+          });
+        }else {
+          return false;
+        }
+      })
 
     },
   }

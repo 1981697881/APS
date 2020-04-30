@@ -29,7 +29,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleSync">同步</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleSync" >同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh"    @click="upload">刷新</el-button>
         </el-button-group>
       </el-row>
@@ -40,23 +40,23 @@
 import { mapGetters } from 'vuex'
 import { PrintFour } from '@/tools/doPrint'
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
+  components: {},
+  computed: {
+    ...mapGetters(["node","clickData","selections"])
+  },
   data() {
     return {
-        options: [{
-            value: '选项1',
-            label: '成品'
-        }, {
-            value: '选项2',
-            label: '半成品'
-        }],
-        value: '',
+      options: [{
+        value: '选项1',
+        label: '成品'
+      }, {
+        value: '选项2',
+        label: '半成品'
+      }],
+      value: '',
       search: {
-          keyword: null,
-          type:null
+        keyword: null,
+        type:null
       }
     };
   },
@@ -100,8 +100,8 @@ export default {
     handleSync() {
       this.$emit('syncDialog')
     },
-      handleAdd(){
-          this.$emit('showDialog')
+    handleAdd(){
+      this.$emit('showDialog')
 
     },
     disable() {

@@ -9,7 +9,7 @@
     </div>
     <el-dialog
       :visible.sync="visible"
-      title="同步信息"
+      title="仓库信息"
       v-if="visible"
       v-dialogDrag
       :width="'50%'"
@@ -40,21 +40,20 @@ export default {
       floorId: null
     };
   },
-    mounted() {
-        this.$refs.list.fetchData()
-    },
+  mounted() {
+    this.$refs.list.fetchData()
+  },
   methods: {
-      hideWindow(val){
-          this.visible = val
-      },
+    hideWindow(val){
+      this.visible = val
+    },
     handlerDialog(obj){
-
       this.visible = true
     },
-      //更新列表
-      upload(){
-          this.$refs.list.fetchData()
-      }
+    //更新列表
+    upload(){
+      this.$refs.list.fetchData()
+    }
   }
 };
 </script>

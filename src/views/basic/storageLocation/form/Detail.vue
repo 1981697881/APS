@@ -1,136 +1,242 @@
 <template>
   <div>
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'gid'" style="display: none">
-            <el-input v-model="form.gid"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'编码'" prop="goodCode">
-            <el-input v-model="form.goodCode"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'名称'" prop="goodName">
-            <el-input v-model="form.goodName"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'规格'" prop="roleName">
-            <el-input v-model="form.roleName"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'旧料号'" prop="roleName">
-            <el-input v-model="form.roleName"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'物料类别'" >
-            <el-select v-model="form.roleLevel" class="width-full" placeholder="请选择用户权限">
-              <el-option :label="t[1]" :value="t[0]" v-for="(t,i) in levelFormat" :key="i"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'计量单位'" >
-            <el-select v-model="form.pidS" multiple  placeholder="请选择">
-              <el-option
-                v-for="(t,i) in pArray"
-                :key="i"
-                :label="t.permissionName"
-                :value="t.pid">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
+    <el-container>
+      <el-aside width="250px" style="line-height: normal">
+        <div style="text-align: right;">
+          <el-button type="success" style="padding: 7px 13px;" @click="setRow">添加</el-button>
+        </div>
+        <el-table height="300px" class="list-main"  :data="list1" border size="mini" :highlight-current-row="true" @row-click="rowClick1"  @row-dblclick="dblclick1">
+          <el-table-column
+            v-for="(t,i) in columns1"
+            :key="i"
+            align="center"
+            :prop="t.name"
+            :label="t.text"
+            v-if="t.default!=undefined?t.default:true"
+            :width="t.width?t.width:''"
+             v-loading="loading"
+          ></el-table-column>
+        </el-table>
+      </el-aside>
+      <el-container>
+        <el-header style="height: auto">
+          <el-form :model="form" :rules="rules" ref="form" label-width="80px" :size="'mini'" style="padding-top: 10px;">
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-form-item :label="'piId'" style="display: none">
+                  <el-input v-model="form.piId"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-form-item :label="'编码'" prop="positionCode">
+                  <el-input v-model="form.positionCode"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item :label="'名称'" prop="positionName">
+                  <el-input v-model="form.positionName"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </el-header>
+        <el-main style="line-height: normal">
+          <el-table class="list-main" :data="list2" border size="mini" :highlight-current-row="true"   @row-click="rowClick2">
+            <el-table-column
+              v-for="(t,i) in columns2"
+              :key="i"
+              align="center"
+              :prop="t.name"
+              :label="t.text"
+              v-if="t.default!=undefined?t.default:true"
+              :width="t.width?t.width:''"
+              v-loading="loading"
+            ></el-table-column>
+          </el-table>
+        </el-main>
+      </el-container>
+    </el-container>
+    <div slot="footer" style="text-align:center;padding-top: 15px;">
+        <el-button type="primary" @click="saveData('form')">保存</el-button>
+        <el-button type="primary" @click="createData">新增</el-button>
+      </div>
+    <el-dialog
+      :visible.sync="visible"
+      title="仓库信息"
+      v-if="visible"
+      :width="'30%'"
+      destroy-on-close
+      append-to-body
+    >
+      <el-form :model="form2" :rules="rules" ref="form2">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'安全数量'" prop="roleName">
-              <el-input v-model="form.roleName"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item :label="'旧料号'" prop="oldCode">
-              <el-input v-model="form.oldCode"></el-input>
+            <el-form-item :label="'piId'" style="display: none">
+              <el-input v-model="form2.piId"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-      </el-row>
-    </el-form>
-    <div slot="footer" style="text-align:center">
-        <el-button type="primary" @click="saveData('form')">同步</el-button>
+        <el-row :gutter="20" type="flex" justify="center">
+            <el-col :span="12">
+              <el-form-item :label="'编码'" prop="positionCode">
+                <el-input v-model="form2.positionCode"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item :label="'名称'" prop="positionName">
+                <el-input v-model="form2.positionName"></el-input>
+              </el-form-item>
+            </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" style="text-align:center">
+        <el-button type="primary" @click.native="saveParent('form2')">确定</el-button>
       </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import {syncInventory} from "@/api/basic/index";
+import {getWarehouseList, warehouseAdd, warehouseAlter, getAreaTree} from "@/api/basic/index";
 
 export default {
-  props: {
-    gid: {
-      type: Number,
-      default: null
-    }
-  },
   data() {
     return {
-      form: {
-          gid: null,
-        goodCode: null, // 名称
-        goodName:null,
-        oldCode:null,
+      form2: {
+        positionName: null, // 名称
+        positionCode: null,
+        piId: null,
+        parent: -1,
+        type: 1,
       },
-        pidS:[],
-        pArray:[],
-        rules: {
-          goodCode: [
-                {required: true, message: '请输入编码', trigger: 'blur'},
-            ],
-          goodName: [
-            {required: true, message: '请输入名稱', trigger: 'blur'},
-          ],
-            roleLevel: [
-                {required: true, message: '请选择等级', trigger: 'change'},
-            ],
-
-        },
-      levelFormat: [[1,'一级'],[2,'二级']]
+      form: {
+        positionName: null, // 名称
+        positionCode: null,
+        piId: null,
+        parent: 1,
+        type: 2,
+      },
+      loading: false,
+      visible: null,
+      list1: [],
+      list2: [],
+      columns1: [
+        { text: "编码", name: "positionCode" },
+        { text: "名称", name: "positionName" },
+      ],
+      columns2: [
+        { text: "编码", name: "positionCode" },
+        { text: "名称", name: "positionName" },
+      ],
+      rules: {
+        positionCode: [
+          {required: true, message: '请输入编码', trigger: 'blur'},
+        ],
+        positionName: [
+          {required: true, message: '请输入名稱', trigger: 'blur'},
+        ],
+      },
     };
   },
   created() {
 
   },
   mounted() {
-      //this.fetchFormat();
+    this.fetchData();
   },
   methods: {
+    setRow() {
+      this.form2 = {
+        positionName: null, // 名称
+        positionCode: null,
+        piId: null,
+        parent: -1,
+        type: 1,
+      }
+      this.visible = true
+    },
+    dblclick1(row) {
+      this.visible = true
+      this.form2 = row
+    },
+    // 监听单击某一行
+    rowClick1(obj) {
+      this.loading = true;
+      getAreaTree(obj.piId).then(res => {
+        if(res.flag){
+          this.loading = false;
+          this.list2 = res.data;
+        }
+      });
+    },
+    // 监听单击某一行
+    rowClick2(obj) {
+      this.form = obj
+    },
+    fetchData() {
+      this.loading = true;
+      getWarehouseList(-1).then(res => {
+        this.loading = false;
+        this.list1 = res.data;
+      });
+    },
+    createData() {
+      this.form = {
+        positionName: null, // 名称
+        positionCode: null,
+        piId: null,
+        parent: 1,
+        type: 2,
+      }
+    },
     saveData(form) {
-        this.$refs[form].validate((valid) => {
-            //判断必填项
-            if (valid) {
-              syncInventory(this.form).then(res => {
-                        this.$emit('hideDialog', false)
-                        this.$emit('uploadList')
-                    });
-            }else {
-                return false;
-            }
-        })
-
+      this.$refs[form].validate((valid) => {
+        //判断必填项
+        if (valid) {
+          // 修改
+          if (typeof (this.form.piId) != undefined && this.form.piId != null) {
+            warehouseAlter(this.form).then(res => {
+              this.fetchData()
+            });
+            // 保存
+          }else{
+            warehouseAdd(this.form).then(res => {
+              this.fetchData()
+            });
+          }
+        }else {
+          return false;
+        }
+      })
+    },
+    saveParent(form) {
+      this.$refs[form].validate((valid) => {
+        //判断必填项
+        if (valid) {
+          // 修改
+          if (typeof (this.form2.piId) != undefined && this.form2.piId != null) {
+            warehouseAlter(this.form2).then(res => {
+              if(res.flag){
+                this.fetchData()
+              }
+            });
+            // 保存
+          } else {
+            warehouseAdd(this.form2).then(res => {
+              if(res.flag){
+                this.fetchData()
+              }
+            });
+          }
+        } else {
+          return false;
+        }
+      })
     },
   }
 };
 </script>
 
-<style>
-</style>
+

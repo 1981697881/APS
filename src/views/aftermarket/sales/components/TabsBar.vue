@@ -99,7 +99,7 @@
           </el-row>
         </el-form>
         <div slot="footer" style="text-align:center;padding-top: 15px">
-          <el-button type="primary" @click.native="confirm('form')">确认</el-button>
+          <el-button type="primary" @click.native="confirm('form')" v-loading.fullscreen.lock="fullscreenLoading">确认</el-button>
         </div>
     </el-dialog>
   </div>
@@ -115,6 +115,7 @@ export default {
   data() {
     return {
       visible: null,
+      fullscreenLoading: false,
       form: {
         docNo: '',
         customeCode: '',
@@ -214,9 +215,11 @@ export default {
         // 判断必填项
         if (valid) {
           if(this.form.value.length > 0) {
+            this.fullscreenLoading = true
             delete this.form.value
             salesListSync(this.form).then(res => {
               this.visible = false
+              this.fullscreenLoading = false
               this.upload()
             })
           }else{

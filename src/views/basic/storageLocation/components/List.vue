@@ -35,9 +35,11 @@ export default {
       list: {},
       columns: [
         { text: "piId", name: "piId", default: false },
+        { text: "仓库", name: "" },
+        { text: "区域", name: "" },
         { text: "库位编码", name: "piCode" },
         { text: "库位名称", name: "piName" },
-        { text: "类型", name: "type" },
+        { text: "描述", name: "remark" },
       ]
     };
   },

@@ -603,3 +603,50 @@ export function getStorageList(data) {
     method: 'POST'
   })
 }
+// 仓库-获取列表
+export function getWarehouseList(params) {
+  const url = '/position/formatByPrId/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'get'
+  })
+}
+// 仓库-新增
+export function warehouseAdd(params) {
+  const url = '/position/add'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
+// 仓库-修改
+export function warehouseAlter(params) {
+  const url = '/position/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: params
+  })
+}
+// 仓库-获取区域
+export function getAreaTree(params) {
+  return request({
+    url: '/position/formatByPrId/' + params,
+    headers: {
+      'authorization': getToken('apsrx')
+    },
+    method: 'get',
+  })
+}

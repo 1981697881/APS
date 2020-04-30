@@ -12,7 +12,7 @@
         </el-col>
         <el-button-group style="float:right">
           <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleAdd">同步</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-refresh"    @click="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" >导出</el-button>
         </el-button-group>
       </el-row>

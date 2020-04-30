@@ -66,7 +66,7 @@
         </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">
-      <el-button type="primary" @click="saveData('form')">同步</el-button>
+      <el-button type="primary" @click="saveData('form')" v-loading.fullscreen.lock="fullscreenLoading">同步</el-button>
     </div>
   </div>
 </template>
@@ -88,6 +88,7 @@
           name: '',
           orgCode: '',
         },
+        fullscreenLoading: false,
         value1: '',
         value2: '',
         rules: {
@@ -130,8 +131,9 @@
     methods: {
       saveData(form) {
         this.$refs[form].validate((valid) => {
-          //判断必填项
+          // 判断必填项
           if (valid) {
+            this.fullscreenLoading = true
             this.form.createdOnEnd = null
             this.form.createdOnStart = null
             this.form.modifyOnEnd = null
@@ -145,6 +147,7 @@
               this.form.modifyOnStart = this.value2[0]
             }
             syncMaterialInfo(this.form).then(res => {
+              this.fullscreenLoading = false
                 this.$emit('hideDialog', false)
                 this.$emit('uploadList')
               });
