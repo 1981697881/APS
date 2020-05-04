@@ -26,18 +26,18 @@
       destroy-on-close
       append-to-body
     >
-      <el-form :model="form2" :rules="rules" ref="form2">
+      <el-form :model="form" :rules="rules" ref="form">
         <el-row :gutter="20" type="flex" justify="center">
           <el-col :span="12">
-            <el-form-item :label="'仓库'" prop="tpId">
-              <el-select v-model="form.tpId" class="width-full" placeholder="仓库" @change="selectChange">
+            <el-form-item :label="'仓库'" prop="type">
+              <el-select v-model="form.type" class="width-full" placeholder="仓库" @change="selectChange">
                 <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in pArray" :key="i"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'区域'" prop="plId">
-              <el-select v-model="form.plId" class="width-full" placeholder="区域" :disabled="disPl">
+            <el-form-item :label="'区域'" prop="prId">
+              <el-select v-model="form.prId" class="width-full" placeholder="区域" :disabled="disPl">
                 <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in rArray"  :key="i"></el-option>
               </el-select>
             </el-form-item>
@@ -46,8 +46,7 @@
       </el-form>
       <div slot="footer" style="text-align:center">
         <el-upload
-          style="float: left"
-          name="order"
+          name="position"
           :on-success="uploadSuccess"
           :on-error="uploadError"
           accept="xlsx,xls"
@@ -57,13 +56,12 @@
           :show-file-list="false"
           action="excel/import/position"
           class="upload-demo"
-          multiple
           :auto-upload="false"
           :on-change="handleUpload"
-          :limit="3"
+          :limit="1"
         >
-          <el-button size="mini" type="primary" >点击上传</el-button>
-          <el-button style="margin-left: 10px;display: none" size="mini" type="success"  @click="submitUpload">上传到服务器</el-button>
+          <el-button type="primary" >选择文件</el-button>
+          <el-button style="margin-left: 10px;" type="success"  @click="submitUpload">上传文件</el-button>
         </el-upload>
       </div>
     </el-dialog>
@@ -84,23 +82,18 @@ export default {
       headers: {
         'authorization': getToken('apsrx'),
       },
-      options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
-      value: '',
+      form: {
+        prId: null,
+        type: null
+      },
+      rules: {
+        type: [
+          {required: true, message: '请选择仓库', trigger: 'change'},
+        ],
+        prId: [
+          {required: true, message: '请选择区域', trigger: 'change'},
+        ],
+      },
       isUpload: null,
       pArray: [],
       rArray: [],
@@ -126,36 +119,42 @@ export default {
       this.rArray = []
       this.fetchLine(val)
     },
-    handleUpload(file, fileList){
-      if(file.status=="ready"){
+    handleUpload(file, fileList) {
+      if (file.status=="ready") {
         this.isUpload = true
         this.visible = true
       }
     },
     handlerUpload() {
+      this.form = {
+        prId: null,
+        type: null
+      }
       this.visible = true
     },
     submitUpload() {
+      this.fileData.type = 3
+      this.fileData.prId = this.form.prId
       this.$refs.upload.submit()
       this.visible = false
     },
     uploadError(res) {
       this.$message({
-        message: res.msg,
+        message: '导入失败',
         type: "warning"
       });
       this.visible = false
       this.$emit('uploadList')
     },
     uploadSuccess(res) {
-      if(res.flag){
+      if(res.flag) {
         this.$message({
           message: res.msg,
           type: "success"
         });
         this.visible = false
         this.$emit('uploadList')
-      }else{
+      } else {
         this.$message({
           message: res.msg,
           type: "warning"
@@ -163,8 +162,8 @@ export default {
       }
     },
     // 关键字查询
-    query(){
-        this.$emit('queryBtn', this.qFilter())
+    query() {
+      this.$emit('queryBtn', this.qFilter())
     },
     upload() {
       this.$emit('uploadList')
@@ -178,28 +177,6 @@ export default {
     },
     handlerAdd() {
       this.$emit("showDialog")
-    },
-    // 下载文件
-    download(res) {
-      if (!res.data) {
-        return
-      }
-      let url = window.URL.createObjectURL(new Blob([res.data]))
-      let link = document.createElement('a')
-      link.style.display = 'none'
-      link.href = url
-      link.setAttribute('download', res.headers['content-disposition'].split('filename=')[1])
-      document.body.appendChild(link)
-      link.click()
-    },
-    exportData() {
-      /*exportAdjust(this.qFilter()).then(res => {
-        this.download(res)
-      })*/
-      this.$message({
-        message: "抱歉，功能尚未完善！",
-        type: "warning"
-      });
     },
     print() {
       if (this.selections.length>0) {
