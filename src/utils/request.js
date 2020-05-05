@@ -10,9 +10,8 @@ import {
 } from '@/utils/auth'
 import querystring from 'querystring'
 // create an axios instance
-
 const service = axios.create({
-  baseURL: (process.env.NODE_ENV === 'production'?'http://test.gzfzdev.com:8080':'')+process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: (process.env.NODE_ENV === 'production'?'http://test.gzfzdev.com:8080':'') + process.env.VUE_APP_BASE_API, // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 900000 // request timeout
 })
@@ -23,6 +22,7 @@ service.interceptors.request.use(
     // do something before request is sent
     /* console.log('process.env.VUE_APP_BASE_API',process.env.VUE_APP_BASE_API)
     console.log('process.env.NODE_ENV',process.env.NODE_ENV) */
+
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -65,7 +65,6 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-        console.log(res)
        if(res.status === 20010){//需要重新登录
         store.dispatch('user/resetToken').then(() => {
           //location.reload()
@@ -99,15 +98,20 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.msg || 'Error'))
     } else {
-
-      if(res.msg!="登陆成功" && res.msg!=null){
+      if(res.flag){
         if(res.status == 20000){
           Message({
             message:res.msg,
             type:'success',
             duration: 5 * 1000
           })
-        }else{
+          store.dispatch('user/resetToken').then(() => {
+
+          })
+          store.dispatch('user/addToken', response.headers.authorization).then(() => {
+
+          })
+        } else {
           Message({
             message:res.msg,
             type:'error',
@@ -115,12 +119,6 @@ service.interceptors.response.use(
           })
         }
       }
-      store.dispatch('user/resetToken').then(() => {
-
-      })
-      store.dispatch('user/addToken', response.headers.authorization).then(() => {
-
-      })
       if(typeof(response.headers['content-disposition']) !='undefined'){
         if(response.headers['content-disposition'].search('attachment')!=-1){
           return response

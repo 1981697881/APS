@@ -6,7 +6,7 @@ import {
 // 组织架构-获取组织树
 export function getFrameTree(params) {
   return request({
-    url: '/table/list',
+    url: 'APS' + '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -19,7 +19,7 @@ export function getFrameTree(params) {
 export function getFrameList(params) {
   const url = '/department/list/' + params.pageNum + '/' + params.pageSize
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -32,7 +32,7 @@ export function getFrameList(params) {
 export function FrameAdd(params) {
   const url = '/department/add'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ export function FrameAdd(params) {
 export function FrameAlter(params) {
   const url = '/department/update'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -57,7 +57,7 @@ export function FrameAlter(params) {
 // 组织架构-获取详情
 export function getFrameInfo(params) {
   return request({
-    url: '/table/list',
+    url: 'APS' + '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -69,7 +69,7 @@ export function getFrameInfo(params) {
 // 组织架构-获取上级下拉
 export function getSuperior(params) {
   return request({
-    url: '/table/list',
+    url: 'APS' + '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -81,7 +81,7 @@ export function getSuperior(params) {
 // 组织架构-获取公司下拉
 export function getCompany(params) {
   return request({
-    url: '/table/list',
+    url: 'APS' + '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -93,7 +93,7 @@ export function getCompany(params) {
 // 组织架构-删除
 export function delFrame(params) {
   return request({
-    url: '/department/del/' + params,
+    url: 'APS' + '/department/del/' + params,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -105,7 +105,7 @@ export function delFrame(params) {
 export function getMaterialList(data) {
   const url = '/goods/list/' + data.pageNum + '/' + data.pageSize
   return request({
-      url: url,
+      url: 'APS' + url,
       headers: {
         'authorization': getToken('apsrx'),
         'Content-Type': 'application/json'
@@ -118,7 +118,7 @@ export function getMaterialList(data) {
 export function materialAdd(params) {
   const url = '/goods/add'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -133,7 +133,7 @@ export function materialAdd(params) {
 export function materialAlter(params) {
   const url = '/goods/update'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -148,7 +148,7 @@ export function materialAlter(params) {
 export function syncMaterialInfo(params) {
   const url = '/Admin/ItemInfo/sync'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -161,7 +161,7 @@ export function syncMaterialInfo(params) {
 export function getMaterialInfo(params) {
   const url = '/goods/getById/' + params
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -172,7 +172,7 @@ export function getMaterialInfo(params) {
 // 物料管理-类别下拉
 export function getMType(params) {
   return request({
-    url: '/table/list',
+    url: 'APS' + '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -184,7 +184,7 @@ export function getMType(params) {
 // 物料管理-计量单位下拉
 export function getUnit(params) {
   return request({
-    url: '/table/list',
+    url: 'APS' + '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -197,7 +197,7 @@ export function getUnit(params) {
 export function delMaterial(params) {
   const url = '/goods/del/' + params
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -209,7 +209,7 @@ export function delMaterial(params) {
 export function getClerkList(params) {
   const url = '/Admin/employee/list/' + params.pageNum + '/' + params.pageSize
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -221,7 +221,7 @@ export function getClerkList(params) {
 // 职员管理-新增
 export function addClerk(params) {
   return request({
-    url: '/employee/add',
+    url: 'APS' + '/employee/add',
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -233,7 +233,7 @@ export function addClerk(params) {
 // 职员管理-修改
 export function alterClerk(params) {
   return request({
-    url: '/employee/update',
+    url: 'APS' + '/employee/update',
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -246,7 +246,7 @@ export function alterClerk(params) {
 // 职员管理-获取详情
 export function clerkInfo(params) {
   return request({
-    url: '/table/list' + params,
+    url: 'APS' + '/table/list' + params,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -257,7 +257,7 @@ export function clerkInfo(params) {
 // 职员管理-获取部门下拉
 export function clerkDepartment(params) {
   return request({
-    url: '/table/list' + params,
+    url: 'APS' + '/table/list' + params,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -269,7 +269,7 @@ export function clerkDepartment(params) {
 // 职员管理-删除
 export function delClerk(params) {
   return request({
-    url: '/employee/del/' + params,
+    url: 'APS' + '/employee/del/' + params,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -280,7 +280,7 @@ export function delClerk(params) {
 export function supplierList(params, query) {
   const url = '/logistics-providers/list/' + params.pageNum + '/' + params.pageSize
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -293,7 +293,7 @@ export function supplierList(params, query) {
 // 承运商管理-新增
 export function addSupplier(params) {
   return request({
-    url: '/logistics-providers/add',
+    url: 'APS' + '/logistics-providers/add',
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -305,7 +305,7 @@ export function addSupplier(params) {
 // 承运商管理-修改
 export function alterSupplier(params) {
   return request({
-    url: '/logistics-providers/update',
+    url: 'APS' + '/logistics-providers/update',
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -319,7 +319,7 @@ export function alterSupplier(params) {
 export function delSupplier(params) {
   const url = '/logistics-providers/del/' + params
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -331,7 +331,7 @@ export function delSupplier(params) {
 export function getInventory(params) {
   const url = '/inv-detail/list/' + params.pageNum + '/' + params.pageSize
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -343,7 +343,7 @@ export function getInventory(params) {
 export function syncInventory(params) {
   const url = '/Admin/InvDetail/sync'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -359,7 +359,7 @@ export function syncInventory(params) {
 export function getResourcesList(data) {
   const url = '/type/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -374,7 +374,7 @@ export function getResourcesList(data) {
 export function getFinalGoodsType() {
   const url = '/type/list/endProductType'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
     },
@@ -385,7 +385,7 @@ export function getFinalGoodsType() {
 export function getSemiFinishedProductsType() {
   const url = '/type/list/semiProductType'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
     },
@@ -396,7 +396,7 @@ export function getSemiFinishedProductsType() {
 export function getFinalGoods(data) {
   const url = '/production-line/list/endProduct/' + data
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
     },
@@ -407,7 +407,7 @@ export function getFinalGoods(data) {
 export function getSemiFinishedProducts(data) {
   const url = '/production-line/list/semiProductLine/' + data
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
     },
@@ -418,7 +418,7 @@ export function getSemiFinishedProducts(data) {
 export function resourcesAdd(params) {
   const url = '/Admin/type/add'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -431,7 +431,7 @@ export function resourcesAdd(params) {
 export function resourcesAlter(params) {
   const url = '/Admin/type/update'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -444,7 +444,7 @@ export function resourcesAlter(params) {
 export function resourcesInfo(params) {
   const url = '/type/getById/' + params
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -457,7 +457,7 @@ export function resourcesInfo(params) {
 export function delResources(params) {
   const url = '/Admin/type/delete/' + params
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -468,7 +468,7 @@ export function delResources(params) {
 export function productionLineList(data, query) {
   const url = '/production-line/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -482,7 +482,7 @@ export function productionLineList(data, query) {
 export function productionLineAdd(params) {
   const url = '/Admin/productionLine/add'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -495,7 +495,7 @@ export function productionLineAdd(params) {
 export function productionLineAlter(params) {
   const url = '/Admin/productionLine/update'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -508,7 +508,7 @@ export function productionLineAlter(params) {
 export function productionLineInfo(params) {
   const url = '/production-line/getById/' + params
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -521,7 +521,7 @@ export function productionLineInfo(params) {
 export function delProductionLine(params) {
   const url = '/Admin/productionLine/delete/' + params
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -532,7 +532,7 @@ export function delProductionLine(params) {
 export function regulationList(data) {
   const url = '/task-rules/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -545,7 +545,7 @@ export function regulationList(data) {
 export function regulationAdd(params) {
   const url = '/task-rules/add'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -558,7 +558,7 @@ export function regulationAdd(params) {
 export function regulationAlter(params) {
   const url = '/task-rules/update'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -571,7 +571,7 @@ export function regulationAlter(params) {
 export function delRegulation(params) {
   const url = '/task-rules/delete/' + params
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -582,7 +582,7 @@ export function delRegulation(params) {
 export function getGoodPrints(params) {
   const url = '/goods/getPrintInfoById'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -595,7 +595,7 @@ export function getGoodPrints(params) {
 export function getStorageList(data) {
   const url = '/position/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -607,7 +607,7 @@ export function getStorageList(data) {
 export function getWarehouseList(params) {
   const url = '/position/formatByPrId/' + params
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
     },
@@ -618,7 +618,7 @@ export function getWarehouseList(params) {
 export function warehouseAdd(params) {
   const url = '/position/add'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -631,7 +631,7 @@ export function warehouseAdd(params) {
 export function warehouseAlter(params) {
   const url = '/position/update'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -643,10 +643,20 @@ export function warehouseAlter(params) {
 // 仓库-获取区域
 export function getAreaTree(params) {
   return request({
-    url: '/position/formatByPrId/' + params,
+    url: 'APS' + '/position/formatByPrId/' + params,
     headers: {
       'authorization': getToken('apsrx')
     },
     method: 'get',
+  })
+}
+// 获取当年法定节假日
+export function getYearHoliday(params) {
+  return request({
+    url: '/api/jiari/?d=' + params.d + '&info=1&back=json',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded'
+    },
+    method: 'get'
   })
 }

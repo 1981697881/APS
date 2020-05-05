@@ -7,7 +7,7 @@ import {
 export function getSchedulingList(params, query) {
   const url = '/task-scheduling/list/' + params.pageNum + '/' + params.pageSize
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -20,7 +20,7 @@ export function getSchedulingList(params, query) {
 export function getSemiList(params, query) {
   const url = '/task-scheduling/semiList'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ export function getSemiList(params, query) {
 export function schedulingPreview(params) {
   const url = '/task-scheduling/getProdRes'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -46,7 +46,7 @@ export function schedulingPreview(params) {
 export function schedulingSave(params) {
   const url = '/Admin/Schedule/insertOrder'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ export function schedulingSave(params) {
 export function schedulingAlter(params) {
   const url = '/task-scheduling/update'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -72,7 +72,7 @@ export function schedulingAlter(params) {
 export function updateProductNum(params) {
   const url = '/task-scheduling/updateProductNum'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -85,7 +85,7 @@ export function updateProductNum(params) {
 export function updateLotNo(params) {
   const url = '/task-scheduling/submitLotNo'
   return request({
-    url: url,
+    url: 'APS' + url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'

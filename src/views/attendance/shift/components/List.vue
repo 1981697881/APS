@@ -77,7 +77,7 @@
 </template>
 
 <script>
-  import {FrameAdd,updateRoles,getSuperior,getCompany} from "@/api/system/permissions";
+  import {getShiftInfoList} from "@/api/attendance/index";
   export default {
     props: {
       rid: {
@@ -164,7 +164,18 @@
           this.pArray = res.data;
         });
       },
-      fetchData(val) {
+      fetchData(fid, type) {
+        this.loading = true;
+        const data = {
+          /*  fid: fid,
+            type: type,*/
+          pageNum: this.list.current || 1,
+          pageSize: this.list.size || 50
+        };
+        getShiftInfoList(data).then(res => {
+          this.loading = false;
+          this.list = res.data;
+        });
       }
     }
   };

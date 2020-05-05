@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { saleInfo,auditOrder,Dismissed} from "@/api/indent/sales";
+import { saleInfo,auditOrder,Dismissed} from "@/api/basic/index";
 import List from "@/components/List";
 
 export default {

@@ -7,7 +7,6 @@ function resolve(dir) {
 }
 
 const name = defaultSettings.title || 'APSv.1' // page title
-
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
@@ -41,7 +40,7 @@ module.exports = {
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
-      [process.env.VUE_APP_BASE_API]: {
+      [process.env.VUE_APP_BASE_API + '/APS']: {
         // target: `http://localhost:8090/asset`, // 修改后台接口地址
         //target: `http://39.108.190.52:50080/web`,
         target: `http://test.gzfzdev.com:8080/`,
@@ -49,7 +48,16 @@ module.exports = {
         ws: false,
         secure: false,
         pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API]: ''
+          ['^' + process.env.VUE_APP_BASE_API + '/APS']: ''
+        }
+      },
+      [process.env.VUE_APP_BASE_API + '/api']: {
+        target: `https://tool.bitefu.net/`,
+        changeOrigin: true, // 必须加上跨域
+        ws: false,
+        secure: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API + '/api']: ''
         }
       }
     }

@@ -15,7 +15,7 @@
 </template>
 <script>
     import { mapGetters } from "vuex";
-    import {getFrameList,delFrame} from "@/api/basic/index";
+    import {getShiftList} from "@/api/attendance/index";
     import List from "@/components/List";
     export default {
         components: {
@@ -33,24 +33,12 @@
                 type: null,
                 checkDate:null,
                 columns: [
-                    { text: "班次代码", name: "" },
-                    { text: "班次名称", name: "" },
+                    { text: "班次代码", name: "oow_id" },
+                    { text: "班次名称", name: "oow_name" },
                 ]
             };
         },
-
         methods: {
-            handlerForm() {},
-            //监听每页显示几条
-            handleSize(val) {
-                this.list.size = val
-                this.fetchData();
-            },
-            //监听当前页
-            handleCurrent(val) {
-                this.list.current = val;
-                this.fetchData();
-            },
             dblclick(obj) {
                 this.$emit('showDialog',obj)
             },
@@ -70,17 +58,11 @@
 
             },
             fetchData(fid, type) {
-                //this.loading = true;
-                const data = {
-                    /*  fid: fid,
-                      type: type,*/
-                    pageNum: this.list.current || 1,
-                    pageSize: this.list.size || 50
-                };
-                /*getFrameList(data).then(res => {
-                this.loading = false;
-                this.list = res.data;
-              });*/
+                this.loading = true;
+              getShiftList().then(res => {
+                this.loading = false
+                this.list = {records: res.data }
+              });
             }
         }
     };

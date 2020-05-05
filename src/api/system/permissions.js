@@ -10,7 +10,7 @@ export function permissionsList(data) {
     headers: {
       'authorization': getToken('apsrx'),
     },
-    url: url,
+    url: 'APS' + url,
     method: 'get',
   })
 }
@@ -22,7 +22,7 @@ export function saveRoles(data) {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    url: url,
+    url: 'APS' + url,
     method: 'post',
     data: data
   })
@@ -34,7 +34,7 @@ export function getRoles(data) {
     headers: {
       'authorization': getToken('apsrx')
     },
-    url: url,
+    url: 'APS' + url,
     method: 'get'
   })
 }
@@ -46,7 +46,7 @@ export function updateRoles(data) {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    url: url,
+    url: 'APS' + url,
     method: 'put',
     data: data
   })
@@ -58,7 +58,7 @@ export function getSysMenuTree() {
     headers: {
       'authorization': getToken('apsrx'),
     },
-    url: url,
+    url: 'APS' + url,
     method: 'get',
   })
 }
@@ -69,7 +69,7 @@ export function getRoleMenu(data) {
     headers: {
       'authorization': getToken('apsrx'),
     },
-    url: url,
+    url: 'APS' + url,
     method: 'get',
     params:{rid:data}
   })
@@ -82,7 +82,7 @@ export function addRoleMenu(data) {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    url: url,
+    url: 'APS' + url,
     method: 'put',
     data: data
   })
@@ -94,7 +94,7 @@ export function getPermission(data) {
     headers: {
       'authorization': getToken('apsrx')
     },
-    url: url,
+    url: 'APS' + url,
     method: 'get'
   })
 }

@@ -1,86 +1,47 @@
 <template>
   <div>
     <list
-       class="list-main box-shadow"
-      :columns="columns"
-      :loading="loading"
       :list="list"
-      index
-      type
-      @handle-size="handleSize"
-      @handle-current="handleCurrent"
-      @dblclick="dblclick"
-       @row-click="rowClick"
     />
-
   </div>
 </template>
-
 <script>
-import { mapGetters } from "vuex";
-import { salesList ,delivery} from "@/api/indent/sales";
-import List from "@/components/List";
-
+import { getYearHoliday } from '@/api/basic/index'
+import List from '@/components/calendar'
 export default {
   components: {
     List
   },
-  computed: {
-    ...mapGetters(["node"])
-  },
   data() {
     return {
-      loading: false,
-      list: {},
-      columns: [
-        { text: "oid", name: "oid",default:false },
-        { text: "订单单号", name: "orderId" },
-        { text: "客户名称", name: "code" },
-        { text: "金额", name: "price" },
-        { text: "下单时间", name: "createTime" },
-          { text: "审核状态", name: "auditStatus" },
-          { text: "发货状态", name: "status" },
-      ]
+      list: [],
     };
   },
+  created() {
+
+  },
   methods: {
-      //监听每页显示几条
-      handleSize(val) {
-          this.list.size = val
-          this.fetchData();
-      },
-      //监听当前页
-      handleCurrent(val) {
-          this.list.current = val;
-          this.fetchData();
-      },
-    dblclick(obj) {
-      this.$emit('showDialog',obj.row)
-    },
-      Delivery(val){
-          delivery(val).then(res => {
-            if(res.flag){
-              this.$store.dispatch("list/setClickData", '');
-              this.fetchData();
+    fetchData() {
+      const myDate = new Date()
+      const tYear = myDate.getFullYear()
+      const array = []
+      getYearHoliday({
+        d: (tYear + '01%2C' + tYear + '02%2C' + tYear + '03%2C' + tYear + '04%2C' + tYear + '05%2C' + tYear + '06%2C' + tYear + '07%2C' + tYear + '08%2C' + tYear + '09%2C' + tYear + '10%2C' + tYear + '11%2C' + tYear + '12'),
+        info: 1,
+        back: 'json'
+      }).then(res => {
+        for (const i in res) {
+          for (const j in res[i]) {
+            const obj = {}
+            if(res[i][j].type == 1 || res[i][j].type == 2) {
+              eval("obj.date='" + (res[i][j].day).replace( /(\d{4})(\d{2})(\d{2})/, '$1-$2-$3') + "'")
+              eval("obj.typename='" + res[i][j].typename + "'")
+              array.push(obj)
             }
-          });
-      },
-      //监听单击某一行
-      rowClick(obj) {
-          this.$store.dispatch("list/setClickData", obj.row);
-      },
-    fetchData(fid, type) {
-      this.loading = true;
-      const data = {
-      /*  fid: fid,
-        type: type,*/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
-      };
-        salesList(data).then(res => {
-        this.loading = false;
-        this.list = res.data;
-      });
+          }
+        }
+        this.list = array
+      })
     }
   }
 };

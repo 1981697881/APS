@@ -51,7 +51,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { salesList ,delivery} from "@/api/indent/sales";
+import { salesList ,delivery} from "@/api/basic/index";
 import List from "@/components/List";
 
 export default {

@@ -1,13 +1,13 @@
 <template>
   <ele-calendar
     style="margin-top: 20px;"
-    defaultValue="2019-05"
+    :defaultValue="createTime"
+    :selectionMode="'dates'"
+    :data="list"
+    @select="select"
     @date-change="change"
     @pick="pick"
-    :selectionMode="'dates'"
-   @select="select"
     :render-content="renderContent"
-    :data="datedef"
     :prop="prop"></ele-calendar>
 </template>
 <script>
@@ -17,32 +17,43 @@
       components: {
         eleCalendar
       },
+      props: {
+        list: {
+          // 请求返回的json数据
+          type: Array,
+          default: null
+        },
+      },
       data() {
         return {
-          datedef: [
-
-            {'date': "2019-05-01", 'content': 'aa', "cid": null},
-
-            {'date': "2019-05-15", 'content': 'bb', "cid": null},
-
-          ],
-          valueDates:[],
-          prop: 'date' //对应日期字段名
+          createTime: null,
+          valueDates: [],
+          getTime: function () {
+            var _this = this;
+            let yy = new Date().getFullYear();
+            let mm = new Date().getMonth() + 1;
+            let dd = new Date().getDate();
+            let hh = new Date().getHours();
+            let mf = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes();
+            let ss = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();
+            _this.createTime = yy + '-' + mm
+          },
+          prop: 'date' // 对应日期字段名
         }
       },
+      mounted() {
+        this.getTime()
+      },
       methods: {
-        renderContent(h,parmas) { //设置lunarcalendar=true,parmas返回值包含农历
+        renderContent(h,parmas) { // 设置lunarcalendar=true,parmas返回值包含农历
           const loop = data =>{
             return (
               data.defvalue.value ? (<div><div>{data.defvalue.text}</div>
-                <span  >备选项</span>
+                <span>{data.defvalue.value.typename}</span>
                 </div>) : <div>{data.defvalue.text}</div>
             )
           }
-          return (
-            <div  style="min-height:60px;">
-            {loop(parmas)}
-            </div>
+          return (<div style="min-height:60px;">{loop(parmas)} </div>
         );
         },
         change() {

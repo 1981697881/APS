@@ -30,20 +30,20 @@ export default {
   components: {
     TabsBar,
     List,
-      Info
+    Info
   },
   data() {
     return {
       visible: null,
       oid: null,
-        orderId: null,
-        createTime: null,
+      orderId: null,
+      createTime: null,
       treeId: null, // null
       floorId: null
     };
   },
     mounted() {
-        this.$refs.list.fetchData()
+      this.$refs.list.fetchData()
     },
   methods: {
       delivery(obj){
