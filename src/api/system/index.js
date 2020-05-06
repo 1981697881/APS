@@ -7,7 +7,7 @@ import {
 export function getUsersTree(params) {
   var url = '/Admin/group/list/'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -18,7 +18,7 @@ export function getUsersTree(params) {
 export function groupAdd(params) {
   const url = '/Admin/group/add'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -31,7 +31,7 @@ export function groupAdd(params) {
 export function groupAlter(params) {
   const url = '/Admin/group/update'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -46,7 +46,7 @@ export function groupAlter(params) {
 export function delGroup(params) {
   const url = '/Admin/group/delete/' + params
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -57,7 +57,7 @@ export function delGroup(params) {
 export function getUsersList(data) {
   const url = '/Admin/user/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ export function getUsersList(data) {
 export function addUsers(params) {
   const url = '/Admin/user/add/'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ export function addUsers(params) {
 export function alterUsers(params) {
   const url = '/Admin/user/update/'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -95,7 +95,7 @@ export function alterUsers(params) {
 export function delUsers(params) {
   const url = '/Admin/user/delete/' + params
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -106,7 +106,7 @@ export function delUsers(params) {
 // 用户权限管理-禁用
 export function disableUsers(params) {
   return request({
-    url: 'APS' + '/table/list',
+    url: '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -117,7 +117,7 @@ export function disableUsers(params) {
 // 用户权限管理-启用
 export function enableUsers(params) {
   return request({
-    url: 'APS' + '/table/list',
+    url: '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -129,7 +129,7 @@ export function enableUsers(params) {
 export function getUsersInfo(params) {
   const url = '/Admin/user/' + params
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -140,7 +140,7 @@ export function getUsersInfo(params) {
 // 用户权限管理-职员下拉
 export function getClerk(params) {
   return request({
-    url: 'APS' + '/table/list',
+    url: '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -151,7 +151,7 @@ export function getClerk(params) {
 // 用户权限管理-获取菜单树
 export function getMenuList(params) {
   return request({
-    url: 'APS' + '/sys-menu/getSysMenuTree',
+    url: '/sys-menu/getSysMenuTree',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -163,7 +163,7 @@ export function getMenuList(params) {
 export function journalList(data) {
   const url = '/operation-log/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -174,7 +174,7 @@ export function journalList(data) {
 // 日志管理-清除
 export function journalClean(params) {
   return request({
-    url: 'APS' + '/table/list',
+    url: '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -186,7 +186,7 @@ export function journalClean(params) {
 // 看板管理-获取列表
 export function getBoardList(params) {
   return request({
-    url: 'APS' + '/table/list',
+    url: '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -197,7 +197,7 @@ export function getBoardList(params) {
 // 看板管理-获取详情
 export function getBoardInfo(params) {
   return request({
-    url: 'APS' + '/table/list',
+    url: '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -208,7 +208,7 @@ export function getBoardInfo(params) {
 // 看板管理-新增
 export function boardAdd(params) {
   return request({
-    url: 'APS' + '/table/list',
+    url: '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -219,7 +219,7 @@ export function boardAdd(params) {
 // 看板管理-删除
 export function delBoard(params) {
   return request({
-    url: 'APS' + '/table/list',
+    url: '/table/list',
     headers: {
       'authorization': getToken('apsrx')
     },

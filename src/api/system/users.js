@@ -10,7 +10,7 @@ export function usersList(data) {
     headers: {
       'authorization': getToken('apsrx')
     },
-    url: 'APS' + url,
+    url: url,
     method: 'get'
   })
 }
@@ -22,7 +22,7 @@ export function getRoles(data) {
     headers: {
       'authorization': getToken('apsrx')
     },
-    url: 'APS' + url,
+    url: url,
     method: 'get'
   })
 }
@@ -34,7 +34,7 @@ export function saveUsers(data) {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    url: 'APS' + url,
+    url: url,
     method: 'post',
     data: data
   })
@@ -46,7 +46,7 @@ export function getUsers(data) {
     headers: {
       'authorization': getToken('apsrx')
     },
-    url: 'APS' + url,
+    url: url,
     method: 'get'
   })
 }
@@ -58,7 +58,7 @@ export function updateUsers(data) {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    url: 'APS' + url,
+    url: url,
     method: 'put',
     data: data
   })
@@ -71,7 +71,7 @@ export function resetPWD(data) {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    url: 'APS' + url,
+    url: url,
     method: 'put',
     data: data
   })
@@ -83,7 +83,7 @@ export function getPlas(data) {
     headers: {
       'authorization': getToken('apsrx')
     },
-    url: 'APS' + url,
+    url: url,
     method: 'get'
   })
 }

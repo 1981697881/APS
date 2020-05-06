@@ -1,21 +1,19 @@
 <template>
   <div>
-    <el-table class="list-main" :data="list" border size="mini" :highlight-current-row="true" @row-dblclick="dblclick"  @row-click="rowClick">
-      <el-table-column
-        v-for="(t,i) in columns"
-        :key="i"
-        align="center"
-        :prop="t.name"
-        :label="t.text"
-        v-if="t.default!=undefined?t.default:true"
-        :width="t.width?t.width:''"
-      ></el-table-column>
-    </el-table>
+    <list
+      class="list-main"
+      :columns="columns"
+      :loading="loading"
+      :list="list"
+      index
+      selfAdaption
+      @row-click="rowClick"
+    />
   </div>
 </template>
 <script>
     import { mapGetters } from "vuex";
-    import {getShiftList} from "@/api/attendance/index";
+    import {getShiftList, delShift} from "@/api/attendance/index";
     import List from "@/components/List";
     export default {
         components: {
@@ -33,8 +31,9 @@
                 type: null,
                 checkDate:null,
                 columns: [
-                    { text: "班次代码", name: "oow_id" },
-                    { text: "班次名称", name: "oow_name" },
+                    { text: "id", name: "oowId", default: false},
+                    { text: "班次代码", name: "oowCode" },
+                    { text: "班次名称", name: "oowName" },
                 ]
             };
         },
@@ -44,15 +43,15 @@
             },
             //监听单击某一行
             rowClick(obj) {
-                this.checkDate=obj;
-                this.$emit('showTree',obj)
-                this.$store.dispatch("list/setClickData", obj);
+                this.checkDate = obj.row;
+                this.$emit('showTree', obj.row)
+                this.$store.dispatch("list/setClickData", obj.row);
             },
-            //删除
-            delDate(val) {
-                delFrame(val).then(res => {
+            // 删除
+          delData(val) {
+              delShift(val).then(res => {
                     if(res.flag){
-                        this.$emit('uploadList',obj)
+                        this.$emit('uploadList')
                     }
                 });
 
@@ -67,3 +66,8 @@
         }
     };
 </script>
+<style lang="scss" scoped>
+  .list-main {
+    height: calc(100vh - 300px);
+  }
+</style>

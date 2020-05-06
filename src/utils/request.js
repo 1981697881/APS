@@ -98,18 +98,12 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.msg || 'Error'))
     } else {
-      if(res.flag){
+      if(res.msg!="登陆成功" && res.msg!=null) {
         if(res.status == 20000){
           Message({
             message:res.msg,
             type:'success',
             duration: 5 * 1000
-          })
-          store.dispatch('user/resetToken').then(() => {
-
-          })
-          store.dispatch('user/addToken', response.headers.authorization).then(() => {
-
           })
         } else {
           Message({
@@ -119,6 +113,12 @@ service.interceptors.response.use(
           })
         }
       }
+      store.dispatch('user/resetToken').then(() => {
+
+      })
+      store.dispatch('user/addToken', response.headers.authorization).then(() => {
+
+      })
       if(typeof(response.headers['content-disposition']) !='undefined'){
         if(response.headers['content-disposition'].search('attachment')!=-1){
           return response

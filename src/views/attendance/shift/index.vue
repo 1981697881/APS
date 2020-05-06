@@ -1,11 +1,11 @@
 <template>
   <div class="app-list">
-    <Tree ref="tree" class="list-table" @handler-node="handlerNode" />
+    <Tree ref="tree" class="list-table" @showTree="handlerNode" />
     <div class="list-containerT">
       <div>
-        <tabs-bar @del="delList" @uploadList="upload" @reset="reset"/>
+        <tabs-bar @del="delList" @uploadList="upload" @handlerSave="handlerSave" @reset="reset"/>
       </div>
-      <list ref="list" @showDialog="handlerDialog"  />
+      <list ref="list" @showDialog="handlerDialog" @uploadList="upload" />
     </div>
     <el-dialog
       :visible.sync="visible"
@@ -54,18 +54,22 @@ export default {
     reset(obj) {
       this.$refs.list.reset()
     },
-    delList() {
-      this.$refs.list.delData()
+    delList(val) {
+      this.$refs.tree.delData(val)
     },
     setData(val) {
       this.$refs.list.setList(val)
     },
-    // 更新列表
-    upload(){
-      this.$refs.list.fetchData()
+    handlerSave() {
+      this.$refs.list.saveData()
     },
-    handlerNode(node) {
-      this.$refs.list.fetchData(node.data.fid,node.data.type)
+    // 更新列表
+    upload() {
+      this.$refs.tree.fetchData()
+      this.$refs.list.reset()
+    },
+    handlerNode(val) {
+      this.$refs.list.fetchData(val.oowId)
     },
 
   }

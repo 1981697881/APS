@@ -42,10 +42,8 @@ export default {
         this.$emit("reset")
     },
       del() {
-          if (this.clickData.reOdId) {
-                  this.$emit('del',{
-                      reOdId:this.clickData.reOdId,
-                  })
+          if (this.clickData.oowId) {
+                  this.$emit('del', this.clickData.oowId)
               } else {
                   this.$message({
                       message: "无选中行",
@@ -54,14 +52,7 @@ export default {
               }
       },
       handlerAlter() {
-          if (this.clickData.rid) {
-              this.$emit('showDialog',{rid: this.clickData.rid })
-          } else {
-              this.$message({
-                  message: "无选中行",
-                  type: "warning"
-              });
-          }
+        this.$emit('handlerSave')
       }
   }
 };

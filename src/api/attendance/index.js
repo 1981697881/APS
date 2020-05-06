@@ -6,7 +6,7 @@ import {
 export function getShiftList(params, query) {
   const url = '/order-of-work/list'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx')
     },
@@ -15,15 +15,61 @@ export function getShiftList(params, query) {
   })
 }
 // 班次詳情-获取列表
-export function getShiftInfoList(params, query) {
-  const url = '/order-of-work/list/' + params.pageNum + '/' + params.pageSize
+export function getShiftInfoList(params) {
+  const url = '/order-of-work/getById/' + params
   return request({
-    url: 'APS' + url,
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx')
+    },
+    method: 'GET',
+  })
+}
+// 班次-新增
+export function shiftAdd(params) {
+  const url = '/order-of-work/add'
+  return request({
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    method: 'POST',
-    data: query
+    method: 'post',
+    data: params
+  })
+}
+// 班次-修改
+export function shiftAlter(params) {
+  const url = '/order-of-work/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: params
+  })
+}
+// 班次-删除
+export function delShift(params) {
+  const url = '/order-of-work/del/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx')
+    },
+    method: 'delete'
+  })
+}
+// 班次管理-获取员工排班列表
+export function getShiftClerkList(params) {
+  const url = '/employee-oow/getById/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx')
+    },
+    method: 'GET',
   })
 }

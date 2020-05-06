@@ -7,7 +7,7 @@ import {
 export function getLibraryStatisticsList(data, query) {
   const url = '/putOrder/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -20,7 +20,7 @@ export function getLibraryStatisticsList(data, query) {
 export function libraryStatisticsInfo(data) {
   const url = '/putOrder/getById/' + data.pageNum + '/' + data.pageSize + '/' + data.id
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
     },
@@ -36,7 +36,7 @@ export function exportLibraryStatistics(data) {
       'Content-Type': 'application/json'
     },
     responseType: 'blob',
-    url: 'APS' + url,
+    url: url,
     method: 'post',
     data: data
   })
@@ -45,7 +45,7 @@ export function exportLibraryStatistics(data) {
 export function getOutboundStatisticsList(data, query) {
   const url = '/outOrder/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ export function getOutboundStatisticsList(data, query) {
 export function outboundStatisticsInfo(data) {
   const url = '/outOrder/getById/' + data.pageNum + '/' + data.pageSize + '/' + data.id
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
     },
@@ -74,7 +74,7 @@ export function exportOutboundStatistics(data) {
       'Content-Type': 'application/json'
     },
     responseType: 'blob',
-    url: 'APS' + url,
+    url: url,
     method: 'post',
     data: data
   })
@@ -83,7 +83,7 @@ export function exportOutboundStatistics(data) {
 export function getAdjustList(data, query) {
   const url = '/adjust/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -101,7 +101,7 @@ export function exportAdjust(data) {
       'Content-Type': 'application/json'
     },
     responseType: 'blob',
-    url: 'APS' + url,
+    url: url,
     method: 'post',
     data: data
   })
@@ -110,7 +110,7 @@ export function exportAdjust(data) {
 export function getMovingframeList(data, query) {
   const url = '/warehouseMove/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -128,7 +128,7 @@ export function exportMovingframe(data) {
       'Content-Type': 'application/json'
     },
     responseType: 'blob',
-    url: 'APS' + url,
+    url: url,
     method: 'post',
     data: data
   })
@@ -137,7 +137,7 @@ export function exportMovingframe(data) {
 export function getLocationBoardList(data, query) {
   const url = '/position/board'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -151,7 +151,7 @@ export function getLocationBoardList(data, query) {
 export function getProcurementList(data, query) {
   const url = '/purchase-order/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -164,7 +164,7 @@ export function getProcurementList(data, query) {
 export function syncPOInfoQuery(params) {
   const url = '/Admin/POInfoQuery/sync'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -182,7 +182,7 @@ export function exportProcurement(data) {
       'Content-Type': 'application/json'
     },
     responseType: 'blob',
-    url: 'APS' + url,
+    url: url,
     method: 'post',
     data: data
   })
@@ -191,7 +191,7 @@ export function exportProcurement(data) {
 export function getRecipientsList(data, query) {
   const url = '/ship-order/list/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -204,7 +204,7 @@ export function getRecipientsList(data, query) {
 export function syncShipInfo(params) {
   const url = '/Admin/ShipInfo/sync'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -222,7 +222,7 @@ export function exportRecipients(data) {
       'Content-Type': 'application/json'
     },
     responseType: 'blob',
-    url: 'APS' + url,
+    url: url,
     method: 'post',
     data: data
   })
@@ -231,7 +231,7 @@ export function exportRecipients(data) {
 export function procurementBarcode(params) {
   const url = '/barcode/barcodePurchaseOrder'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -244,7 +244,7 @@ export function procurementBarcode(params) {
 export function procurementUpdate(params) {
   const url = '/purchaseOrderDetail/update'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -257,7 +257,7 @@ export function procurementUpdate(params) {
 export function getStorageBinList(data, query) {
   const url = '/position/table/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -275,7 +275,7 @@ export function exportStorageBin(data) {
       'Content-Type': 'application/json'
     },
     responseType: 'blob',
-    url: 'APS' + url,
+    url: url,
     method: 'post',
     data: data
   })
@@ -284,7 +284,7 @@ export function exportStorageBin(data) {
 export function getDeliveryOrderBoardList(data, query) {
   const url = '/ship-order/board/' + data.pageNum + '/' + data.pageSize
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
     },

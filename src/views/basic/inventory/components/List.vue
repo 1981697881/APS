@@ -33,7 +33,7 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: 'oid', name: 'oid', default: false },
+        { text: 'invId', name: 'invId', default: false },
         { text: '批号', name: 'lotNo' },
         { text: '名称', name: 'goodName' },
         { text: '编码', name: 'goodCode' },
@@ -61,7 +61,7 @@ export default {
           this.fetchData();
       },
     dblclick(obj) {
-      this.$emit('showDialog',obj.row)
+      this.$emit('showDialog', obj.row)
     },
       //监听单击某一行
       rowClick(obj) {

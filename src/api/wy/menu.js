@@ -10,7 +10,7 @@ export function getRouter(userId) {
     headers: {
       'authorization': getToken('apsrx'),
     },
-    url: 'APS' + '/sys-menu/getByUser',
+    url: '/sys-menu/getByUser',
     method: 'get',
   })
 }

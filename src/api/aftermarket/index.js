@@ -7,7 +7,7 @@ import {
 export function getSalesList(params, query) {
   const url = '/sale-order/list/' + params.pageNum + '/' + params.pageSize
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -20,7 +20,7 @@ export function getSalesList(params, query) {
 export function getSalesInfo(params) {
   const url = '/sale-order/getOrderByOrderNum'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
     },
@@ -34,7 +34,7 @@ export function getSalesInfo(params) {
 export function notarizeList(params) {
   const url = '/sale-order/confirm'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ export function notarizeList(params) {
 export function salesListSync(params) {
   const url = '/Admin/SOInfo/sync'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
@@ -65,7 +65,7 @@ export function exportSales(data) {
       'Content-Type': 'application/json'
     },
     responseType: 'blob',
-    url: 'APS' + url,
+    url: url,
     method: 'post',
     data: data
   })
@@ -74,7 +74,7 @@ export function exportSales(data) {
 export function getShiftList(params, query) {
   const url = '/order-of-work/list'
   return request({
-    url: 'APS' + url,
+    url: url,
     headers: {
       'authorization': getToken('apsrx')
     },

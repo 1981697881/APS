@@ -3,36 +3,38 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="80px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'soId'" style="display: none">
-            <el-input v-model="form.soId"></el-input>
+          <el-form-item :label="'woId'" style="display: none">
+            <el-input v-model="form.woId"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12" >
-          <el-form-item :label="'上班时间'" prop="roleName">
+          <el-form-item :label="'上班时间'" prop="startTime">
             <el-time-picker
               arrow-control
-              v-model="value2"
+              v-model="form.startTime"
               :picker-options="{
-                selectableRange: '18:30:00 - 20:30:00'
+                selectableRange: '5:30:00 - 12:30:00'
                }"
+              value-format="HH:mm:ss"
               placeholder="任意时间点">
             </el-time-picker>
           </el-form-item>
         </el-col>
         <el-col :span="12" >
-          <el-form-item :label="'下班时间'" prop="roleName">
+          <el-form-item :label="'下班时间'" prop="endTime">
             <el-time-picker
               arrow-control
-              v-model="value2"
+              v-model="form.endTime"
               :picker-options="{
-                selectableRange: '18:30:00 - 20:30:00'
+                selectableRange: '16:30:00 - 23:30:00'
               }"
+              value-format="HH:mm:ss"
               placeholder="任意时间点">
             </el-time-picker>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20">
+      <!--<el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'段内休息'" prop="roleName">
             <el-input v-model="form.roleName"></el-input>
@@ -50,7 +52,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-      </el-row>
+      </el-row>-->
    </el-form>
    <div slot="footer" style="text-align:center;padding-top: 15px">
        <el-button type="primary" @click.native="confirm('form')">确认</el-button>
@@ -59,8 +61,6 @@
 </template>
 
 <script>
-import { notarizeList} from "@/api/aftermarket/index"
-
 export default {
   props: {
     listInfo: {
@@ -71,28 +71,15 @@ export default {
   data() {
     return {
       form: {
-        factoryEstimatedDate: null,
+        endTime: null,
+        woId: null,
+        startTime: null
       },
-      options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
-      value: '',
-      value2: '',
       rules: {
-        factoryEstimatedDate: [
+        endTime: [
+          {required: true, message: '请选择日期', trigger: 'change'}
+        ],
+        startTime: [
           {required: true, message: '请选择日期', trigger: 'change'}
         ],
       },
@@ -119,8 +106,4 @@ export default {
 };
 </script>
 
-<style>
-  .el-date-editor.el-input, .el-date-editor.el-input__inner {
-     width: auto !important;
-  }
-</style>
+

@@ -8,7 +8,7 @@ export function login(data) {
       'Content-Type': 'application/json',
       'Accept': '*/*'
     },
-    url: 'APS' + '/user/login',
+    url: '/user/login',
     method: 'post',
     data
   })
@@ -16,7 +16,7 @@ export function login(data) {
 
 export function getInfo(fid) {
   return request({
-    url: 'APS' + '/back/system/user/selectUserInfoById.do',
+    url: '/back/system/user/selectUserInfoById.do',
     method: 'post',
     params: { fid }
   })
@@ -24,7 +24,7 @@ export function getInfo(fid) {
 
 export function logout(data) {
   return request({
-    url: 'APS' + '/back/system/user/login_out.do',
+    url: '/back/system/user/login_out.do',
     method: 'post',
   })
 }
@@ -35,7 +35,7 @@ export function changePassword(data) {
       'Content-Type': 'application/json',
       'authorization': getToken('apsrx'),
     },
-    url: 'APS' + '/user/changePass',
+    url: '/user/changePass',
     method: 'post',
     data
   })
