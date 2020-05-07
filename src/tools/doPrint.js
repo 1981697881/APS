@@ -520,11 +520,11 @@ const PrintStorage = (data, codetype, url, code) => {
     let qrAccount = data[i].barcode
     console.log(qrAccount)
     LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",7);
-    LODOP.ADD_PRINT_BARCODE("1mm", "2mm", "40mm", "40mm", 'QRCode', qrAccount)
-    LODOP.ADD_PRINT_TEXT("35mm", "0mm", "40mm", "8mm", data[i].piName);
+    LODOP.ADD_PRINT_BARCODE("1mm", "18mm", "65mm", "65mm", 'QRCode', qrAccount)
+    LODOP.ADD_PRINT_TEXT("61mm", "0mm", "100mm", "8mm", data[i].piCode);
     LODOP.SET_PRINT_STYLEA(0, "Alignment", 2);
-    LODOP.SET_PRINT_STYLEA(0, "FontSize", 13);
-    LODOP.SET_PRINT_PAGESIZE(1, '40mm', '40mm');
+    LODOP.SET_PRINT_STYLEA(0, "FontSize", 20);
+    LODOP.SET_PRINT_PAGESIZE(1, '100mm', '70mm');
     //分页
     LODOP.NewPage();
   }

@@ -328,7 +328,7 @@ export function delSupplier(params) {
 }
 
 // 库存查看-获取列表
-export function getInventory(params) {
+export function getInventory(params, query) {
   const url = '/inv-detail/list/' + params.pageNum + '/' + params.pageSize
   return request({
     url: url,
@@ -336,7 +336,8 @@ export function getInventory(params) {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    method: 'POST'
+    method: 'POST',
+    data: query
   })
 }
 // 库存管理-同步库存
@@ -601,7 +602,7 @@ export function getGoodPrints(params) {
   })
 }
 // 库位管理-获取列表
-export function getStorageList(data) {
+export function getStorageList(data, query) {
   const url = '/position/list/' + data.pageNum + '/' + data.pageSize
   return request({
     url: url,
@@ -609,7 +610,8 @@ export function getStorageList(data) {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    method: 'POST'
+    method: 'POST',
+    data: query
   })
 }
 // 仓库-获取列表

@@ -3,8 +3,8 @@
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
         <el-col :span="6">
-          <el-form-item :label="'关键字'">
-            <el-input v-model="search.keyword" />
+          <el-form-item :label="'物料名称'">
+            <el-input v-model="search.name" />
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -30,17 +30,23 @@ export default {
   data() {
     return {
       search: {
-        keyword: null
+        name: null
       }
     };
   },
   methods: {
-    //关键字查询
     query() {
-      this.$message({
-        message: "抱歉，功能尚未完善！",
-        type: "warning"
-      });
+      this.$emit('queryBtn', this.qFilter())
+    },
+    upload() {
+      this.$emit('uploadList')
+      this.search.name = ''
+    },
+    // 查询条件过滤
+    qFilter() {
+      let obj = {}
+      this.search.name != null && this.search.name != '' ? obj.name = this.search.name : null
+      return obj
     },
     handleAlter() {
       if (this.clickData.invId) {
@@ -54,9 +60,6 @@ export default {
     },
     handleAdd() {
       this.$emit('showSync')
-    },
-    upload() {
-      this.$emit("uploadList")
     },
   }
 };

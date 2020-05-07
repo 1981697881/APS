@@ -3,7 +3,7 @@
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-button-group style="float:right">
         <el-button :size="'mini'" type="primary" @click="handlerAdd">新建</el-button>
-        <el-button :size="'mini'" type="primary" @click="handlerAlter">保存</el-button>
+        <el-button :size="'mini'" type="primary" @click="handlerAlter">修改</el-button>
         <el-button :size="'mini'" type="primary" @click="del">删除</el-button>
       </el-button-group>
     </el-form>
@@ -38,22 +38,29 @@ export default {
         })
       }
     },
-      handlerAdd() {
-        this.$emit("reset")
+    handlerAdd() {
+      this.$emit('showDialog')
     },
-      del() {
-          if (this.clickData.oowId) {
-                  this.$emit('del', this.clickData.oowId)
-              } else {
-                  this.$message({
-                      message: "无选中行",
-                      type: "warning"
-                  });
-              }
-      },
-      handlerAlter() {
-        this.$emit('handlerSave')
+    del() {
+      if (this.clickData.oowId) {
+        this.$emit('del', this.clickData.oowId)
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
       }
+    },
+    handlerAlter() {
+      if (this.clickData.oowId) {
+        this.$emit('showDialog', this.clickData)
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    }
   }
 };
 </script>

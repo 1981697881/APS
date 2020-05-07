@@ -3,19 +3,19 @@
     <Tree ref="tree" class="list-table" @showTree="handlerNode" />
     <div class="list-containerT">
       <div>
-        <tabs-bar @del="delList" @uploadList="upload" @handlerSave="handlerSave" @reset="reset"/>
+        <tabs-bar @del="delList" @uploadList="upload" @showDialog="handlerDialog" />
       </div>
-      <list ref="list" @showDialog="handlerDialog" @uploadList="upload" />
+      <list ref="list" @uploadList="upload" />
     </div>
     <el-dialog
       :visible.sync="visible"
       title="排班信息"
       v-if="visible"
       v-dialogDrag
-      :width="'30%'"
+      :width="'60%'"
       destroy-on-close
     >
-      <info @hideDialog="hideWindow" @uploadList="upload" @setTable="setData" :listInfo="listInfo"></info>
+      <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
     </el-dialog>
   </div>
 </template>
@@ -44,6 +44,7 @@ export default {
       this.visible = val
     },
     handlerDialog(obj) {
+      console.log(1123)
       this.listInfo = null
       if(obj) {
         const info = JSON.parse(JSON.stringify(obj))
@@ -66,7 +67,6 @@ export default {
     // 更新列表
     upload() {
       this.$refs.tree.fetchData()
-      this.$refs.list.reset()
     },
     handlerNode(val) {
       this.$refs.list.fetchData(val.oowId)

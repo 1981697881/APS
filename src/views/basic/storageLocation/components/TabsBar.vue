@@ -10,6 +10,14 @@
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'仓库'" prop="plaIdS">
+            <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
+              <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-button-group style="float:right">
           <el-button :size="'mini'" type="primary" icon="el-icon-upload" @click="handlerUpload">上传</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAdd">仓库编辑</el-button>
@@ -60,8 +68,8 @@
           :on-change="handleUpload"
           :limit="1"
         >
-          <el-button type="primary" >选择文件</el-button>
-          <el-button style="margin-left: 10px;" type="success"  @click="submitUpload">上传文件</el-button>
+          <el-button slot="trigger" type="primary" >选择文件</el-button>
+          <el-button style="margin-left: 10px;" type="success"  @click="submitUpload" v-loading.fullscreen.lock="fullscreenLoading">上传文件</el-button>
         </el-upload>
       </div>
     </el-dialog>
@@ -94,9 +102,12 @@ export default {
           {required: true, message: '请选择区域', trigger: 'change'},
         ],
       },
+      fullscreenLoading: false,
       isUpload: null,
       pArray: [],
       rArray: [],
+      parent: null,
+      plaArray: [],
       disPl: true,
       visible: null,
       fileData: {
@@ -109,7 +120,7 @@ export default {
     };
   },
   mounted() {
-    this.fetchFormat(-1)
+    this.fetchWare(-1)
   },
   methods: {
     // 切换类别
@@ -119,6 +130,10 @@ export default {
       this.rArray = []
       this.fetchLine(val)
     },
+    // 切换仓库
+    selectWorn(val) {
+      this.$emit('queryBtn', this.qFilter())
+    },
     handleUpload(file, fileList) {
       if (file.status=="ready") {
         this.isUpload = true
@@ -126,6 +141,7 @@ export default {
       }
     },
     handlerUpload() {
+      this.fetchFormat(-1)
       this.form = {
         prId: null,
         type: null
@@ -135,14 +151,23 @@ export default {
     submitUpload() {
       this.fileData.type = 3
       this.fileData.prId = this.form.prId
-      this.$refs.upload.submit()
-      this.visible = false
+      if(this.isUpload){
+        this.fullscreenLoading = true
+        this.$refs.upload.submit()
+      } else {
+        this.$message({
+          message: '请选择文件',
+          type: "warning"
+        });
+      }
+
     },
     uploadError(res) {
       this.$message({
         message: '导入失败',
         type: "warning"
       });
+      this.fullscreenLoading = false
       this.visible = false
       this.$emit('uploadList')
     },
@@ -153,6 +178,7 @@ export default {
           type: "success"
         });
         this.visible = false
+        this.fullscreenLoading = false
         this.$emit('uploadList')
       } else {
         this.$message({
@@ -168,11 +194,13 @@ export default {
     upload() {
       this.$emit('uploadList')
       this.search.keyword = ''
+      this.parent = null
     },
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.keyword != null || this.search.keyword != undefined ? obj.keyword = this.search.keyword : null
+      this.search.keyword != null && this.search.keyword != '' ? obj.piName = this.search.keyword : null
+      this.parent != null && this.parent != undefined ? obj.parent = this.parent : null
       return obj
     },
     handlerAdd() {
@@ -188,6 +216,13 @@ export default {
           type: "warning"
         });
       }
+    },
+    fetchWare(val) {
+      getWarehouseList(val).then(res => {
+        if(res.flag) {
+          this.plaArray = res.data
+        }
+      })
     },
     fetchFormat(val) {
       getWarehouseList(val).then(res => {

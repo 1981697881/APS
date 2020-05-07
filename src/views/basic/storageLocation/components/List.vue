@@ -35,8 +35,8 @@ export default {
       list: {},
       columns: [
         { text: "piId", name: "piId", default: false },
-        { text: "仓库", name: "" },
-        { text: "区域", name: "" },
+        { text: "仓库", name: "grandpaPiName" },
+        { text: "区域", name: "parentPiName" },
         { text: "库位编码", name: "piCode" },
         { text: "库位名称", name: "piName" },
         { text: "描述", name: "remark" },
@@ -65,15 +65,14 @@ export default {
     rowClick(obj) {
       this.$store.dispatch("list/setClickData", obj.row);
     },
-    fetchData(fid, type) {
-      this.loading = true;
-      const data = {
+    fetchData(val, data = {
       /*  fid: fid,
         type: type,*/
-        pageNum: this.list.current || 1,
-        pageSize: this.list.size || 50
-      };
-      getStorageList(data).then(res => {
+      pageNum: this.list.current || 1,
+      pageSize: this.list.size || 50
+    }) {
+      this.loading = true;
+      getStorageList(data, val).then(res => {
         this.loading = false;
         this.list = res.data;
       });

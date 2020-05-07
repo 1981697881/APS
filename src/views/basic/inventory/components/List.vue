@@ -50,35 +50,31 @@ export default {
     };
   },
   methods: {
-      //监听每页显示几条
-      handleSize(val) {
-          this.list.size = val
-          this.fetchData();
-      },
-      //监听当前页
-      handleCurrent(val) {
-          this.list.current = val;
-          this.fetchData();
-      },
+    //监听每页显示几条
+    handleSize(val) {
+      this.list.size = val
+      this.fetchData();
+    },
+    //监听当前页
+    handleCurrent(val) {
+      this.list.current = val;
+      this.fetchData();
+    },
     dblclick(obj) {
       this.$emit('showDialog', obj.row)
     },
-      //监听单击某一行
-      rowClick(obj) {
-          this.$store.dispatch('list/setClickData', obj.row);
-      },
-    fetchData(fid, type) {
-     this.loading = true;
-      const data = {
-      /*  fid: fid,
-        type: type,*/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
-      };
-      console.log(data)
-        getInventory(data).then(res => {
-        this.loading = false;
-        this.list = res.data;
+    //监听单击某一行
+    rowClick(obj) {
+      this.$store.dispatch('list/setClickData', obj.row);
+    },
+    fetchData(val, data = {
+      pageNum: this.list.current || 1,
+      pageSize: this.list.size || 50
+    }) {
+      this.loading = true;
+      getInventory(data, val).then(res => {
+        this.loading = false
+        this.list = res.data
       });
     }
   }
