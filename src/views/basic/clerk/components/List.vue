@@ -70,13 +70,12 @@ export default {
       rowClick(obj) {
           this.$store.dispatch("list/setClickData", obj.row);
       },
-    fetchData() {
+    fetchData(val, data = {
+      pageNum: this.list.current || 1,
+      pageSize: this.list.size || 50
+    }) {
       this.loading = true;
-      const data = {
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
-      };
-        getClerkList(data).then(res => {
+        getClerkList(data, val).then(res => {
         this.loading = false;
         this.list = res.data;
       });

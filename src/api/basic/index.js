@@ -206,7 +206,7 @@ export function delMaterial(params) {
 }
 
 // 职员管理-获取列表
-export function getClerkList(params) {
+export function getClerkList(params, query) {
   const url = '/Admin/employee/list/' + params.pageNum + '/' + params.pageSize
   return request({
     url: url,
@@ -214,7 +214,8 @@ export function getClerkList(params) {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    method: 'POST'
+    method: 'POST',
+    data: query
   })
 }
 

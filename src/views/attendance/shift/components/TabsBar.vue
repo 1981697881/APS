@@ -4,6 +4,7 @@
       <el-button-group style="float:right">
         <el-button :size="'mini'" type="primary" @click="handlerAdd">新建</el-button>
         <el-button :size="'mini'" type="primary" @click="handlerAlter">修改</el-button>
+        <el-button :size="'mini'" type="primary" @click="handlerScheduling">排班</el-button>
         <el-button :size="'mini'" type="primary" @click="del">删除</el-button>
       </el-button-group>
     </el-form>
@@ -40,6 +41,9 @@ export default {
     },
     handlerAdd() {
       this.$emit('showDialog')
+    },
+    handlerScheduling() {
+      this.$emit('showScheduling')
     },
     del() {
       if (this.clickData.oowId) {

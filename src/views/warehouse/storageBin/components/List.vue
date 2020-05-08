@@ -32,8 +32,9 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: '', name: '',default:false },
-        { text: '区域位置', name: 'positionName' },
+        { text: '', name: '',default: false },
+        { text: '区域位置', name: 'grandpaPiCode' },
+        { text: '库位', name: 'positionCode' },
         { text: 'U9料号', name: 'goodCode' },
         { text: '物料名称', name: 'goodName' },
         { text: '旧料号', name: 'oldCode' },

@@ -6,6 +6,7 @@
       :loading="loading"
       :list="list"
       index
+      type
       selfAdaption
       @row-click="rowClick"
     />

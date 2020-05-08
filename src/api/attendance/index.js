@@ -38,6 +38,19 @@ export function shiftAdd(params) {
     data: params
   })
 }
+// 排班-职员绑定班次
+export function empBind(params) {
+  const url = '/employee-oow/empBind'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
 // 班次-修改
 export function shiftAlter(params) {
   const url = '/order-of-work/update'

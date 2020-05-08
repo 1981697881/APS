@@ -16,7 +16,7 @@
       <el-row :gutter="20" type="flex" justify="center">
         <el-col :span="12">
           <el-form-item :label="'批号'">
-            <el-input v-model="form.lineNo"  label="请输入批号" ></el-input>
+            <el-input v-model="form.lotNo"  label="请输入批号" ></el-input>
           </el-form-item>
         </el-col>
       </el-row><el-row :gutter="20" type="flex" justify="center">
@@ -60,7 +60,7 @@ export default {
       form: {
         puDeId: null,
         puId: null,
-        lineNo: null,
+        lotNo: null,
         weight: null,
         putTime: null
       },
@@ -90,7 +90,7 @@ export default {
         }]
       },
       rules: {
-        lineNo: [
+        lotNo: [
           {required: true, message: '请输入批号', trigger: 'blur'},
         ],
         weight: [

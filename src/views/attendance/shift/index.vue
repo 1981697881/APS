@@ -3,13 +3,13 @@
     <Tree ref="tree" class="list-table" @showTree="handlerNode" />
     <div class="list-containerT">
       <div>
-        <tabs-bar @del="delList" @uploadList="upload" @showDialog="handlerDialog" />
+        <tabs-bar @del="delList" @uploadList="upload" @showDialog="handlerDialog" @showScheduling="handlerSch" />
       </div>
       <list ref="list" @uploadList="upload" />
     </div>
     <el-dialog
       :visible.sync="visible"
-      title="排班信息"
+      title="班次信息"
       v-if="visible"
       v-dialogDrag
       :width="'60%'"
@@ -17,23 +17,36 @@
     >
       <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
     </el-dialog>
+    <el-dialog
+      :visible.sync="visible2"
+      title="排班信息"
+      v-if="visible2"
+      v-dialogDrag
+      :width="'40%'"
+      destroy-on-close
+    >
+      <grade @hideDialog="hideSch" @uploadList="uploadSch" :listInfo="listInfo"></grade>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { Tree, TabsBar,List } from "./components";
-import { Info } from "./form"
+import { Info, Grade} from "./form"
 export default {
   components: {
     Tree,
     TabsBar,
     Info,
+    Grade,
     List
   },
   data() {
     return {
       visible: null,
+      visible2: null,
       listInfo: null,
+      oowId: null
     }
   },
   mounted() {
@@ -43,14 +56,24 @@ export default {
     hideWindow(val) {
       this.visible = val
     },
+    hideSch(val) {
+      this.visible2 = val
+    },
     handlerDialog(obj) {
-      console.log(1123)
       this.listInfo = null
       if(obj) {
         const info = JSON.parse(JSON.stringify(obj))
         this.listInfo = info
       }
       this.visible = true
+    },
+    handlerSch(obj) {
+      this.listInfo = null
+      if(obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
+      this.visible2 = true
     },
     reset(obj) {
       this.$refs.list.reset()
@@ -68,7 +91,12 @@ export default {
     upload() {
       this.$refs.tree.fetchData()
     },
+    // 更新列表
+    uploadSch() {
+      this.$refs.list.fetchData(this.oowId)
+    },
     handlerNode(val) {
+      this.oowId = val.oowId
       this.$refs.list.fetchData(val.oowId)
     },
 
