@@ -9,6 +9,7 @@
       type
       selfAdaption
       @row-click="rowClick"
+      @dblclick="dblclick"
     />
   </div>
 </template>
@@ -42,7 +43,8 @@
     },
     methods: {
       dblclick(obj) {
-        this.$emit('showDialog', obj)
+        console.log(13)
+        this.$emit('showScheduling', obj)
       },
       //监听单击某一行
       rowClick(obj) {

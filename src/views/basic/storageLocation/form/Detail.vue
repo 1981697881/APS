@@ -163,7 +163,13 @@ export default {
     },
     // 监听单击某一行
     rowClick1(obj) {
-
+      this.form = {
+        positionName: null, // 名称
+        positionCode: null,
+        piId: null,
+        parent: null,
+        type: 2,
+      }
       this.row = obj
       this.formatArea(obj.piId)
     },

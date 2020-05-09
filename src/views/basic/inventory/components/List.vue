@@ -34,8 +34,9 @@ export default {
       list: {},
       columns: [
         { text: 'invId', name: 'invId', default: false },
-        { text: '批号', name: 'lotNo' },
+        { text: '旧料号', name: 'oldCode' },
         { text: '名称', name: 'goodName' },
+        { text: '批号', name: 'lotNo' },
         { text: '编码', name: 'goodCode' },
         { text: '类别', name: '' },
         { text: '规格', name: 'spec' },
@@ -45,7 +46,6 @@ export default {
         { text: 'U9库存', name: 'num' },
         { text: '仓库', name: 'whName' },
         { text: '仓位', name: 'positionName' },
-        { text: '旧料号', name: 'oldCode' },
       ]
     };
   },

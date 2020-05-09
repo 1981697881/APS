@@ -7,7 +7,7 @@
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <!--<el-col :span="3">
           <el-form-item :label="'类别'">
             <el-select v-model="value" placeholder="请选择">
               <el-option
@@ -18,7 +18,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-        </el-col>
+        </el-col>-->
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
