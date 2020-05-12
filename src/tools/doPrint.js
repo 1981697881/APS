@@ -524,7 +524,7 @@ const PrintStorage = (data, codetype, url, code) => {
     LODOP.ADD_PRINT_TEXT("61mm", "0mm", "100mm", "8mm", data[i].piCode);
     LODOP.SET_PRINT_STYLEA(0, "Alignment", 2);
     LODOP.SET_PRINT_STYLEA(0, "FontSize", 20);
-    LODOP.SET_PRINT_PAGESIZE(1, '100mm', '70mm');
+    LODOP.SET_PRINT_PAGESIZE(2, '100mm', '70mm');
     //分页
     LODOP.NewPage();
   }

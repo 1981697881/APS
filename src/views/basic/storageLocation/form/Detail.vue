@@ -4,6 +4,7 @@
       <el-aside width="250px" style="line-height: normal">
         <div style="text-align: right;">
           <el-button type="success" style="padding: 7px 13px;" @click="setRow">添加</el-button>
+          <el-button type="danger" style="padding: 7px 13px;" @click="Delivery1">删除</el-button>
         </div>
         <el-table height="300px" class="list-main"  :data="list1" border size="mini" :highlight-current-row="true" @row-click="rowClick1"  @row-dblclick="dblclick1">
           <el-table-column
@@ -61,7 +62,7 @@
     <div slot="footer" style="text-align:center;padding-top: 15px;">
         <el-button type="success" @click="createData">新增</el-button>
         <el-button type="primary" @click="saveData('form')">保存</el-button>
-
+        <el-button type="danger" @click="Delivery2">删除</el-button>
       </div>
     <el-dialog
       :visible.sync="visible"
@@ -100,7 +101,7 @@
 </template>
 
 <script>
-import {getWarehouseList, warehouseAdd, warehouseAlter, getAreaTree} from "@/api/basic/index";
+import {getWarehouseList, warehouseAdd, warehouseAlter, getAreaTree, delPosition} from "@/api/basic/index";
 
 export default {
   data() {
@@ -148,6 +149,56 @@ export default {
     this.fetchData();
   },
   methods: {
+    Delivery1() {
+      if (this.row.piId) {
+        this.$confirm('是否删除(' + this.row.positionName + ')，删除后将无法恢复?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          delPosition(this.row.piId).then(res => {
+            if(res.flag){
+              this.fetchData();
+            }
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        })
+      }
+    },
+    Delivery2(){
+      if (this.form.piId) {
+        this.$confirm('是否删除(' + this.form.positionCode + ')，删除后将无法恢复?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          delPosition(this.form.piId).then(res => {
+            if(res.flag){
+              this.formatArea(this.row.piId)
+            }
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        })
+      }
+    },
     setRow() {
       this.form2 = {
         positionName: null, // 名称
@@ -173,6 +224,10 @@ export default {
       this.row = obj
       this.formatArea(obj.piId)
     },
+    // 监听单击某一行
+    rowClick2(obj) {
+      this.form = obj
+    },
     formatArea(val) {
       this.loading = true
       getAreaTree(val).then(res => {
@@ -182,10 +237,7 @@ export default {
         }
       });
     },
-    // 监听单击某一行
-    rowClick2(obj) {
-      this.form = obj
-    },
+
     fetchData() {
       this.loading = true;
       getWarehouseList(-1).then(res => {

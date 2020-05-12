@@ -57,7 +57,7 @@ import { alterSupplier, addSupplier } from "@/api/basic/index";
 
 export default {
   props: {
-      listInfo: {
+    listInfo: {
       type: Object,
       default: null
     }

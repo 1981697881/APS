@@ -19,7 +19,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getStorageList } from "@/api/basic/index";
+import { getStorageList, delPosition} from "@/api/basic/index";
 import List from "@/components/List";
 
 export default {
@@ -49,13 +49,21 @@ export default {
       this.list.size = val
       this.fetchData();
     },
+    Delivery(val) {
+      delPosition(val).then(res => {
+        if(res.flag){
+          this.$store.dispatch("list/setClickData", '');
+          this.fetchData();
+        }
+      });
+    },
     // 监听当前页
     handleCurrent(val) {
       this.list.current = val;
       this.fetchData();
     },
     dblclick(obj) {
-      this.$emit('showDialog',obj.row)
+      this.$emit('showInfo', obj.row)
     },
     // 监听多选 参数-所有选中的值
     handleSelectionChange(val){
@@ -75,6 +83,7 @@ export default {
       getStorageList(data, val).then(res => {
         this.loading = false;
         this.list = res.data;
+        this.$store.dispatch("list/setClickData", '');
       });
     }
   }

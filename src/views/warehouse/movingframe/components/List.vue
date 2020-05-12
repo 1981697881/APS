@@ -33,12 +33,12 @@ export default {
       list: {},
       columns: [
         { text: '', name: '',default:false },
-        { text: '日期', name: 'moveTime' },
+        { text: '移库时间', name: 'moveTime' },
         { text: 'U9料号', name: 'goodCode' },
-        { text: '旧料号', name: 'oldCode' },
-        { text: '原仓位', name: 'pastPositionName' },
-        { text: '数量', name: 'pastNum' },
-        { text: '现仓位', name: 'nowPositionName' },
+        { text: '旧料号', name: '色号' },
+        { text: '原仓位', name: 'pastPositionCode' },
+        { text: '原数量', name: 'pastNum' },
+        { text: '现仓位', name: 'nowPositionCode' },
         { text: '现数量', name: 'nowNum' },
         { text: '操作员', name: 'username' },
       ]

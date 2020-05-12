@@ -3,9 +3,9 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar @showDialog="handlerDialog"  @uploadList="upload" @queryBtn="query"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @showInfo="handlerInfo"  @uploadList="upload" @delList="delivery" @queryBtn="query"/>
       </div>
-      <list ref="list" />
+      <list ref="list" @showInfo="handlerInfo" />
     </div>
     <el-dialog
       :visible.sync="visible"
@@ -18,37 +18,67 @@
       <info @hideDialog="hideWindow"  @uploadList="upload" ></info>
 
     </el-dialog>
+    <el-dialog
+      :visible.sync="visible2"
+      title="库位信息"
+      v-if="visible2"
+      v-dialogDrag
+      :width="'50%'"
+      destroy-on-close
+    >
+      <detail-info @hideDialog="hideInfoWindow"  @uploadList="upload" :listInfo="listInfo"></detail-info>
+
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { TabsBar, List } from "./components";
-import { Info } from "./form";
+import { TabsBar, List } from './components'
+import { delPosition} from '@/api/basic/index'
+import { Info, DetailInfo } from './form'
 export default {
   components: {
     TabsBar,
     List,
+    DetailInfo,
     Info
   },
   data() {
     return {
       visible: null,
-      oid: null,
-        orderId: null,
-        createTime: null,
-      treeId: null, // null
-      floorId: null
+      visible2: null,
+      listInfo: null
     };
   },
   mounted() {
     this.$refs.list.fetchData()
   },
   methods: {
+    delivery(obj) {
+      if(obj) {
+        delPosition(obj).then(res => {
+          if(res.flag) {
+            this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+          }
+        });
+      }
+    },
     hideWindow(val) {
       this.visible = val
     },
+    hideInfoWindow(val) {
+      this.visible2 = val
+    },
     handlerDialog(obj) {
       this.visible = true
+    },
+    handlerInfo(obj) {
+      this.listInfo = null
+      if(obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
+      this.visible2 = true
     },
     // 查询
     query(val) {
@@ -56,7 +86,7 @@ export default {
     },
     // 更新列表
     upload(){
-      this.$refs.list.fetchData()
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     }
   }
 };

@@ -131,7 +131,6 @@ export default {
       }
     },
     print() {
-        console.log(this.selections)
       if (this.selections.length>0) {
         PrintFour(this.selections)
         LODOP.PREVIEW()

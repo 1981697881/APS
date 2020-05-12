@@ -672,3 +672,14 @@ export function getYearHoliday(params) {
     method: 'get'
   })
 }
+// 库位管理-删除
+export function delPosition(params) {
+  const url = '/position/del/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx')
+    },
+    method: 'delete'
+  })
+}

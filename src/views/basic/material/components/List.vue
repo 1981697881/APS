@@ -35,10 +35,10 @@ export default {
       list: {},
       columns: [
         { text: "gid", name: "gid",default:false },
-        { text: "U9料号", name: "oldCode" },
+        { text: "U9料号", name: "goodCode" },
         { text: "名称", name: "goodName" },
         { text: "类别", name: "" },
-        { text: "编码", name: "goodCode" },
+        { text: "旧料号", name: "oldCode" },
         { text: "规格", name: "spec" },
         { text: "安全数量", name: "" },
         { text: "计量单位", name: "" },

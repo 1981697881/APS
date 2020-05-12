@@ -34,12 +34,12 @@ export default {
       columns: [
         { text: '', name: '',default: false },
         { text: '区域位置', name: 'grandpaPiCode' },
-        { text: '库位', name: 'positionCode' },
+        { text: '库位号', name: 'positionCode' },
         { text: 'U9料号', name: 'goodCode' },
         { text: '物料名称', name: 'goodName' },
         { text: '旧料号', name: 'oldCode' },
         { text: '批号', name: 'lotNo' },
-        { text: '包装规格(KG/桶)', name: 'spec' },
+        { text: '规格', name: 'spec' },
         { text: '数量', name: 'num' },
         { text: '入库日期', name: 'createTime' },
       ]

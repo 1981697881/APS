@@ -19,8 +19,11 @@
           </el-form-item>
         </el-col>
         <el-button-group style="float:right">
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handlerAdd">新增</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAlter">修改</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="Delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-upload" @click="handlerUpload">上传</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAdd">仓库编辑</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerDetail">仓库编辑</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
         </el-button-group>
@@ -203,8 +206,11 @@ export default {
       this.parent != null && this.parent != undefined ? obj.parent = this.parent : null
       return obj
     },
-    handlerAdd() {
+    handlerDetail() {
       this.$emit("showDialog")
+    },
+    handlerAdd() {
+      this.$emit("showInfo")
     },
     print() {
       if (this.selections.length>0) {
@@ -215,6 +221,37 @@ export default {
           message: "无选中行",
           type: "warning"
         });
+      }
+    },
+    handlerAlter() {
+      if (this.clickData.piId) {
+        this.$emit('showInfo', this.clickData)
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    Delivery() {
+      if (this.clickData.piId) {
+        this.$confirm('是否删除(' + this.clickData.piCode + ')，删除后将无法恢复?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$emit('delList', this.clickData.piId)
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        })
       }
     },
     fetchWare(val) {
