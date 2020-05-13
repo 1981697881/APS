@@ -15,7 +15,7 @@ const PrintAccount = (data, printingQuantity, apiece, repeat) => {
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT('13mm', '17mm', '50mm', '10mm', data.oldCode);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 1);
-    LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",7);
+    LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",8);
     LODOP.ADD_PRINT_BARCODE('11mm', '75mm', '13mm', '13mm', 'QRCode', data.qrCode)
     LODOP.SET_PRINT_STYLE('FontSize', 10);
     LODOP.ADD_PRINT_TEXT('22mm', '17mm', '29mm', '10mm', data.executiveStandard);
@@ -520,10 +520,10 @@ const PrintStorage = (data, codetype, url, code) => {
     let qrAccount = data[i].barcode
     console.log(qrAccount)
     LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",7);
-    LODOP.ADD_PRINT_BARCODE("1mm", "18mm", "65mm", "65mm", 'QRCode', qrAccount)
-    LODOP.ADD_PRINT_TEXT("61mm", "0mm", "100mm", "8mm", data[i].piCode);
+    LODOP.ADD_PRINT_BARCODE("1mm", "2mm", "68mm", "68mm", 'QRCode', qrAccount)
+    LODOP.ADD_PRINT_TEXT("72mm", "0mm", "70mm", "8mm", data[i].piCode);
     LODOP.SET_PRINT_STYLEA(0, "Alignment", 2);
-    LODOP.SET_PRINT_STYLEA(0, "FontSize", 20);
+    LODOP.SET_PRINT_STYLEA(0, "FontSize", 40);
     LODOP.SET_PRINT_PAGESIZE(2, '100mm', '70mm');
     //分页
     LODOP.NewPage();

@@ -76,6 +76,7 @@ export default {
       this.listInfo = null
       if(obj) {
         const info = JSON.parse(JSON.stringify(obj))
+        info.worn = obj.grandpaPiId
         this.listInfo = info
       }
       this.visible2 = true

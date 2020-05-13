@@ -3,8 +3,8 @@
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
         <el-col :span="4">
-          <el-form-item :label="'物料'">
-            <el-input v-model="search.keyword" />
+          <el-form-item :label="'料号'">
+            <el-input v-model="search.goodCode" />
           </el-form-item>
         </el-col>
         <!--<el-col :span="3">
@@ -63,13 +63,16 @@ export default {
   mounted(){
 
   },
-  methods:{
-      //关键字查询
-      query(){
-          if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
-          }
-      },
+  methods: {
+    query() {
+      this.$emit('queryBtn', this.qFilter())
+    },
+    // 查询条件过滤
+    qFilter() {
+      let obj = {}
+      this.search.goodCode != null && this.search.goodCode != '' ? obj.goodCode = this.search.goodCode : null
+      return obj
+    },
       del() {
       if (this.clickData.gid) {
         this.$emit('delList',{

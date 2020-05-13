@@ -6,7 +6,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
+          <!--<el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>-->
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint" >打印</el-button>
           <!--<el-popover
@@ -171,7 +171,7 @@ export default {
     },
     over() {
       if (this.clickData.taskId) {
-        this.$confirm('是否结束(' + this.clickData.taskNum + ')，结束后将无法恢复?', '提示', {
+        this.$confirm('是否结束(' + this.clickData.taskNum + ')，结束后将完成生产?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

@@ -87,12 +87,11 @@
 
     },
     mounted() {
-      console.log(this.listInfo)
+      this.fetchWare(-1)
       if(this.listInfo) {
         this.form = this.listInfo
-        this.worn = this.listInfo.grandpaPiId
-      }else{
-        this.fetchWare(-1)
+        this.disPl = false
+        this.fetchLine(this.form.worn)
       }
     },
     methods: {

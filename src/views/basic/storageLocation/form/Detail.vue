@@ -69,6 +69,7 @@
       title="仓库信息"
       v-if="visible"
       :width="'30%'"
+      v-dialogDrag
       destroy-on-close
       append-to-body
     >

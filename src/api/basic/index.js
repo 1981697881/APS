@@ -102,7 +102,7 @@ export function delFrame(params) {
 }
 
 // 物料管理-获取列表
-export function getMaterialList(data) {
+export function getMaterialList(data, query) {
   const url = '/goods/list/' + data.pageNum + '/' + data.pageSize
   return request({
       url: url,
@@ -110,7 +110,8 @@ export function getMaterialList(data) {
         'authorization': getToken('apsrx'),
         'Content-Type': 'application/json'
       },
-      method: 'POST'
+      method: 'POST',
+    data: query
     })
 }
 

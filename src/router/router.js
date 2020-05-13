@@ -16,7 +16,6 @@ const map = {
   'barcode': () => import('@/views/basic/barcode'),
   'storageLocation': () => import('@/views/basic/storageLocation'),
 
-  'prepare': () => import('@/views/production/prepare'),
   'scheduling': () => import('@/views/production/scheduling'),
   'sboard': () => import('@/views/production/sboard'),
   'efficiency': () => import('@/views/production/efficiency'),
