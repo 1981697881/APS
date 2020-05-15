@@ -1,8 +1,30 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
-      <el-row :gutter="10">
-        <el-col :span="7">
+    <el-form v-model="search" :size="'mini'" :label-width="'40px'" >
+      <el-row :gutter="24">
+        <el-button-group style="float:right;padding-right: 15px;">
+          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
+          <!--<el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>-->
+          <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint" >打印</el-button>
+          <!--<el-popover
+            placement="bottom"
+            width="200"
+            :size="'mini'"
+            v-model="visible">
+            <p>请选择需要打印的内容</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="primary" @click="confirmPrint">打印单据</el-button>
+              <el-button type="success" size="mini" @click="visible = false">打印标签</el-button>
+            </div>
+            <el-button :size="'mini'" type="primary" icon="el-icon-printer" slot="reference"  >打印</el-button>
+          </el-popover>-->
+        </el-button-group>
+      </el-row>
+      <el-row :gutter="24"  style="padding-top: 15px;">
+        <el-col :span="7" style="display: inline-block">
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
@@ -18,30 +40,48 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
-          <el-form-item :label="'关键字'">
-            <el-input v-model="search.keyword" />
+        <el-col :span="3">
+          <el-form-item :label="'色号'">
+            <el-input v-model="search.oldCode" placeholder="输入关键字"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'项目名称'" :label-width="'70px'">
+            <el-input v-model="search.soName" placeholder="输入关键字"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'单号'">
+            <el-input v-model="search.taskNum" placeholder="输入关键字"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'生产状态'" :label-width="'70px'">
+            <el-select v-model="search.allocatedStatus" placeholder="请选择" @change="selectChange">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
-        <el-button-group style="float:right">
-          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click.native="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
-        </el-button-group>
       </el-row>
     </el-form>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import {getMType} from "@/api/basic/index";
+import { mapGetters } from "vuex"
+import { PrintSchedule } from '@/tools/doPrint'
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
+  components: {},
+  computed: {
+    ...mapGetters(["node","clickData","selections"])
+  },
   data() {
     return {
       value: '',
@@ -72,60 +112,45 @@ export default {
           }
         }]
       },
+      options: [{
+        value: '待生产',
+        label: '待生产'
+      }, {
+        value: '生产中',
+        label: '生产中'
+      }, {
+        value: '已暂停',
+        label: '已暂停'
+      }, {
+        value: '已停止',
+        label: '已停止'
+      }, {
+        value: '生产完毕',
+        label: '生产完毕'
+      }],
+      visible: false,
       search: {
-          keyword: null,
-          type:null
+        allocatedStatus: null,
+        oldCode: null,
+        taskNum: null,
+        soName: null,
       }
     };
   },
-  mounted() {
 
-  },
   methods: {
-    // 下载文件
-    download(res) {
-      if (!res.data) {
-        return
-      }
-      let url = window.URL.createObjectURL(new Blob([res.data]))
-      let link = document.createElement('a')
-      link.style.display = 'none'
-      link.href = url
-      link.setAttribute('download', res.headers['content-disposition'].split('filename=')[1])
-      document.body.appendChild(link)
-      link.click()
+    selectChange(val) {
+        this.$emit('uploadList')
     },
-    upload() {
-      this.$emit('uploadList')
-      this.search.keyword = ''
-      this.value = ''
-    },
-    // 查询条件过滤
-    qFilter() {
-      let obj = {}
-      this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
-      this.value[1] != null || this.value[1] != undefined ? obj.endDate = this.value[1] : null
-      this.value[0] != null || this.value[0] != undefined ? obj.startDate = this.value[0] : null
-      return obj
-    },
-    exportData() {
-      this.$message({
-        message: "抱歉，功能尚未完善！",
-        type: "warning"
-      });
-      /* exportOutboundStatistics(this.qFilter()).then(res => {
-         this.download(res)
-       })*/
-    },
-    // 关键字查询
-    query() {
-      this.$emit('queryBtn', this.qFilter())
-    },
-    handleAlter() {
-      if (this.clickData.gid) {
-        this.$emit('showDialog',{
-          gid: this.clickData.gid,
-        })
+    delivery() {
+      if (this.clickData.taskId) {
+        this.$message({
+          message: "抱歉，功能尚未完善！",
+          type: "warning"
+        });
+        /*this.$emit('theDelivery',{
+          taskId: this.clickData.taskId,
+        })*/
       } else {
         this.$message({
           message: "无选中行",
@@ -133,9 +158,87 @@ export default {
         });
       }
     },
+    confirmPrint() {
+      if (this.selections.length > 0) {
+        PrintSchedule(this.selections)
+        LODOP.PREVIEW()
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    over() {
+      if (this.clickData.taskId) {
+        this.$confirm('是否结束(' + this.clickData.taskNum + ')，结束后将完成生产?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            message: "抱歉，功能尚未完善！",
+            type: "warning"
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    upload() {
+      this.search.allocatedStatus = null
+      this.search.oldCode = null
+      this.search.soName = null
+      this.search.taskNum = null
+      this.value = []
+      this.$emit('uploadList')
+    },
+    report() {
+      if (this.clickData.taskId) {
+        if (this.clickData.allocatedStatus == '生产完毕') {
+          this.clickData.isF = 0
+          this.clickData.isOver = 1
+          this.$emit('reportInfo', this.clickData)
+        } else {
+          this.clickData.isF = 0
+          this.clickData.isOver = 0
+          this.$emit('reportInfo', this.clickData)
+        }
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    // 查询条件过滤
+    qFilter() {
+      let obj = {}
+      this.search.allocatedStatus != null && this.search.allocatedStatus != '' ? obj.allocatedStatus = this.search.allocatedStatus : null
+      this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
+      this.search.soName != null && this.search.soName != '' ? obj.soName = this.search.soName : null
+      this.search.taskNum != null && this.search.taskNum != '' ? obj.taskNum = this.search.taskNum : null
+      this.value[1] != null && this.value[1] != undefined ? obj.productionDateEnd = this.value[1] : null
+      this.value[0] != null && this.value[0] != undefined ? obj.productionDateStart = this.value[0] : null
+      console.log(obj)
+      return obj
+    },
+    // 关键字查询
+    query() {
+      this.$emit('uploadList')
+    },
+    handleDialog() {
+      this.$emit('showDialog')
+    }
   }
 };
 </script>
 
-<style>
-</style>

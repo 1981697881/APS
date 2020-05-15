@@ -5,7 +5,6 @@
       :columns="columns"
       :loading="loading"
       :list="list"
-      index
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -33,6 +32,7 @@ export default {
       list: {},
       columns: [
         { text: '', name: '',default:false },
+        { text: '行号', name: 'lineNo' },
         { text: '出货日期', name: 'businessDate' },
         { text: '单号', name: 'shipNo' },
         { text: '客户编码', name: 'customerCode' },

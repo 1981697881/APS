@@ -40,7 +40,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'组织编码'" >
-            <el-input v-model="form.orgCode"></el-input>
+            <el-input v-model="form.orgCode" readOnly></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -68,7 +68,7 @@
           code: '',
           lotNo: '',
           name: '',
-          orgCode: '',
+          orgCode: '901',
           whCode: '',
           whName: '',
         },

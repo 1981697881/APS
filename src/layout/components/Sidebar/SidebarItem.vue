@@ -67,7 +67,6 @@ export default {
           return true
         }
       })
-
       // When there is only one child router, the child router is displayed by default
       // 添加逻辑-只有首页才需要上面的规则
       if (showingChildren.length === 1 && showingChildren[0].name == "Dashboard") {

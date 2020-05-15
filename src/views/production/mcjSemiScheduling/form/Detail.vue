@@ -88,7 +88,7 @@
   import { getSemiFinishedProductsType, getSemiFinishedProducts} from '@/api/basic/index'
   export default {
     props: {
-      listBlank: {
+      listInfo: {
         type: Object,
         default: null
       },
@@ -146,12 +146,12 @@
     },
     mounted() {
       this.fetchFormat()
-      if (this.listBlank) {
-        console.log(this.listBlank)
-       this.form = this.listBlank
+      if (this.listInfo) {
+        console.log(this.listInfo)
+        this.form = this.listInfo
         this.fetchLine(this.form.tpId)
-        this.form.plId = Number(this.listBlank.plId)
-        this.form.tpId = Number(this.listBlank.tpId)
+        this.form.plId = Number(this.listInfo.plId)
+        this.form.tpId = Number(this.listInfo.tpId)
       }
     },
     methods: {

@@ -35,7 +35,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item :label="'组织编码'" >
-              <el-input v-model="form.orgCode"></el-input>
+              <el-input v-model="form.orgCode" readOnly></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -53,13 +53,20 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'供应商名称'" >
-              <el-input v-model="form.supplierName"></el-input>
+            <el-form-item :label="'色号'" >
+              <el-input v-model="form.color"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item :label="'客户名称'" >
+              <el-input v-model="form.customerName"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'供应商编码'" >
-              <el-input v-model="form.supplierCode"></el-input>
+            <el-form-item :label="'客户编码'" >
+              <el-input v-model="form.customeCode"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -102,11 +109,12 @@ export default {
       fullscreenLoading: false,
       form: {
         docNo: '',
-        supplierCode: '',
-        supplierName: '',
+        customeCode: '',
+        customerName: '',
+        color: '',
         itemCode: '',
         itemName: '',
-        orgCode: '',
+        orgCode: '901',
         businessDateStart: '',
         businessDateEnd: '',
         value: [],

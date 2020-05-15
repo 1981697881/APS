@@ -44,8 +44,8 @@ export default {
         { text: '计量单位', name: '' },
         { text: '即时库存', name: 'evenNum' },
         { text: 'U9库存', name: 'num' },
-        { text: '仓库', name: 'whName' },
-        { text: '仓位', name: 'positionName' },
+      /*  { text: '仓库', name: 'whName' },
+        { text: '仓位', name: 'positionName' },*/
         { text: '合格状态', name: 'status' },
       ]
     };

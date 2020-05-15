@@ -94,3 +94,15 @@ export function updateLotNo(params) {
     data: params
   })
 }
+// 生产排程-结束
+export function schedulingStop(params) {
+  const url = '/task-scheduling/stop/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'post',
+  })
+}
+

@@ -3,35 +3,33 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'物料编码'" >
+          <el-form-item :label="'U9料号'" >
             <el-input v-model="form.code"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'物料名称'" >
+          <el-form-item :label="'品名'" >
             <el-input v-model="form.name"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'参照料号1'" prop="roleName">
+          <el-form-item :label="'组织编码'" >
+            <el-input v-model="form.orgCode" readOnly></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'色号'" >
             <el-input v-model="form.code1"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'参照料号2'" prop="roleName">
+       <!-- <el-col :span="12">
+          <el-form-item :label="'参照料号2'" >
             <el-input v-model="form.code2"></el-input>
           </el-form-item>
-        </el-col>
+        </el-col>-->
       </el-row>
-      <!--<el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'组织编码'" prop="roleName">
-            <el-input v-model="form.orgCode"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>-->
         <el-row :gutter="20">
           <el-col :span="24">
             <el-form-item :label="'创建时间'">
@@ -86,7 +84,7 @@
           modifyOnEnd: '',
           modifyOnStart: '',
           name: '',
-          orgCode: '',
+          orgCode: '901',
         },
         fullscreenLoading: false,
         value1: '',

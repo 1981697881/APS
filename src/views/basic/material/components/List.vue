@@ -40,41 +40,42 @@ export default {
         { text: "类别", name: "" },
         { text: "旧料号", name: "oldCode" },
         { text: "规格", name: "spec" },
-        { text: "安全数量", name: "" },
-        { text: "计量单位", name: "" },
+        { text: "安全数量", name: "safetyStockQty" },
+        { text: "计量单位", name: "inventoryUomGroup" },
+        { text: "同步时间", name: "syncTime" },
       ]
     };
   },
   methods: {
-      //监听每页显示几条
-      handleSize(val) {
-          this.list.size = val
-          this.fetchData();
-      },
-      //监听当前页
-      handleCurrent(val) {
-          this.list.current = val;
-          this.fetchData();
-      },
+    //监听每页显示几条
+    handleSize(val) {
+      this.list.size = val
+      this.$emit('uploadList');
+    },
+    //监听当前页
+    handleCurrent(val) {
+      this.list.current = val;
+      this.$emit('uploadList');
+    },
     dblclick(obj) {
      /* this.$emit('showDialog',obj.row)*/
     },
-      Delivery(val){
-          delMaterial(val).then(res => {
-            if(res.flag){
-              this.$store.dispatch("list/setClickData", '');
-              this.fetchData();
-            }
-          });
-      },
+    Delivery(val){
+      delMaterial(val).then(res => {
+        if(res.flag){
+          this.$store.dispatch("list/setClickData", '');
+          this.$emit('uploadList');
+        }
+      });
+    },
     // 监听多选 参数-所有选中的值
-    handleSelectionChange(val){
+    handleSelectionChange(val) {
       this.$store.dispatch('list/setSelections', val)
     },
-      //监听单击某一行
-      rowClick(obj) {
-          this.$store.dispatch("list/setClickData", obj.row);
-      },
+    // 监听单击某一行
+    rowClick(obj) {
+      this.$store.dispatch("list/setClickData", obj.row);
+    },
     fetchData(val, data = {
       /*  fid: fid,
         type: type,*/
@@ -82,7 +83,7 @@ export default {
       pageSize: this.list.size || 50
     }) {
       this.loading = true;
-        getMaterialList(data, val).then(res => {
+      getMaterialList(data, val).then(res => {
         this.loading = false;
         this.list = res.data;
       });

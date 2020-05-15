@@ -79,12 +79,18 @@ router.afterEach(() => {
 function gotoRouter(to, next) {
   getRouter(store.getters.token) // 使用useid获取路由
     .then(res => {
-      // console.log('解析后端动态路由', res.data)
-      res.data.map(val=>{
+      //console.log('解析后端动态路由', res.data)
+      res.data.map(val => {
         val.type = 1
+        val.children.map(value => {
+          if(value.children!=null && value.children!=''){
+            value.type = 2
+          }
+        })
       })
-      // console.log('解析后端动态路由', res.data)
+      console.log(res.data)
       const asyncRouter = addRouter(res.data) // 进行递归解析
+      console.log(asyncRouter)
       // 一定不能写在静态路由里面,否则会出现,访问动态路由404的情况.所以在这列添加
       asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
       // console.log(asyncRouter)

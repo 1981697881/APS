@@ -45,7 +45,7 @@
         @size-change="handleSize"
         @current-change="handleCurrent"
         :current-page="list.current"
-        :page-sizes="[50, 100, 250, 500, 1000, 5000]"
+        :page-sizes="[50, 100, 250, 500, 1000, 2500]"
         :page-size="list.size"
         :page-count="list.pages?list.pages:0"
         layout="total, sizes, prev, pager, next, jumper"
@@ -184,18 +184,18 @@ export default {
 };
 </script>
 
-<style>
+<!--<style>
   .el-table__body tr.current-row>td{
     background-color: #f19944 !important;
     /* color: #f19944; */  /* 设置文字颜色，可以选择不设置 */
   }
   /* 用来设置当前页面element全局table 鼠标移入某行时的背景色*/
-  .el-table--enable-row-hover .el-table__body tr:hover>td {
+  .el-table&#45;&#45;enable-row-hover .el-table__body tr:hover>td {
     background-color: #f19944;
     /* color: #f19944; */ /* 设置文字颜色，可以选择不设置 */
   }
 
-</style>
+</style>-->
 <style>
   .urgent-row {
     color: #7b1424;

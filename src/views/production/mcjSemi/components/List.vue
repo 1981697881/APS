@@ -1,9 +1,6 @@
 <template>
   <div>
     <el-card class="box-card box-card-component">
-      <div slot="header" class="clearfix" style="text-align: center">
-        <span>美瓷胶半成品线效率表</span>
-      </div>
       <list
         class="list-main box-shadow"
         :columns="columns"
@@ -87,17 +84,6 @@
 
 <style lang="scss" scoped>
   .list-main {
-    height: calc((100vh - 250px)/3);
-  }
-</style>
-<style lang="scss" >
-  .box-card-component{
-    .el-card__header {
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-    .el-card__body{
-      padding: 0px!important;
-    }
+    height: calc(100vh - 300px);
   }
 </style>

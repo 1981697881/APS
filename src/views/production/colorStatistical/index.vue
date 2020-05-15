@@ -2,9 +2,9 @@
   <div class="app-list">
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
-      <div>
+     <!-- <div>
         <tabs-bar @uploadList="upload"/>
-      </div>
+      </div>-->
       <list ref="list"/>
     </div>
   </div>
@@ -23,20 +23,20 @@ export default {
       visible: null,
       visible2: null,
       gid: null,
-        orderId: null,
-        createTime: null,
+      orderId: null,
+      createTime: null,
       treeId: null, // null
       floorId: null
     };
   },
-    mounted() {
-        this.$refs.list.fetchData()
-    },
+  mounted() {
+    this.$refs.list.fetchData()
+  },
   methods: {
-      //更新列表
-      upload(){
-          this.$refs.list.fetchData()
-      }
+    // 更新列表
+    upload(){
+      this.$refs.list.fetchData()
+    }
   }
 };
 </script>

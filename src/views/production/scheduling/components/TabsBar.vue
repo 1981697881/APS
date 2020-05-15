@@ -76,6 +76,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex"
+import { schedulingStop } from "@/api/production/index";
 import { PrintSchedule } from '@/tools/doPrint'
 export default {
   components: {},
@@ -140,7 +141,7 @@ export default {
 
   methods: {
     selectChange(val) {
-        this.$emit('uploadList')
+      this.$emit('uploadList')
     },
     delivery() {
       if (this.clickData.taskId) {
@@ -176,10 +177,9 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message({
-            message: "抱歉，功能尚未完善！",
-            type: "warning"
-          });
+          schedulingStop(this.clickData.taskId).then(res => {
+            this.$emit('uploadList')
+          })
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -228,7 +228,6 @@ export default {
       this.search.taskNum != null && this.search.taskNum != '' ? obj.taskNum = this.search.taskNum : null
       this.value[1] != null && this.value[1] != undefined ? obj.productionDateEnd = this.value[1] : null
       this.value[0] != null && this.value[0] != undefined ? obj.productionDateStart = this.value[0] : null
-      console.log(obj)
       return obj
     },
     // 关键字查询

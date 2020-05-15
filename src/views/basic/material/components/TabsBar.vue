@@ -1,24 +1,26 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'" :label-width="'50px'">
       <el-row :gutter="10">
         <el-col :span="4">
           <el-form-item :label="'料号'">
             <el-input v-model="search.goodCode" />
           </el-form-item>
         </el-col>
-        <!--<el-col :span="3">
-          <el-form-item :label="'类别'">
-            <el-select v-model="value" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
+        <el-col :span="7" style="display: inline-block">
+          <el-form-item :label="'日期'">
+            <el-date-picker
+              v-model="value"
+              type="datetimerange"
+              :picker-options="pickerOptions"
+              range-separator="至"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              align="right">
+            </el-date-picker>
           </el-form-item>
-        </el-col>-->
+        </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
@@ -46,6 +48,33 @@ export default {
   },
   data() {
     return {
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
       options: [{
         value: '选项1',
         label: '成品'
@@ -71,9 +100,11 @@ export default {
     qFilter() {
       let obj = {}
       this.search.goodCode != null && this.search.goodCode != '' ? obj.goodCode = this.search.goodCode : null
+      this.value[1] != null && this.value[1] != undefined ? obj.syncTimeEnd = this.value[1] : null
+      this.value[0] != null && this.value[0] != undefined ? obj.syncTimeStart = this.value[0] : null
       return obj
     },
-      del() {
+    del() {
       if (this.clickData.gid) {
         this.$emit('delList',{
           gid:this.clickData.gid,
@@ -86,6 +117,8 @@ export default {
       }
     },
     upload() {
+      this.search.goodCode = null
+      this.value = []
       this.$emit("uploadList")
     },
     handleAlter() {
