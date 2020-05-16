@@ -53,11 +53,17 @@
           type: ''
         },
         options: [{
-          value: 0,
+          value: 1,
           label: '成品线'
         }, {
-          value: 1,
+          value: 2,
           label: '半成品线'
+        }, {
+          value: 3,
+          label: '美瓷胶成品线'
+        }, {
+          value: 4,
+          label: '美瓷胶半成品线'
         }],
         rules: {
           tpName: [
@@ -70,7 +76,10 @@
       };
     },
     created() {
-      if (this.gpInfo) this.form = this.gpInfo
+      if (this.gpInfo) {
+        this.form = this.gpInfo
+        this.form.type = this.gpInfo.parent
+      }
     },
     mounted() {
 

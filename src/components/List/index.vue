@@ -104,8 +104,6 @@ export default {
     }
   },
   methods: {
-    formatSex(row, column) {
-    },
     taskWarning(row, column) {
       let stau = ''
       if(row.alertStatus == 1) {
@@ -122,16 +120,26 @@ export default {
       return  stau
     },
     tableRowClassName({row, rowIndex}) {
-      if (row.alertStatus == 3) {
-        return 'urgent-row';
-      } else if (row.alertStatus == 4) {
-        return 'suspended-row';
-      }else if (row.alertStatus == 1) {
-        return 'delay-row';
-      }else if (row.alertStatus == 2) {
-        return 'conflict-row';
-      }else{
-        return '';
+      if(row.allocatedStatus == '冲突'){
+        if (row.alertStatus == 3) {
+          return 'suspended-row1';
+        } else if (row.alertStatus == 1) {
+          return 'suspended-row2';
+        }else if (row.alertStatus == 4) {
+          return 'suspended-row3';
+        }else{
+          return '';
+        }
+      } else {
+        if (row.alertStatus == 3) {
+          return 'urgent-row';
+        } else if (row.alertStatus == 1) {
+          return 'delay-row';
+        }else if (row.alertStatus == 4) {
+          return 'conflict-row';
+        }else{
+          return '';
+        }
       }
     },
     // 监听多选 参数-所有选中的值
@@ -198,15 +206,24 @@ export default {
 </style>-->
 <style>
   .urgent-row {
-    color: #7b1424;
-  }
-  .suspended-row {
-    color: #3b199a;
+    color: red;
   }
   .delay-row {
-    color: #dc9118;
+    color: orange;
   }
   .conflict-row {
-    color: #8032a4;
+    color: blue;
+  }
+  .suspended-row1 {
+    background-color: #CD69C9 !important;
+    color: red;
+  }
+  .suspended-row2 {
+    background-color: #CD69C9 !important;
+    color: orange;
+  }
+  .suspended-row3 {
+    background-color: #CD69C9 !important;
+    color: blue;
   }
 </style>
