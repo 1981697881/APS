@@ -61,18 +61,15 @@ export default {
   mounted() {
     this.fetchFormat()
   },
-
   methods: {
     selectChange(val) {
       this.upload({tpId: val })
     },
-
     delivery(obj) {
       if(obj) {
 
       }
     },
-
     fetchFormat() {
       getFinalGoodsType().then(res => {
         if(res.flag) {
@@ -91,9 +88,14 @@ export default {
     },
     handlerDialog(obj) {
       this.listInfo = null
-      if(obj){
+      if(obj) {
         const info = JSON.parse(JSON.stringify(obj))
         this.listInfo = info
+      } else {
+        this.listInfo = {
+          flag: true,
+          tpId: this.plaIdS
+        }
       }
       this.visible = true
     },

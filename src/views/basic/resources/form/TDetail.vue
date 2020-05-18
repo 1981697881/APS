@@ -15,7 +15,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12" >
-          <el-form-item :label="'类别'" prop="type">
+          <el-form-item :label="'类别'" prop="type" @change="selectChange">
             <el-select v-model="form.type" placeholder="请选择">
               <el-option
                 v-for="item in options"
@@ -50,7 +50,7 @@
           tpId: null,
           tpName: null, // 名称
           tpCategory: '产线设备',
-          type: ''
+          type: null
         },
         options: [{
           value: 1,
@@ -76,15 +76,18 @@
       };
     },
     created() {
+
+    },
+    mounted() {
       if (this.gpInfo) {
         this.form = this.gpInfo
         this.form.type = this.gpInfo.parent
       }
     },
-    mounted() {
-
-    },
     methods: {
+      selectChange(val) {
+        this.form.type = val
+      },
       saveData(form) {
         this.$refs[form].validate((valid) => {
           //判断必填项

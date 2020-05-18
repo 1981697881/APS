@@ -105,4 +105,16 @@ export function schedulingStop(params) {
     method: 'post',
   })
 }
-
+// 生产排程-标签打印
+export function schedulingPrint(params) {
+  const url = '/barcode/barcodeTaskScheduling'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}

@@ -84,7 +84,7 @@ export default {
           {required: true, message: '请输入名稱', trigger: 'blur'},
         ],
         deptId: [
-          {required: true, message: '请选择部门', trigger: 'change'},
+          {type: 'array', required: true, message: '请选择部门', trigger: 'change'},
         ],
       },
     };

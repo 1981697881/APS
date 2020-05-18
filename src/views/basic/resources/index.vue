@@ -80,6 +80,7 @@ export default {
       this.gpInfo = null
       if(obj) {
         const info = JSON.parse(JSON.stringify(obj))
+        info.type = obj.parent
         this.gpInfo = info
       }
       this.visible2 = true

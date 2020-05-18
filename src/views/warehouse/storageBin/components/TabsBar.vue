@@ -23,6 +23,14 @@
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'仓库'" prop="plaIdS">
+            <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
+              <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
@@ -37,6 +45,7 @@
 <script>
 import { mapGetters } from "vuex";
 import {exportStorageBin} from "@/api/warehouse/index";
+import {getWarehouseList} from "@/api/basic/index";
 export default {
     components: {},
     computed: {
@@ -72,16 +81,29 @@ export default {
           }
         }]
       },
+      parent: null,
+      plaArray: [],
       search: {
-          keyword: null,
-          type:null
+        keyword: null,
+        type: null
       }
     };
   },
-  mounted(){
-
+  mounted() {
+    this.fetchWare(-1)
   },
-  methods:{
+  methods: {
+    // 切换仓库
+    selectWorn(val) {
+      this.$emit('queryBtn', this.qFilter())
+    },
+    fetchWare(val) {
+      getWarehouseList(val).then(res => {
+        if(res.flag) {
+          this.plaArray = res.data
+        }
+      })
+    },
     // 下载文件
     download(res) {
       if (!res.data) {

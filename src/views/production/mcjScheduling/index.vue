@@ -37,17 +37,16 @@
     </el-dialog>
   </div>
 </template>
-
 <script>
-import { TabsBar, List  } from "./components"
+import { TabsBar, List } from "./components"
 import { Info, Report} from "./form"
-import { getFinalGoodsType } from "@/api/basic"
+import { getMcjSchedulingType } from "@/api/basic"
 export default {
   components: {
     TabsBar,
     List,
     Info,
-    Report,
+    Report
   },
   data() {
     return {
@@ -61,7 +60,6 @@ export default {
   mounted() {
     this.fetchFormat()
   },
-
   methods: {
     selectChange(val) {
       this.upload({tpId: val })
@@ -72,7 +70,7 @@ export default {
       }
     },
     fetchFormat() {
-      getFinalGoodsType().then(res => {
+      getMcjSchedulingType().then(res => {
         if(res.flag) {
           console.log(res)
           this.plaArray = res.data
@@ -89,9 +87,14 @@ export default {
     },
     handlerDialog(obj) {
       this.listInfo = null
-      if(obj){
+      if(obj) {
         const info = JSON.parse(JSON.stringify(obj))
         this.listInfo = info
+      } else {
+        this.listInfo = {
+          flag: true,
+          tpId: this.plaIdS
+        }
       }
       this.visible = true
     },

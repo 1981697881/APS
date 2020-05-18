@@ -1,6 +1,6 @@
 <template>
   <div class="list-main box-shadow">
-    <el-table :data="list" height="100%" :v-loading="loading" border   size="mini" :highlight-current-row="true" :cell-class-name="tableCellClassName" @cell-dblclick="celldblclick" @cell-click="cellclick"  @selection-change="handleSelectionChange">
+    <el-table :data="list" height="100%" :v-loading="loading" border size="mini" :highlight-current-row="true" :cell-class-name="tableCellClassName" @cell-dblclick="celldblclick" @cell-click="cellclick"  @selection-change="handleSelectionChange">
       <el-table-column type="selection"></el-table-column>
       <el-table-column prop="date" label="序号" align="center" type="index" sortable></el-table-column>
       <el-table-column
@@ -39,25 +39,24 @@
       return {
         loading: false,
         list: [],
+        result: [],
         columns: []
       };
     },
     methods: {
-      taskWarning(row, column) {
+        taskWarning(row, column) {
         let stau = ''
         for(let i in row) {
-          if (i.replace(/\d+/g, "") == 'alertStatus') {
-            if (row[i] == 1) {
-              stau = '延误'
-            } else if (row[i] == 2) {
-              stau = '冲突'
-            } else if (row[i] == 3) {
-              stau = '加急'
-            } else if (row[i] == 4) {
-              stau = '暂停'
-            } else {
-              stau = ''
-            }
+          if (row[column.property] == 1) {
+            stau = '延误'
+          } else if (row[column.property] == 2) {
+            stau = '冲突'
+          } else if (row[column.property] == 3) {
+            stau = '加急'
+          } else if (row[column.property] == 4) {
+            stau = '暂停'
+          } else {
+            stau = ''
           }
         }
         return stau
@@ -65,22 +64,32 @@
       tableCellClassName({row, column, rowIndex, columnIndex}) {
         if((columnIndex-2) % 4 == 0 && (columnIndex-2) != 0) {
           for(let i in row){
-            if(i.replace(/\d+/g,"") == 'alertStatus'){
-              if (row[i] == 3) {
-                return 'urgent-row'
-              } else if (row[i] == 4) {
-                return 'suspended-row'
-              } else if (row[i] == 1) {
-                return 'delay-row'
-              } else if (row[i] == 2) {
-                return 'conflict-row'
-              } else {
-                return ''
+              if(i.replace(/\d+/g,"") == 'alertStatus'){
+                if (row[column.property] == 3) {
+                  if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                    return 'suspended-row1'
+                  }else{
+                    return 'urgent-row'
+                  }
+                } else if (row[column.property] == 4) {
+                  if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                    return 'suspended-row2'
+                  }else{
+                    return 'suspended-row'
+                  }
+                } else if (row[column.property] == 1) {
+                  if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                    return 'suspended-row3'
+                  }else{
+                    return 'delay-row'
+                  }
+                } else {
+                  return ''
+                }
               }
             }
           }
-        }
-
+        //}
       },
       // 监听多选 参数-所有选中的值
       handleSelectionChange(val){
@@ -180,15 +189,24 @@
 </style>
 <style>
   .urgent-row {
-    color: #7b1424;
-  }
-  .suspended-row {
-    color: #3b199a;
+    color: red;
   }
   .delay-row {
-    color: #dc9118;
+    color: orange;
   }
   .conflict-row {
-    color: #8032a4;
+    color: blue;
+  }
+  .suspended-row1 {
+    background-color: #CD69C9 !important;
+    color: red;
+  }
+  .suspended-row2 {
+    background-color: #CD69C9 !important;
+    color: orange;
+  }
+  .suspended-row3 {
+    background-color: #CD69C9 !important;
+    color: blue;
   }
 </style>

@@ -116,6 +116,11 @@ export default {
             type: "warning"
           });
         }
+      } else {
+        this.listInfo = {
+          flag: true,
+          tpId: this.plaIdS
+        }
       }
       this.visible = true
     },

@@ -56,7 +56,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'报工入库数量'" prop="estimatedStorage">
-            <el-input-number v-model="form.estimatedStorage"  :min="0" :max="form.productionQuantity" ></el-input-number>
+            <el-input-number v-model="form.estimatedStorage"  :min="0" ></el-input-number>
           </el-form-item>
         </el-col>
       </el-row>
@@ -154,10 +154,10 @@
   </div>
 </template>
 <script>
-  import { updateProductNum, updateLotNo } from '@/api/production/index'
-  import { getFinalGoodsType, getSemiFinishedProductsType, getSemiFinishedProducts, getFinalGoods, getGoodPrints} from '@/api/basic/index'
+  import { updateProductNum, updateLotNo, schedulingPrint} from '@/api/production/index'
+  import { getFinalGoodsType, getFinalGoods} from '@/api/basic/index'
   import { getToken } from '@/utils/auth' // get token from cookie
-  import { PrintTwo, PrintAccount} from '@/tools/doPrint'
+  import { PrintTwo2 } from '@/tools/doPrint'
   export default {
     props: {
       listInfo: {
@@ -263,17 +263,14 @@
             // apiece: 打印
             // repeat: 重复打印第几张
             // printModel: 打印模板
-            getGoodPrints([this.form.gid]).then(res => {
+            schedulingPrint({barcodeList:[{printId: this.form.taskId,
+                printNum: this.printingQuantity,
+                type: 2}]}).then(res => {
               if(res.flag) {
                 var obj = res.data
                 Object.assign(this.form, obj[0]);
-                if(this.printModel == 0) {
-                  PrintAccount(this.form, this.printingQuantity, this.apiece, this.repeat)
-                  LODOP.PREVIEW()
-                }else{
-                  PrintTwo(this.form, this.printingQuantity, this.apiece, this.repeat, this.printModel)
-                  LODOP.PREVIEW()
-                }
+                PrintTwo2(obj, this.printingQuantity, this.apiece, this.repeat, this.printModel)
+                LODOP.PREVIEW()
               }
             })
           }else{
@@ -285,17 +282,14 @@
                 // apiece: 打印
                 // repeat: 重复打印第几张
                 // printModel: 打印模板
-                getGoodPrints([this.form.gid]).then(res => {
+                schedulingPrint({barcodeList:[{printId: this.form.taskId,
+                    printNum: this.printingQuantity,
+                    type: 2}]}).then(res => {
                   if(res.flag) {
                     var obj = res.data
                     Object.assign(this.form, obj[0]);
-                    if(this.printModel == 0) {
-                      PrintAccount(this.form, this.printingQuantity, this.apiece, this.repeat)
-                      LODOP.PREVIEW()
-                    }else{
-                      PrintTwo(this.form, this.printingQuantity, this.apiece, this.repeat, this.printModel)
-                      LODOP.PREVIEW()
-                    }
+                    PrintTwo2(obj, this.printingQuantity, this.apiece, this.repeat, this.printModel)
+                    LODOP.PREVIEW()
                   }
                 })
               }
@@ -314,20 +308,34 @@
         this.$refs[form].validate((valid) => {
           // 判断必填项
           if (valid) {
-            if(this.form.estimatedStorage<=this.form.productionQuantity){
+            if(this.form.estimatedStorage<=this.form.productionQuantity) {
               updateProductNum(this.form).then(res => {
                 if(res.flag) {
                   this.isSavtBtn = false
                   this.$emit('uploadList')
                   this.$emit('hideReport', false)
                 }
-
               })
             }else{
-              this.$message({
-                message: "入库数量不能大于完工数量",
-                type: "warning"
-              })
+              this.$confirm('入库数量大于完工数量, 请检验是否输入错误?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                updateProductNum(this.form).then(res => {
+                  if(res.flag) {
+                    this.isSavtBtn = false
+                    this.$emit('uploadList')
+                    this.$emit('hideReport', false)
+                  }
+
+                })
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: '已取消汇报'
+                });
+              });
             }
           } else {
             return false
@@ -336,14 +344,7 @@
       },
       fetchLine(val) {
         this.rArray = []
-        if(val == 0){
           this.options = [{
-            value: '0',
-            label: '自有产品标签'
-          }, {
-            value: '1',
-            label: 'OEM产品_加固剂&防水宝标签'
-          }, {
             value: '2',
             label: 'OEM产品_美瓷胶标签'
           }]
@@ -357,25 +358,7 @@
               })
             }
           })
-        } else {
-          this.options = [{
-            value: '3',
-            label: '色石&Base标签'
-          }, {
-            value: '4',
-            label: '美瓷胶标签'
-          }]
-          getSemiFinishedProductsType().then(res => {
-            this.pArray = res.data
-            if(res.flag){
-              getSemiFinishedProducts(this.form.tpId).then(res2 => {
-                if(res2.flag) {
-                  this.rArray = res2.data
-                }
-              })
-            }
-          })
-        }
+
       },
     }
   };

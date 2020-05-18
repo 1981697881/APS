@@ -41,7 +41,7 @@
 <script>
 import { TabsBar, List  } from "./components"
 import { Info, Report} from "./form"
-import {  getSemiFinishedProductsType } from "@/api/basic"
+import { getMcjSemiSchedulingType } from "@/api/basic"
 export default {
   components: {
     TabsBar,
@@ -73,7 +73,7 @@ export default {
       }
     },
     fetchFormat() {
-      getSemiFinishedProductsType().then(res => {
+      getMcjSemiSchedulingType().then(res => {
         if(res.flag) {
           this.plaArray = res.data
           this.plaIdS = res.data[0].tpId
@@ -115,6 +115,11 @@ export default {
             message: "当前选中无数据！",
             type: "warning"
           });
+        }
+      } else {
+        this.listInfo = {
+          flag: true,
+          tpId: this.plaIdS
         }
       }
       this.visible = true

@@ -56,7 +56,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'生产线'" prop="tpId">
-            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" @change="selectChange">
+            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" disabled @change="selectChange">
               <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
@@ -257,16 +257,22 @@ export default {
   mounted() {
     this.fetchFormat()
     if (this.listInfo) {
-      this.form = this.listInfo
-      const listInfo = this.listInfo
-      const form = this.form
-      this.fetchLine(this.form.tpId)
-      this.options.forEach(function(item, index) {
-        if (item.label == listInfo.productionType) {
-          form.productionType = item.value
-        }
-      })
-      this.form.oldCode = this.listInfo.color
+      if (this.listInfo.flag) {
+        this.disPl = false
+        this.form.tpId = this.listInfo.tpId
+        this.fetchLine(this.listInfo.tpId)
+      } else {
+        this.form = this.listInfo
+        const listInfo = this.listInfo
+        const form = this.form
+        this.fetchLine(this.form.tpId)
+        this.options.forEach(function(item, index) {
+          if (item.label == listInfo.productionType) {
+            form.productionType = item.value
+          }
+        })
+        this.form.oldCode = this.listInfo.color
+      }
     }
   },
   methods: {

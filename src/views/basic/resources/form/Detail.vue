@@ -41,7 +41,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'工作时段'" >
+          <el-form-item :label="'工作时段'" :prop="workDay">
             <el-select v-model="form.workDay" multiple placeholder="请选择">
               <el-option
                 v-for="item in options"
@@ -138,6 +138,8 @@
           ],
           tpId: [
             {required: true, message: '请选择产线', trigger: 'change'},
+          ], workDay: [
+            {type: 'array', required: true, message: '请选择产线', trigger: 'change'},
           ],
         },
       };

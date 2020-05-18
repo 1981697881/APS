@@ -14,7 +14,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleShow">补充信息</el-button>
+          <!--<el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleShow">补充信息</el-button>-->
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
       </el-row>
@@ -244,7 +244,6 @@ export default {
 
     print() {
       if (this.selections.length>0) {
-        console.log(this.selections)
         let selections = this.selections
         let array = []
         selections.forEach((item, index) =>{
@@ -256,6 +255,7 @@ export default {
         })
         procurementBarcode({barcodeList: array}).then(res => {
           PrintThree(res.data)
+          console.log(res.data)
           LODOP.PREVIEW()
         })
       } else {
