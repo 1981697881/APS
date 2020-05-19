@@ -328,25 +328,10 @@
 
               })
             }else{
-              this.$confirm('入库数量大于完工数量, 请检验是否输入错误?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-              }).then(() => {
-                updateProductNum(this.form).then(res => {
-                  if(res.flag) {
-                    this.isSavtBtn = false
-                    this.$emit('uploadList')
-                    this.$emit('hideReport', false)
-                  }
-
-                })
-              }).catch(() => {
-                this.$message({
-                  type: 'info',
-                  message: '已取消汇报'
-                });
-              });
+              this.$message({
+                message: "入库数量不能大于完工数量",
+                type: "warning"
+              })
             }
           } else {
             return false

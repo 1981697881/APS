@@ -126,6 +126,7 @@ export default {
     qFilter() {
       let obj = {}
       this.search.keyword != null && this.search.keyword != '' ? obj.oldCode = this.search.keyword : null
+      this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
       this.value[1] != null && this.value[1] != undefined ? obj.endDate = this.value[1] : null
       this.value[0] != null && this.value[0] != undefined ? obj.startDate = this.value[0] : null
       return obj
@@ -154,6 +155,5 @@ export default {
   }
 };
 </script>
-
 <style>
 </style>

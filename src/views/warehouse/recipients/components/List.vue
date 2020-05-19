@@ -93,7 +93,7 @@ export default {
               record[i].detail[a].businessDate = record[i].businessDate
               record[i].detail[a].customerName = record[i].customerName
               record[i].detail[a].customerCode = record[i].customerCode
-              record[i].detail[a].spId = record[i].soId
+              record[i].detail[a].spId = record[i].spId
               record[i].detail[a].status = record[i].status
               obj.push(record[i].detail[a])
             }
@@ -114,6 +114,6 @@ export default {
 
 <style lang="scss" scoped>
 .list-main {
-  height: calc(100vh - 300px);
+  height: calc(100vh - 250px);
 }
 </style>

@@ -155,7 +155,7 @@
 </template>
 <script>
   import { updateProductNum, updateLotNo, schedulingPrint} from '@/api/production/index'
-  import { getFinalGoodsType, getFinalGoods} from '@/api/basic/index'
+  import { getMcjSchedulingType, getFinalGoods} from '@/api/basic/index'
   import { getToken } from '@/utils/auth' // get token from cookie
   import { PrintTwo2 } from '@/tools/doPrint'
   export default {
@@ -317,25 +317,10 @@
                 }
               })
             }else{
-              this.$confirm('入库数量大于完工数量, 请检验是否输入错误?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-              }).then(() => {
-                updateProductNum(this.form).then(res => {
-                  if(res.flag) {
-                    this.isSavtBtn = false
-                    this.$emit('uploadList')
-                    this.$emit('hideReport', false)
-                  }
-
-                })
-              }).catch(() => {
-                this.$message({
-                  type: 'info',
-                  message: '已取消汇报'
-                });
-              });
+              this.$message({
+                message: "入库数量不能大于完工数量",
+                type: "warning"
+              })
             }
           } else {
             return false
@@ -348,7 +333,7 @@
             value: '2',
             label: 'OEM产品_美瓷胶标签'
           }]
-          getFinalGoodsType().then(res => {
+        getMcjSchedulingType(val).then(res => {
             this.pArray = res.data
             if(res.flag){
               getFinalGoods(this.form.tpId).then(res2 => {

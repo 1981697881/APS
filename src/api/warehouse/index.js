@@ -292,3 +292,27 @@ export function getDeliveryOrderBoardList(data, query) {
     data: query
   })
 }
+// 采购确认单据
+export function notarizeBeputList(params) {
+  const url = '/purchase-order/confirm/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+  })
+}
+// 出货确认单据
+export function notarizeOutputList(params) {
+  const url = '/ship-order/confirm/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put'
+  })
+}

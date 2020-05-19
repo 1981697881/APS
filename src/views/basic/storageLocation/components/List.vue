@@ -1,7 +1,7 @@
 <template>
   <div>
     <list
-       class="list-main box-shadow"
+       class="list-main box-shadow sto-age"
       :columns="columns"
       :loading="loading"
       :list="list"
@@ -91,6 +91,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .list-main {
-  height: calc(100vh - 300px);
+  height: calc(100vh - 250px);
 }
+</style>
+<style>
+  .sto-age .el-table td, .el-table th{
+    padding: 0 !important;
+  }
 </style>

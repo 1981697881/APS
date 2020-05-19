@@ -97,7 +97,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import {syncShipInfo, exportRecipients} from "@/api/warehouse/index";
+import {syncShipInfo, exportRecipients, notarizeOutputList} from "@/api/warehouse/index";
 export default {
   components: {},
   computed: {
@@ -148,7 +148,7 @@ export default {
       },
       search: {
         keyword: null,
-        type:null
+        type: null
       }
     };
   },
@@ -183,11 +183,14 @@ export default {
       this.value = ''
     },
     notarize() {
-      if (this.clickData.soId) {
-        this.$message({
-          message: "抱歉，功能尚未完善！",
-          type: "warning"
-        });
+      console.log(this.clickData)
+      if (this.clickData.spId) {
+        notarizeOutputList(this.clickData.spId).then(res => {
+          if(res.flag) {
+            this.upload()
+          }
+        })
+        /*this.$emit('showDialog', this.clickData)*/
       } else {
         this.$message({
           message: "无选中行",

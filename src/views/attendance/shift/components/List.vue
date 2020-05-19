@@ -70,6 +70,6 @@
 </style>
 <style lang="scss" scoped>
   .list-main {
-    height: calc(100vh - 300px);
+    height: calc(100vh - 250px);
   }
 </style>

@@ -86,3 +86,16 @@ export function getShiftClerkList(params) {
     method: 'GET',
   })
 }
+// 班次管理-获取员工排班列表
+export function getSalaryList(params) {
+  const url = '/attend-manage/list'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}

@@ -17,16 +17,16 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { getSchedulingList } from "@/api/production/index";
-import List from "@/components/List";
+import { mapGetters } from 'vuex';
+import { getSchedulingList } from '@/api/production/index';
+import List from '@/components/List';
 
 export default {
   components: {
     List
   },
   computed: {
-    ...mapGetters(["node"])
+    ...mapGetters(['node'])
   },
   data() {
     return {
@@ -34,24 +34,23 @@ export default {
       list: {},
       multipleSelection: [],
       columns: [
-        { text: "taskId", name: "taskId",default: false },
-        { text: "plId", name: "plId",default: false },
-        { text: "订单日期", name: "soDate" },
-        { text: "订单号", name: "soNum" },
-        { text: "排产单号", name: "taskNum" },
-        { text: "项目名称", name: "soName" },
-        { text: "色号/旧料号", name: "color" },
-        { text: "订单数量", name: "odPrNum" },
-        { text: "计划数量", name: "allocatedNum" },
-        { text: "实际完工数量", name: "productionQuantity" },
-        { text: "计划日期", name: "productionDate" },
-        { text: "产品分类", name: "" },
-        { text: "批号", name: "lotNo" },
-        { text: "生产设备", name: "plName" },
-        { text: "生产类型", name: "productionType" },
-        { text: "生产状态", name: "allocatedStatus" },
-        { text: "任务警示", name: "alertStatus", formatt: 'taskWarning' },
-        { text: "备注", name: "remark" },
+        { text: 'taskId', name: 'taskId',default: false },
+        { text: 'plId', name: 'plId',default: false },
+        { text: '订单日期', name: 'soDate', width: '150px' },
+        { text: '色号/旧料号', name: 'color', width: '100px'},
+        { text: '订单数量', name: 'odPrNum' },
+        { text: '计划数量', name: 'allocatedNum' },
+        { text: '实际完工数量', name: 'productionQuantity' },
+        { text: '生产设备', name: 'plName' },
+        { text: '产品分类', name: '' },
+        { text: '任务警示', name: 'alertStatus', formatt: 'taskWarning' },
+        { text: '项目名称', name: 'soName' , width: '150px' },
+        { text: '计划日期', name: 'productionDate', width: '150px' },
+        { text: '生产状态', name: 'allocatedStatus' },
+        { text: '生产类型', name: 'productionType', width: '100px' },
+        { text: '备注', name: 'remark' },
+        { text: '订单号', name: 'soNum' , width: '150px' },
+        { text: '排产单号', name: 'taskNum', width: '150px' },
       ]
     };
   },
@@ -76,7 +75,7 @@ export default {
     },
     // 监听单击某一行
     rowClick(obj) {
-      this.$store.dispatch("list/setClickData", obj.row);
+      this.$store.dispatch('list/setClickData', obj.row);
     },
     fetchData(val) {
       this.loading = true

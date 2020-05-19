@@ -1,20 +1,27 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
-      <el-row :gutter="10">
-        <el-col :span="6">
-          <el-form-item :label="'订单单号'">
-            <el-input v-model="search.keyword" />
+    <el-form v-model="search" :size="'mini'" :label-width="'50px'">
+      <el-row :gutter="12">
+        <el-col :span="4">
+          <el-form-item :label="'部门'">
+            <el-select v-model="deptIds" class="width-full"  placeholder="请选择部门">
+              <el-option :label="t.deptName" :value="t.deptId" v-for="(t,i) in pArray" :key="i"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item :label="'月份'">
+            <el-date-picker
+              style="width: auto"
+              v-model="value"
+              type="month"
+              value-format="yyyy-MM"
+              placeholder="选择月">
+            </el-date-picker>
           </el-form-item>
         </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleAudit">审核</el-button>
-        </el-col>
-        <el-col :span="2" >
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="Delivery">发货确认</el-button>
         </el-col>
       </el-row>
     </el-form>
@@ -22,52 +29,71 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { getFrameList } from "@/api/basic/index";
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
+  components: {},
+  computed: {
+    ...mapGetters(["node","clickData","selections"])
+  },
   data() {
     return {
+      pArray: [],
+      value: null,
+      deptIds: null,
       search: {
-          keyword: null
+        keyword: null
       }
     };
   },
-
-  methods:{
-      Delivery(){
-          if (this.clickData.oid) {
-              this.$emit('theDelivery',{
-                  oid:this.clickData.oid,
-              })
-          } else {
-              this.$message({
-                  message: "无选中行",
-                  type: "warning"
-              });
-          }
-      },
-      //关键字查询
-      query(){
-          if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
-          }
-      },
-      handleAudit(){
-        if (this.clickData.oid) {
-            this.$emit('showDialog',{
-                oid:this.clickData.oid,
-                orderId:this.clickData.orderId,
-                createTime:this.clickData.createTime
-            })
-        } else {
-            this.$message({
-                message: "无选中行",
-                type: "warning"
-            });
-        }
-
+  created: function() {
+    this.value = (new Date().getFullYear() + '-' + this.doHandleMonth((new Date().getMonth() + 1))) // 当前日期
+  },
+  mounted() {
+    this.fetchFormat();
+  },
+  methods: {
+    doHandleMonth(month) {
+      var m = month;
+      if(month.toString().length == 1) {
+        m = "0" + month;
+      }
+      return m;
+    },
+    // 查询条件过滤
+    qFilter() {
+      let obj = {}
+      this.deptIds != null && this.deptIds != undefined ? obj.deptIds = this.deptIds : null
+      this.value != null && this.value != undefined ? obj.month = this.value : null
+      return obj
+    },
+    // 关键字查询
+    query() {
+     /* this.deptIds = null
+      this.value = (new Date().getFullYear() + '-' + (new Date().getMonth() + 1)) // 当前日期 // 当前日期*/
+      this.$emit('uploadList', this.qFilter())
+    },
+    fetchFormat() {
+      const data = {
+        pageNum: 1,
+        pageSize: 1000
+      };
+      getFrameList(data).then(res => {
+        this.pArray = res.data.records
+      });
+    },
+    handleAudit(){
+      if (this.clickData.oid) {
+        this.$emit('showDialog',{
+          oid:this.clickData.oid,
+          orderId:this.clickData.orderId,
+          createTime:this.clickData.createTime
+        })
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
     },
   }
 };

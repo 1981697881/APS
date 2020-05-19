@@ -14,6 +14,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">确认</el-button>
           <!--<el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleShow">补充信息</el-button>-->
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
@@ -98,8 +99,9 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { syncPOInfoQuery, procurementBarcode, exportProcurement} from "@/api/warehouse/index";
+import { syncPOInfoQuery, procurementBarcode, exportProcurement, notarizeBeputList} from "@/api/warehouse/index";
 import { PrintThree } from '@/tools/doPrint'
+import {notarizeOutputList} from "../../../../api/warehouse";
 export default {
   components: {},
   computed: {
@@ -174,6 +176,21 @@ export default {
       link.setAttribute('download', res.headers['content-disposition'].split('filename=')[1])
       document.body.appendChild(link)
       link.click()
+    },
+    notarize() {
+      if (this.clickData.puId) {
+        notarizeBeputList(this.clickData.puId).then(res => {
+          if(res.flag) {
+            this.upload()
+          }
+        })
+        /*this.$emit('showDialog', this.clickData)*/
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
     },
     confirm(form) {
       this.$refs[form].validate((valid) => {

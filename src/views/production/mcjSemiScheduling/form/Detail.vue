@@ -85,7 +85,7 @@
 
 <script>
   import { schedulingSave, schedulingAlter } from "@/api/production/index";
-  import { getSemiFinishedProductsType, getSemiFinishedProducts} from '@/api/basic/index'
+  import { getMcjSemiSchedulingType, getSemiFinishedProducts} from '@/api/basic/index'
   export default {
     props: {
       listInfo: {
@@ -188,7 +188,7 @@
         })
       },
       fetchFormat() {
-        getSemiFinishedProductsType().then(res => {
+        getMcjSemiSchedulingType().then(res => {
           if(res.flag) {
             this.pArray = res.data
           }

@@ -155,7 +155,7 @@
 </template>
 <script>
   import { updateProductNum, updateLotNo, schedulingPrint } from '@/api/production/index'
-  import { getSemiFinishedProductsType, getSemiFinishedProducts } from '@/api/basic/index'
+  import { getMcjSemiSchedulingType, getSemiFinishedProducts } from '@/api/basic/index'
   import { getToken } from '@/utils/auth' // get token from cookie
   import { PrintTwo4} from '@/tools/doPrint'
   export default {
@@ -308,27 +308,15 @@
         this.$refs[form].validate((valid) => {
           // 判断必填项
           if (valid) {
-            if(this.form.estimatedStorage<=this.form.productionQuantity){
-              this.$confirm('入库数量大于完工数量, 请检验是否输入错误?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-              }).then(() => {
-                updateProductNum(this.form).then(res => {
-                  if(res.flag) {
-                    this.isSavtBtn = false
-                    this.$emit('uploadList')
-                    this.$emit('hideReport', false)
-                  }
-
-                })
-              }).catch(() => {
-                this.$message({
-                  type: 'info',
-                  message: '已取消汇报'
-                });
-              });
-            }else{
+            if(this.form.estimatedStorage <= this.form.productionQuantity){
+              updateProductNum(this.form).then(res => {
+                if(res.flag) {
+                  this.isSavtBtn = false
+                  this.$emit('uploadList')
+                  this.$emit('hideReport', false)
+                }
+              })
+            } else {
               this.$message({
                 message: "入库数量不能大于完工数量",
                 type: "warning"
@@ -345,7 +333,7 @@
             value: '4',
             label: '美瓷胶标签'
           }]
-          getSemiFinishedProductsType().then(res => {
+        getMcjSemiSchedulingType().then(res => {
             this.pArray = res.data
             if(res.flag){
               getSemiFinishedProducts(this.form.tpId).then(res2 => {
