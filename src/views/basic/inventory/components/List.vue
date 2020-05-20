@@ -47,6 +47,7 @@ export default {
       /*  { text: '仓库', name: 'whName' },
         { text: '仓位', name: 'positionName' },*/
         { text: '合格状态', name: 'status' },
+        { text: '最近同步时间', name: 'syncTime', width: '150px' },
       ]
     };
   },

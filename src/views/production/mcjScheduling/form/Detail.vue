@@ -168,7 +168,7 @@
 
 <script>
 import { schedulingSave, schedulingAlter } from "@/api/production/index";
-import { getMcjSchedulingType, getFinalGoods} from '@/api/basic/index'
+import { getMcjSchedulingType, getMcjFinalGoods} from '@/api/basic/index'
 import { getSalesInfo } from '@/api/aftermarket/index'
 
 export default {
@@ -388,7 +388,7 @@ export default {
       })
     },
     fetchLine(val) {
-      getFinalGoods(val).then(res => {
+      getMcjFinalGoods(val).then(res => {
         if(res.flag) {
           this.rArray = res.data
         }

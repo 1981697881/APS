@@ -155,7 +155,7 @@
 </template>
 <script>
   import { updateProductNum, updateLotNo, schedulingPrint } from '@/api/production/index'
-  import { getMcjSemiSchedulingType, getSemiFinishedProducts } from '@/api/basic/index'
+  import { getMcjSemiSchedulingType, getMcjSemiFinishedProducts } from '@/api/basic/index'
   import { getToken } from '@/utils/auth' // get token from cookie
   import { PrintTwo4} from '@/tools/doPrint'
   export default {
@@ -336,7 +336,7 @@
         getMcjSemiSchedulingType().then(res => {
             this.pArray = res.data
             if(res.flag){
-              getSemiFinishedProducts(this.form.tpId).then(res2 => {
+              getMcjSemiFinishedProducts(this.form.tpId).then(res2 => {
                 if(res2.flag) {
                   this.rArray = res2.data
                 }

@@ -222,20 +222,19 @@ export default {
       this.$refs[form].validate((valid) => {
         // 判断必填项
         if (valid) {
-          if(this.form.value.length > 0) {
-            this.fullscreenLoading = true
-            delete this.form.value
-            salesListSync(this.form).then(res => {
-              this.visible = false
-              this.fullscreenLoading = false
-              this.upload()
-            })
-          }else{
-            this.$message({
-              message: "请选择时间",
-              type: "warning"
-            });
-          }
+          // if(this.form.value.length > 0) {
+          delete this.form.value
+          salesListSync(this.form).then(res => {
+            this.visible = false
+            this.fullscreenLoading = false
+            this.upload()
+          })
+          /*   }else{
+               this.$message({
+                 message: "请选择时间",
+                 type: "warning"
+               });
+             }*/
         } else {
           return false
         }

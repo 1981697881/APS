@@ -155,7 +155,7 @@
 </template>
 <script>
   import { updateProductNum, updateLotNo, schedulingPrint} from '@/api/production/index'
-  import { getMcjSchedulingType, getFinalGoods} from '@/api/basic/index'
+  import { getMcjSchedulingType, getMcjFinalGoods} from '@/api/basic/index'
   import { getToken } from '@/utils/auth' // get token from cookie
   import { PrintTwo2 } from '@/tools/doPrint'
   export default {
@@ -336,7 +336,7 @@
         getMcjSchedulingType(val).then(res => {
             this.pArray = res.data
             if(res.flag){
-              getFinalGoods(this.form.tpId).then(res2 => {
+              getMcjFinalGoods(this.form.tpId).then(res2 => {
                 if(res2.flag) {
                   this.rArray = res2.data
                 }

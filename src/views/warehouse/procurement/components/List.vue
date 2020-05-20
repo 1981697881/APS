@@ -35,18 +35,20 @@ export default {
       list: {},
       columns: [
         { text: '', name: '',default:false },
-        { text: '单号', name: 'purNum' },
-        { text: '日期', name: 'createTime' },
+        { text: '单号', name: 'purNum', width: '150px' },
+        { text: '日期', name: 'createTime', width: '150px' },
         { text: '物料编码', name: 'goodCode' },
-        { text: '旧料号', name: 'color' },
+        { text: '旧料号', name: 'color', width: '100px' },
         { text: '物料名称', name: 'goodName' },
-        { text: '采购单描述', name: 'poDesc' },
+       /* { text: '采购单描述', name: 'poDesc' },*/
         { text: '规格', name: 'spec' },
         { text: '数量', name: 'num' },
         { text: '需求数量', name: 'reqQty' },
         { text: '计划到货日期', name: 'planArriveDate' },
         { text: '仓库名', name: 'whName' },
         { text: '创建人', name: '' },
+        { text: '核准', name: 'auditStatus' },
+        { text: '最近同步时间', name: 'syncTime', width: '150px' },
       ]
     };
   },
@@ -93,6 +95,7 @@ export default {
             for(const a in record[i].detail) {
               record[i].detail[a].purNum = record[i].purNum
               record[i].detail[a].createTime = record[i].createTime
+              record[i].detail[a].auditStatus = record[i].auditStatus
               obj.push(record[i].detail[a])
             }
           }

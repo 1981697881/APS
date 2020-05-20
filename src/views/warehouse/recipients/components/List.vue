@@ -33,18 +33,19 @@ export default {
       columns: [
         { text: '', name: '',default:false },
         { text: '行号', name: 'lineNo' },
-        { text: '出货日期', name: 'businessDate' },
-        { text: '单号', name: 'shipNo' },
+        { text: '出货日期', name: 'businessDate', width: '100px' },
+        { text: '单号', name: 'shipNo', width: '150px' },
         { text: '客户编码', name: 'customerCode' },
-        { text: '客户名称', name: 'customerName' },
-        { text: 'U9料号', name: 'goodCode' },
-        { text: '品名', name: 'goodName' },
-        { text: '色号', name: 'color' },
+        { text: '客户名称', name: 'customerName', width: '150px' },
+        { text: 'U9料号', name: 'goodCode', width: '150px' },
+        { text: '品名', name: 'goodName', width: '150px' },
+        { text: '色号', name: 'color', width: '150px' },
         { text: '规格', name: 'spec' },
         { text: '出货数量', name: 'qty' },
         { text: '库存数量', name: '' },
-        { text: '核准人', name: '' },
+        { text: '核准', name: 'auditStatus' },
         { text: '创建人', name: 'createBy' },
+        { text: '最近同步时间', name: 'syncTime', width: '150px' },
        /* { text: '最终价', name: 'finallyPrice' },
         { text: '金额', name: 'totalMoneyTc' },
         { text: '未税金额', name: 'totalNetMoneyTc' },*/
@@ -95,6 +96,7 @@ export default {
               record[i].detail[a].customerCode = record[i].customerCode
               record[i].detail[a].spId = record[i].spId
               record[i].detail[a].status = record[i].status
+              record[i].detail[a].auditStatus = record[i].auditStatus
               obj.push(record[i].detail[a])
             }
           }

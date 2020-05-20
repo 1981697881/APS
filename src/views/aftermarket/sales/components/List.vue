@@ -33,9 +33,9 @@ export default {
       list: {},
       columns: [
         { text: 'soId', name: 'soId', default: false},
-        { text: '大区', name: '' },
+        { text: '大区', name: 'departmentName' },
         { text: '业务员', name: 'seller' },
-        { text: '助理', name: '' },
+        { text: '助理', name: 'createBy' },
         { text: '公司名称', name: 'customerName' },
         { text: '项目名称', name: 'soName' },
         { text: '订单日期', name: '' },
@@ -65,6 +65,8 @@ export default {
         { text: '外包未好金额', name: '' },
         { text: '制造单位', name: '' },
         { text: '供应商', name: '' },
+        { text: '核准', name: 'auditStatus' },
+        { text: '最近同步时间', name: 'syncTime', width: '150px' },
       ]
     };
   },
@@ -106,6 +108,7 @@ export default {
               record[i].detail[a].soId = record[i].soId
               record[i].detail[a].factoryEstimatedDate = record[i].factoryEstimatedDate
               record[i].detail[a].soName = record[i].soName
+              record[i].detail[a].auditStatus = record[i].auditStatus
               obj.push(record[i].detail[a])
             }
           }

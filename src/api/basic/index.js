@@ -448,6 +448,28 @@ export function getSemiFinishedProducts(data) {
     method: 'get'
   })
 }
+// 生产资源-获取美瓷胶成品生产设备
+export function getMcjFinalGoods(data) {
+  const url = '/production-line/list/spaEndProduct/' + data
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'get'
+  })
+}
+// 生产资源-获取美瓷胶半成品生产设备
+export function getMcjSemiFinishedProducts(data) {
+  const url = '/production-line/list/spaSemiProductLine/' + data
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'get'
+  })
+}
 // 生产资源-新增
 export function resourcesAdd(params) {
   const url = '/Admin/type/add'
