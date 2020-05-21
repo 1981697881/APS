@@ -35,11 +35,11 @@ export default {
       list: {},
       columns: [
         { text: '', name: '',default:false },
-        { text: '单号', name: 'purNum', width: '150px' },
-        { text: '日期', name: 'createTime', width: '150px' },
-        { text: '物料编码', name: 'goodCode' },
+        { text: '单号', name: 'purNum', width: '150px', sort: true },
+        { text: '订单日期', name: 'createTime', width: '150px', sort: true },
+        { text: '物料编码', name: 'goodCode', width: '150px' },
         { text: '旧料号', name: 'color', width: '100px' },
-        { text: '物料名称', name: 'goodName' },
+        { text: '物料名称', name: 'goodName', width: '200px' },
        /* { text: '采购单描述', name: 'poDesc' },*/
         { text: '规格', name: 'spec' },
         { text: '数量', name: 'num' },

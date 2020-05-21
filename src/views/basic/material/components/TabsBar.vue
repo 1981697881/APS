@@ -2,7 +2,7 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'50px'">
       <el-row :gutter="10">
-        <el-col :span="4">
+        <el-col :span="3">
           <el-form-item :label="'料号'">
             <el-input v-model="search.goodCode" />
           </el-form-item>
@@ -10,6 +10,7 @@
         <el-col :span="7" style="display: inline-block">
           <el-form-item :label="'日期'">
             <el-date-picker
+              style="width: auto"
               v-model="value"
               type="datetimerange"
               :picker-options="pickerOptions"

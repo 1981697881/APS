@@ -22,6 +22,7 @@
         v-for="(t,i) in columns"
         :key="i"
         :prop="t.name"
+        :sortable="t.sort"
         :formatter="t.formatt!=undefined?taskWarning : null"
         v-if="t.default!=undefined?t.default:true"
         :label="t.text"
@@ -84,6 +85,10 @@ export default {
       default: false
     },
     loading: {
+      type: Boolean,
+      default: false
+    },
+    sort: {
       type: Boolean,
       default: false
     },

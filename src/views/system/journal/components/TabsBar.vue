@@ -7,6 +7,7 @@
             <el-date-picker
               v-model="value"
               type="datetimerange"
+              style="width: auto"
               :picker-options="pickerOptions"
               range-separator="至"
               value-format="yyyy-MM-dd HH:mm:ss"

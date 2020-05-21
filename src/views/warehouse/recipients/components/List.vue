@@ -5,6 +5,7 @@
       :columns="columns"
       :loading="loading"
       :list="list"
+       type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -33,13 +34,13 @@ export default {
       columns: [
         { text: '', name: '',default:false },
         { text: '行号', name: 'lineNo' },
-        { text: '出货日期', name: 'businessDate', width: '100px' },
-        { text: '单号', name: 'shipNo', width: '150px' },
-        { text: '客户编码', name: 'customerCode' },
-        { text: '客户名称', name: 'customerName', width: '150px' },
+        { text: '出货日期', name: 'businessDate', width: '100px', sort: true },
+        { text: '单号', name: 'shipNo', width: '150px', sort: true },
+       /* { text: '客户编码', name: 'customerCode' },*/
+        { text: '客户名称', name: 'customerName', width: '200px' },
         { text: 'U9料号', name: 'goodCode', width: '150px' },
-        { text: '品名', name: 'goodName', width: '150px' },
-        { text: '色号', name: 'color', width: '150px' },
+        { text: '品名', name: 'goodName', width: '200px' },
+        { text: '色号', name: 'color', width: '200px' },
         { text: '规格', name: 'spec' },
         { text: '出货数量', name: 'qty' },
         { text: '库存数量', name: '' },

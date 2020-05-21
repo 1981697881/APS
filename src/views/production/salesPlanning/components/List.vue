@@ -37,15 +37,17 @@ export default {
         { text: '业务员', name: 'seller' },
         { text: '助理', name: 'createBy' },
         { text: '公司名称', name: 'customerName' },
-        { text: '项目名称', name: 'soName' },
-        { text: '订单日期', name: '' },
+        { text: '项目名称', name: 'soName', width: '150px' },
+        { text: '订单日期', name: '', sort: true },
         { text: '预计出货日期', name: 'planDate' },
         { text: '厂务预计出货日期', name: 'factoryEstimatedDate' },
         { text: '产品名称', name: 'goodName' },
-        { text: '色号', name: 'color' },
+        { text: '色号', name: 'color', width: '100px' },
         { text: '订单数量', name: 'num' },
-        { text: '料号', name: 'goodCode' },
-        { text: '订单号', name: 'orderNum' },
+        { text: '产品最终价', name: '' },
+        { text: '价税合计', name: '' },
+        { text: '料号', name: 'goodCode', width: '100px' },
+        { text: '订单号', name: 'orderNum', width: '150px', sort: true },
         { text: '生产完成', name: '' },
         { text: '入库', name: '' },
         { text: '制造单位', name: '' },
@@ -91,6 +93,8 @@ export default {
               record[i].detail[a].orgCode = record[i].orgCode
               record[i].detail[a].seller = record[i].seller
               record[i].detail[a].soId = record[i].soId
+              record[i].detail[a].createBy = record[i].createBy
+              record[i].detail[a].departmentName = record[i].departmentName
               record[i].detail[a].factoryEstimatedDate = record[i].factoryEstimatedDate
               record[i].detail[a].soName = record[i].soName
               record[i].detail[a].auditStatus = record[i].auditStatus
