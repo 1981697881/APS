@@ -122,11 +122,11 @@ export default {
         value: '已暂停',
         label: '已暂停'
       }, {
-        value: '已停止',
-        label: '已停止'
+        value: '已结束',
+        label: '已结束'
       }, {
-        value: '生产完毕',
-        label: '生产完毕'
+        value: '已完工',
+        label: '已完工'
       }],
       visible: false,
       search: {

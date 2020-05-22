@@ -7,6 +7,18 @@
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'核准状态'" :label-width="'70px'">
+            <el-select v-model="isConfirm" placeholder="请选择" @change="selectChange">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
@@ -119,6 +131,13 @@ export default {
         businessDateEnd: '',
         value: [],
       },
+      options: [{
+        value: true,
+        label: '已核准'
+      }, {
+        value: false,
+        label: '未核准'
+      }],
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -146,6 +165,7 @@ export default {
           }
         }]
       },
+      isConfirm: false,
       search: {
         keyword: null,
         type: null
@@ -153,12 +173,15 @@ export default {
     };
   },
   mounted() {
-
   },
   methods: {
     changeDate(val) {
       this.form.businessDateEnd = val[1]
       this.form.businessDateStart = val[0]
+    },
+    selectChange(val) {
+      this.isConfirm = val
+      this.$emit('uploadList')
     },
     // 关键字查询
     query() {
@@ -181,6 +204,7 @@ export default {
       this.$emit('uploadList')
       this.search.keyword = ''
       this.value = ''
+      this.isConfirm = false
     },
     notarize() {
       console.log(this.clickData)
@@ -202,6 +226,7 @@ export default {
     qFilter() {
       let obj = {}
       this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
+      obj.isConfirm = this.isConfirm
       return obj
     },
     exportData() {

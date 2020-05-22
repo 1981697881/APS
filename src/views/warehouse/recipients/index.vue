@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar @uploadList="upload" @queryBtn="query"/>
+        <tabs-bar ref="tabs" @uploadList="upload" @queryBtn="query"/>
       </div>
       <list ref="list"/>
     </div>
@@ -23,23 +23,23 @@ export default {
       visible: null,
       visible2: null,
       gid: null,
-        orderId: null,
-        createTime: null,
+      orderId: null,
+      createTime: null,
       treeId: null, // null
       floorId: null
     };
   },
-    mounted() {
-        this.$refs.list.fetchData()
-    },
+  mounted() {
+    this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+  },
   methods: {
     // 更新列表
     upload() {
-      this.$refs.list.fetchData()
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     // 查询
     query(val) {
-      this.$refs.list.uploadPr(val)
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
     },
   }
 };

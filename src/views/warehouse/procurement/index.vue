@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar @uploadList="upload"  @showDialog="handlerDialog" @queryBtn="query"/>
+        <tabs-bar ref="tabs" @uploadList="upload"  @showDialog="handlerDialog" @queryBtn="query"/>
       </div>
       <list ref="list"/>
     </div>
@@ -16,7 +16,6 @@
       destroy-on-close
     >
       <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
-
     </el-dialog>
   </div>
 </template>
@@ -40,7 +39,7 @@ export default {
     };
   },
   mounted() {
-    this.$refs.list.fetchData()
+    this.$refs.list.fetchData(this.$refs.tabs.qFilter())
   },
   methods: {
     hideWindow(val) {
@@ -57,11 +56,11 @@ export default {
     },
     // 查询
     query(val) {
-      this.$refs.list.uploadPr(val)
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
     },
     // 更新列表
     upload() {
-      this.$refs.list.fetchData()
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     }
   }
 };

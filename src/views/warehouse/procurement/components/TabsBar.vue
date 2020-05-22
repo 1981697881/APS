@@ -10,6 +10,18 @@
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'核准状态'" :label-width="'70px'">
+            <el-select v-model="isConfirm" placeholder="请选择" @change="selectChange">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-button-group style="float:right;padding-right: 10px">
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
@@ -123,6 +135,13 @@ export default {
         businessDateEnd: '',
         value: [],
       },
+      options: [{
+        value: true,
+        label: '已核准'
+      }, {
+        value: false,
+        label: '未核准'
+      }],
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -150,6 +169,7 @@ export default {
           }
         }]
       },
+      isConfirm: false,
       search: {
         keyword: null,
         type: null
@@ -157,9 +177,13 @@ export default {
     };
   },
   mounted() {
-
   },
   methods: {
+    selectChange(val) {
+      console.log(val)
+      this.isConfirm = val
+      this.$emit('uploadList')
+    },
     changeDate(val) {
       this.form.businessDateEnd = val[1]
       this.form.businessDateStart = val[0]
@@ -215,11 +239,14 @@ export default {
       this.$emit('uploadList')
       this.search.keyword = ''
       this.value = ''
+      this.isConfirm = false
     },
     // 查询条件过滤
     qFilter() {
       let obj = {}
       this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
+      console.log(this.isConfirm)
+      obj.isConfirm = this.isConfirm
       return obj
     },
     exportData() {
