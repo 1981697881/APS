@@ -36,17 +36,17 @@ export default {
         { text: '大区', name: 'departmentName' },
         { text: '业务员', name: 'seller' },
         { text: '助理', name: 'createBy' },
-        { text: '公司名称', name: 'customerName' },
-        { text: '项目名称', name: 'soName', width: '150px' },
-        { text: '订单日期', name: '', sort: true },
-        { text: '预计出货日期', name: 'planDate' },
-        { text: '厂务预计出货日期', name: 'factoryEstimatedDate' },
-        { text: '产品名称', name: 'goodName' },
-        { text: '色号', name: 'color', width: '100px' },
+        { text: '公司名称', name: 'customerName', width: '250px' },
+        { text: '项目名称', name: 'soName', width: '300px' },
+        { text: '订单日期', name: 'createTime', sort: true, width: '100px' },
+        { text: '预计出货日期', name: 'planDate', width: '100px' },
+        { text: '厂务预计出货日期', name: 'factoryEstimatedDate', width: '100px' },
+        { text: '产品名称', name: 'goodName', width: '150px' },
+        { text: '色号', name: 'color', width: '150px' },
         { text: '订单数量', name: 'num' },
         { text: '产品最终价', name: '' },
         { text: '价税合计', name: '' },
-        { text: '料号', name: 'goodCode', width: '100px' },
+        { text: '料号', name: 'goodCode', width: '150px' },
         { text: '订单号', name: 'orderNum', width: '150px', sort: true },
         { text: '生产完成', name: '' },
         { text: '入库', name: '' },
@@ -111,6 +111,7 @@ export default {
               record[i].detail[a].createBy = record[i].createBy
               record[i].detail[a].departmentName = record[i].departmentName
               record[i].detail[a].auditStatus = record[i].auditStatus
+              record[i].detail[a].createTime = record[i].createTime
               obj.push(record[i].detail[a])
             }
           }

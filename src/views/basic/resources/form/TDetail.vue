@@ -27,6 +27,20 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20" >
+        <el-col :span="12">
+          <el-form-item :label="'规则'" >
+            <el-select v-model="form.rules" multiple placeholder="请选择">
+              <el-option
+                v-for="item in rArray"
+                :key="item.value"
+                :label="item.trName"
+                :value="item.trId">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">
       <el-button type="primary" @click="saveData('form')">保存</el-button>
@@ -35,7 +49,7 @@
 </template>
 
 <script>
-  import{ resourcesAdd, resourcesAlter } from "@/api/basic/index"
+  import{ resourcesAdd, resourcesAlter, regulationList, productionRules } from "@/api/basic/index"
 
   export default {
     props: {
@@ -50,7 +64,8 @@
           tpId: null,
           tpName: null, // 名称
           tpCategory: '产线设备',
-          type: null
+          type: null,
+          rules: null
         },
         options: [{
           value: 1,
@@ -65,7 +80,11 @@
           value: 4,
           label: '美瓷胶半成品线'
         }],
+        rArray: [],
         rules: {
+          rules: [
+            {type: 'array', required: true, message: '请选择规则', trigger: 'change'},
+          ],
           tpName: [
             {required: true, message: '请输入名稱', trigger: 'blur'},
           ],
@@ -82,9 +101,26 @@
       if (this.gpInfo) {
         this.form = this.gpInfo
         this.form.type = this.gpInfo.parent
+       this.alterFormat(this.form.tpId)
+      } else {
+        this.fetchFormat(this.gpInfo)
       }
     },
     methods: {
+      alterFormat(val) {
+        productionRules(val).then(res => {
+          this.rArray = res.data.records
+        })
+      },
+      fetchFormat() {
+        const data = {
+          pageNum: 1,
+          pageSize: 1000
+        };
+        regulationList(data).then(res => {
+          this.rArray = res.data.records
+        });
+      },
       selectChange(val) {
         this.form.type = val
       },

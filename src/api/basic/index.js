@@ -728,3 +728,14 @@ export function delPosition(params) {
     method: 'delete'
   })
 }
+// 资源管理产线-查询
+export function productionRules(params) {
+  const url = '/production-line/list/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx')
+    },
+    method: 'post'
+  })
+}

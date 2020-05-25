@@ -54,19 +54,7 @@
        </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'规则'" >
-            <el-select v-model="form.rules" multiple placeholder="请选择">
-              <el-option
-                v-for="item in rArray"
-                :key="item.value"
-                :label="item.trName"
-                :value="item.trId">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
+        <el-col :span="24">
           <el-form-item :label="'描述'">
             <el-input v-model="form.description"></el-input>
           </el-form-item>
@@ -80,7 +68,7 @@
 </template>
 
 <script>
-  import{productionLineAdd, productionLineAlter, getResourcesList, regulationList} from '@/api/basic/index'
+  import{productionLineAdd, productionLineAlter, getResourcesList} from '@/api/basic/index'
 
   export default {
     props: {
@@ -151,7 +139,6 @@
       this.fetchFormat()
       if (this.listInfo) {
         this.form = this.listInfo
-
       }
       console.log(this.form)
     },
@@ -187,9 +174,6 @@
         };
         getResourcesList(data).then(res => {
           this.pArray = res.data.records
-        });
-        regulationList(data).then(res => {
-          this.rArray = res.data.records
         });
       },
     }
