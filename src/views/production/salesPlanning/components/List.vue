@@ -50,7 +50,7 @@ export default {
         { text: '入库', name: '' },
         { text: '制造单位', name: '' },
         { text: '供应商', name: '' },
-        { text: '核准', name: 'auditStatus' },
+        { text: '确认状态', name: 'auditStatus' },
         { text: '最近同步时间', name: 'syncTime', width: '150px' },
       ]
     };
@@ -93,7 +93,6 @@ export default {
               record[i].detail[a].soId = record[i].soId
               record[i].detail[a].createBy = record[i].createBy
               record[i].detail[a].departmentName = record[i].departmentName
-              record[i].detail[a].factoryEstimatedDate = record[i].factoryEstimatedDate
               record[i].detail[a].soName = record[i].soName
               record[i].detail[a].createTime = record[i].createTime
               record[i].detail[a].auditStatus = record[i].auditStatus

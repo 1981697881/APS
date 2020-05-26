@@ -1,12 +1,13 @@
 <template>
   <div class="list-header">
-    <el-form  :size="'mini'" :label-width="'80px'">
+    <el-form  :size="'mini'" :label-width="'50px'">
       <el-row :gutter="10">
-        <el-col :span="7">
+        <el-col :span="6">
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
               type="daterange"
+              style="width: auto"
               align="right"
               class="input-class"
               unlink-panels
@@ -18,9 +19,19 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
-          <el-form-item :label="'关键字'">
-            <el-input v-model="search.keyword" />
+        <el-col :span="3">
+          <el-form-item :label="'单号'">
+            <el-input v-model="search.keyword" placeholder="单号"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'色号'">
+            <el-input v-model="search.color" placeholder="色号"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'料号'">
+            <el-input v-model="search.itemCode" placeholder="料号"/>
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -92,6 +103,7 @@
                 <el-date-picker
                   v-model="form.value"
                   type="daterange"
+                  style="width: auto"
                   align="right"
                   unlink-panels
                   range-separator="至"
@@ -164,6 +176,8 @@ export default {
         }]
       },
       search: {
+        color: null,
+        itemCode: null,
         keyword: null
       }
     }
@@ -210,6 +224,8 @@ export default {
     qFilter() {
       let obj = {}
       this.search.keyword != null && this.search.keyword != '' ? obj.docNo = this.search.keyword : null
+      this.search.itemCode != null && this.search.itemCode != '' ? obj.itemCode = this.search.itemCode : null
+      this.search.color != null && this.search.color != '' ? obj.color = this.search.color : null
       this.value[1] != null && this.value[1] != undefined ? obj.businessDateEnd = this.value[1] : null
       this.value[0] != null && this.value[0] != undefined ? obj.businessDateStart = this.value[0] : null
       return obj
@@ -244,6 +260,8 @@ export default {
     upload() {
       this.$emit('uploadList')
       this.search.keyword = ''
+      this.search.color = ''
+      this.search.itemCode = ''
       this.value = ''
     },
     handleSync() {

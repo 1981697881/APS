@@ -15,7 +15,7 @@
       :summary-method="getSummaries"
       v-loading="loading"
     >
-      <el-table-column v-if="type" :type="type?'selection':''"></el-table-column>
+      <el-table-column fixed v-if="type" :type="type?'selection':''"></el-table-column>
       <el-table-column v-if="index" prop="date" label="序号" type="index" align="center" sortable></el-table-column>
       <slot name="title"></slot>
       <el-table-column

@@ -89,6 +89,7 @@
                 v-model="form.value"
                 type="daterange"
                 align="right"
+                style="width: auto"
                 unlink-panels
                 range-separator="至"
                 value-format="yyyy-MM-dd"

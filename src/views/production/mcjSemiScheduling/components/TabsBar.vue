@@ -17,6 +17,7 @@
             <el-date-picker
               v-model="value"
               type="daterange"
+              style="width: auto"
               align="right"
               value-format="yyyy-MM-dd"
               unlink-panels

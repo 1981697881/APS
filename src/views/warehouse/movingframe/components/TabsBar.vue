@@ -8,6 +8,7 @@
               v-model="value"
               type="daterange"
               align="right"
+              style="width: auto"
               class="input-class"
               unlink-panels
               range-separator="至"

@@ -29,11 +29,11 @@
       </el-row>
       <el-row :gutter="20" >
         <el-col :span="12">
-          <el-form-item :label="'规则'" >
+          <el-form-item :label="'规则'" prop="rules">
             <el-select v-model="form.rules" multiple placeholder="请选择">
               <el-option
                 v-for="item in rArray"
-                :key="item.value"
+                :key="item.trId"
                 :label="item.trName"
                 :value="item.trId">
               </el-option>
@@ -50,7 +50,6 @@
 
 <script>
   import{ resourcesAdd, resourcesAlter, regulationList, productionRules } from "@/api/basic/index"
-
   export default {
     props: {
       gpInfo: {
@@ -65,7 +64,7 @@
           tpName: null, // 名称
           tpCategory: '产线设备',
           type: null,
-          rules: null
+          rules: []
         },
         options: [{
           value: 1,
@@ -95,21 +94,24 @@
       };
     },
     created() {
-
-    },
-    mounted() {
+      this.fetchFormat()
       if (this.gpInfo) {
         this.form = this.gpInfo
         this.form.type = this.gpInfo.parent
-       this.alterFormat(this.form.tpId)
-      } else {
-        this.fetchFormat(this.gpInfo)
+        console.log(this.form)
+        this.alterFormat(this.form.tpId)
       }
+    },
+    mounted() {
+
     },
     methods: {
       alterFormat(val) {
         productionRules(val).then(res => {
-          this.rArray = res.data.records
+          if(res.flag) {
+            this.form.rules = res.data
+            console.log(this.form)
+          }
         })
       },
       fetchFormat() {

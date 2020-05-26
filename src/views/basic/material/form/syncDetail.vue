@@ -36,6 +36,7 @@
               <el-date-picker
                 v-model="value1"
                 type="daterange"
+                style="width: auto"
                 :picker-options="pickerOptions"
                 range-separator="至"
                 value-format="yyyy/MM/dd"
@@ -52,6 +53,7 @@
               <el-date-picker
                 v-model="value2"
                 type="daterange"
+                style="width: auto"
                 :picker-options="pickerOptions"
                 range-separator="至"
                 value-format="yyyy/MM/dd"

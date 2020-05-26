@@ -6,6 +6,7 @@
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
+              style="width: auto"
               type="daterange"
               align="right"
               class="input-class"

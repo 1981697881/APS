@@ -19,7 +19,7 @@
         </el-col>
         <el-col :span="4">
           <el-form-item :label="'关键字'">
-            <el-input v-model="search.keyword" />
+            <el-input v-model="search.keyword" placeholder=""/>
           </el-form-item>
         </el-col>
         <el-col :span="2">

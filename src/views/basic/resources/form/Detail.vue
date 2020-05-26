@@ -41,7 +41,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'工作时段'" :prop="workDay">
+          <el-form-item :label="'工作时段'" prop="workDay">
             <el-select v-model="form.workDay" multiple placeholder="请选择">
               <el-option
                 v-for="item in options"
@@ -93,7 +93,7 @@
           overtimeResources: null,
           description: null,
           workDay: [],
-          rules: [],
+         /* rules: [],*/
         },
         list: [],
         pArray: [],
@@ -133,14 +133,14 @@
       };
     },
     created() {
-
-    },
-    mounted() {
       this.fetchFormat()
       if (this.listInfo) {
         this.form = this.listInfo
       }
       console.log(this.form)
+    },
+    mounted() {
+
     },
     methods: {
       handleClick(tab, event) {

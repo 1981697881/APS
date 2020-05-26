@@ -18,6 +18,7 @@
               v-model="value"
               type="daterange"
               align="right"
+              style="width: auto"
               value-format="yyyy-MM-dd"
               unlink-panels
               range-separator="至"

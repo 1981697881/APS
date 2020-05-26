@@ -4,7 +4,7 @@
       <el-row :gutter="10">
         <el-col :span="6">
           <el-form-item :label="'关键字'">
-            <el-input v-model="search.name" />
+            <el-input v-model="search.name" placeholder="名称"/>
           </el-form-item>
         </el-col>
         <el-col :span="2">
