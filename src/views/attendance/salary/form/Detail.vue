@@ -86,90 +86,83 @@
 
 <script>
 import { saleInfo,auditOrder,Dismissed} from "@/api/basic/index";
-import List from "@/components/List";
 
 export default {
-   components: {
-       List
-   },
- props: {
-   oid: {
-     type: Number,
-     default: null
-   },
-     orderId: {
-         type: String,
-         default: null
-     },
-     createTime: {
-         type: String,
-         default: null
-     }
- },
- data() {
-   return {
-       num1: 1,
-       visible:false,
-     form: {
-         oid: null,
-         orderId: null,
-         createTime: null,
-       name: null, // 客户名称
-       code: null, // 客户编号
-     },
-       loading: false,
-       list: [],
-       obj:{},
-       type: null,
-       columns: [
-           { text: "gid", name: "gid",default:false },
-           { text: "商品名称", name: "goodName" },
-           { text: "商品编码", name: "goodCode" },
-           { text: "下单数量", name: "num" },
-           { text: "实发数量", name: "actualNum" },
-           { text: "价格", name: "phone" },
-       ],
-   };
- },
+  props: {
+    oid: {
+      type: Number,
+      default: null
+    },
+    orderId: {
+      type: String,
+      default: null
+    },
+    createTime: {
+      type: String,
+      default: null
+    }
+  },
+  data() {
+    return {
+      num1: 1,
+      visible: false,
+      form: {
+        oid: null,
+        orderId: null,
+        createTime: null,
+        name: null, // 客户名称
+        code: null, // 客户编号
+      },
+      loading: false,
+      list: [],
+      obj:{},
+      type: null,
+      columns: [
+        { text: "gid", name: "gid",default:false },
+        { text: "商品名称", name: "goodName" },
+        { text: "商品编码", name: "goodCode" },
+        { text: "下单数量", name: "num" },
+        { text: "实发数量", name: "actualNum" },
+        { text: "价格", name: "phone" },
+      ],
+    };
+  },
  created() {
-
  },
  mounted() {
-     this.form.oid=this.oid
-     this.form.orderId=this.orderId
-     this.form.createTime=this.createTime
-   if (this.form.oid) {
-     this.fetchData(this.form.oid);
-   }
+    this.form.oid=this.oid
+    this.form.orderId=this.orderId
+    this.form.createTime=this.createTime
+    if (this.form.oid) {
+      this.fetchData(this.form.oid);
+    }
  },
  methods: {
-     //修改数量
-     alterNum(row) {
-         this.obj = row;
-         this.visible = true;
-     },
-     saveNum(){
-         this.visible = false
-        this.obj["actualNum"]=this.num1
-         this.num1=1
-     },
-     audit() {
-         let list=this.list,array=[]
-         if (list.length > 0) {
-             for (const i in list) {
-                 var jbj = {}
-                 jbj.gid = list[i].gid
-                 jbj.oid = this.form.oid
-                 jbj.actualNum = list[i].actualNum
-                 array.push(jbj)
-             }
-
-             auditOrder(array).then(res => {
-                     this.$emit('hideDialog', false)
-                 this.$emit('uploadList')
-                 });
-
-         } else {
+    //修改数量
+    alterNum(row) {
+      this.obj = row;
+      this.visible = true;
+    },
+    saveNum(){
+      this.visible = false
+      this.obj["actualNum"]=this.num1
+      this.num1=1
+    },
+    audit() {
+      let list=this.list,array=[]
+      if (list.length > 0) {
+        for (const i in list) {
+          var jbj = {}
+          jbj.gid = list[i].gid
+          jbj.oid = this.form.oid
+          jbj.actualNum = list[i].actualNum
+          array.push(jbj)
+        }
+        auditOrder(array).then(res => {
+          this.$emit('hideDialog', false)
+          this.$emit('uploadList')
+       });
+     } else {
              return this.$message({
                  message: "无退货商品",
                  type: "warning"

@@ -2,9 +2,9 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
-        <el-col :span="6">
+        <el-col :span="3">
           <el-form-item :label="'关键字'">
-            <el-input v-model="search.keyword" />
+            <el-input v-model="search.keyword" placeholder="库位编码"/>
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -202,7 +202,7 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.keyword != null && this.search.keyword != '' ? obj.piName = this.search.keyword : null
+      this.search.keyword != null && this.search.keyword != '' ? obj.piCode = this.search.keyword : null
       this.parent != null && this.parent != undefined ? obj.parent = this.parent : null
       return obj
     },

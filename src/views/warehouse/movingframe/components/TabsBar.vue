@@ -2,7 +2,7 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
-        <el-col :span="7">
+        <el-col :span="6">
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
@@ -19,13 +19,21 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-form-item :label="'关键字'">
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'仓库'" prop="plaIdS">
+            <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
+              <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">
+              </el-option>
+            </el-select>
+          </el-form-item>
         </el-col>
         <el-button-group style="float:right">
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click.native="upload">刷新</el-button>
@@ -36,13 +44,14 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import {exportMovingframe} from "@/api/warehouse/index";
+import { mapGetters } from "vuex"
+import {getWarehouseList} from "@/api/basic/index"
+import {exportMovingframe} from "@/api/warehouse/index"
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
+  components: {},
+  computed: {
+    ...mapGetters(["node","clickData","selections"])
+  },
   data() {
     return {
       value: '',
@@ -73,16 +82,29 @@ export default {
           }
         }]
       },
+      plaArray: [],
+      parent: null,
       search: {
-          keyword: null,
-          type:null
+        keyword: null,
+        type: null
       }
     };
   },
   mounted() {
-
+    this.fetchWare(-1)
   },
   methods: {
+    // 切换仓库
+    selectWorn(val) {
+      this.$emit('queryBtn', this.qFilter())
+    },
+    fetchWare(val) {
+      getWarehouseList(val).then(res => {
+        if(res.flag) {
+          this.plaArray = res.data
+        }
+      })
+    },
     // 关键字查询
     query() {
       this.$emit('queryBtn', this.qFilter())
@@ -91,12 +113,14 @@ export default {
       this.$emit('uploadList')
       this.search.keyword = ''
       this.value = ''
+      this.parent = null
     },
     // 查询条件过滤
     qFilter() {
       let obj = {}
       this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
       this.value[1] != null || this.value[1] != undefined ? obj.endDate = this.value[1] : null
+      this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
       this.value[0] != null || this.value[0] != undefined ? obj.startDate = this.value[0] : null
       return obj
     },

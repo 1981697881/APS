@@ -47,20 +47,20 @@ export default {
     // 监听每页显示几条
     handleSize(val) {
       this.list.size = val
-      this.fetchData();
+      this.$emit('uploadList')
     },
     Delivery(val) {
       delPosition(val).then(res => {
         if(res.flag){
           this.$store.dispatch("list/setClickData", '');
-          this.fetchData();
+          this.$emit('uploadList')
         }
       });
     },
     // 监听当前页
     handleCurrent(val) {
       this.list.current = val;
-      this.fetchData();
+      this.$emit('uploadList')
     },
     dblclick(obj) {
       this.$emit('showInfo', obj.row)

@@ -122,6 +122,7 @@ export default {
       this.$emit('uploadList')
       this.search.keyword = ''
       this.value = ''
+      this.parent = null
     },
     // 查询条件过滤
     qFilter() {

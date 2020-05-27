@@ -5,7 +5,7 @@
       <div>
         <tabs-bar ref="tabs" @showDialog="handlerDialog" @showInfo="handlerInfo"  @uploadList="upload" @delList="delivery" @queryBtn="query"/>
       </div>
-      <list ref="list" @showInfo="handlerInfo" />
+      <list ref="list" @showInfo="handlerInfo" @uploadList="upload"/>
     </div>
     <el-dialog
       :visible.sync="visible"
