@@ -60,11 +60,21 @@ export default {
   },
   mounted() {
     this.fetchFormat()
-    console.log(this.$route)
   },
 
   methods: {
     selectChange(val) {
+      let batch = null
+      this.plaArray.forEach((item, index) =>{
+        if(item.tpId == val) {
+          if (item.tpName == '美瓷胶调色线') {
+            batch = true
+          } else {
+            batch = false
+          }
+        }
+      })
+      this.$refs.list.resetBatch(batch)
       this.upload({tpId: val })
     },
     delivery(obj) {
@@ -78,7 +88,7 @@ export default {
           this.plaArray = res.data
           this.plaIdS = res.data[0].tpId
           const array = this.$refs.tabs.getODate()
-          this.$refs.list.fetchData({tpId: this.plaIdB, productionDateStart: array[0], productionDateEnd: array[1]})
+          this.$refs.list.fetchData({tpId: this.plaIdS, productionDateStart: array[0], productionDateEnd: array[1]})
         }
       });
     },

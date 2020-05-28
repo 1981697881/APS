@@ -3,6 +3,23 @@
     <el-form  :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
         <el-col :span="6">
+          <el-form-item :label="'出货日期'">
+            <el-date-picker
+              v-model="value"
+              type="daterange"
+              align="right"
+              style="width: auto"
+              class="input-class"
+              unlink-panels
+              range-separator="至"
+              value-format="yyyy-MM-dd"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions">
+            </el-date-picker>
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
           <el-form-item :label="'出货单号'">
             <el-input v-model="search.keyword" />
           </el-form-item>
@@ -26,6 +43,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">确认</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="cancelNotarize">取消确认</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
       </el-row>
@@ -110,7 +128,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import {syncShipInfo, exportRecipients, notarizeOutputList} from "@/api/warehouse/index";
+import {syncShipInfo, exportRecipients, notarizeOutputList, notarizeCancelOutputList} from "@/api/warehouse/index";
 export default {
   components: {},
   computed: {
@@ -139,6 +157,7 @@ export default {
         value: false,
         label: '未核准'
       }],
+      value: '',
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -202,15 +221,29 @@ export default {
       link.click()
     },
     upload() {
-      this.$emit('uploadList')
       this.search.keyword = ''
       this.value = ''
       this.isConfirm = false
+      this.$emit('uploadList')
     },
     notarize() {
-      console.log(this.clickData)
       if (this.clickData.spId) {
         notarizeOutputList(this.clickData.spId).then(res => {
+          if(res.flag) {
+            this.upload()
+          }
+        })
+        /*this.$emit('showDialog', this.clickData)*/
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    cancelNotarize() {
+      if (this.clickData.spId) {
+        notarizeCancelOutputList(this.clickData.spId).then(res => {
           if(res.flag) {
             this.upload()
           }
@@ -227,6 +260,8 @@ export default {
     qFilter() {
       let obj = {}
       this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
+      this.value[1] != null || this.value[1] != undefined ? obj.businessDateEnd = this.value[1] : null
+      this.value[0] != null || this.value[0] != undefined ? obj.businessDateStart = this.value[0] : null
       obj.isConfirm = this.isConfirm
       return obj
     },

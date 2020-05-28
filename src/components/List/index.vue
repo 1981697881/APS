@@ -149,6 +149,7 @@ export default {
     },
     // 监听多选 参数-所有选中的值
     handleSelectionChange(val){
+      console.log(val)
       this.$store.dispatch('list/setSelections',val)
     },
     getSummaries(param) {

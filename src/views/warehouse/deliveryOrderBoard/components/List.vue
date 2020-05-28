@@ -40,6 +40,7 @@ export default {
         { text: '料号', name: 'goodCode' },
         { text: '旧料号', name: 'oldCode' },
         { text: '规格', name: 'spec' },
+        { text: '即时库存', name: 'evenNum' },
         { text: '出货数量', name: 'qty' }
 
       ]

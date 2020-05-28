@@ -37,7 +37,7 @@ export default {
         { text: 'taskId', name: 'taskId',default: false },
         { text: 'plId', name: 'plId',default: false },
         { text: '订单日期', name: 'soDate', width: '150px' },
-        { text: '色号/旧料号', name: 'color', width: '100px' },
+        { text: '色号/旧料号', name: 'color', width: '180px' },
         { text: '订单数量', name: 'odPrNum' },
         { text: '库存数量', name: '' },
         { text: '最高安全库存', name: '' },

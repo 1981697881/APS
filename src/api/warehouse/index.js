@@ -316,3 +316,15 @@ export function notarizeOutputList(params) {
     method: 'put'
   })
 }
+// 出货取消确认
+export function notarizeCancelOutputList(params) {
+  const url = '/ship-order/cConfirm/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put'
+  })
+}

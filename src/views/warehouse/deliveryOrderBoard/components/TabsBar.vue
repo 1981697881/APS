@@ -1,10 +1,15 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'" :label-width="'60px'">
       <el-row :gutter="10">
-        <el-col :span="4">
-          <el-form-item :label="'关键字'">
-            <el-input v-model="search.keyword" />
+        <el-col :span="3">
+          <el-form-item :label="'单号'">
+            <el-input v-model="search.shipNo" placeholder="单号" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'旧料号'">
+            <el-input v-model="search.oldCode" placeholder="旧料号" />
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -28,7 +33,8 @@ export default {
   data() {
     return {
       search: {
-        keyword: null,
+        oldCode: null,
+        shipNo: null,
       }
     };
   },
@@ -42,13 +48,15 @@ export default {
     },
     upload() {
       this.$emit('uploadList')
-      this.search.keyword = ''
+      this.search.oldCode = ''
+      this.search.shipNo = ''
       this.value = ''
     },
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.keyword != null && this.search.keyword != '' ? obj.shipNo = this.search.keyword : null
+      this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
+      this.search.shipNo != null && this.search.shipNo != '' ? obj.shipNo = this.search.shipNo : null
       return obj
     },
     handleAlter() {

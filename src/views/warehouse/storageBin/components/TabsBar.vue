@@ -1,6 +1,6 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'" :label-width="'60px'">
       <el-row :gutter="10">
         <el-col :span="7">
           <el-form-item :label="'日期'">
@@ -20,8 +20,13 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item :label="'关键字'">
-            <el-input v-model="search.keyword" />
+          <el-form-item :label="'料号'">
+            <el-input v-model="search.goodCode" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item :label="'旧料号'">
+            <el-input v-model="search.oldCode" />
           </el-form-item>
         </el-col>
         <el-col :span="3">
@@ -85,7 +90,8 @@ export default {
       parent: null,
       plaArray: [],
       search: {
-        keyword: null,
+        oldCode: null,
+        goodCode: null,
         type: null
       }
     };
@@ -120,14 +126,16 @@ export default {
     },
     upload() {
       this.$emit('uploadList')
-      this.search.keyword = ''
+      this.search.oldCode = ''
+      this.search.goodCode = ''
       this.value = ''
       this.parent = null
     },
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.keyword != null && this.search.keyword != '' ? obj.oldCode = this.search.keyword : null
+      this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
+      this.search.goodCode != null && this.search.goodCode != '' ? obj.goodCode = this.search.goodCode : null
       this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
       this.value[1] != null && this.value[1] != undefined ? obj.endDate = this.value[1] : null
       this.value[0] != null && this.value[0] != undefined ? obj.startDate = this.value[0] : null

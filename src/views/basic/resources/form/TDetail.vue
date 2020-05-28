@@ -41,6 +41,78 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20" >
+        <el-col :span="12">
+          <el-form-item :label="'注意事项1'" >
+            <el-input v-model="matters.matters0.note" ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item >
+            <el-checkbox v-model="matters.matters0.show">是否展示</el-checkbox>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20" >
+        <el-col :span="12">
+          <el-form-item :label="'注意事项2'">
+            <el-input v-model="matters.matters1.note" ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item >
+            <el-checkbox v-model="matters.matters1.show">是否展示</el-checkbox>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20" >
+        <el-col :span="12">
+          <el-form-item :label="'注意事项3'">
+            <el-input v-model="matters.matters2.note" ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item >
+            <el-checkbox v-model="matters.matters2.show">是否展示</el-checkbox>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20" >
+        <el-col :span="12">
+          <el-form-item :label="'注意事项4'" >
+            <el-input v-model="matters.matters3.note" ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item >
+            <el-checkbox v-model="matters.matters3.show">是否展示</el-checkbox>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20" >
+        <el-col :span="12">
+          <el-form-item :label="'注意事项5'" >
+            <el-input v-model="matters.matters4.note" ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item >
+            <el-checkbox v-model="matters.matters4.show">是否展示</el-checkbox>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20" >
+        <el-col :span="12">
+          <el-form-item :label="'注意事项6'" >
+            <el-input v-model="matters.matters5.note" ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item  >
+            <el-checkbox v-model="matters.matters5.show">是否展示</el-checkbox>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">
       <el-button type="primary" @click="saveData('form')">保存</el-button>
@@ -65,6 +137,32 @@
           tpCategory: '产线设备',
           type: null,
           rules: []
+        },
+        matters: {
+          matters0: {
+            note: null,
+            show: false,
+          },
+          matters1: {
+            note: null,
+            show: false,
+          },
+          matters2: {
+            note: null,
+            show: false,
+          },
+          matters3: {
+            note: null,
+            show: false,
+          },
+          matters4: {
+            note: null,
+            show: false,
+          },
+          matters5: {
+            note: null,
+            show: false,
+          },
         },
         options: [{
           value: 1,
@@ -128,8 +226,16 @@
       },
       saveData(form) {
         this.$refs[form].validate((valid) => {
+          const marrter = this.matters
           //判断必填项
           if (valid) {
+            let array = []
+            for(const i in marrter){
+              let obj = {}
+              marrter[i].tpId = this.form.tpId
+              array.push(marrter[i])
+            }
+            this.form.importantMatters = array
             if (typeof (this.form.tpId) != undefined && this.form.tpId != null) {
               resourcesAlter(this.form).then(res => {
                 this.$emit('hideGroupDialog', false)

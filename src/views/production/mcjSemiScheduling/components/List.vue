@@ -14,8 +14,8 @@
         v-if="t.default!=undefined?t.default:true"
       >
         <el-table-column
-          v-if="t.colspan!=undefined?t.colspan:false"
           v-for="(a,b) in t.data"
+          v-if="t.colspan!=undefined&&a.default!=false?t.colspan:false"
           :prop="a.name"
           :key="b"
           :label="a.text"
@@ -39,11 +39,15 @@
       return {
         loading: false,
         list: [],
+        isBatch: false,
         result: [],
         columns: []
       };
     },
     methods: {
+      resetBatch(val) {
+        this.isBatch = val
+      },
         taskWarning(row, column) {
         let stau = ''
         for(let i in row) {
@@ -124,8 +128,8 @@
           if (res.flag) {
             const data = res.data
             this.columns = [
-              {text: '', name: 'gid', default: false},
-              {text: '计划日期',width: '150px', name: '', colspan: true, data: [{text: '生产设备', width: '150px', name: 'plName'}]}
+              {text: '', name: 'gid', default: false },
+              {text: '计划日期', width: '150px', name: '', colspan: true, data: [{text: '生产设备', width: '150px', name: 'plName'}]}
             ]
             var array = []
             const columns = this.columns
@@ -133,7 +137,7 @@
             var arr = []
             // 根据时间生成表头 把时间包含数据重新组装 -》array
             for (const i in data) {
-              columns.push({text: i + '', name: i + '', colspan: true, data: [{text: '旧料号', name: 'oldCode' + count}, {text: '数量(kg)', name: 'allocatedNum' + count},{text: '生产状态', name: 'allocatedStatus' + count},{text: '任务警示', name: 'alertStatus' + count, formatt: 'taskWarning'}]})
+              columns.push({text: i + '', name: i + '', colspan: true, data: [{text: '旧料号', name: 'oldCode' + count}, {text: '单批次数量（kg）', default: this.isBatch, name: 'singleBatch' + count }, {text: '批次数', default: this.isBatch, name: 'batch' + count }, {text: '数量(kg)', name: 'allocatedNum' + count},{text: '生产状态', name: 'allocatedStatus' + count},{text: '任务警示', name: 'alertStatus' + count, formatt: 'taskWarning'}]})
               count++
               data[i][0].time = i
               array.push(data[i])
