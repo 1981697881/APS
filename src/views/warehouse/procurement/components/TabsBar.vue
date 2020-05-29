@@ -20,8 +20,13 @@
           </el-form-item>
         </el-col>
         <el-col :span="3">
-          <el-form-item :label="'关键字'">
+          <el-form-item :label="'旧料号'">
             <el-input v-model="search.keyword" placeholder="旧料号"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'仓库'">
+            <el-input v-model="search.keyword" placeholder="仓库"/>
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -256,6 +261,7 @@ export default {
     },
     upload() {
       this.search.keyword = ''
+      this.search.keyword = ''
       /*this.isConfirm = false*/
      /* this.planArriveDate = ''*/
       this.value = ''
@@ -264,6 +270,7 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
+      this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
       this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
      /* this.planArriveDate != null && this.planArriveDate != '' ? obj.planArriveDate = this.planArriveDate : null*/
       this.value[1] != null || this.value[1] != undefined ? obj.planArriveDateEnd = this.value[1] : null

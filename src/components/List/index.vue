@@ -111,16 +111,30 @@ export default {
   methods: {
     taskWarning(row, column) {
       let stau = ''
-      if(row.alertStatus == 1) {
-        stau = '延误'
-      }else if(row.alertStatus == 2) {
-        stau = '冲突'
-      }else if(row.alertStatus == 3) {
-        stau = '加急'
-      }else if(row.alertStatus == 4) {
-        stau = '暂停'
-      }else{
-        stau = ''
+      if(row.allocatedStatus == '冲突'){
+        if(row.alertStatus == 1) {
+          stau = '延误,冲突'
+        }else if(row.alertStatus == 2) {
+          stau = '冲突,冲突'
+        }else if(row.alertStatus == 3) {
+          stau = '加急,冲突'
+        }else if(row.alertStatus == 4) {
+          stau = '暂停,冲突'
+        }else{
+          stau = '正常,冲突'
+        }
+      } else {
+        if(row.alertStatus == 1) {
+          stau = '延误'
+        }else if(row.alertStatus == 2) {
+          stau = '冲突'
+        }else if(row.alertStatus == 3) {
+          stau = '加急'
+        }else if(row.alertStatus == 4) {
+          stau = '暂停'
+        }else{
+          stau = '正常'
+        }
       }
       return  stau
     },
@@ -132,8 +146,8 @@ export default {
           return 'suspended-row2';
         }else if (row.alertStatus == 4) {
           return 'suspended-row3';
-        }else{
-          return '';
+        }else {
+          return 'suspended-row0';
         }
       } else {
         if (row.alertStatus == 3) {
@@ -219,6 +233,9 @@ export default {
   }
   .conflict-row {
     color: blue;
+  }
+  .suspended-row0 {
+    background-color: #CD69C9 !important;
   }
   .suspended-row1 {
     background-color: #CD69C9 !important;

@@ -12,9 +12,9 @@ const PrintAccount = (data, printingQuantity, apiece, repeat) => {
     LODOP.SET_PRINT_STYLE('FontSize', 16);
     LODOP.ADD_PRINT_TEXT('1mm', '25mm', '50mm', '10mm', data[0].goodName);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-    LODOP.ADD_PRINT_TEXT('13mm', '17mm', '50mm', '10mm', data[0].oldCode);
+    LODOP.ADD_PRINT_TEXT('13mm', '17mm', '50mm', '10mm', data[0].color);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 1);
-    LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",8);
+    LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",1);
     LODOP.ADD_PRINT_BARCODE('11mm', '75mm', '13mm', '13mm', 'QRCode', data[0].barcode)
     LODOP.SET_PRINT_STYLE('FontSize', 10);
     LODOP.ADD_PRINT_TEXT('22mm', '17mm', '29mm', '10mm', data[0].executiveStandard);
@@ -61,9 +61,9 @@ const PrintTwo1 = (data, printingQuantity, apiece, repeat, printModel) => {
     LODOP.SET_PRINT_STYLE('FontSize', 14);
     LODOP.ADD_PRINT_TEXT('10mm', '2mm', '19mm', '10mm', '旧料号');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-    LODOP.ADD_PRINT_TEXT('10mm', '21mm', '45mm', '10mm', data[0].oldCode);
+    LODOP.ADD_PRINT_TEXT('10mm', '21mm', '45mm', '10mm', data[0].color);
     LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",7);
-    LODOP.ADD_PRINT_BARCODE('4mm', '75mm', '21mm', '21mm', 'QRCode', data[0].qrCode)
+    LODOP.ADD_PRINT_BARCODE('4mm', '75mm', '21mm', '21mm', 'QRCode', data[0].barcode)
     LODOP.ADD_PRINT_TEXT('30mm', '2mm', '19mm', '10mm', '生产');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT('36mm', '2mm', '19mm', '10mm', '日期');
@@ -117,9 +117,9 @@ const PrintTwo2 = (data, printingQuantity, apiece, repeat, printModel) => {
     LODOP.SET_PRINT_STYLE('FontSize', 14);
     LODOP.ADD_PRINT_TEXT('10mm', '2mm', '19mm', '10mm', '旧料号');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-    LODOP.ADD_PRINT_TEXT('10mm', '21mm', '45mm', '10mm', data[0].oldCode);
+    LODOP.ADD_PRINT_TEXT('10mm', '21mm', '45mm', '10mm', data[0].color);
     LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",7);
-    LODOP.ADD_PRINT_BARCODE('4mm', '75mm', '21mm', '21mm', 'QRCode', data[0].qrCode)
+    LODOP.ADD_PRINT_BARCODE('4mm', '75mm', '21mm', '21mm', 'QRCode', data[0].barcode)
     LODOP.ADD_PRINT_TEXT('30mm', '2mm', '19mm', '10mm', '生产');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT('36mm', '2mm', '19mm', '10mm', '日期');
@@ -139,7 +139,7 @@ const PrintTwo2 = (data, printingQuantity, apiece, repeat, printModel) => {
     LODOP.ADD_PRINT_TEXT('57mm', '48.3mm', '19mm', '10mm', '数量');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.SET_PRINT_STYLE('FontSize', 16);
-    LODOP.ADD_PRINT_TEXT('53mm', '65.3mm', '30mm', '10mm', data[0].spec);
+    LODOP.ADD_PRINT_TEXT('53mm', '65.3mm', '30mm', '10mm', apiece + '支');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     //第一行横线
     LODOP.ADD_PRINT_LINE('24.3mm', '2mm', '24.3mm', '96mm', 0, 1);
@@ -176,9 +176,9 @@ const PrintTwo3 = (data, printingQuantity, apiece, repeat, printModel) => {
     LODOP.SET_PRINT_STYLE('FontSize', 14);
     LODOP.ADD_PRINT_TEXT('10mm', '2mm', '19mm', '10mm', '旧料号');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-    LODOP.ADD_PRINT_TEXT('10mm', '21mm', '45mm', '10mm', data[0].oldCode);
+    LODOP.ADD_PRINT_TEXT('10mm', '21mm', '45mm', '10mm', data[0].color);
     LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",7);
-    LODOP.ADD_PRINT_BARCODE('4mm', '75mm', '21mm', '21mm', 'QRCode', data[0].qrCode)
+    LODOP.ADD_PRINT_BARCODE('4mm', '75mm', '21mm', '21mm', 'QRCode', data[0].barcode)
     LODOP.ADD_PRINT_TEXT('30mm', '2mm', '19mm', '10mm', '生产');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT('36mm', '2mm', '19mm', '10mm', '日期');
@@ -232,9 +232,9 @@ const PrintTwo4 = (data, printingQuantity, apiece, repeat, printModel) => {
     LODOP.SET_PRINT_STYLE('FontSize', 14);
     LODOP.ADD_PRINT_TEXT('10mm', '2mm', '19mm', '10mm', '旧料号');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-    LODOP.ADD_PRINT_TEXT('10mm', '21mm', '45mm', '10mm', data[0].oldCode);
+    LODOP.ADD_PRINT_TEXT('10mm', '21mm', '45mm', '10mm', data[0].color);
     LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",7);
-    LODOP.ADD_PRINT_BARCODE('4mm', '75mm', '21mm', '21mm', 'QRCode', data[0].qrCode)
+    LODOP.ADD_PRINT_BARCODE('4mm', '75mm', '21mm', '21mm', 'QRCode', data[0].barcode)
     LODOP.ADD_PRINT_TEXT('30mm', '2mm', '19mm', '10mm', '生产');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT('36mm', '2mm', '19mm', '10mm', '日期');

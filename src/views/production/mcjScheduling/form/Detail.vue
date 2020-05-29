@@ -106,6 +106,7 @@
         <el-col :span="12">
           <el-form-item :label="'任务警示'">
             <el-radio-group v-model="form.alertStatus">
+              <el-radio :label=0 >正常</el-radio>
               <el-radio :label=3 style="color:#7b1424">加急</el-radio>
               <el-radio :label=4 style="color:#3b199a">暂停</el-radio>
               <el-radio :label=1 style="color:#dc9118" disabled>延误</el-radio>
@@ -257,6 +258,7 @@ export default {
   mounted() {
     this.fetchFormat()
     if (this.listInfo) {
+      console.log(this.listInfo)
       if (this.listInfo.flag) {
         this.disPl = false
         this.form.tpId = this.listInfo.tpId

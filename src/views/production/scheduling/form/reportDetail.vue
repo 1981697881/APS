@@ -245,15 +245,16 @@
     methods: {
       print() {
         this.lotNo = this.form.lotNo
+        this.visible = true
         // 判断必填项
-        if (this.lotNo != null && this.lotNo != undefined) {
+        /*if (this.lotNo != null && this.lotNo != undefined) {
           this.visible = true
         } else {
           this.$message({
             message: "请填写批号",
             type: "warning"
           })
-        }
+        }*/
       },
       confirmPrint() {
         if(this.printModel != null && this.lotNo != null) {
@@ -264,7 +265,7 @@
             // repeat: 重复打印第几张
             // printModel: 打印模板
             schedulingPrint({barcodeList:[{printId: this.form.taskId,
-                printNum: this.printingQuantity,
+                printNum: 1,
                 type: 2}]}).then(res => {
               if(res.flag) {
                 var obj = res.data
@@ -288,7 +289,7 @@
                 // repeat: 重复打印第几张
                 // printModel: 打印模板
                 schedulingPrint({barcodeList:[{printId: this.form.taskId,
-                  printNum: this.printingQuantity,
+                  printNum: 1,
                   type: 2}]}).then(res => {
                   if(res.flag) {
                     var obj = res.data

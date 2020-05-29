@@ -25,6 +25,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="3">
+          <el-form-item :label="'仓库'">
+            <el-input v-model="search.keyword" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
           <el-form-item :label="'核准状态'" :label-width="'70px'">
             <el-select v-model="isConfirm" placeholder="请选择" @change="selectChange">
               <el-option
@@ -222,6 +227,7 @@ export default {
     },
     upload() {
       this.search.keyword = ''
+      this.search.keyword = ''
       this.value = ''
       this.isConfirm = false
       this.$emit('uploadList')
@@ -259,6 +265,7 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
+      this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
       this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
       this.value[1] != null || this.value[1] != undefined ? obj.businessDateEnd = this.value[1] : null
       this.value[0] != null || this.value[0] != undefined ? obj.businessDateStart = this.value[0] : null

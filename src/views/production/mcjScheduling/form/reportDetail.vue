@@ -111,11 +111,11 @@
     >
       <el-form :rules="rules">
         <el-row :gutter="20" type="flex" justify="center">
-          <!--<el-col :span="12">
+          <el-col :span="12">
             <el-form-item :label="'每托/桶或箱'">
               <el-input-number v-model="apiece"  label="请输入数量" :min="0"></el-input-number>
             </el-form-item>
-          </el-col>-->
+          </el-col>
           <el-col :span="12">
             <el-form-item :label="'打印/张'">
               <el-input-number v-model="printingQuantity" label="请输入数量" :min="1"></el-input-number>
@@ -246,25 +246,27 @@
       print() {
         this.lotNo = this.form.lotNo
         // 判断必填项
-        if (this.lotNo != null && this.lotNo != undefined) {
+        console.log(this.lotNo)
+        this.visible = true
+        /*if (this.lotNo != null && this.lotNo != undefined) {
           this.visible = true
         } else {
           this.$message({
             message: "请填写批号",
             type: "warning"
           })
-        }
+        }*/
       },
       confirmPrint() {
         if(this.printModel != null && this.lotNo != null) {
           if(this.listInfo.lotNo != null && this.listInfo.lotNo != '') {
             // data: 数据
             // printingQuantity: 打印品种
-            // apiece: 打印
+            // apiece: 每托/桶或箱
             // repeat: 重复打印第几张
             // printModel: 打印模板
             schedulingPrint({barcodeList:[{printId: this.form.taskId,
-                printNum: this.printingQuantity,
+                printNum: 1,
                 type: 2}]}).then(res => {
               if(res.flag) {
                 var obj = res.data
@@ -279,11 +281,11 @@
                 this.form.lotNo = this.lotNo
                 // data: 数据
                 // printingQuantity: 打印品种
-                // apiece: 打印
+                // apiece: 每托/桶或箱
                 // repeat: 重复打印第几张
                 // printModel: 打印模板
                 schedulingPrint({barcodeList:[{printId: this.form.taskId,
-                    printNum: this.printingQuantity,
+                    printNum: 1,
                     type: 2}]}).then(res => {
                   if(res.flag) {
                     var obj = res.data

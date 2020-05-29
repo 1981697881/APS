@@ -739,3 +739,14 @@ export function productionRules(params) {
     method: 'post'
   })
 }
+// 资源管理重要事项-查询
+export function getListMatters(params) {
+  const url = '/production-line/listMatters/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx')
+    },
+    method: 'post'
+  })
+}

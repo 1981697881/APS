@@ -203,10 +203,10 @@
   }
   .suspended-row2 {
     background-color: #CD69C9 !important;
-    color: orange;
+    color: blue;
   }
   .suspended-row3 {
     background-color: #CD69C9 !important;
-    color: blue;
+    color: orange;
   }
 </style>
