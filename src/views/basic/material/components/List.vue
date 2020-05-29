@@ -6,12 +6,10 @@
       :loading="loading"
       :list="list"
       index
-      type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
        @row-click="rowClick"
-       @selection-change="handleSelectionChange"
     />
 
   </div>
@@ -58,7 +56,7 @@ export default {
       this.$emit('uploadList');
     },
     dblclick(obj) {
-     /* this.$emit('showDialog',obj.row)*/
+      this.$emit('showDialog',obj.row)
     },
     Delivery(val){
       delMaterial(val).then(res => {
@@ -67,10 +65,6 @@ export default {
           this.$emit('uploadList');
         }
       });
-    },
-    // 监听多选 参数-所有选中的值
-    handleSelectionChange(val) {
-      this.$store.dispatch('list/setSelections', val)
     },
     // 监听单击某一行
     rowClick(obj) {

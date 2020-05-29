@@ -44,19 +44,33 @@
       };
     },
     methods: {
-        taskWarning(row, column) {
+      taskWarning(row, column) {
         let stau = ''
         for(let i in row) {
           if (row[column.property] == 1) {
-            stau = '延误'
-          } else if (row[column.property] == 2) {
-            stau = '冲突'
+            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+              stau = '延误,冲突'
+            } else {
+              stau = '延误'
+            }
           } else if (row[column.property] == 3) {
-            stau = '加急'
+            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+              stau = '加急,冲突'
+            } else {
+              stau = '加急'
+            }
           } else if (row[column.property] == 4) {
-            stau = '暂停'
+            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+              stau = '暂停,冲突'
+            } else {
+              stau = '暂停'
+            }
           } else {
-            stau = ''
+            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+              stau = '正常,冲突'
+            } else {
+              stau = '正常'
+            }
           }
         }
         return stau
@@ -64,31 +78,37 @@
       tableCellClassName({row, column, rowIndex, columnIndex}) {
         if((columnIndex-2) % 4 == 0 && (columnIndex-2) != 0) {
           for(let i in row){
-              if(i.replace(/\d+/g,"") == 'alertStatus'){
-                if (row[column.property] == 3) {
-                  if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
-                    return 'suspended-row1'
-                  }else{
-                    return 'urgent-row'
-                  }
-                } else if (row[column.property] == 4) {
-                  if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
-                    return 'suspended-row2'
-                  }else{
-                    return 'suspended-row'
-                  }
-                } else if (row[column.property] == 1) {
-                  if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
-                    return 'suspended-row3'
-                  }else{
-                    return 'delay-row'
-                  }
-                } else {
+            if(i.replace(/\d+/g,"") == 'alertStatus'){
+              if (row[column.property] == 3) {
+                if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                  return 'suspended-row1'
+                }else{
+                  return 'urgent-row'
+                }
+              } else if (row[column.property] == 4) {
+                if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                  return 'suspended-row2'
+                }else{
+                  return 'conflict-row'
+                }
+              } else if (row[column.property] == 1) {
+                if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                  return 'suspended-row3'
+                }else{
+                  return 'delay-row'
+                }
+              } else if (row[column.property] == 0) {
+                if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                  return 'suspended-row0'
+                }else{
                   return ''
                 }
+              } else {
+                return ''
               }
             }
           }
+        }
         //}
       },
       // 监听多选 参数-所有选中的值
@@ -196,6 +216,9 @@
   }
   .conflict-row {
     color: blue;
+  }
+  .suspended-row0 {
+    background-color: #CD69C9 !important;
   }
   .suspended-row1 {
     background-color: #CD69C9 !important;

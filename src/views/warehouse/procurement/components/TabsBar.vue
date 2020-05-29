@@ -26,7 +26,7 @@
         </el-col>
         <el-col :span="3">
           <el-form-item :label="'仓库'">
-            <el-input v-model="search.keyword" placeholder="仓库"/>
+            <el-input v-model="search.whName" placeholder="仓库"/>
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -197,6 +197,7 @@ export default {
       isConfirm: false,
       search: {
         keyword: null,
+        whName: null,
         type: null
       }
     };
@@ -261,7 +262,7 @@ export default {
     },
     upload() {
       this.search.keyword = ''
-      this.search.keyword = ''
+      this.search.whName = ''
       /*this.isConfirm = false*/
      /* this.planArriveDate = ''*/
       this.value = ''
@@ -271,7 +272,7 @@ export default {
     qFilter() {
       let obj = {}
       this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
-      this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
+      this.search.whName != null && this.search.whName != '' ? obj.whName = this.search.whName : null
      /* this.planArriveDate != null && this.planArriveDate != '' ? obj.planArriveDate = this.planArriveDate : null*/
       this.value[1] != null || this.value[1] != undefined ? obj.planArriveDateEnd = this.value[1] : null
       this.value[0] != null || this.value[0] != undefined ? obj.planArriveDateStart = this.value[0] : null

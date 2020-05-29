@@ -27,8 +27,8 @@
         </el-col>
         <el-button-group style="float:right">
           <!--<el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAdd">新增</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAlter">修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="del">删除</el-button>-->
+          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAlter">信息维护</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>

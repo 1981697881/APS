@@ -52,14 +52,29 @@
         let stau = ''
         for(let i in row) {
           if (row[column.property] == 1) {
-            stau = '延误'
+            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+              stau = '延误,冲突'
+            } else {
+              stau = '延误'
+            }
           } else if (row[column.property] == 3) {
-            stau = '加急'
+            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+              stau = '加急,冲突'
+            } else {
+              stau = '加急'
+            }
           } else if (row[column.property] == 4) {
-            console.log(row)
-            stau = '暂停'
+            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+              stau = '暂停,冲突'
+            } else {
+              stau = '暂停'
+            }
           } else {
-            stau = '正常'
+            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+              stau = '正常,冲突'
+            } else {
+              stau = '正常'
+            }
           }
         }
         return stau
@@ -78,7 +93,7 @@
                   if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
                     return 'suspended-row2'
                   }else{
-                    return 'suspended-row'
+                    return 'conflict-row'
                   }
                 } else if (row[column.property] == 1) {
                   if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
@@ -142,7 +157,7 @@
             var arr = []
             // 根据时间生成表头 把时间包含数据重新组装 -》array
             for (const i in data) {
-              columns.push({text: i + '', name: i + '', colspan: true, data: [{text: '旧料号', name: 'oldCode' + count}, {text: '单批次数量（kg）', default: this.isBatch, name: 'singleBatch' + count }, {text: '批次数', default: this.isBatch, name: 'batch' + count }, {text: '数量(kg)', name: 'allocatedNum' + count},{text: '生产状态', name: 'allocatedStatus' + count, formatt: 'taskWarning'},{text: '任务警示', name: 'alertStatus' + count, formatt: 'taskWarning'}]})
+              columns.push({text: i + '', name: i + '', colspan: true, data: [{text: '旧料号', name: 'oldCode' + count}, {text: '单批次数量（kg）', default: this.isBatch, name: 'singleBatch' + count }, {text: '批次数', default: this.isBatch, name: 'batch' + count }, {text: '数量(kg)', name: 'allocatedNum' + count},{text: '生产状态', name: 'allocatedStatus' + count},{text: '任务警示', name: 'alertStatus' + count, formatt: 'taskWarning'}]})
               count++
               data[i][0].time = i
               array.push(data[i])
