@@ -52,25 +52,25 @@
         let stau = ''
         for(let i in row) {
           if (row[column.property] == 1) {
-            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+            if(row['isClash' + column.property.replace('alertStatus','')]) {
               stau = '延误,冲突'
             } else {
               stau = '延误'
             }
           } else if (row[column.property] == 3) {
-            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+            if(row['isClash' + column.property.replace('alertStatus','')]) {
               stau = '加急,冲突'
             } else {
               stau = '加急'
             }
           } else if (row[column.property] == 4) {
-            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+            if(row['isClash' + column.property.replace('alertStatus','')]) {
               stau = '暂停,冲突'
             } else {
               stau = '暂停'
             }
           } else {
-            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+            if(row['isClash' + column.property.replace('alertStatus','')]) {
               stau = '正常,冲突'
             } else {
               stau = '正常'
@@ -84,25 +84,25 @@
           for(let i in row){
               if(i.replace(/\d+/g,"") == 'alertStatus'){
                 if (row[column.property] == 3) {
-                  if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                  if(row['isClash' + column.property.split("alertStatus")[1]]){
                     return 'suspended-row1'
                   }else{
                     return 'urgent-row'
                   }
                 } else if (row[column.property] == 4) {
-                  if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                  if(row['isClash' + column.property.split("alertStatus")[1]]){
                     return 'suspended-row2'
                   }else{
                     return 'conflict-row'
                   }
                 } else if (row[column.property] == 1) {
-                  if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                  if(row['isClash' + column.property.split("alertStatus")[1]]){
                     return 'suspended-row3'
                   }else{
                     return 'delay-row'
                   }
                 } else if (row[column.property] == 0) {
-                  if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                  if(row['isClash' + column.property.split("alertStatus")[1]]){
                     return 'suspended-row0'
                   }else{
                     return ''
@@ -176,6 +176,7 @@
                   eval("obj.plId" + index + "='" + item2.plId + "'")
                   eval("obj.tpId" + index + "='" + item2.tpId + "'")
                   eval("obj.alertStatus" + index + "=" + item2.alertStatus )
+                  eval("obj.alertStatus" + index + "=" + item2.isClash )
                   eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
                   eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                   eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
@@ -188,6 +189,7 @@
                   eval("arr["+index2+"].taskId" + index + "='" + item2.taskId + "'")
                   eval("arr["+index2+"].allocatedNum" + index + "='" + item2.allocatedNum + "'")
                   eval("arr["+index2+"].taskNum" + index + "='" + item2.taskNum + "'")
+                  eval("arr["+index2+"].isClash" + index + "='" + item2.isClash + "'")
                   eval("arr["+index2+"].alertStatus" + index + "=" + item2.alertStatus )
                   eval("arr["+index2+"].plId" + index + "='" + item2.plId + "'")
                   eval("arr["+index2+"].tpId" + index + "='" + item2.tpId + "'")

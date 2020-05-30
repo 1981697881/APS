@@ -49,7 +49,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item >
-            <el-checkbox v-model="matters.matters0.show">是否展示</el-checkbox>
+            <el-checkbox v-model="matters.matters0.display">是否展示</el-checkbox>
           </el-form-item>
         </el-col>
       </el-row>
@@ -61,7 +61,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item >
-            <el-checkbox v-model="matters.matters1.show">是否展示</el-checkbox>
+            <el-checkbox v-model="matters.matters1.display">是否展示</el-checkbox>
           </el-form-item>
         </el-col>
       </el-row>
@@ -73,7 +73,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item >
-            <el-checkbox v-model="matters.matters2.show">是否展示</el-checkbox>
+            <el-checkbox v-model="matters.matters2.display">是否展示</el-checkbox>
           </el-form-item>
         </el-col>
       </el-row>
@@ -85,7 +85,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item >
-            <el-checkbox v-model="matters.matters3.show">是否展示</el-checkbox>
+            <el-checkbox v-model="matters.matters3.display">是否展示</el-checkbox>
           </el-form-item>
         </el-col>
       </el-row>
@@ -97,7 +97,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item >
-            <el-checkbox v-model="matters.matters4.show">是否展示</el-checkbox>
+            <el-checkbox v-model="matters.matters4.display">是否展示</el-checkbox>
           </el-form-item>
         </el-col>
       </el-row>
@@ -109,7 +109,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item  >
-            <el-checkbox v-model="matters.matters5.show">是否展示</el-checkbox>
+            <el-checkbox v-model="matters.matters5.display">是否展示</el-checkbox>
           </el-form-item>
         </el-col>
       </el-row>
@@ -141,27 +141,27 @@
         matters: {
           matters0: {
             note: null,
-            show: false,
+            display: false,
           },
           matters1: {
             note: null,
-            show: false,
+            display: false,
           },
           matters2: {
             note: null,
-            show: false,
+            display: false,
           },
           matters3: {
             note: null,
-            show: false,
+            display: false,
           },
           matters4: {
             note: null,
-            show: false,
+            display: false,
           },
           matters5: {
             note: null,
-            show: false,
+            display: false,
           },
         },
         options: [{
@@ -213,10 +213,20 @@
           }
         })
       },
+      compare(arr1, arr2) {
+        return arr1.ipMatId-arr2.ipMatId
+      },
       alterMatters(val) {
         getListMatters(val).then(res => {
           if(res.flag) {
-            console.log(res.data)
+            const matterArray = res.data.sort(this.compare)
+            let martterObj = {}
+            matterArray.forEach((item,index) => {
+              martterObj['matters'+index] = item
+
+            })
+            console.log(martterObj)
+            this.matters = martterObj
           }
         })
       },

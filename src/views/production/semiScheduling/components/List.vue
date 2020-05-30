@@ -48,25 +48,25 @@
         let stau = ''
         for(let i in row) {
           if (row[column.property] == 1) {
-            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+            if(row['isClash' + column.property.replace('alertStatus','')]) {
               stau = '延误,冲突'
             } else {
               stau = '延误'
             }
           } else if (row[column.property] == 3) {
-            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+            if(row['isClash' + column.property.replace('alertStatus','')]) {
               stau = '加急,冲突'
             } else {
               stau = '加急'
             }
           } else if (row[column.property] == 4) {
-            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+            if(row['isClash' + column.property.replace('alertStatus','')]) {
               stau = '暂停,冲突'
             } else {
               stau = '暂停'
             }
           } else {
-            if(row['allocatedStatus' + column.property.replace('alertStatus','')] == '冲突') {
+            if(row['isClash' + column.property.replace('alertStatus','')]) {
               stau = '正常,冲突'
             } else {
               stau = '正常'
@@ -80,25 +80,25 @@
           for(let i in row){
             if(i.replace(/\d+/g,"") == 'alertStatus'){
               if (row[column.property] == 3) {
-                if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                if(row['isClash' + column.property.split("alertStatus")[1]]){
                   return 'suspended-row1'
                 }else{
                   return 'urgent-row'
                 }
               } else if (row[column.property] == 4) {
-                if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                if(row['isClash' + column.property.split("alertStatus")[1]]){
                   return 'suspended-row2'
                 }else{
                   return 'conflict-row'
                 }
               } else if (row[column.property] == 1) {
-                if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                if(row['isClash' + column.property.split("alertStatus")[1]]){
                   return 'suspended-row3'
                 }else{
                   return 'delay-row'
                 }
               } else if (row[column.property] == 0) {
-                if(row['allocatedStatus' + column.property.split("alertStatus")[1]]=='冲突'){
+                if(row['isClash' + column.property.split("alertStatus")[1]]){
                   return 'suspended-row0'
                 }else{
                   return ''

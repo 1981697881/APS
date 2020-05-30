@@ -167,6 +167,7 @@ export default {
     },
     print() {
       if (this.clickData.gid) {
+        this.$emit('printDialog', this.clickData)
        /* PrintFour(this.selections)
         LODOP.PREVIEW()*/
       } else {

@@ -32,18 +32,43 @@
     </el-form>
     <el-dialog
       :visible.sync="visible"
-      title="下单数量"
+      title="新增"
       v-if="visible"
       :width="'30%'"
       v-dialogDrag
       destroy-on-close
       append-to-body
     >
-      <el-form>
+      <el-form :rules="rules">
         <el-row :gutter="20" type="flex" justify="center">
           <el-col :span="12">
-            <el-form-item :label="'下单数量'">
-              <el-input-number v-model="num1"  :min="1" label="请输入数量"></el-input-number>
+            <el-form-item :label="'每托/桶或箱'">
+              <el-input-number v-model="apiece"  label="请输入数量" :min="0"></el-input-number>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="'打印/张'">
+              <el-input-number v-model="printingQuantity" label="请输入数量" :min="1"></el-input-number>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" type="flex" justify="center">
+          <el-col :span="12">
+            <el-form-item :label="'打印模板'">
+              <el-select v-model="printModel" placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="'打印批号'">
+              <!--<el-input-number v-model="repeat"  label="请输入数量" :min="0"></el-input-number>-->
+              <el-input v-model="form.lotNo"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -52,15 +77,14 @@
         <el-button type="primary" @click.native="saveNum">确定</el-button>
       </div>
     </el-dialog>
-    <div slot="footer" style="text-align:center;padding-top: 15px">
-      <el-button type="warning" @click.native="rejected">驳回</el-button>
-      <el-button type="primary" @click.native="audit">审核</el-button>
-    </div>
+ <!--   <div slot="footer" style="text-align:center;padding-top: 15px">
+      <el-button type="success" @click.native="add">新增</el-button>
+    </div>-->
   </div>
 </template>
 
 <script>
-  import { saleInfo,auditOrder,Dismissed} from "@/api/basic/index";
+  import { getMattersPrint } from "@/api/basic/index";
 
   export default {
     props: {
@@ -73,71 +97,64 @@
       return {
         visible: false,
         form: {
-          oid: null,
+          gid: null,
         },
+        repeat: 0,
+        printingQuantity: 1,
+        apiece: 0,
+        printModel: null,
         loading: false,
+        options: [{
+          value: '0',
+          label: '自有产品标签'
+        }, {
+          value: '1',
+          label: 'OEM产品_加固剂&防水宝标签'
+        }, {
+          value: '2',
+          label: 'OEM产品_美瓷胶标签'
+        }, {
+          value: '3',
+          label: '色石&Base标签'
+        }, {
+          value: '4',
+          label: '美瓷胶标签'
+        }],
         list: [],
         columns: [
           { text: "gid", name: "gid",default:false },
-          { text: "商品名称", name: "goodName" },
-          { text: "商品编码", name: "goodCode" },
-          { text: "下单数量", name: "num" },
-          { text: "实发数量", name: "actualNum" },
-          { text: "价格", name: "phone" },
+          { text: "U9料号", name: "goodCode" },
+          { text: "名称", name: "goodName" },
+          { text: "旧料号", name: "oldCode" },
+          { text: "规格", name: "spec" },
+          { text: "批号", name: "lotNo" },
+          { text: "打印时间", name: "" },
         ],
       };
     },
     created() {
     },
     mounted() {
-      this.form.oid=this.oid
-      this.form.orderId=this.orderId
-      this.form.createTime=this.createTime
-      if (this.form.oid) {
-        this.fetchData(this.form.oid);
+      this.form.gid = this.listInfo.gid
+      if (this.form.gid) {
+        this.fetchData(this.listInfo.gid)
       }
     },
     methods: {
       //修改数量
       alterNum(row) {
-        this.obj = row;
+        this.form = row;
         this.visible = true;
       },
       saveNum(){
+        console.log(this.form)
         this.visible = false
-        this.obj["actualNum"]=this.num1
-        this.num1=1
       },
-      audit() {
-        let list=this.list,array=[]
-        if (list.length > 0) {
-          for (const i in list) {
-            var jbj = {}
-            jbj.gid = list[i].gid
-            jbj.oid = this.form.oid
-            jbj.actualNum = list[i].actualNum
-            array.push(jbj)
-          }
-          auditOrder(array).then(res => {
-            this.$emit('hideDialog', false)
-            this.$emit('uploadList')
-          });
-        } else {
-          return this.$message({
-            message: "无退货商品",
-            type: "warning"
-          })
-        }
-      },
-      rejected() {
-        Dismissed(this.form.oid).then(res => {
-          this.$emit('hideDialog', false)
-          this.$emit('uploadList')
-
-        })
+      add() {
+        this.visible = true
       },
       fetchData(val) {
-        saleInfo(val).then(res => {
+        getMattersPrint(val).then(res => {
           this.list = res.data;
         });
       },

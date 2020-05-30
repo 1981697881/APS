@@ -748,3 +748,14 @@ export function getListMatters(params) {
     method: 'post'
   })
 }
+// 物料管理-查询打印历史
+export function getMattersPrint(params) {
+  const url = '/barcode/barcodeByGid/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx')
+    },
+    method: 'get'
+  })
+}

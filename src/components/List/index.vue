@@ -111,7 +111,7 @@ export default {
   methods: {
     taskWarning(row, column) {
       let stau = ''
-      if(row.allocatedStatus == '冲突'){
+      if(row.isClash){
         if(row.alertStatus == 1) {
           stau = '延误,冲突'
         }else if(row.alertStatus == 2) {
@@ -139,7 +139,7 @@ export default {
       return  stau
     },
     tableRowClassName({row, rowIndex}) {
-      if(row.allocatedStatus == '冲突'){
+      if(row.isClash){
         if (row.alertStatus == 3) {
           return 'suspended-row1';
         } else if (row.alertStatus == 1) {
@@ -163,7 +163,6 @@ export default {
     },
     // 监听多选 参数-所有选中的值
     handleSelectionChange(val){
-      console.log(val)
       this.$store.dispatch('list/setSelections',val)
     },
     getSummaries(param) {
