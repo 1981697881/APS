@@ -106,8 +106,8 @@
               array.push(obj)
             })
             empBind(array).then(res => {
-                this.$emit('hideDialog')
-                this.$emit('uploadList')
+                this.$emit('hideDialog', false)
+                this.$emit('uploadList', this.form.oowId)
               });
           } else {
             return false

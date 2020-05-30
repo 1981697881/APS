@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @syncDialog="handlerSyncDialog" @queryBtn="query"  @delList="delivery" @uploadList="upload"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @syncDialog="handlerSyncDialog" @printDialog="handlerPrintDialog" @queryBtn="query"  @delList="delivery" @uploadList="upload"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog" @uploadList="upload"/>
     </div>
@@ -16,7 +16,7 @@
       :width="'50%'"
       destroy-on-close
     >
-      <info @hideDialog="hideWindow" :gid="gid" @uploadList="upload" ></info>
+      <info @hideDialog="hideWindow" :listInfo="listInfo" @uploadList="upload" ></info>
 
     </el-dialog>
     <el-dialog
@@ -30,17 +30,28 @@
       <sync-info @hideDialog="hideSyncWindow"  @uploadList="upload" ></sync-info>
 
     </el-dialog>
+    <el-dialog
+      :visible.sync="visible3"
+      title="打印信息"
+      v-if="visible3"
+      :width="'50%'"
+      v-dialogDrag
+      destroy-on-close
+    >
+      <print-detail @hideDialog="hidePrintWindow" :listInfo="listInfo" @uploadList="upload" ></print-detail>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { TabsBar, List } from "./components";
-import { Info, syncInfo } from "./form";
+import { Info, syncInfo, printDetail } from "./form";
 
 export default {
   components: {
     TabsBar,
     List,
+    printDetail,
     syncInfo,
     Info
   },
@@ -48,11 +59,8 @@ export default {
     return {
       visible: null,
       visible2: null,
-      gid: null,
-      orderId: null,
-      createTime: null,
-      treeId: null,
-      floorId: null
+      visible3: null,
+      listInfo: null,
     };
   },
   mounted() {
@@ -67,16 +75,30 @@ export default {
     hideWindow(val){
       this.visible = val
     },
-    handlerDialog(obj){
-      if(obj)this.gid = obj.gid
-      this.visible = true
+    handlerDialog(obj) {
+      this.listInfo = null
+      if (obj) {
+        this.obj = JSON.parse(JSON.stringify(obj));
+        this.listInfo = this.obj
+        this.visible = true
+      }
     },
-    hideSyncWindow(val){
+    hideSyncWindow(val) {
       this.visible2 = val
     },
-    handlerSyncDialog(obj){
-      if(obj)this.gid = obj.gid
+    hidePrintWindow(val) {
+      this.visible3 = val
+    },
+    handlerSyncDialog(obj) {
       this.visible2 = true
+    },
+    handlerPrintDialog(obj) {
+      this.listInfo = null
+      if (obj) {
+        this.obj = JSON.parse(JSON.stringify(obj));
+        this.listInfo = this.obj
+        this.visible3 = true
+      }
     },
     // 更新列表
     upload(){

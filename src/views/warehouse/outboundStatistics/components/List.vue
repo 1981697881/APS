@@ -32,8 +32,8 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: 'gid', name: 'gid',default:false },
-        { text: '出库单号', name: '', width: '100px', sort: true },
+        { text: 'gid', name: 'gid',default: false },
+        { text: '出库单号', name: 'outNo', width: '100px', sort: true },
         { text: '出库日期', name: 'createTime', sort: true },
         { text: 'U9料号', name: 'goodCode', width: '150px' },
         { text: '品名', name: 'goodName' },
@@ -41,8 +41,8 @@ export default {
         { text: '规格', name: 'spec' },
         { text: '批号', name: 'lotNo' },
         { text: '数量', name: 'num' },
-        { text: '库位号', name: 'positionName' },
-        { text: '出库去向', name: 'positionName' },
+        { text: '库位号', name: 'positionCode' },
+        { text: '出库去向', name: 'outbound' },
         { text: '操作员', name: 'username' },
       ]
     };

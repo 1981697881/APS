@@ -10,60 +10,15 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'编码'" prop="goodCode">
-            <el-input v-model="form.goodCode"></el-input>
+          <el-form-item :label="'最高库存'" prop="max_stock">
+            <el-input-number v-model="form.maxStock"></el-input-number>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'名称'" prop="goodName">
-            <el-input v-model="form.goodName"></el-input>
+          <el-form-item :label="'最低库存'" prop="min_stock">
+            <el-input-number v-model="form.minStock" :max="form.maxStock"></el-input-number>
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'规格'" prop="roleName">
-            <el-input v-model="form.roleName"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'色号'" prop="roleName">
-            <el-input v-model="form.roleName"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'物料类别'" >
-            <el-select v-model="form.roleLevel" class="width-full" placeholder="请选择用户权限">
-              <el-option :label="t[1]" :value="t[0]" v-for="(t,i) in levelFormat" :key="i"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'计量单位'" >
-            <el-select v-model="form.pidS" multiple  placeholder="请选择">
-              <el-option
-                v-for="(t,i) in pArray"
-                :key="i"
-                :label="t.permissionName"
-                :value="t.pid">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item :label="'安全数量'" prop="roleName">
-              <el-input v-model="form.roleName"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item :label="'旧料号'" prop="oldCode">
-              <el-input v-model="form.oldCode"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
       </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">
@@ -73,60 +28,53 @@
 </template>
 
 <script>
-import {syncMaterialInfo} from "@/api/basic/index";
+import {materialAlter} from "@/api/basic/index";
 
 export default {
   props: {
-    gid: {
-      type: Number,
+    listInfo: {
+      type: Object,
       default: null
     }
   },
   data() {
     return {
       form: {
-          gid: null,
-        goodCode: null, // 名称
-        goodName:null,
-        oldCode:null,
+        gid: null,
+        maxStock: null, // 名称
+        minStock: null,
       },
-        pidS:[],
-        pArray:[],
-        rules: {
-          goodCode: [
-                {required: true, message: '请输入编码', trigger: 'blur'},
-            ],
-          goodName: [
-            {required: true, message: '请输入名稱', trigger: 'blur'},
-          ],
-            roleLevel: [
-                {required: true, message: '请选择等级', trigger: 'change'},
-            ],
-
-        },
-      levelFormat: [[1,'一级'],[2,'二级']]
+      rules: {
+        maxStock: [
+          {required: true, message: '请输入最高库存', trigger: 'blur'},
+        ],
+        minStock: [
+          {required: true, message: '请输入最低库存', trigger: 'blur'},
+        ],
+      },
     };
   },
   created() {
-
+    this.form.gid = this.listInfo.gid
+    this.form.maxStock = (this.listInfo.maxStock == null?0:this.listInfo.maxStock)
+    this.form.minStock = (this.listInfo.minStock == null?0:this.listInfo.minStock)
   },
   mounted() {
 
   },
   methods: {
     saveData(form) {
-        this.$refs[form].validate((valid) => {
-            //判断必填项
-            if (valid) {
-              syncMaterialInfo(this.form).then(res => {
-                        this.$emit('hideSyncDialog', false)
-                        this.$emit('uploadList')
-                    })
-            }else {
-                return false;
-            }
-        })
-
+      this.$refs[form].validate((valid) => {
+        //判断必填项
+        if (valid) {
+          materialAlter(this.form).then(res => {
+            this.$emit('hideDialog', false)
+            this.$emit('uploadList')
+          })
+        }else {
+          return false;
+        }
+      })
     },
   }
 };

@@ -121,7 +121,7 @@
 </template>
 
 <script>
-  import{ resourcesAdd, resourcesAlter, regulationList, productionRules } from "@/api/basic/index"
+  import{ resourcesAdd, resourcesAlter, regulationList, productionRules, getListMatters } from "@/api/basic/index"
   export default {
     props: {
       gpInfo: {
@@ -198,6 +198,7 @@
         this.form.type = this.gpInfo.parent
         console.log(this.form)
         this.alterFormat(this.form.tpId)
+        this.alterMatters(this.form.tpId)
       }
     },
     mounted() {
@@ -209,6 +210,13 @@
           if(res.flag) {
             this.form.rules = res.data
             console.log(this.form)
+          }
+        })
+      },
+      alterMatters(val) {
+        getListMatters(val).then(res => {
+          if(res.flag) {
+            console.log(res.data)
           }
         })
       },

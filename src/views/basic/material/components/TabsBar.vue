@@ -28,7 +28,7 @@
         <el-button-group style="float:right">
           <!--<el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAdd">新增</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="del">删除</el-button>-->
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAlter">信息维护</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleAlter">信息维护</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
@@ -124,9 +124,7 @@ export default {
     },
     handleAlter() {
       if (this.clickData.gid) {
-        this.$emit('showDialog',{
-          gid: this.clickData.gid,
-        })
+        this.$emit('showDialog', this.clickData)
       } else {
         this.$message({
           message: "无选中行",
@@ -168,9 +166,9 @@ export default {
       }
     },
     print() {
-      if (this.selections.length>0) {
-        PrintFour(this.selections)
-        LODOP.PREVIEW()
+      if (this.clickData.gid) {
+       /* PrintFour(this.selections)
+        LODOP.PREVIEW()*/
       } else {
         this.$message({
           message: "无选中行",

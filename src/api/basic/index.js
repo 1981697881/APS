@@ -139,10 +139,8 @@ export function materialAlter(params) {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    method: 'put',
-    data: {
-      goods: params
-    }
+    method: 'post',
+    data: params
   })
 }
 // 物料管理-同步物料

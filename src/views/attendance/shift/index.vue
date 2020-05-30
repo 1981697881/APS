@@ -92,8 +92,8 @@ export default {
       this.$refs.tree.fetchData()
     },
     // 更新列表
-    uploadSch() {
-      this.$refs.list.fetchData(this.oowId)
+    uploadSch(val) {
+      this.$refs.list.fetchData(val)
     },
     handlerNode(val) {
       this.oowId = val.oowId
