@@ -39,7 +39,7 @@
       destroy-on-close
       append-to-body
     >
-      <el-form :rules="rules">
+      <el-form :rules="rules" :model="form">
         <el-row :gutter="20" type="flex" justify="center">
           <el-col :span="12">
             <el-form-item :label="'每托/桶或箱'">
@@ -54,8 +54,8 @@
         </el-row>
         <el-row :gutter="20" type="flex" justify="center">
           <el-col :span="12">
-            <el-form-item :label="'打印模板'">
-              <el-select v-model="printModel" placeholder="请选择">
+            <el-form-item :label="'打印模板'" prop="printModel">
+              <el-select v-model="form.printModel" placeholder="请选择">
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -66,7 +66,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'打印批号'">
+            <el-form-item :label="'打印批号'" prop="lotNo">
               <!--<el-input-number v-model="repeat"  label="请输入数量" :min="0"></el-input-number>-->
               <el-input v-model="form.lotNo"></el-input>
             </el-form-item>
@@ -74,12 +74,12 @@
         </el-row>
       </el-form>
       <div slot="footer" style="text-align:center">
-        <el-button type="primary" @click.native="saveNum">确定</el-button>
+        <el-button type="primary" @click.native="saveNum('form')">确定</el-button>
       </div>
     </el-dialog>
- <!--   <div slot="footer" style="text-align:center;padding-top: 15px">
+    <div slot="footer" style="text-align:center;padding-top: 15px">
       <el-button type="success" @click.native="add">新增</el-button>
-    </div>-->
+    </div>
   </div>
 </template>
 
@@ -98,6 +98,14 @@
         visible: false,
         form: {
           gid: null,
+          printModel: null,
+        },
+        rules: {
+          printModel: [
+            {required: true, message: '请输入模板', trigger: 'change'},
+          ],lotNo: [
+            {required: true, message: '请输入编码', trigger: 'blur'},
+          ],
         },
         repeat: 0,
         printingQuantity: 1,
@@ -146,9 +154,16 @@
         this.form = row;
         this.visible = true;
       },
-      saveNum(){
-        console.log(this.form)
-        this.visible = false
+      saveNum(form){
+        this.$refs[form].validate((valid) => {
+          //判断必填项
+          if (valid) {
+            this.visible = false
+          }else{
+            return false;
+          }
+        })
+
       },
       add() {
         this.visible = true
