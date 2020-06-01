@@ -41,6 +41,18 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20" v-if="!form.isPalette">
+        <el-col :span="12">
+          <el-form-item :label="'单批次数量(kg)'">
+            <el-input-number v-model="form.singleLotNum" @change="formSigle1" :min="1" ></el-input-number>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'批次数'">
+            <el-input-number v-model="form.lotNum" @change="formSigle2"  :min="1" ></el-input-number>
+          </el-form-item>
+        </el-col>
+      </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'计划数量'" prop="allocatedNum">
@@ -103,6 +115,8 @@
           taskId: null,
           tips: null,
           isSemi: 1,
+          singleLotNum: null,
+          lotNum: null,
           oldCode: null,
           alertStatus: null,
           plId: null,
@@ -144,8 +158,6 @@
       }
     },
     created() {
-    },
-    mounted() {
       this.fetchFormat()
       if (this.listInfo) {
         if(this.listInfo.flag) {
@@ -162,7 +174,16 @@
         }
       }
     },
+    mounted() {
+
+    },
     methods: {
+      formSigle1(val) {
+        this.form.allocatedNum = val * this.form.lotNum
+      },
+      formSigle2(val) {
+        this.form.allocatedNum = val * this.form.singleLotNum
+      },
       // 切换类别
       selectChange(val) {
         this.disPl = false

@@ -42,6 +42,7 @@
 import { TabsBar, List  } from "./components"
 import { Info, Report} from "./form"
 import { getMcjSemiSchedulingType } from "@/api/basic"
+import { schedulingDel } from "@/api/production/index"
 export default {
   components: {
     TabsBar,
@@ -56,6 +57,7 @@ export default {
       visibleR: null,
       plaIdS: null,
       plaArray: [],
+      batch: null,
     };
   },
   mounted() {
@@ -64,22 +66,25 @@ export default {
 
   methods: {
     selectChange(val) {
-      let batch = null
       this.plaArray.forEach((item, index) =>{
         if(item.tpId == val) {
           if (item.tpName == '美瓷胶调色线') {
-            batch = true
+            this.batch = true
           } else {
-            batch = false
+            this.batch = false
           }
         }
       })
-      this.$refs.list.resetBatch(batch)
+      this.$refs.list.resetBatch(this.batch)
       this.upload({tpId: val })
     },
     delivery(obj) {
       if(obj) {
-
+        schedulingDel(obj.taskId).then(res => {
+          if (res.flag) {
+            this.upload({ tpId: this.plaIdS })
+          }
+        })
       }
     },
     fetchFormat() {
@@ -107,8 +112,13 @@ export default {
       this.visibleR = true
     },
     handlerDialog(obj) {
-      this.listInfo = null
-      if(obj){
+      this.listInfo = {}
+      if(this.batch) {
+        this.listInfo.isPalette = true
+      } else {
+        this.listInfo.isPalette = false
+      }
+      if(obj) {
         if(obj.length > 0) {
           const listBlank = obj[0]
           const listInfo = {}
@@ -127,11 +137,10 @@ export default {
           });
         }
       } else {
-        this.listInfo = {
-          flag: true,
-          tpId: this.plaIdS
-        }
+        this.listInfo.flag = false
+        this.listInfo.tpId = this.plaIdS
       }
+      console.log(this.listInfo)
       this.visible = true
     },
     // 更新列表

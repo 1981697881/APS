@@ -41,6 +41,7 @@
 import { TabsBar, List } from "./components"
 import { Info, Report} from "./form"
 import { getMcjSchedulingType } from "@/api/basic"
+import { schedulingDel } from "@/api/production/index"
 export default {
   components: {
     TabsBar,
@@ -66,16 +67,20 @@ export default {
     },
     delivery(obj) {
       if(obj) {
-
+        schedulingDel(obj.taskId).then(res => {
+          if (res.flag) {
+            this.upload({ tpId: this.plaIdS })
+          }
+        })
       }
     },
     fetchFormat() {
       getMcjSchedulingType().then(res => {
-        if(res.flag) {
+        if (res.flag) {
           console.log(res)
           this.plaArray = res.data
           this.plaIdS = res.data[0].tpId
-          this.$refs.list.fetchData({tpId: this.plaIdS})
+          this.$refs.list.fetchData({ tpId: this.plaIdS })
         }
       })
     },

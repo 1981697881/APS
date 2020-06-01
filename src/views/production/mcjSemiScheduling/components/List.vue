@@ -157,7 +157,7 @@
             var arr = []
             // 根据时间生成表头 把时间包含数据重新组装 -》array
             for (const i in data) {
-              columns.push({text: i + '', name: i + '', colspan: true, data: [{text: '旧料号', name: 'oldCode' + count}, {text: '单批次数量（kg）', default: this.isBatch, name: 'singleBatch' + count }, {text: '批次数', default: this.isBatch, name: 'batch' + count }, {text: '数量(kg)', name: 'allocatedNum' + count},{text: '生产状态', name: 'allocatedStatus' + count},{text: '任务警示', name: 'alertStatus' + count, formatt: 'taskWarning'}]})
+              columns.push({text: i + '', name: i + '', colspan: true, data: [{text: '旧料号', name: 'oldCode' + count}, {text: '单批次数量（kg）', default: this.isBatch, name: 'singleLotNum' + count }, {text: '批次数', default: this.isBatch, name: 'lotNum' + count }, {text: '数量(kg)', name: 'allocatedNum' + count},{text: '生产状态', name: 'allocatedStatus' + count},{text: '任务警示', name: 'alertStatus' + count, formatt: 'taskWarning'}]})
               count++
               data[i][0].time = i
               array.push(data[i])
@@ -176,6 +176,8 @@
                   eval("obj.plId" + index + "='" + item2.plId + "'")
                   eval("obj.tpId" + index + "='" + item2.tpId + "'")
                   eval("obj.alertStatus" + index + "=" + item2.alertStatus )
+                  eval("obj.singleLotNum" + index + "=" + item2.singleLotNum )
+                  eval("obj.lotNum" + index + "=" + item2.lotNum )
                   eval("obj.alertStatus" + index + "=" + item2.isClash )
                   eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
                   eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
@@ -192,6 +194,8 @@
                   eval("arr["+index2+"].isClash" + index + "='" + item2.isClash + "'")
                   eval("arr["+index2+"].alertStatus" + index + "=" + item2.alertStatus )
                   eval("arr["+index2+"].plId" + index + "='" + item2.plId + "'")
+                  eval("arr["+index2+"].singleLotNum" + index + "='" + item2.singleLotNum + "'")
+                  eval("arr["+index2+"].lotNum" + index + "='" + item2.lotNum + "'")
                   eval("arr["+index2+"].tpId" + index + "='" + item2.tpId + "'")
                   eval("arr["+index2+"].productionDate" + index + "='" + item2.productionDate + "'")
                   eval("arr["+index2+"].remark" + index + "='" + (item2.remark == null? '' : item2.remark) + "'")

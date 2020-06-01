@@ -105,6 +105,17 @@ export function schedulingStop(params) {
     method: 'post',
   })
 }
+// 生产排程-删除
+export function schedulingDel(params) {
+  const url = '/task-scheduling/delete/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'delete',
+  })
+}
 // 生产排程-标签打印
 export function schedulingPrint(params) {
   const url = '/barcode/barcodeTaskScheduling'
@@ -116,5 +127,19 @@ export function schedulingPrint(params) {
     },
     method: 'post',
     data: params
+  })
+}
+// 半成品-导出
+export function exportSemiSchedulin(data) {
+  const url = '/excel/export/semiTaskScheduling'
+  return request({
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    responseType: 'blob',
+    url: url,
+    method: 'post',
+    data: data
   })
 }

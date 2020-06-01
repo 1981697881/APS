@@ -6,7 +6,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
-          <!-- <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>-->
+           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint">打印</el-button>
         </el-button-group>
@@ -44,6 +44,7 @@
 <script>
   import { mapGetters } from "vuex";
   import { PrintSemi } from '@/tools/doPrint'
+  import { schedulingStop } from "@/api/production/index"
   export default {
     components: {},
     computed: {
@@ -171,14 +172,32 @@
         this.$emit('uploadList')
       },
       delivery() {
-        if (this.clickData.taskId) {
-          this.$message({
-            message: "抱歉，功能尚未完善！",
-            type: "warning"
+        const clickData = this.clickData
+        if(clickData.length > 0) {
+          const listBlank = clickData[0]
+          const listInfo = {}
+          for(const i in listBlank) {
+            if(i.match(/\d+/g) != null) {
+              if(i.match(/\d+/g)[0] == clickData[1]) {
+                eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + "'")
+              }
+            }
+          }
+          listInfo.isF = 1
+          this.$confirm('是否删除(' + listInfo.oldCode + ')，删除后将无法恢复?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$emit('theDelivery',{
+              taskId: listInfo.taskId,
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });
           });
-          /* this.$emit('theDelivery',{
-             taskId: this.clickData.taskId,
-           })*/
         } else {
           this.$message({
             message: "无选中行",
@@ -204,10 +223,11 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.$message({
-              message: "抱歉，功能尚未完善！",
-              type: "warning"
-            });
+            schedulingStop(listInfo.taskId).then(res => {
+              if (res.flag) {
+                this.$emit('uploadList')
+              }
+            })
           }).catch(() => {
             this.$message({
               type: 'info',

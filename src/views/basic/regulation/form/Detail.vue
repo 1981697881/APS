@@ -32,6 +32,13 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'不匹配的编码'" prop="exMatchCode">
+            <el-input v-model="form.exMatchCode"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
         <!--<el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'数量大于'" >
@@ -77,6 +84,8 @@ export default {
                 {required: true, message: '请输入编码', trigger: 'blur'},
             ],
           matchCode: [
+            {required: true, message: '请输入编码', trigger: 'blur'},
+          ], exMatchCode: [
             {required: true, message: '请输入编码', trigger: 'blur'},
           ],
         },

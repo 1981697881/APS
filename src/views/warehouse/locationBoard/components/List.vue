@@ -55,19 +55,24 @@ export default {
     dblclick(obj) {
       // this.$emit('showDialog',obj.row)
     },
+    uploadPr(val) {
+      this.fetchData(val, {
+        pageNum: 1,
+        pageSize: this.list.size || 50
+      })
+    },
     // 监听单击某一行
     rowClick(obj) {
       this.$store.dispatch("list/setClickData", obj.row);
     },
-    fetchData(fid, type) {
-      this.loading = true;
-      const data = {
+    fetchData(val, data = {
       /*  fid: fid,
         type: type,*/
-        pageNum: this.list.current || 1,
-        pageSize: this.list.size || 50
-      };
-      getLocationBoardList(data).then(res => {
+      pageNum: this.list.current || 1,
+      pageSize: this.list.size || 50
+    }) {
+      this.loading = true;
+      getLocationBoardList(data, val).then(res => {
         this.loading = false;
         this.list = {records: [res.data]}
       });

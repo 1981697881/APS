@@ -42,6 +42,7 @@
 import { TabsBar, List } from "./components"
 import { Info, Report} from "./form"
 import { getFinalGoodsType } from "@/api/basic"
+import { schedulingDel } from "@/api/production/index"
 export default {
   components: {
     TabsBar,
@@ -67,7 +68,11 @@ export default {
     },
     delivery(obj) {
       if(obj) {
-
+        schedulingDel(obj.taskId).then(res => {
+          if (res.flag) {
+            this.upload({ tpId: this.plaIdS })
+          }
+        })
       }
     },
     fetchFormat() {

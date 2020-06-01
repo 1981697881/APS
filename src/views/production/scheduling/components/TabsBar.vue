@@ -6,7 +6,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
-          <!--<el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>-->
+          <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint" >打印</el-button>
           <!--<el-popover
@@ -146,13 +146,20 @@ export default {
     },
     delivery() {
       if (this.clickData.taskId) {
-        this.$message({
-          message: "抱歉，功能尚未完善！",
-          type: "warning"
+        this.$confirm('是否删除(' + this.clickData.oldCode + ')，删除后将无法恢复?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$emit('theDelivery',{
+            taskId: this.clickData.taskId,
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
         });
-        /*this.$emit('theDelivery',{
-          taskId: this.clickData.taskId,
-        })*/
       } else {
         this.$message({
           message: "无选中行",
@@ -179,7 +186,9 @@ export default {
           type: 'warning'
         }).then(() => {
           schedulingStop(this.clickData.taskId).then(res => {
-            this.$emit('uploadList')
+            if (res.flag) {
+              this.$emit('uploadList')
+            }
           })
         }).catch(() => {
           this.$message({

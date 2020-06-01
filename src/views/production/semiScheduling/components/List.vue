@@ -30,7 +30,6 @@
 <script>
   import {mapGetters} from "vuex";
   import {getSemiList} from "@/api/production/index";
-
   export default {
     computed: {
       ...mapGetters(["node"])

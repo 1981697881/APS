@@ -45,7 +45,7 @@ export default {
         { text: '出货数量', name: 'qty' },
         { text: '库存数量', name: 'stockNum' },
         { text: '仓库名', name: 'wareName' },
-        { text: '核准人', name: 'auditStatus' },
+        { text: '核准人', name: 'confirmBy' },
         { text: '核准', name: 'auditStatus' },
         { text: '创建人', name: 'createBy' },
         { text: '最近同步时间', name: 'syncTime', width: '150px' },

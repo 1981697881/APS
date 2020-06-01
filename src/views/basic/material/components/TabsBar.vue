@@ -1,10 +1,15 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'50px'">
+    <el-form v-model="search" :size="'mini'" :label-width="'70px'">
       <el-row :gutter="10">
         <el-col :span="3">
-          <el-form-item :label="'料号'">
+          <el-form-item :label="'U9料号'">
             <el-input v-model="search.goodCode" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'旧料号'">
+            <el-input v-model="search.oldCode" />
           </el-form-item>
         </el-col>
         <el-col :span="7" style="display: inline-block">
@@ -85,8 +90,8 @@ export default {
       }],
       value: '',
       search: {
-        keyword: null,
-        type:null
+        oldCode: null,
+        goodCode: null
       }
     };
   },
@@ -101,6 +106,7 @@ export default {
     qFilter() {
       let obj = {}
       this.search.goodCode != null && this.search.goodCode != '' ? obj.goodCode = this.search.goodCode : null
+      this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       this.value[1] != null && this.value[1] != undefined ? obj.syncTimeEnd = this.value[1] : null
       this.value[0] != null && this.value[0] != undefined ? obj.syncTimeStart = this.value[0] : null
       return obj
@@ -119,6 +125,7 @@ export default {
     },
     upload() {
       this.search.goodCode = null
+      this.search.oldCode = null
       this.value = []
       this.$emit("uploadList")
     },

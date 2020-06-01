@@ -20,7 +20,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="3">
-          <el-form-item :label="'出货单号'">
+          <el-form-item :label="'色号'">
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>

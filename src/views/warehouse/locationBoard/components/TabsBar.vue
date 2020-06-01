@@ -2,9 +2,12 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
-        <el-col :span="4">
-          <el-form-item :label="'关键字'">
-            <el-input v-model="search.keyword" />
+        <el-col :span="3">
+          <el-form-item :label="'仓库'" prop="plaIdS">
+            <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
+              <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -19,6 +22,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex"
+import {getWarehouseList} from "@/api/basic/index"
 export default {
     components: {},
     computed: {
@@ -26,23 +30,38 @@ export default {
     },
   data() {
     return {
+      plaArray: [],
+      parent: null,
       search: {
-          keyword: null,
+        keyword: null,
       }
     };
   },
   mounted(){
-
+    this.fetchWare(-1)
   },
   methods:{
+    // 切换仓库
+    selectWorn(val) {
+      this.$emit('queryBtn', this.qFilter())
+    },
     upload() {
       this.$emit('uploadList')
       this.search.keyword = ''
+      this.parent = null
+    },
+    fetchWare(val) {
+      getWarehouseList(val).then(res => {
+        if(res.flag) {
+          this.plaArray = res.data
+        }
+      })
     },
     // 查询条件过滤
     qFilter() {
       let obj = {}
       this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
+      this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
       return obj
     },
     // 关键字查询
