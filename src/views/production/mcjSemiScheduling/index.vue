@@ -112,12 +112,7 @@ export default {
       this.visibleR = true
     },
     handlerDialog(obj) {
-      this.listInfo = {}
-      if(this.batch) {
-        this.listInfo.isPalette = true
-      } else {
-        this.listInfo.isPalette = false
-      }
+      this.listInfo = null
       if(obj) {
         if(obj.length > 0) {
           const listBlank = obj[0]
@@ -137,8 +132,15 @@ export default {
           });
         }
       } else {
-        this.listInfo.flag = false
-        this.listInfo.tpId = this.plaIdS
+        this.listInfo = {
+          flag: true,
+          tpId: this.plaIdS
+        }
+      }
+      if(this.batch) {
+        this.listInfo.isPalette = true
+      } else {
+        this.listInfo.isPalette = false
       }
       console.log(this.listInfo)
       this.visible = true

@@ -8,6 +8,25 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
            <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
+           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
+          <el-upload
+            name="order"
+            :on-success="uploadSuccess"
+            :on-error="uploadError"
+            accept="xlsx,xls"
+            ref="upload"
+            :headers="headers"
+            :show-file-list="false"
+            action="excel/import/semiTaskScheduling"
+            class="upload-demo"
+            multiple
+            :auto-upload="false"
+            :on-change="handleUpload"
+            :limit="1"
+          >
+            <el-button size="mini" type="primary" icon="el-icon-upload2" >导入</el-button>
+            <el-button style="margin-left: 10px;display: none" size="mini" type="success" @click="submitUpload">上传到服务器</el-button>
+          </el-upload>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint">打印</el-button>
         </el-button-group>
       </el-row>
@@ -44,7 +63,8 @@
 <script>
   import { mapGetters } from "vuex";
   import { PrintSemi } from '@/tools/doPrint'
-  import { schedulingStop } from "@/api/production/index"
+  import { schedulingStop, exportSemiSchedulin } from "@/api/production/index"
+  import {getToken} from '@/utils/auth'
   export default {
     components: {},
     computed: {
@@ -52,6 +72,10 @@
     },
     data() {
       return {
+        headers: {
+          'authorization': getToken('apsrx'),
+        },
+        isUpload: null,
         value: [],
         pickerOptions: {
           shortcuts: [{
@@ -93,6 +117,53 @@
       this.$emit('firstLoad', this.value)
     },
     methods: {
+      submitUpload() {
+        this.$refs.upload.submit()
+      },
+      uploadError(res) {
+        this.$message({
+          message: '上传失败',
+          type: "warning"
+        });
+        this.$emit('uploadList')
+      },
+      uploadSuccess(res) {
+        if(res.flag){
+          this.$message({
+            message: res.msg,
+            type: "success"
+          });
+          this.$emit('uploadList')
+        }else{
+          this.$message({
+            message: res.msg,
+            type: "warning"
+          });
+        }
+      },
+      handleUpload(file, fileList){
+        if(file.status=="ready"){
+          this.submitUpload()
+        }
+      },
+      // 下载文件
+      download(res) {
+        if (!res.data) {
+          return
+        }
+        let url = window.URL.createObjectURL(new Blob([res.data]))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', res.headers['content-disposition'].split('filename=')[1])
+        document.body.appendChild(link)
+        link.click()
+      },
+      exportData() {
+        exportSemiSchedulin(this.qFilter()).then(res => {
+          this.download(res)
+        })
+      },
       report() {
         const clickData = this.clickData
         if(clickData.length > 0) {
@@ -253,4 +324,7 @@
 </script>
 
 <style>
+  .upload-demo{
+    float: right;
+  }
 </style>

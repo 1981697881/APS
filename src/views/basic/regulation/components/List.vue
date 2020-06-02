@@ -37,6 +37,7 @@ export default {
         { text: "匹配编码", name: "matchCode" },
         { text: "包含名字", name: "include" },
         { text: "不包含", name: "exclude" },
+        { text: "不匹配编码", name: "exMatchCode" },
        /* { text: "数量大于", name: "numGe" },
         { text: "数量小于", name: "numLe" },*/
       ]

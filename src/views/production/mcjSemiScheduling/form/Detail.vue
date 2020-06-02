@@ -160,6 +160,7 @@
     created() {
       this.fetchFormat()
       if (this.listInfo) {
+        console.log(this.listInfo)
         if(this.listInfo.flag) {
           this.fetchLine(this.listInfo.tpId)
           this.form.tpId = Number(this.listInfo.tpId)

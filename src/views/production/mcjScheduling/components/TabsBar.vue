@@ -8,7 +8,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
+         <!-- <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>-->
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint" >打印</el-button>
           <!--<el-popover
             placement="bottom"

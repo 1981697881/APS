@@ -69,7 +69,7 @@
             } else {
               stau = '暂停'
             }
-          } else {
+          } else if (row[column.property] == 0) {
             if(row['isClash' + column.property.replace('alertStatus','')]) {
               stau = '正常,冲突'
             } else {
@@ -155,6 +155,7 @@
             const columns = this.columns
             var count = 0
             var arr = []
+            var result = []
             // 根据时间生成表头 把时间包含数据重新组装 -》array
             for (const i in data) {
               columns.push({text: i + '', name: i + '', colspan: true, data: [{text: '旧料号', name: 'oldCode' + count}, {text: '单批次数量（kg）', default: this.isBatch, name: 'singleLotNum' + count }, {text: '批次数', default: this.isBatch, name: 'lotNum' + count }, {text: '数量(kg)', name: 'allocatedNum' + count},{text: '生产状态', name: 'allocatedStatus' + count},{text: '任务警示', name: 'alertStatus' + count, formatt: 'taskWarning'}]})
@@ -166,8 +167,8 @@
             array.forEach((item1, index) => {
               item1.forEach((item2, index2) => {
                 var obj = {}
-                // 根据每个时间里的数据量生成数据行
-                if(arr.length == index2) {
+                if(result.indexOf(item2.plName) == -1) {
+                  // 根据每个时间插入数据列
                   eval("obj.oldCode" + index + "='" + item2.color + "'")
                   eval("obj.goodName" + index + "='" + item2.goodName + "'")
                   eval("obj.taskId" + index + "='" + item2.taskId + "'")
@@ -175,31 +176,32 @@
                   eval("obj.taskNum" + index + "='" + item2.taskNum + "'")
                   eval("obj.plId" + index + "='" + item2.plId + "'")
                   eval("obj.tpId" + index + "='" + item2.tpId + "'")
-                  eval("obj.alertStatus" + index + "=" + item2.alertStatus )
-                  eval("obj.singleLotNum" + index + "=" + item2.singleLotNum )
-                  eval("obj.lotNum" + index + "=" + item2.lotNum )
-                  eval("obj.alertStatus" + index + "=" + item2.isClash )
+                  eval("obj.alertStatus" + index + "=" + item2.alertStatus)
+                  eval("obj.lotNum" + index + "=" + item2.lotNum)
+                  eval("obj.singleLotNum" + index + "=" + item2.singleLotNum)
                   eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
                   eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                   eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
                   eval("obj.plName ='" + item2.plName + "'")
+                  result.push(item2.plName)
                   arr.push(obj)
-                } else {
-                  // 根据每个时间插入数据列
-                  eval("arr["+index2+"].oldCode" + index + "='" + item2.color + "'")
-                  eval("arr["+index2+"].goodName" + index + "='" + item2.goodName + "'")
-                  eval("arr["+index2+"].taskId" + index + "='" + item2.taskId + "'")
-                  eval("arr["+index2+"].allocatedNum" + index + "='" + item2.allocatedNum + "'")
-                  eval("arr["+index2+"].taskNum" + index + "='" + item2.taskNum + "'")
-                  eval("arr["+index2+"].isClash" + index + "='" + item2.isClash + "'")
-                  eval("arr["+index2+"].alertStatus" + index + "=" + item2.alertStatus )
-                  eval("arr["+index2+"].plId" + index + "='" + item2.plId + "'")
-                  eval("arr["+index2+"].singleLotNum" + index + "='" + item2.singleLotNum + "'")
-                  eval("arr["+index2+"].lotNum" + index + "='" + item2.lotNum + "'")
-                  eval("arr["+index2+"].tpId" + index + "='" + item2.tpId + "'")
-                  eval("arr["+index2+"].productionDate" + index + "='" + item2.productionDate + "'")
-                  eval("arr["+index2+"].remark" + index + "='" + (item2.remark == null? '' : item2.remark) + "'")
-                  eval("arr["+index2+"].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                }else{
+                  item1.forEach((item2, index2) => {
+                    // 根据每个时间插入数据列
+                    eval("arr["+result.indexOf(item2.plName)+"].oldCode" + index + "='" + item2.color + "'")
+                    eval("arr["+result.indexOf(item2.plName)+"].goodName" + index + "='" + item2.goodName + "'")
+                    eval("arr["+result.indexOf(item2.plName)+"].taskId" + index + "='" + item2.taskId + "'")
+                    eval("arr["+result.indexOf(item2.plName)+"].allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                    eval("arr["+result.indexOf(item2.plName)+"].taskNum" + index + "='" + item2.taskNum + "'")
+                    eval("arr["+result.indexOf(item2.plName)+"].alertStatus" + index + "=" + item2.alertStatus)
+                    eval("arr["+result.indexOf(item2.plName)+"].lotNum" + index + "=" + item2.lotNum)
+                    eval("arr["+result.indexOf(item2.plName)+"].singleLotNum" + index + "=" + item2.singleLotNum)
+                    eval("arr["+result.indexOf(item2.plName)+"].plId" + index + "='" + item2.plId + "'")
+                    eval("arr["+result.indexOf(item2.plName)+"].tpId" + index + "='" + item2.tpId + "'")
+                    eval("arr["+result.indexOf(item2.plName)+"].productionDate" + index + "='" + item2.productionDate + "'")
+                    eval("arr["+result.indexOf(item2.plName)+"].remark" + index + "='" + (item2.remark == null? '' : item2.remark) + "'")
+                    eval("arr["+result.indexOf(item2.plName)+"].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                  })
                 }
               })
             })

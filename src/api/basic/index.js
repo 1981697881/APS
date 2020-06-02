@@ -759,3 +759,16 @@ export function getMattersPrint(params) {
     method: 'get'
   })
 }
+// 物料管理-物料打印
+export function barcodeGoods(params) {
+  const url = '/barcode/barcodeGoods'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}

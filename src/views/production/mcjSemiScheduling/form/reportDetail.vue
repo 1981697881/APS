@@ -265,7 +265,7 @@
             // repeat: 重复打印第几张
             // printModel: 打印模板
             schedulingPrint({barcodeList:[{printId: this.form.taskId,
-                printNum: 1,
+                printNum: this.printingQuantity,
                 type: 2}]}).then(res => {
               if(res.flag) {
                 var obj = res.data
@@ -284,7 +284,7 @@
                 // repeat: 重复打印第几张
                 // printModel: 打印模板
                 schedulingPrint({barcodeList:[{printId: this.form.taskId,
-                    printNum: 1,
+                    printNum: this.printingQuantity,
                     type: 2}]}).then(res => {
                   if(res.flag) {
                     var obj = res.data

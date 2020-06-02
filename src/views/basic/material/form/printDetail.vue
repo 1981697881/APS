@@ -1,13 +1,6 @@
 <template>
   <div>
-    <el-form v-model="form" label-width="100px" :size="'mini'">
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'gid'" style="display: none">
-            <el-input v-model="form.gid"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
+    <el-form  label-width="100px" :size="'mini'">
       <el-row :gutter="20">
         <el-table :data="list" border :height="'250px'" stripe size="mini" :highlight-current-row="true" >
           <el-table-column prop="date" label="序号" type="index" sortable></el-table-column>
@@ -39,7 +32,14 @@
       destroy-on-close
       append-to-body
     >
-      <el-form :rules="rules" :model="form">
+      <el-form :model="form" :rules="rules" ref="form" >
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item :label="'gid'" style="display: none">
+              <el-input v-model="form.gid"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row :gutter="20" type="flex" justify="center">
           <el-col :span="12">
             <el-form-item :label="'每托/桶或箱'">
@@ -48,7 +48,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item :label="'打印/张'">
-              <el-input-number v-model="printingQuantity" label="请输入数量" :min="1"></el-input-number>
+              <el-input-number v-model="form.printingQuantity" label="请输入数量" :min="1"></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
@@ -84,8 +84,8 @@
 </template>
 
 <script>
-  import { getMattersPrint } from "@/api/basic/index";
-
+  import { getMattersPrint, barcodeGoods } from "@/api/basic/index"
+  import {PrintAccount, PrintThree, PrintTwo1, PrintTwo2, PrintTwo3, PrintTwo4} from "@/tools/doPrint"
   export default {
     props: {
       listInfo: {
@@ -98,19 +98,19 @@
         visible: false,
         form: {
           gid: null,
+          lotNo: null,
           printModel: null,
+          printingQuantity: 1,
         },
         rules: {
           printModel: [
-            {required: true, message: '请输入模板', trigger: 'change'},
+            {required: true, message: '请选择模板', trigger: 'change'},
           ],lotNo: [
             {required: true, message: '请输入编码', trigger: 'blur'},
           ],
         },
         repeat: 0,
-        printingQuantity: 1,
         apiece: 0,
-        printModel: null,
         loading: false,
         options: [{
           value: '0',
@@ -127,6 +127,9 @@
         }, {
           value: '4',
           label: '美瓷胶标签'
+        }, {
+          value: '5',
+          label: '外购物料标签'
         }],
         list: [],
         columns: [
@@ -149,15 +152,50 @@
       }
     },
     methods: {
-      //修改数量
       alterNum(row) {
-        this.form = row;
-        this.visible = true;
+        this.form = row
+        this.isLog = true
+        this.visible = true
       },
-      saveNum(form){
+      printType(type, data) {
+       if(type == "0"){
+         PrintAccount(data, this.form.printingQuantity)
+         LODOP.PREVIEW()
+       }else if(type == "1"){
+         PrintTwo1(data, this.form.printingQuantity)
+         LODOP.PREVIEW()
+       }else if(type == "2"){
+         PrintTwo2(data, this.form.printingQuantity, this.apiece)
+         LODOP.PREVIEW()
+       }else if(type == "3"){
+         PrintTwo3(data, this.form.printingQuantity)
+         LODOP.PREVIEW()
+       }else if(type == "4"){
+         PrintTwo4(data, this.form.printingQuantity)
+         LODOP.PREVIEW()
+       }else if(type == "5"){
+         PrintThree(data)
+         LODOP.PREVIEW()
+       }
+      },
+      saveNum(form) {
         this.$refs[form].validate((valid) => {
           //判断必填项
           if (valid) {
+            if (this.isLog) {
+              console.log(this.form)
+              this.printType(this.form.printModel, [this.form])
+            } else {
+              console.log(this.form)
+              barcodeGoods({barcodeList:[{gid: this.form.gid,
+                  printNum: this.form.printingQuantity,
+                  lotNo: this.form.lotNo,
+                  type: 4}]}).then(res => {
+                    if(res.flag){
+                      this.printType(this.form.printModel, res.data)
+                    }
+              });
+            }
             this.visible = false
           }else{
             return false;
@@ -166,6 +204,13 @@
 
       },
       add() {
+        this.form = {
+          lotNo: null,
+          gid: this.listInfo.gid,
+          printModel: null,
+          printingQuantity: 1,
+        }
+        this.isLog = false
         this.visible = true
       },
       fetchData(val) {

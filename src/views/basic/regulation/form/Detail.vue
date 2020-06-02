@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
+    <el-form :model="form" :rules="rules" ref="form" label-width="110px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'trId'" style="display: none">
@@ -34,7 +34,7 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'不匹配的编码'" prop="exMatchCode">
+          <el-form-item :label="'不匹配的编码'">
             <el-input v-model="form.exMatchCode"></el-input>
           </el-form-item>
         </el-col>

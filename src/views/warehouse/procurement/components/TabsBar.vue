@@ -136,7 +136,6 @@
 import { mapGetters } from "vuex";
 import { syncPOInfoQuery, procurementBarcode, exportProcurement, notarizeBeputList} from "@/api/warehouse/index";
 import { PrintThree } from '@/tools/doPrint'
-import {notarizeOutputList} from "../../../../api/warehouse";
 export default {
   components: {},
   computed: {
@@ -322,7 +321,6 @@ export default {
         })
         procurementBarcode({barcodeList: array}).then(res => {
           PrintThree(res.data)
-          console.log(res.data)
           LODOP.PREVIEW()
         })
       } else {

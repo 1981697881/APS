@@ -219,14 +219,15 @@
       alterMatters(val) {
         getListMatters(val).then(res => {
           if(res.flag) {
-            const matterArray = res.data.sort(this.compare)
-            let martterObj = {}
-            matterArray.forEach((item,index) => {
-              martterObj['matters'+index] = item
+            if(res.data.length> 0){
+              const matterArray = res.data.sort(this.compare)
+              let martterObj = {}
+              matterArray.forEach((item,index) => {
+                martterObj['matters'+index] = item
 
-            })
-            console.log(martterObj)
-            this.matters = martterObj
+              })
+              this.matters = martterObj
+            }
           }
         })
       },
