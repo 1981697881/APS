@@ -19,17 +19,17 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'单号'">
             <el-input v-model="search.keyword" placeholder="单号"/>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'色号'">
             <el-input v-model="search.color" placeholder="色号"/>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'料号'">
             <el-input v-model="search.itemCode" placeholder="料号"/>
           </el-form-item>

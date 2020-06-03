@@ -46,7 +46,7 @@ export default {
         { text: '需求数量', name: 'reqQty' },
         { text: '计划到货日期', name: 'planArriveDate' },
         { text: '仓库名', name: 'whName' },
-        { text: '创建人', name: '' },
+        { text: '创建人', name: 'createBy' },
       /*  { text: '核准', name: 'auditStatus' },*/
         { text: '最近同步时间', name: 'syncTime', width: '150px' },
       ]

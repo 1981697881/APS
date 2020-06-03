@@ -1,6 +1,6 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'" :label-width="'70px'">
       <el-row :gutter="10">
         <el-col :span="6">
           <el-form-item :label="'日期'">
@@ -19,12 +19,12 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'关键字'">
             <el-input v-model="search.keyword" placeholder="请输入内容"/>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'仓库'" prop="plaIdS">
             <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
               <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">

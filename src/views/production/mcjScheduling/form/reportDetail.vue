@@ -112,7 +112,7 @@
       <el-form :rules="rules">
         <el-row :gutter="20" type="flex" justify="center">
           <el-col :span="12">
-            <el-form-item :label="'每托/桶或箱'">
+            <el-form-item :label="'每箱支数'">
               <el-input-number v-model="apiece"  label="请输入数量" :min="0"></el-input-number>
             </el-form-item>
           </el-col>

@@ -31,7 +31,7 @@
         </el-button-group>
       </el-row>
       <el-row :gutter="24" style="padding-top: 15px;">
-        <el-col :span="8">
+        <el-col :span="7">
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
@@ -47,7 +47,7 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'旧料号'">
             <el-input v-model="search.oldCode" placeholder="输入关键字"/>
           </el-form-item>

@@ -2,7 +2,7 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'60px'">
       <el-row :gutter="10">
-        <el-col :span="7">
+        <el-col :span="6">
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
@@ -29,7 +29,7 @@
             <el-input v-model="search.oldCode" />
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'仓库'" prop="plaIdS">
             <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
               <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">

@@ -17,7 +17,7 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'操作员'">
             <el-input v-model="search.keyword" placeholder="输入操作员"/>
           </el-form-item>

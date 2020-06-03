@@ -42,12 +42,12 @@
         </el-row>
         <el-row :gutter="20" type="flex" justify="center">
           <el-col :span="12">
-            <el-form-item :label="'每托/桶或箱'">
+            <el-form-item :label="'每箱支数'">
               <el-input-number v-model="apiece"  label="请输入数量" :min="0"></el-input-number>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'打印/张'">
+            <el-form-item :label="'打印/张'" prop="printingQuantity">
               <el-input-number v-model="form.printingQuantity" label="请输入数量" :min="1"></el-input-number>
             </el-form-item>
           </el-col>
@@ -105,6 +105,8 @@
         rules: {
           printModel: [
             {required: true, message: '请选择模板', trigger: 'change'},
+          ],printingQuantity: [
+            {required: true, message: '请输入数量', trigger: 'change'},
           ],lotNo: [
             {required: true, message: '请输入编码', trigger: 'blur'},
           ],
@@ -139,7 +141,7 @@
           { text: "旧料号", name: "oldCode" },
           { text: "规格", name: "spec" },
           { text: "批号", name: "lotNo" },
-          { text: "打印时间", name: "" },
+          { text: "打印时间", name: "createTime" },
         ],
       };
     },
@@ -154,6 +156,7 @@
     methods: {
       alterNum(row) {
         this.form = row
+        this.form.color = row.oldCode
         this.isLog = true
         this.visible = true
       },
@@ -192,6 +195,7 @@
                   lotNo: this.form.lotNo,
                   type: 4}]}).then(res => {
                     if(res.flag){
+                      res.data[0].color = res.data[0].oldCode
                       this.printType(this.form.printModel, res.data)
                     }
               });
@@ -208,6 +212,8 @@
           lotNo: null,
           gid: this.listInfo.gid,
           printModel: null,
+          color: this.listInfo.oldCode,
+          oldCode: this.listInfo.oldCode,
           printingQuantity: 1,
         }
         this.isLog = false

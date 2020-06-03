@@ -24,7 +24,7 @@
         </el-button-group>
       </el-row>
       <el-row :gutter="24"  style="padding-top: 15px;">
-        <el-col :span="7" style="display: inline-block">
+        <el-col :span="6" style="display: inline-block">
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
@@ -41,22 +41,22 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'色号'">
             <el-input v-model="search.oldCode" placeholder="输入关键字"/>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'项目名称'" :label-width="'70px'">
             <el-input v-model="search.soName" placeholder="输入关键字"/>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'单号'">
             <el-input v-model="search.taskNum" placeholder="输入关键字"/>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'生产状态'" :label-width="'70px'">
             <el-select v-model="search.allocatedStatus" placeholder="请选择" @change="selectChange">
               <el-option

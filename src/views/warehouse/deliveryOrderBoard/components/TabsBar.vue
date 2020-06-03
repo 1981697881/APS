@@ -2,12 +2,12 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'60px'">
       <el-row :gutter="10">
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'单号'">
             <el-input v-model="search.shipNo" placeholder="单号" />
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'旧料号'">
             <el-input v-model="search.oldCode" placeholder="旧料号" />
           </el-form-item>

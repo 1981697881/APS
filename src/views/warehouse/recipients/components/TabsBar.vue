@@ -19,17 +19,17 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'色号'">
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'仓库'">
             <el-input v-model="search.whName" />
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'核准状态'" :label-width="'70px'">
             <el-select v-model="isConfirm" placeholder="请选择" @change="selectChange">
               <el-option

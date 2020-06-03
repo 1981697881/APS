@@ -2,7 +2,7 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
-        <el-col :span="6">
+        <el-col :span="4">
           <el-form-item :label="'关键字'">
             <el-input v-model="search.name" placeholder="名称"/>
           </el-form-item>
@@ -12,8 +12,8 @@
         </el-col>
         <el-button-group style="float:right">
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleAdd">新增</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="alter">修改</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="Delivery">删除</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="alter">修改</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="Delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh"    @click="upload">刷新</el-button>
         </el-button-group>
       </el-row>

@@ -2,9 +2,9 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
-        <el-col :span="6">
+        <el-col :span="4">
           <el-form-item :label="'关键字'">
-            <el-input v-model="search.loPrName" />
+            <el-input v-model="search.loPrName" placeholder="名称"/>
           </el-form-item>
         </el-col>
         <el-col :span="2">

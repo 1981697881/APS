@@ -2,17 +2,17 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'70px'">
       <el-row :gutter="10">
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'U9料号'">
             <el-input v-model="search.goodCode" />
           </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'旧料号'">
             <el-input v-model="search.oldCode" />
           </el-form-item>
         </el-col>
-        <el-col :span="7" style="display: inline-block">
+        <el-col :span="6" style="display: inline-block">
           <el-form-item :label="'日期'">
             <el-date-picker
               style="width: auto"

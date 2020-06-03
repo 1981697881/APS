@@ -2,8 +2,8 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
-        <el-col :span="6">
-          <el-form-item :label="'订单单号'">
+        <el-col :span="4">
+          <el-form-item :label="'关键字'">
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>

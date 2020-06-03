@@ -2,9 +2,14 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
-        <el-col :span="6">
+        <!--<el-col :span="4">
           <el-form-item :label="'物料名称'">
             <el-input v-model="search.name" />
+          </el-form-item>
+        </el-col>-->
+        <el-col :span="4">
+          <el-form-item :label="'旧料号'">
+            <el-input v-model="search.oldCode" />
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -29,7 +34,8 @@ export default {
   data() {
     return {
       search: {
-        name: null
+        name: null,
+        oldCode: null,
       }
     };
   },
@@ -40,11 +46,13 @@ export default {
     upload() {
       this.$emit('uploadList')
       this.search.name = ''
+      this.search.oldCode = ''
     },
     // 查询条件过滤
     qFilter() {
       let obj = {}
       this.search.name != null && this.search.name != '' ? obj.name = this.search.name : null
+      this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       return obj
     },
     handleAlter() {

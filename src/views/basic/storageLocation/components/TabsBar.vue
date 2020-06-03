@@ -2,21 +2,21 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'关键字'">
             <el-input v-model="search.keyword" placeholder="库位编码"/>
           </el-form-item>
         </el-col>
-        <el-col :span="2">
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
-        </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-form-item :label="'仓库'" prop="plaIdS">
             <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
               <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">
               </el-option>
             </el-select>
           </el-form-item>
+        </el-col>
+        <el-col :span="2">
+          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
         <el-button-group style="float:right">
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handlerAdd">新增</el-button>
