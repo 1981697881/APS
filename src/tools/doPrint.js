@@ -195,7 +195,7 @@ const PrintTwo3 = (data, printingQuantity, apiece, repeat, printModel) => {
     LODOP.SET_PRINT_STYLE('FontSize', 14);
     LODOP.ADD_PRINT_TEXT('53mm', '48.3mm', '19mm', '10mm', '净重量');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-    LODOP.ADD_PRINT_TEXT('53mm', '65.3mm', '30mm', '10mm', '     kg');
+    LODOP.ADD_PRINT_TEXT('53mm', '65.3mm', '30mm', '10mm', data[0].spec);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     //第一行横线
     LODOP.ADD_PRINT_LINE('24.3mm', '2mm', '24.3mm', '96mm', 0, 1);
@@ -254,7 +254,7 @@ const PrintTwo4 = (data, printingQuantity, apiece, repeat, printModel) => {
     LODOP.ADD_PRINT_TEXT('57mm', '48.3mm', '19mm', '10mm', '数量');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.SET_PRINT_STYLE('FontSize', 16);
-    LODOP.ADD_PRINT_TEXT('53mm', '65.3mm', '30mm', '10mm', '    支');
+    LODOP.ADD_PRINT_TEXT('53mm', '65.3mm', '30mm', '10mm', data[0].spec);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     //第一行横线
     LODOP.ADD_PRINT_LINE('24.3mm', '2mm', '24.3mm', '96mm', 0, 1);

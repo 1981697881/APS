@@ -37,11 +37,11 @@ export default {
         { text: '旧料号', name: 'oldCode' },
         { text: '编码', name: 'goodCode' },
         { text: '名称', name: 'goodName' },
-        { text: '批号', name: 'lotNo' },
+       /* { text: '批号', name: 'lotNo' },*/
         { text: '类别', name: '' },
         { text: '规格', name: 'spec' },
         { text: '安全数量', name: '' },
-        { text: '计量单位', name: '' },
+        { text: '计量单位', name: 'inventoryUomGroup' },
         { text: '即时库存', name: 'evenNum' },
         { text: 'U9库存', name: 'num' },
       /*  { text: '仓库', name: 'whName' },

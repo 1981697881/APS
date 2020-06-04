@@ -13,7 +13,6 @@
             v-if="t.default!=undefined?t.default:true"
           ></el-table-column>
           <el-table-column
-            fixed="right"
             label="操作"
             width="100">
             <template slot-scope="scope">
@@ -189,7 +188,6 @@
               console.log(this.form)
               this.printType(this.form.printModel, [this.form])
             } else {
-              console.log(this.form)
               barcodeGoods({barcodeList:[{gid: this.form.gid,
                   printNum: this.form.printingQuantity,
                   lotNo: this.form.lotNo,

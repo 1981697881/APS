@@ -99,6 +99,7 @@ export default {
               record[i].detail[a].customerCode = record[i].customerCode
               record[i].detail[a].spId = record[i].spId
               record[i].detail[a].status = record[i].status
+              record[i].detail[a].confirmBy = record[i].confirmBy
               record[i].detail[a].auditStatus = record[i].auditStatus
               obj.push(record[i].detail[a])
             }

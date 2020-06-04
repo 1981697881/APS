@@ -20,7 +20,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item :label="'关键字'">
+          <el-form-item :label="'旧料号'">
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>
@@ -111,7 +111,7 @@ export default {
     },
     upload() {
       this.$emit('uploadList')
-      this.search.keyword = ''
+      this.search.keyword = null
       this.value = ''
       this.parent = null
     },
@@ -119,9 +119,9 @@ export default {
     qFilter() {
       let obj = {}
       this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
-      this.value[1] != null || this.value[1] != undefined ? obj.endDate = this.value[1] : null
+      this.value != null || this.value != undefined ? obj.endDate = this.value[1] : null
       this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
-      this.value[0] != null || this.value[0] != undefined ? obj.startDate = this.value[0] : null
+      this.value != null || this.value != undefined ? obj.startDate = this.value[0] : null
       return obj
     },
     // 下载文件

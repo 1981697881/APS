@@ -137,8 +137,8 @@ export default {
       this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       this.search.goodCode != null && this.search.goodCode != '' ? obj.goodCode = this.search.goodCode : null
       this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
-      this.value[1] != null && this.value[1] != undefined ? obj.endDate = this.value[1] : null
-      this.value[0] != null && this.value[0] != undefined ? obj.startDate = this.value[0] : null
+      this.value != null && this.value != undefined ? obj.endDate = this.value[1] : null
+      this.value != null && this.value != undefined ? obj.startDate = this.value[0] : null
       return obj
     },
     exportData() {

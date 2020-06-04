@@ -226,8 +226,8 @@ export default {
       this.search.keyword != null && this.search.keyword != '' ? obj.docNo = this.search.keyword : null
       this.search.itemCode != null && this.search.itemCode != '' ? obj.itemCode = this.search.itemCode : null
       this.search.color != null && this.search.color != '' ? obj.color = this.search.color : null
-      this.value[1] != null && this.value[1] != undefined ? obj.businessDateEnd = this.value[1] : null
-      this.value[0] != null && this.value[0] != undefined ? obj.businessDateStart = this.value[0] : null
+      this.value != null && this.value != undefined ? obj.businessDateEnd = this.value[1] : null
+      this.value != null && this.value != undefined ? obj.businessDateStart = this.value[0] : null
       return obj
     },
     // 关键字查询

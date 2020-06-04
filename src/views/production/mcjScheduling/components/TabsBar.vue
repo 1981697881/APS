@@ -255,8 +255,8 @@ export default {
       this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       this.search.soName != null && this.search.soName != '' ? obj.soName = this.search.soName : null
       this.search.taskNum != null && this.search.taskNum != '' ? obj.taskNum = this.search.taskNum : null
-      this.value[1] != null && this.value[1] != undefined ? obj.productionDateEnd = this.value[1] : null
-      this.value[0] != null && this.value[0] != undefined ? obj.productionDateStart = this.value[0] : null
+      this.value != null && this.value != undefined ? obj.productionDateEnd = this.value[1] : null
+      this.value != null && this.value != undefined ? obj.productionDateStart = this.value[0] : null
       console.log(obj)
       return obj
     },

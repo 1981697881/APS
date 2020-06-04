@@ -1,6 +1,6 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'" :label-width="'60px'">
       <el-row :gutter="10">
         <!--<el-col :span="4">
           <el-form-item :label="'物料名称'">
@@ -10,6 +10,18 @@
         <el-col :span="4">
           <el-form-item :label="'旧料号'">
             <el-input v-model="search.oldCode" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item :label="'合格'" >
+            <el-select v-model="search.status" placeholder="请选择" @change="selectChange">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -36,10 +48,22 @@ export default {
       search: {
         name: null,
         oldCode: null,
-      }
+        status: null,
+      },
+      options: [{
+        value: 1,
+        label: '是'
+      }, {
+        value: 2,
+        label: '否'
+      }],
     };
   },
   methods: {
+    selectChange(val) {
+      this.status = val
+      this.$emit('queryBtn', this.qFilter())
+    },
     query() {
       this.$emit('queryBtn', this.qFilter())
     },
@@ -47,11 +71,13 @@ export default {
       this.$emit('uploadList')
       this.search.name = ''
       this.search.oldCode = ''
+      this.search.status = ''
     },
     // 查询条件过滤
     qFilter() {
       let obj = {}
       this.search.name != null && this.search.name != '' ? obj.name = this.search.name : null
+      this.search.status != null && this.search.status != '' ? obj.status = this.search.status : null
       this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       return obj
     },

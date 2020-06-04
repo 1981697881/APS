@@ -105,8 +105,8 @@ export default {
     qFilter() {
       let obj = {}
       this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
-      this.value[1] != null || this.value[1] != undefined ? obj.endDate = this.value[1] : null
-      this.value[0] != null || this.value[0] != undefined ? obj.startDate = this.value[0] : null
+      this.value != null || this.value != undefined ? obj.endDate = this.value[1] : null
+      this.value != null || this.value != undefined ? obj.startDate = this.value[0] : null
       return obj
     },
     exportData() {

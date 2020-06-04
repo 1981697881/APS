@@ -32,9 +32,9 @@ export default {
       list: {},
       columns: [
         { text: '', name: '',default: false },
-        { text: '出货日期', name: 'expectedShipTime' },
-        { text: '销售部门', name: '' },
-        { text: '销售业务员', name: '' },
+        { text: '出货日期', name: 'businessDate' },
+        { text: '销售部门', name: 'saleDeptName' },
+        { text: '销售业务员', name: 'sellerName' },
         { text: '单据编号', name: 'shipNo' },
         { text: '料品名称', name: 'goodName' },
         { text: '料号', name: 'goodCode' },

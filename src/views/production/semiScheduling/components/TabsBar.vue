@@ -234,8 +234,8 @@
       qFilter() {
         let obj = {}
         this.search.oldCode != null && this.search.oldCode != undefined ? obj.oldCode = this.search.oldCode : null
-        this.value[1] != null && this.value[1] != undefined ? obj.productionDateEnd = this.value[1] : null
-        this.value[0] != null && this.value[0] != undefined ? obj.productionDateStart = this.value[0] : null
+        this.value != null && this.value != undefined ? obj.productionDateEnd = this.value[1] : null
+        this.value != null && this.value != undefined ? obj.productionDateStart = this.value[0] : null
         return obj
       },
       // 关键字查询

@@ -20,6 +20,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
+          <el-form-item :label="'单号'">
+            <el-input v-model="search.docNo" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
           <el-form-item :label="'色号'">
             <el-input v-model="search.keyword" />
           </el-form-item>
@@ -194,6 +199,7 @@ export default {
       search: {
         keyword: null,
         whName: null,
+        docNo: null,
         type: null
       }
     };
@@ -229,6 +235,7 @@ export default {
     upload() {
       this.search.whName = ''
       this.search.keyword = ''
+      this.search.docNo = ''
       this.value = ''
       this.isConfirm = false
       this.$emit('uploadList')
@@ -267,9 +274,10 @@ export default {
     qFilter() {
       let obj = {}
       this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
+      this.search.docNo != null && this.search.docNo != '' ? obj.docNo = this.search.docNo : null
       this.search.whName != null && this.search.whName != '' ? obj.whName = this.search.whName : null
-      this.value[1] != null || this.value[1] != undefined ? obj.businessDateEnd = this.value[1] : null
-      this.value[0] != null || this.value[0] != undefined ? obj.businessDateStart = this.value[0] : null
+      this.value != null || this.value != undefined ? obj.businessDateEnd = this.value[1] : null
+      this.value != null || this.value != undefined ? obj.businessDateStart = this.value[0] : null
       obj.isConfirm = this.isConfirm
       return obj
     },

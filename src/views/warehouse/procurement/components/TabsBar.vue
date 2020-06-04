@@ -270,11 +270,12 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
+      console.log(this.value)
       this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
       this.search.whName != null && this.search.whName != '' ? obj.whName = this.search.whName : null
      /* this.planArriveDate != null && this.planArriveDate != '' ? obj.planArriveDate = this.planArriveDate : null*/
-      this.value[1] != null || this.value[1] != undefined ? obj.planArriveDateEnd = this.value[1] : null
-      this.value[0] != null || this.value[0] != undefined ? obj.planArriveDateStart = this.value[0] : null
+      this.value != null || this.value != undefined ? obj.planArriveDateEnd = this.value[1] : null
+      this.value != null || this.value != undefined ? obj.planArriveDateStart = this.value[0] : null
      /* obj.isConfirm = this.isConfirm*/
       return obj
     },

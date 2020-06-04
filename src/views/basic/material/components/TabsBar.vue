@@ -107,8 +107,8 @@ export default {
       let obj = {}
       this.search.goodCode != null && this.search.goodCode != '' ? obj.goodCode = this.search.goodCode : null
       this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
-      this.value[1] != null && this.value[1] != undefined ? obj.syncTimeEnd = this.value[1] : null
-      this.value[0] != null && this.value[0] != undefined ? obj.syncTimeStart = this.value[0] : null
+      this.value != null && this.value != undefined ? obj.syncTimeEnd = this.value[1] : null
+      this.value != null && this.value != undefined ? obj.syncTimeStart = this.value[0] : null
       return obj
     },
     del() {
