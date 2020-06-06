@@ -44,6 +44,7 @@ const map = {
   'sboard': () => import('@/views/production/sboard'),
   'efficiency': () => import('@/views/production/efficiency'),
   'salesPlanning': () => import('@/views/production/salesPlanning'),
+  'safetyStock': () => import('@/views/production/safetyStock'),
 
   'procurement': () => import('@/views/warehouse/procurement'),
   'recipients': () => import('@/views/warehouse/recipients'),

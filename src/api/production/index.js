@@ -16,6 +16,19 @@ export function getSchedulingList(params, query) {
     data: query
   })
 }
+// 生产排程-获取未排程列表
+export function getUnSchedulingList(params, query) {
+  const url = '/sale-order/unscheduledList/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
+  })
+}
 // 生产排程-获取半成品列表
 export function getSemiList(params, query) {
   const url = '/task-scheduling/semiList'
@@ -141,5 +154,18 @@ export function exportSemiSchedulin(data) {
     url: url,
     method: 'post',
     data: data
+  })
+}
+// 库存排产-获取列表
+export function getStorageSchedulingList(data, query) {
+  const url = '/inv-detail/lessList/' + data.pageNum + '/' + data.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
   })
 }

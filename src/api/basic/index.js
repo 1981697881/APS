@@ -658,6 +658,7 @@ export function getStorageList(data, query) {
     data: query
   })
 }
+
 // 仓库-获取列表
 export function getWarehouseList(params) {
   const url = '/position/formatByPrId/' + params

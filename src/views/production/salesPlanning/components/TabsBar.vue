@@ -38,6 +38,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
         <el-button-group style="float:right;padding-right: 10px">
+          <el-button :size="'mini'" type="primary" icon="el-icon-warning" @click="errorInfo">异常排程信息</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">确认</el-button>
@@ -183,6 +184,9 @@
       }
     },
     methods: {
+      errorInfo() {
+        this.$emit('showDialog')
+      },
       // 下载文件
       download(res) {
         if (!res.data) {
