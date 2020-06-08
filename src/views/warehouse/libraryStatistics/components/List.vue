@@ -34,7 +34,7 @@ export default {
       columns: [
         { text: '', name: '', default: false },
         { text: '入库日期', name: 'createTime' },
-        { text: '入库单号', name: '' },
+        { text: '入库单号', name: 'putNo' },
         { text: 'U9料号', name: 'goodCode' },
         { text: '品名', name: 'goodName' },
         { text: '旧料号', name: 'oldCode' },

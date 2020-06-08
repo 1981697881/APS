@@ -23,6 +23,26 @@
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
+        <el-button-group style="float:right;">
+          <el-upload
+            name="order"
+            :on-success="uploadSuccess"
+            :on-error="uploadError"
+            accept="xlsx,xls"
+            ref="upload"
+            :headers="headers"
+            :show-file-list="false"
+            action="excel/import/punchRecord"
+            class="upload-demo"
+            multiple
+            :auto-upload="false"
+            :on-change="handleUpload"
+            :limit="1"
+          >
+            <el-button size="mini" type="primary" icon="el-icon-upload2" >导入</el-button>
+            <el-button style="margin-left: 10px;display: none" size="mini" type="success" @click="submitUpload">上传到服务器</el-button>
+          </el-upload>
+        </el-button-group>
       </el-row>
     </el-form>
   </div>
@@ -30,6 +50,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { getFrameList } from "@/api/basic/index";
+import {getToken} from '@/utils/auth'
 export default {
   components: {},
   computed: {
@@ -37,6 +58,10 @@ export default {
   },
   data() {
     return {
+      headers: {
+        'authorization': getToken('apsrx'),
+      },
+      isUpload: null,
       pArray: [],
       value: null,
       deptIds: null,
@@ -52,6 +77,35 @@ export default {
     this.fetchFormat();
   },
   methods: {
+    submitUpload() {
+      this.$refs.upload.submit()
+    },
+    uploadError(res) {
+      this.$message({
+        message: '上传失败',
+        type: "warning"
+      });
+      this.$emit('uploadList')
+    },
+    uploadSuccess(res) {
+      if(res.flag){
+        this.$message({
+          message: res.msg,
+          type: "success"
+        });
+        this.$emit('uploadList')
+      }else{
+        this.$message({
+          message: res.msg,
+          type: "warning"
+        });
+      }
+    },
+    handleUpload(file, fileList){
+      if(file.status=="ready"){
+        this.submitUpload()
+      }
+    },
     doHandleMonth(month) {
       var m = month;
       if(month.toString().length == 1) {
