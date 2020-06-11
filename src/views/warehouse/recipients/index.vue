@@ -5,7 +5,7 @@
       <div>
         <tabs-bar ref="tabs" @uploadList="upload" @queryBtn="query"/>
       </div>
-      <list ref="list"/>
+      <list ref="list" @uploadList="upload"/>
     </div>
   </div>
 </template>

@@ -146,7 +146,7 @@ export default {
     },
     delivery() {
       if (this.clickData.taskId) {
-        this.$confirm('是否删除(' + this.clickData.oldCode + ')，删除后将无法恢复?', '提示', {
+        this.$confirm('是否删除(' + this.clickData.color + ')，删除后将无法恢复?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

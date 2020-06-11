@@ -7,7 +7,6 @@
       :loading="loading"
       :list="list"
       index
-      :selfAdaption="false"
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -20,8 +19,8 @@
 </template>
 
 <script>
-import { getUnSchedulingList, } from "@/api/production/index"
-import { notarizeList} from "@/api/aftermarket/index"
+import { getUnSchedulingList } from "@/api/production/index"
+import { notarizeAgain} from "@/api/aftermarket/index"
 import List from "@/components/List"
 import { mapGetters } from 'vuex'
 export default {
@@ -42,12 +41,12 @@ export default {
      loading: false,
      list: {},
      columns: [
-       { text: '订单日期', name: 'create_date', sort: true, width: '100px' },
-       { text: '产品名称', name: 'good_name', width: '150px'  },
-       { text: '色号', name: 'old_code', width: '150px' },
+       { text: '订单日期', name: 'create_date', sort: true },
+       { text: '产品名称', name: 'good_name'  },
+       { text: '色号', name: 'old_code' },
        { text: '订单数量', name: 'num' },
-       { text: '料号', name: 'good_code', width: '150px' },
-       { text: '订单号', name: 'order_num', width: '150px', sort: true },
+       { text: '料号', name: 'good_code' },
+       { text: '订单号', name: 'order_num', sort: true },
      ]
    }
  },
@@ -86,7 +85,7 @@ export default {
    },
    confirm() {
      if (this.clickData.so_id) {
-       notarizeList({soId: this.clickData.so_id}).then(res => {
+       notarizeAgain({soId: this.clickData.so_id}).then(res => {
          if(res.flag) {
            this.$emit('hideDialog', false)
            this.$emit('uploadList')

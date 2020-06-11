@@ -44,6 +44,7 @@ export default {
         { text: "正常资源", name: "normalResources" },
         { text: "加班资源", name: "overtimeResources" },
         { text: "其他资源", name: "otherResources" },
+        { text: "单批数量", name: "singleLotNum" },
         { text: "描述", name: "description" },
       ]
     };

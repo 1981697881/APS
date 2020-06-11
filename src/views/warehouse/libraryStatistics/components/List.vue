@@ -40,7 +40,7 @@ export default {
         { text: '旧料号', name: 'oldCode' },
         { text: '规格', name: 'spec' },
         { text: '批号', name: 'lotNo' },
-        { text: '计划数量', name: 'allocatedNum' },
+        //{ text: '计划数量', name: 'allocatedNum' },
         { text: '入库数量', name: 'num' },
         { text: '库位', name: 'positionName' },
         { text: '操作员', name: 'username' },

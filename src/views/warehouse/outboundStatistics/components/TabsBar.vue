@@ -20,7 +20,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item :label="'关键字'">
+          <el-form-item :label="'旧料号'">
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>

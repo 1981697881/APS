@@ -43,6 +43,19 @@ export function notarizeList(params) {
     data: params
   })
 }
+// 二次确认单据
+export function notarizeAgain(params) {
+  const url = '/sale-order/confirmAgain'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
 // 订单同步
 export function salesListSync(params) {
   const url = '/Admin/SOInfo/sync'

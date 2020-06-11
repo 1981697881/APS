@@ -41,6 +41,13 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
+          <el-form-item :label="'单批数量'">
+            <el-input-number v-model="form.singleLotNum"  :min="0"  label="描述文字"></el-input-number>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
           <el-form-item :label="'工作时段'" prop="workDay">
             <el-select v-model="form.workDay" multiple placeholder="请选择">
               <el-option
@@ -51,10 +58,8 @@
               </el-option>
             </el-select>
           </el-form-item>
-       </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="24">
+        </el-col>
+        <el-col :span="12">
           <el-form-item :label="'描述'">
             <el-input v-model="form.description"></el-input>
           </el-form-item>
@@ -87,6 +92,7 @@
         form: {
           plId: null,
           tpId: null,
+          singleLotNum: null,
           plName: null, // 名称
           normalResources: null,
           otherResources: null,
@@ -127,7 +133,7 @@
           tpId: [
             {required: true, message: '请选择产线', trigger: 'change'},
           ], workDay: [
-            {type: 'array', required: true, message: '请选择产线', trigger: 'change'},
+            {type: 'array', required: true, message: '请选择', trigger: 'change'},
           ],
         },
       };

@@ -17,7 +17,7 @@
         </el-col>
         <el-button-group style="float:right;padding-right: 10px">
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">确认</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">生产</el-button>
         </el-button-group>
       </el-row>
     </el-form>
@@ -25,7 +25,7 @@
 </template>
 <script>
   import { mapGetters } from 'vuex'
-  import { salesListSync, exportSales, notarizeList} from "@/api/aftermarket/index"
+  import { schedulingInventory } from "@/api/production/index"
   export default {
     components: {},
     computed: {
@@ -44,8 +44,13 @@
     },
     methods: {
       notarize() {
-        if (this.clickData.soId) {
-          notarizeList({soId: this.clickData.soId}).then(res => {
+        if (this.selections.length > 0) {
+          const selections = this.selections
+          let array = []
+          selections.forEach((item,index) => {
+            array.push(item.invId)
+          })
+          schedulingInventory({siIds: array}).then(res => {
             if(res.flag) {
               this.upload()
             }
@@ -68,23 +73,6 @@
       // 关键字查询
       query() {
         this.$emit('uploadList', this.qFilter())
-      },
-      confirm(form) {
-        this.fullscreenLoading = true
-        this.$refs[form].validate((valid) => {
-          // 判断必填项
-          if (valid) {
-            // if(this.form.value.length > 0) {
-            delete this.form.value
-            salesListSync(this.form).then(res => {
-              this.visible = false
-              this.fullscreenLoading = false
-              this.upload()
-            })
-          } else {
-            return false
-          }
-        })
       },
       upload() {
         this.$emit('uploadList')

@@ -7,7 +7,6 @@
       :list="list"
       index
       type
-       :selfAdaption="false"
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"

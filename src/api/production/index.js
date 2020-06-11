@@ -68,6 +68,19 @@ export function schedulingSave(params) {
     data: params
   })
 }
+// 库存生产排程-保存
+export function schedulingInventory(params) {
+  const url = '/task-scheduling/inventoryScheduling'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}
 // 生产排程-修改
 export function schedulingAlter(params) {
   const url = '/task-scheduling/update'

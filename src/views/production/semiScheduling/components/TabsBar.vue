@@ -261,10 +261,9 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.$message({
-              message: "抱歉，功能尚未完善！",
-              type: "warning"
-            });
+            this.$emit('theDelivery',{
+              taskId: listInfo.taskId,
+            })
           }).catch(() => {
             this.$message({
               type: 'info',
@@ -304,7 +303,7 @@
           }).catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消删除'
+              message: '已取消结束'
             });
           });
         } else {
