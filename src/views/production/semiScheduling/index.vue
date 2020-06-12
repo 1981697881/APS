@@ -103,7 +103,7 @@ export default {
     },
     handlerDialog(obj) {
       this.listInfo = null
-      if(obj){
+      if(obj) {
         if(obj.length > 0) {
           const listBlank = obj[0]
           const listInfo = {}

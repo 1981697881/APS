@@ -391,6 +391,17 @@ export function getFinalGoodsType() {
     method: 'get'
   })
 }
+// 生产资源-获取成品产线
+export function getFinalGoodsTypeT() {
+  const url = '/type/list/endProductTypeN'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'get'
+  })
+}
 // 生产资源-获取半成品产线
 export function getSemiFinishedProductsType() {
   const url = '/type/list/semiProductType'
@@ -427,6 +438,17 @@ export function getMcjSemiSchedulingType() {
 // 生产资源-获取成品生产设备
 export function getFinalGoods(data) {
   const url = '/production-line/list/endProduct/' + data
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'get'
+  })
+}
+// 生产资源-获取成品生产设备
+export function getFinalGoodsT(data) {
+  const url = '/production-line/list/endProductN/' + data
   return request({
     url: url,
     headers: {

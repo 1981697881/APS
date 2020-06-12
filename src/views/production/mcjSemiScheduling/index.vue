@@ -114,7 +114,7 @@ export default {
     handlerDialog(obj) {
       this.listInfo = null
       if(obj) {
-        if(obj.length > 0) {
+        if(obj.length > 2) {
           const listBlank = obj[0]
           const listInfo = {}
           for(const i in listBlank) {

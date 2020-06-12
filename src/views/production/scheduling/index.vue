@@ -81,7 +81,7 @@ export default {
           console.log(res)
           this.plaArray = res.data
           this.plaIdS = res.data[0].tpId
-          this.$refs.list.fetchData({tpId: this.plaIdS})
+          this.upload()
         }
       })
     },

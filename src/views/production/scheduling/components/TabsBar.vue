@@ -115,11 +115,8 @@ export default {
         }]
       },
       options: [{
-        value: '待生产',
-        label: '待生产'
-      }, {
-        value: '生产中',
-        label: '生产中'
+        value: '待计划',
+        label: '待计划'
       }, {
         value: '已暂停',
         label: '已暂停'
@@ -132,7 +129,7 @@ export default {
       }],
       visible: false,
       search: {
-        allocatedStatus: null,
+        allocatedStatus: '待计划',
         oldCode: null,
         taskNum: null,
         soName: null,

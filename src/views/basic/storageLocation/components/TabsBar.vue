@@ -65,7 +65,7 @@
           :data="fileData"
           :headers="headers"
           :show-file-list="false"
-          action="excel/import/position"
+          action="web/excel/import/position"
           class="upload-demo"
           :auto-upload="false"
           :on-change="handleUpload"

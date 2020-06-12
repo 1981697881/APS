@@ -16,7 +16,7 @@
             ref="upload"
             :headers="headers"
             :show-file-list="false"
-            action="excel/import/semiTaskScheduling"
+            action="web/excel/import/semiTaskScheduling"
             class="upload-demo"
             multiple
             :auto-upload="false"

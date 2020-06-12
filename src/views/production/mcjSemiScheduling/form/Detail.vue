@@ -28,7 +28,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'生产线'" prop="tpId">
-            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" disabled @change="selectChange">
+            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" @change="selectChange">
               <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
@@ -84,7 +84,7 @@
               <el-radio :label=0 >正常</el-radio>
               <el-radio :label=3 style="color:#7b1424">加急</el-radio>
               <el-radio :label=4 style="color:#3b199a">暂停</el-radio>
-              <el-radio :label=1 style="color:#dc9118" disabled>延误</el-radio>
+            <!--  <el-radio :label=1 style="color:#dc9118" disabled>延误</el-radio>-->
             </el-radio-group>
           </el-form-item>
         </el-col>

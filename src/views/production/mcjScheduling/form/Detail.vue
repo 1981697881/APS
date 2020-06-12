@@ -56,7 +56,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'生产线'" prop="tpId">
-            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" disabled @change="selectChange">
+            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" @change="selectChange">
               <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
@@ -169,7 +169,7 @@
 
 <script>
 import { schedulingSave, schedulingAlter } from "@/api/production/index";
-import { getMcjSchedulingType, getMcjFinalGoods} from '@/api/basic/index'
+import { getFinalGoodsTypeT, getFinalGoodsT} from '@/api/basic/index'
 import { getSalesInfo } from '@/api/aftermarket/index'
 
 export default {
@@ -383,14 +383,14 @@ export default {
       }
     },
     fetchFormat() {
-      getMcjSchedulingType().then(res => {
+      getFinalGoodsTypeT().then(res => {
         if(res.flag) {
           this.pArray = res.data
         }
       })
     },
     fetchLine(val) {
-      getMcjFinalGoods(val).then(res => {
+      getFinalGoodsT(val).then(res => {
         if(res.flag) {
           this.rArray = res.data
         }

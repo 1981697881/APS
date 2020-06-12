@@ -32,7 +32,7 @@
             ref="upload"
             :headers="headers"
             :show-file-list="false"
-            action="excel/import/punchRecord"
+            action="web/excel/import/punchRecord"
             class="upload-demo"
             multiple
             :auto-upload="false"
