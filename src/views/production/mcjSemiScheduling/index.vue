@@ -114,7 +114,7 @@ export default {
     handlerDialog(obj) {
       this.listInfo = null
       if(obj) {
-        if(obj.length > 2) {
+        if(obj.length > 0) {
           const listBlank = obj[0]
           const listInfo = {}
           for(const i in listBlank) {
@@ -125,6 +125,12 @@ export default {
             }
           }
           this.listInfo = listInfo
+          if(this.batch) {
+            this.listInfo.isPalette = true
+          } else {
+            this.listInfo.isPalette = false
+          }
+          console.log(this.listInfo)
         } else {
           this.$message({
             message: "当前选中无数据！",
@@ -136,12 +142,13 @@ export default {
           flag: true,
           tpId: this.plaIdS
         }
+        if(this.batch) {
+          this.listInfo.isPalette = true
+        } else {
+          this.listInfo.isPalette = false
+        }
       }
-      if(this.batch) {
-        this.listInfo.isPalette = true
-      } else {
-        this.listInfo.isPalette = false
-      }
+
       console.log(this.listInfo)
       this.visible = true
     },

@@ -240,10 +240,6 @@
                 }
               })
             })
-            console.log(arr)
-            console.log(result)
-            console.log(result2)
-            console.log(result3)
             this.loading = false
             this.list = arr
           }
