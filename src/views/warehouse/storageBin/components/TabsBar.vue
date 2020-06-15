@@ -30,6 +30,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
+          <el-form-item :label="'库位号'">
+            <el-input v-model="search.positionCode" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
           <el-form-item :label="'仓库'" prop="plaIdS">
             <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
               <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">
@@ -92,7 +97,8 @@ export default {
       search: {
         oldCode: null,
         goodCode: null,
-        type: null
+        type: null,
+        positionCode: null,
       }
     };
   },
@@ -128,6 +134,7 @@ export default {
       this.$emit('uploadList')
       this.search.oldCode = ''
       this.search.goodCode = ''
+      this.search.positionCode = ''
       this.value = ''
       this.parent = null
     },
@@ -136,6 +143,7 @@ export default {
       let obj = {}
       this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       this.search.goodCode != null && this.search.goodCode != '' ? obj.goodCode = this.search.goodCode : null
+      this.search.positionCode != null && this.search.positionCode != '' ? obj.positionCode = this.search.positionCode : null
       this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
       this.value != null && this.value != undefined ? obj.endDate = this.value[1] : null
       this.value != null && this.value != undefined ? obj.startDate = this.value[0] : null

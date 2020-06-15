@@ -13,6 +13,7 @@
         :formatter="null"
         v-if="t.default!=undefined?t.default:true"
       >
+
         <el-table-column
           v-for="(a,b) in t.data"
           v-if="t.colspan!=undefined&&a.default!=false?t.colspan:false"
@@ -149,7 +150,7 @@
             const data = res.data
             this.columns = [
               {text: '', name: 'gid', default: false },
-              {text: '计划日期', width: '150px', name: '', colspan: true, data: [{text: '生产设备', width: '150px', name: 'plName'}]}
+              {text: '计划日期', width: '150px', name: '', colspan: true, type: false, data: [{text: '生产设备', width: '150px', name: 'plName'}]}
             ]
             var array = []
             const columns = this.columns

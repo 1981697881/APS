@@ -142,14 +142,14 @@ export default {
       this.$emit('uploadList')
     },
     delivery() {
-      if (this.clickData.taskId) {
-        this.$confirm('是否删除(' + this.clickData.color + ')，删除后将无法恢复?', '提示', {
+      if (this.selections[0].taskId) {
+        this.$confirm('是否删除(' + this.selections[0].color + ')，删除后将无法恢复?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.$emit('theDelivery',{
-            taskId: this.clickData.taskId,
+            taskId: this.selections[0].taskId,
           })
         }).catch(() => {
           this.$message({
@@ -176,13 +176,13 @@ export default {
       }
     },
     over() {
-      if (this.clickData.taskId) {
-        this.$confirm('是否结束(' + this.clickData.taskNum + ')，结束后将完成生产?', '提示', {
+      if (this.selections[0].taskId) {
+        this.$confirm('是否结束(' + this.selections[0].taskNum + ')，结束后将完成生产?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          schedulingStop(this.clickData.taskId).then(res => {
+          schedulingStop(this.selections[0].taskId).then(res => {
             if (res.flag) {
               this.$emit('uploadList')
             }
@@ -209,15 +209,15 @@ export default {
       this.$emit('uploadList')
     },
     report() {
-      if (this.clickData.taskId) {
-        if (this.clickData.allocatedStatus == '生产完毕') {
-          this.clickData.isF = 0
-          this.clickData.isOver = 1
-          this.$emit('reportInfo', this.clickData)
+      if (this.selections[0].taskId) {
+        if (this.selections[0].allocatedStatus == '生产完毕') {
+          this.selections[0].isF = 0
+          this.selections[0].isOver = 1
+          this.$emit('reportInfo', this.selections[0])
         } else {
-          this.clickData.isF = 0
-          this.clickData.isOver = 0
-          this.$emit('reportInfo', this.clickData)
+          this.selections[0].isF = 0
+          this.selections[0].isOver = 0
+          this.$emit('reportInfo', this.selections[0])
         }
       } else {
         this.$message({
