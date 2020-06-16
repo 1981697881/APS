@@ -22,40 +22,41 @@ const PrintAccount = (data, printingQuantity, apiece, repeat) => {
   /*  LODOP.SET_SHOW_MODE('LANDSCAPE_DEFROTATED', 1);
     LODOP.SET_PRINT_STYLEA(2, 'AngleOfPageInside', 180);*/
   for (var i = 0; i < printingQuantity; i++) {
-    LODOP.SET_PRINT_STYLE('FontSize', 16);
-    LODOP.ADD_PRINT_TEXT('1mm', '25mm', '50mm', '10mm', data[0].goodName);
-    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.SET_PRINT_STYLE('FontSize', 13);
+    LODOP.ADD_PRINT_TEXT('0mm', '28mm', '55mm', '10mm', data[0].goodName+"123456");
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 1);
+    LODOP.SET_PRINT_STYLEA(0, "TextNeatRow", true);
     if(getLength(data[0].color)>=19){
-      LODOP.ADD_PRINT_TEXT('13mm', '17mm', '60mm', '10mm', data[0].color);
+      LODOP.ADD_PRINT_TEXT('12.5mm', '17mm', '68mm', '10mm', data[0].color);
       LODOP.SET_PRINT_STYLEA(0, 'Alignment', 1);
       LODOP.SET_PRINT_STYLEA(0, "FontSize", 10);
     }else{
-      LODOP.ADD_PRINT_TEXT('13mm', '17mm', '60mm', '10mm', data[0].color);
+      LODOP.ADD_PRINT_TEXT('12.5mm', '17mm', '65mm', '10mm', data[0].color);
       LODOP.SET_PRINT_STYLEA(0, 'Alignment', 1);
     }
-    LODOP.SET_PRINT_STYLEA(0,"QRCodeVersion",1);
-    LODOP.ADD_PRINT_BARCODE('11mm', '75mm', '13mm', '13mm', 'QRCode', data[0].barcode)
-    LODOP.SET_PRINT_STYLE('FontSize', 10);
-    LODOP.ADD_PRINT_TEXT('22mm', '17mm', '29mm', '10mm', data[0].executiveStandard);
+    LODOP.SET_PRINT_STYLEA(0, "QRCodeVersion", 1);
+    LODOP.ADD_PRINT_BARCODE('10mm', '81mm', '13mm', '13mm', 'QRCode', data[0].barcode)
+    LODOP.ADD_PRINT_TEXT('21mm', '16mm', '29mm', '10mm', data[0].executiveStandard);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
     /*LODOP.ADD_PRINT_TEXT('26mm', '17mm', '29mm', '10mm', 'GB 24408-2009');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);*/
-    LODOP.SET_PRINT_STYLE('FontSize', 12);
     LODOP.ADD_PRINT_TEXT('23mm', '65mm', '30mm', '10mm', data[0].mixtureRatio);
-    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 1);
     LODOP.ADD_PRINT_TEXT('33mm', '17mm', '29mm', '10mm', data[0].productionDate);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT('33mm', '64mm', '30mm', '10mm', data[0].lotNo);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT('42mm', '17mm', '29mm', '10mm', data[0].qualityGuaranteePeriod);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-    LODOP.ADD_PRINT_TEXT('42mm', '65mm', '30mm', '10mm', data[0].spec);
+    LODOP.ADD_PRINT_TEXT('40mm', '65mm', '30mm', '10mm', data[0].spec);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.SET_PRINT_STYLEA(0, "FontSize", 22);
+    LODOP.ADD_PRINT_TEXT('52mm', '15.5mm', '49mm', '10mm', '产地:上海');
     LODOP.SET_PRINT_STYLE('FontSize', 10);
-    LODOP.ADD_PRINT_TEXT('52mm', '17mm', '46mm', '10mm', '产地:上海');
-    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-    LODOP.ADD_PRINT_TEXT('57mm', '17mm', '46mm', '10mm', data[0].goodCode);
-    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+    LODOP.ADD_PRINT_TEXT('57mm', '15.5mm', '49mm', '10mm', '料号:'+data[0].goodCode);
+    LODOP.SET_PRINT_STYLE('FontSize', 9);
+    LODOP.SET_PRINT_STYLEA(0,"TextNeatRow",true);
     //分页
     LODOP.NewPage();
   }
@@ -456,6 +457,19 @@ const PrintSchedule = (data, codetype, url, code) => {
       }
     }
   }
+  function getLength(val) {
+    var str = new String(val);
+    var bytesCount = 0;
+    for (var i = 0 ,n = str.length; i < n; i++) {
+      var c = str.charCodeAt(i);
+      if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
+        bytesCount += 1;
+      } else {
+        bytesCount += 2;
+      }
+    }
+    return bytesCount;
+  }
   let fenyeSize = 0;
   let num = 2
   LODOP.SET_PRINT_PAGESIZE(2, '297mm', '210mm', "");//一开始用的是像素，后来都改成用mm为单位
@@ -536,9 +550,8 @@ const PrintSchedule = (data, codetype, url, code) => {
     if (parseInt(getByteLen(ccc) / 17) > SizeTmpt) {
       SizeTmpt = parseInt(getByteLen(ccc) / 17);
     }
-    if (fucCheckLength(data[k].soName) > 18 || fucCheckLength(data[k].color) > 18) {
-      if (fucCheckLength(data[k].soName) > 36 || fucCheckLength(data[k].color) > 36) {
-
+    if ( fucCheckLength(data[k].color) > 16 || (data[k].soName == null? '':fucCheckLength(data[k].soName)) > 18 ) {
+      if ( fucCheckLength(data[k].color) > 26 || (data[k].soName == null? '':fucCheckLength(data[k].soName)) > 36 ) {
         LODOP.SET_PRINT_STYLE('FontSize', 8);
         LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '1mm', '11mm', '9mm', parseInt(1 + k));
         LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
@@ -550,8 +563,10 @@ const PrintSchedule = (data, codetype, url, code) => {
         LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
         LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '85mm', '30mm', '12mm', data[k].soName);
         LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-        LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '115mm', '21mm', '12mm', data[k].color, 18);
+        LODOP.SET_PRINT_STYLEA(0,"TextNeatRow",true);
+        LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '115mm', '21mm', '12mm', data[k].color);
         LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+        LODOP.SET_PRINT_STYLEA(0,"TextNeatRow",true);
         LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '135mm', '9mm', '12mm', data[k].odPrNum);
         LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
         LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '144mm', '9mm', '12mm', data[k].allocatedNum);
@@ -664,8 +679,10 @@ const PrintSchedule = (data, codetype, url, code) => {
         LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
         LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '85mm', '30mm', '12mm', data[k].soName);
         LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+        LODOP.SET_PRINT_STYLEA(0,"TextNeatRow",true);
         LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '115mm', '21mm', '12mm',data[k].color);
         LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
+        LODOP.SET_PRINT_STYLEA(0,"TextNeatRow",true);
         LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '135mm', '9mm', '12mm', data[k].odPrNum);
         LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
         LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '144mm', '9mm', '12mm', data[k].allocatedNum);
@@ -992,12 +1009,12 @@ const PrintSemi = (data, codetype, url, code) => {
       SizeTmpt = parseInt(getByteLen(ccc) / 17);
     }
 
-    LODOP.SET_PRINT_STYLE('FontSize', 8);
+    LODOP.SET_PRINT_STYLE('FontSize', 7);
     LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '1mm', '11mm', '9mm', parseInt(1 + k));
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '10mm', '16mm', '12mm', data[k].plName);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
-    LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '25mm', '40mm', '12mm', data[k].oldCode0);
+    LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '25mm', '43mm', '12mm', data[k].oldCode0);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.ADD_PRINT_TEXT(thHeight + newHeight + 'mm', '65mm', '10mm', '12mm', data[k].allocatedNum0);
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);

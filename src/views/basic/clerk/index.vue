@@ -5,7 +5,7 @@
       <div>
         <tabs-bar @showDialog="handlerDialog" @delList="delivery" @queryBtn="query" @uploadList="upload"/>
       </div>
-      <list ref="list"  @showDialog="handlerDialog"/>
+      <list ref="list"  @showDialog="handlerDialog" @uploadList="upload"/>
     </div>
 
     <el-dialog
@@ -38,7 +38,7 @@ export default {
     };
   },
   mounted() {
-    this.$refs.list.fetchData()
+    this.$refs.list.fetchData(this.$refs.tabs.qFilter())
   },
   methods: {
     delivery(obj) {
@@ -63,11 +63,11 @@ export default {
     },
     // 查询
     query(val) {
-      this.$refs.list.fetchData(val)
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     //更新列表
     upload(){
-      this.$refs.list.fetchData()
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     }
   }
 };

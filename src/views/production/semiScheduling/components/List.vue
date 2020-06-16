@@ -1,6 +1,6 @@
 <template>
   <div class="list-main box-shadow">
-    <el-table :data="list" height="100%" :v-loading="loading" border size="mini" :highlight-current-row="true" :cell-class-name="tableCellClassName" @cell-dblclick="celldblclick" @cell-click="cellclick"  @selection-change="handleSelectionChange">
+    <el-table :data="list" height="100%" :cell-style="tableCellStyle" :v-loading="loading" border size="mini" :highlight-current-row="true" :cell-class-name="tableCellClassName" @cell-dblclick="celldblclick" @cell-click="cellclick"  @selection-change="handleSelectionChange">
       <el-table-column type="selection"></el-table-column>
       <el-table-column prop="date" label="序号" align="center" type="index" sortable></el-table-column>
       <el-table-column
@@ -131,7 +131,16 @@
         this.$emit('showDialog', [row, column.property.match(/\d+/g)[0]])
       },
       cellclick(row, column, cell, event) {
+        this.row = row
+        this.column = column
         this.$store.dispatch("list/setClickData", [row, column.property.match(/\d+/g)[0]])
+      },
+      tableCellStyle(row, rowIndex, column) {
+        if (this.row === row.row && this.column === row.column) {
+          return 'background-color:#ccc;'
+        } else {
+          return 'background-color:#fff;'
+        }
       },
       fetchData(val) {
         this.loading = true
@@ -279,4 +288,5 @@
     background-color: #CD69C9 !important;
     color: orange;
   }
+
 </style>

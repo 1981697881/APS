@@ -58,7 +58,6 @@ export default {
     };
   },
   methods: {
-
     // 监听多选 参数-所有选中的值
     handleSelectionChange(val){
       this.$store.dispatch('list/setSelections',val)
@@ -66,12 +65,12 @@ export default {
     // 监听每页显示几条
     handleSize(val) {
       this.list.size = val
-      this.fetchData();
+      this.$emit('uploadList')
     },
     // 监听当前页
     handleCurrent(val) {
       this.list.current = val;
-      this.fetchData();
+      this.$emit('uploadList')
     },
     dblclick(obj) {
       this.$emit('showDialog', obj.row)

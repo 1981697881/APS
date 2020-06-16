@@ -40,7 +40,7 @@ export default {
         { text: '旧料号', name: 'oldCode' },
         { text: '批号', name: 'lotNo' },
         { text: '规格', name: 'spec' },
-        { text: '数量', name: 'num' },
+        { text: '数量', name: 'evenNum' },
         { text: '入库日期', name: 'createTime' },
       ]
     };

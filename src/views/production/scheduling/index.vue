@@ -13,7 +13,7 @@
       <div>
         <tabs-bar ref="tabs" @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload" @reportInfo="report"/>
       </div>
-      <list ref="list"  @showDialog="handlerDialog" />
+      <list ref="list"  @showDialog="handlerDialog" @uploadList="upload" />
     </div>
     <el-dialog
       :visible.sync="visible"
