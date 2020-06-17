@@ -141,10 +141,16 @@
         this.$store.dispatch("list/setClickData", [row, column.property.match(/\d+/g)[0]])
       },
       tableCellStyle(row, rowIndex, column) {
-        if (this.row === row.row && this.column === row.column) {
-          return 'background-color:#ccc;'
-        } else {
-          return 'background-color:#fff;'
+        if (this.row === row.row) {
+          let col1 = row.column.property
+          let col2 = this.column.property
+          if(col1 != undefined && col2 != undefined){
+            if(col2.replace(/[^0-9]/ig,"") === col1.replace(/[^0-9]/ig,"")){
+              return 'background-color:#ccc;'
+            }else {
+              return 'background-color:#fff;'
+            }
+          }
         }
       },
       fetchData(val) {

@@ -63,7 +63,6 @@ export default {
   mounted() {
     this.fetchFormat()
   },
-
   methods: {
     selectChange(val) {
       this.plaArray.forEach((item, index) =>{

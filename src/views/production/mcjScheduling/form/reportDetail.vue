@@ -122,7 +122,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row :gutter="20" type="flex" justify="center">
+        <el-row :gutter="20" type="flex">
           <el-col :span="12">
             <el-form-item :label="'打印模板'">
               <el-select v-model="printModel" placeholder="请选择">
@@ -135,12 +135,12 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+         <!-- <el-col :span="12">
             <el-form-item :label="'打印批号'">
-              <!--<el-input-number v-model="repeat"  label="请输入数量" :min="0"></el-input-number>-->
+              &lt;!&ndash;<el-input-number v-model="repeat"  label="请输入数量" :min="0"></el-input-number>&ndash;&gt;
                 <el-input v-model="lotNo"></el-input>
             </el-form-item>
-          </el-col>
+          </el-col>-->
         </el-row>
       </el-form>
       <div slot="footer" style="text-align:center">
@@ -148,7 +148,8 @@
       </div>
     </el-dialog>
     <div slot="footer" style="text-align:center;padding-top: 15px">
-      <el-button type="primary" v-if="isOver" @click.native="saveData('form')">提交</el-button>
+      <el-button type="success" v-if="isOver" @click.native="saveData('form')">提交</el-button>
+      <el-button type="primary" @click.native="saveLotNo('form')">保存</el-button>
       <el-button type="primary" @click.native="print('form')">打印条码</el-button>
     </div>
   </div>
@@ -324,6 +325,20 @@
                 type: "warning"
               })
             }
+          } else {
+            return false
+          }
+        })
+      },
+      saveLotNo(form) {
+        this.$refs[form].validate((valid) => {
+          // 判断必填项
+          if (valid) {
+            updateLotNo({taskId: this.form.taskId, lotNo: this.form.lotNo, productionDate: this.form.productionDate}).then(res => {
+              if(res.flag) {
+                this.$emit('uploadList')
+              }
+            })
           } else {
             return false
           }

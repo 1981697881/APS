@@ -41,7 +41,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20" v-if="!form.isPalette">
+      <el-row :gutter="20" v-if="form.isPalette">
         <el-col :span="12">
           <el-form-item :label="'单批次数量(kg)'">
             <el-input-number v-model="form.singleLotNum" @change="formSigle1" :min="1" ></el-input-number>
@@ -160,11 +160,11 @@
     created() {
       this.fetchFormat()
       if (this.listInfo) {
-        console.log(this.listInfo)
         if(this.listInfo.flag) {
           this.fetchLine(this.listInfo.tpId)
           this.form.tpId = Number(this.listInfo.tpId)
           this.form.alertStatus = Number(this.listInfo.alertStatus)
+          this.form.isPalette = this.listInfo.isPalette
           this.disPl = false
         } else {
           this.form = this.listInfo

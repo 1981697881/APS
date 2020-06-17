@@ -256,7 +256,7 @@
           }
           listInfo.isF = 1
           console.log(listInfo)
-          this.$confirm('是否结束(' + listInfo.oldCode + ')，结束后将完成生产?', '提示', {
+          this.$confirm('是否删除(' + listInfo.productionDate + '/' + listBlank.plName + '/' + listInfo.oldCode + ')，删除后将无法恢复?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
@@ -290,7 +290,7 @@
             }
           }
           listInfo.isF = 1
-          this.$confirm('是否结束(' + listInfo.oldCode + ')，结束后将完成生产?', '提示', {
+          this.$confirm('是否结束(' + listInfo.productionDate + '/' + listBlank.plName + '/' + listInfo.oldCode + ')，结束后将完成生产?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'

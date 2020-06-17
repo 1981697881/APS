@@ -121,8 +121,6 @@
               <el-input-number v-model="printingQuantity" label="请输入数量" :min="1"></el-input-number>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row :gutter="20" type="flex" justify="center">
           <el-col :span="12">
             <el-form-item :label="'打印模板'">
               <el-select v-model="printModel" placeholder="请选择">
@@ -135,20 +133,23 @@
               </el-select>
             </el-form-item>
           </el-col>
+        </el-row>
+        <!--<el-row :gutter="20" type="flex" justify="center">
           <el-col :span="12">
             <el-form-item :label="'打印批号'">
-              <!--<el-input-number v-model="repeat"  label="请输入数量" :min="0"></el-input-number>-->
+              &lt;!&ndash;<el-input-number v-model="repeat"  label="请输入数量" :min="0"></el-input-number>&ndash;&gt;
                 <el-input v-model="lotNo"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row>-->
       </el-form>
       <div slot="footer" style="text-align:center">
         <el-button type="primary" @click.native="confirmPrint">打印</el-button>
       </div>
     </el-dialog>
     <div slot="footer" style="text-align:center;padding-top: 15px">
-      <el-button type="primary" v-if="isOver" @click.native="saveData('form')">提交</el-button>
+      <el-button type="success" v-if="isOver" @click.native="saveData('form')">提交</el-button>
+      <el-button type="primary" @click.native="saveLotNo('form')">保存</el-button>
       <el-button type="primary" @click.native="print('form')">打印条码</el-button>
     </div>
   </div>
@@ -208,6 +209,9 @@
           reportDate: [
             {required: true, message: '请选择日期', trigger: 'change'}
           ],
+          productionDate: [
+            {required: true, message: '请选择日期', trigger: 'change'}
+          ],
           printModel: [
             {required: true, message: '请选择模板', trigger: 'change'}
           ],
@@ -258,7 +262,7 @@
       },
       confirmPrint() {
         if(this.printModel != null && this.lotNo != null) {
-          if(this.listInfo.lotNo != null && this.listInfo.lotNo != '') {
+          //if(this.listInfo.lotNo != null && this.listInfo.lotNo != '') {
             // data: 数据
             // printingQuantity: 打印品种
             // apiece: 打印
@@ -279,7 +283,7 @@
                 }
               }
             })
-          }else{
+          /*}else{
             updateLotNo({taskId: this.form.taskId, lotNo: this.lotNo}).then(reso => {
               if(reso.flag) {
                 this.form.lotNo = this.lotNo
@@ -305,7 +309,7 @@
                 })
               }
             })
-          }
+          }*/
           this.$emit('uploadList')
           this.$emit('hideReport', false)
         }else{
@@ -334,6 +338,20 @@
                 type: "warning"
               })
             }
+          } else {
+            return false
+          }
+        })
+      },
+      saveLotNo(form) {
+        this.$refs[form].validate((valid) => {
+          // 判断必填项
+          if (valid) {
+              updateLotNo({taskId: this.form.taskId, lotNo: this.form.lotNo, productionDate: this.form.productionDate}).then(res => {
+                if(res.flag) {
+                  this.$emit('uploadList')
+                }
+              })
           } else {
             return false
           }

@@ -162,7 +162,7 @@ export default {
     },
     delivery() {
       if (this.selections[0].taskId) {
-        this.$confirm('是否删除(' + this.selections[0].oldCode + ')，删除后将无法恢复?', '提示', {
+        this.$confirm('是否删除(' + this.selections[0].productionDate + '/' + this.selections[0].plName + '/' + this.selections[0].color + ')，删除后将无法恢复?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -196,7 +196,7 @@ export default {
     },
     over() {
       if (this.selections[0].taskId) {
-        this.$confirm('是否结束(' + this.selections[0].taskNum + ')，结束后将完成生产?', '提示', {
+        this.$confirm('是否结束(' + this.selections[0].productionDate + '/' + this.selections[0].plName + '/' + this.selections[0].color + ')，结束后将完成生产?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

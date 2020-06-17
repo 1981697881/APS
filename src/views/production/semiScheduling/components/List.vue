@@ -1,6 +1,6 @@
 <template>
   <div class="list-main box-shadow">
-    <el-table :data="list" height="100%" :cell-style="tableCellStyle" :v-loading="loading" border size="mini" :highlight-current-row="true" :cell-class-name="tableCellClassName" @cell-dblclick="celldblclick" @cell-click="cellclick"  @selection-change="handleSelectionChange">
+    <el-table :data="list" height="100%" :cell-style="tableCellStyle" :v-loading="loading" size="mini" :highlight-current-row="true" :cell-class-name="tableCellClassName" @cell-dblclick="celldblclick" @cell-click="cellclick"  @selection-change="handleSelectionChange">
       <el-table-column type="selection"></el-table-column>
       <el-table-column prop="date" label="序号" align="center" type="index" sortable></el-table-column>
       <el-table-column
@@ -136,10 +136,16 @@
         this.$store.dispatch("list/setClickData", [row, column.property.match(/\d+/g)[0]])
       },
       tableCellStyle(row, rowIndex, column) {
-        if (this.row === row.row && this.column === row.column) {
-          return 'background-color:#ccc;'
-        } else {
-          return 'background-color:#fff;'
+        if (this.row === row.row) {
+          let col1 = row.column.property
+          let col2 = this.column.property
+          if(col1 != undefined && col2 != undefined){
+            if(col2.replace(/[^0-9]/ig,"") === col1.replace(/[^0-9]/ig,"")){
+              return 'background-color:#ccc;'
+            }else {
+              return 'background-color:#fff;'
+            }
+          }
         }
       },
       fetchData(val) {
