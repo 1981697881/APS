@@ -7,6 +7,7 @@
       :list="list"
       index
       type
+       show-summary
        timeColor
       @handle-size="handleSize"
       @handle-current="handleCurrent"
@@ -43,7 +44,7 @@ export default {
         { text: '计划日期', name: 'productionDate', width: '150px' },
         { text: '实际完工数量', name: 'productionQuantity' },
         { text: '生产设备', name: 'plName' },
-        { text: '产品分类', name: '' },
+        { text: '产品分类', name: 'productType' },
         { text: '任务警示', name: 'alertStatus', formatt: 'taskWarning' },
         { text: '项目名称', name: 'soName' , width: '150px' },
         { text: '生产状态', name: 'allocatedStatus' },
