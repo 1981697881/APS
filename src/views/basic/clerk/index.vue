@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @delList="delivery" @queryBtn="query" @uploadList="upload"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @delList="delivery"  @queryBtn="query" @uploadList="upload"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog" @uploadList="upload"/>
     </div>
@@ -62,7 +62,7 @@ export default {
       this.visible = true
     },
     // 查询
-    query(val) {
+    query() {
       this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     //更新列表

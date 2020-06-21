@@ -42,7 +42,7 @@ module.exports = {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
         // target: `http://localhost:8090/asset`, // 修改后台接口地址
-        //target: `http://39.108.190.52:50080/web`,
+        //target: `http://139.159.136.187:50080/web`,
         target: `http://xyy.gzfzdev.com:8080/`,
         changeOrigin: true, // 必须加上跨域
         ws: false,

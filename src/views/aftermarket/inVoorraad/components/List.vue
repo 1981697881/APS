@@ -60,17 +60,17 @@ export default {
           this.$store.dispatch("list/setClickData", obj.row);
       },
     fetchData(fid, type) {
-      this.loading = true;
+      /*this.loading = true;
       const data = {
-      /*  fid: fid,
-        type: type,*/
+      /!*  fid: fid,
+        type: type,*!/
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 50
       };
         getMaterialList(data).then(res => {
         this.loading = false;
         this.list = res.data;
-      });
+      });*/
     }
   }
 };
