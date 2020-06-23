@@ -7,7 +7,6 @@
       :list="list"
       index
       type
-       show-summary
        timeColor
       @handle-size="handleSize"
       @handle-current="handleCurrent"

@@ -3,7 +3,7 @@
     <Tree ref="tree" class="list-tree" />
     <div class="list-container">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @delList="delList" @delGroup="delGroup" @uploadAll="uploadAll"  @showGroupDialog="groupDialog"  />
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @delList="delList" @delGroup="delGroup" @uploadAll="uploadAll" @queryBtn="query" @showGroupDialog="groupDialog"  />
       </div>
       <list ref="list" @showDialog="handlerDialog"  />
     </div>
@@ -96,6 +96,9 @@ export default {
       if(val) {
         this.$refs.list.Delivery(val)
       }
+    },// 查询
+    query() {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     delGroup(val) {
       if(val) {

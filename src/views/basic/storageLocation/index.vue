@@ -82,8 +82,8 @@ export default {
       this.visible2 = true
     },
     // 查询
-    query(val) {
-      this.$refs.list.fetchData(val)
+    query() {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     // 更新列表
     upload(){

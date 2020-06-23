@@ -11,7 +11,7 @@
         </el-option>
       </el-select>
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload" @reportInfo="report"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @theDelivery="delivery" @queryBtn="query" @uploadList="upload" @reportInfo="report"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog" @uploadList="upload" />
     </div>
@@ -117,6 +117,9 @@ export default {
       const obj = this.$refs.tabs.qFilter()
       obj.tpId = this.plaIdS
       this.$refs.list.fetchData(obj)
+    },// 查询
+    query() {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
   }
 };

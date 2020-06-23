@@ -105,8 +105,8 @@ export default {
       this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     // 查询
-    query(val) {
-      this.$refs.list.fetchData(val)
+    query() {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
   }
 };

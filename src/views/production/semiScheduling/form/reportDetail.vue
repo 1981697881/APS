@@ -347,7 +347,7 @@
         this.rArray = []
           this.options = [{
             value: '3',
-            label: '色石&Base标签'
+            label: '半成品_色石&Base标签'
           }]
           getSemiFinishedProductsType().then(res => {
             this.pArray = res.data

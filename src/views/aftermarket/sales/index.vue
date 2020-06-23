@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog"  @uploadList="uploadList"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @queryBtn="query" @uploadList="uploadList"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog" @uploadList="uploadList"/>
     </div>
@@ -46,6 +46,9 @@ export default {
     handlerDialog(obj) {
       if(obj)this.soId=obj.soId
       this.visible = true
+    },// 查询
+    query() {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     // 更新列表
     uploadList(val) {

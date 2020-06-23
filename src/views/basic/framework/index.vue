@@ -3,7 +3,7 @@
     <!--<Tree ref="tree" class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @del="delList" @uploadList="upload"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @del="delList" @queryBtn="query" @uploadList="upload"/>
       </div>
       <list ref="list" @showDialog="handlerDialog"  />
     </div>
@@ -57,7 +57,10 @@ export default {
       //更新列表
       upload(){
           this.$refs.list.fetchData()
-      },
+      },// 查询
+    query() {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+    },
     delList(val) {
       this.loading = true
       console.log(val)

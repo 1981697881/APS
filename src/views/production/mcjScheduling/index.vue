@@ -11,7 +11,7 @@
         </el-option>
       </el-select>
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload" @reportInfo="report"/>
+        <tabs-bar ref="tabs" @queryBtn="query" @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload" @reportInfo="report"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog" />
     </div>

@@ -61,6 +61,12 @@ export default {
     rowClick(obj) {
       this.$store.dispatch("list/setClickData", obj.row)
     },
+    uploadPr(val) {
+      this.fetchData(val,{
+        pageNum: 1,
+        pageSize: this.list.size || 50
+      })
+    },
     fetchData(val, data = {
       pageNum: this.list.current || 1,
       pageSize: this.list.size || 50

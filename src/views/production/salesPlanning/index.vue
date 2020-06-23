@@ -3,9 +3,9 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @uploadList="uploadList"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @queryBtn="query" @uploadList="uploadList"/>
       </div>
-      <list ref="list"  @showDialog="handlerDialog"/>
+      <list ref="list"  @showDialog="handlerDialog" @uploadList="uploadList"/>
     </div>
     <el-dialog
       :visible.sync="visible"
@@ -49,7 +49,11 @@ export default {
     },
     // 更新列表
     uploadList(val) {
-      this.$refs.list.fetchData(val)
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+    },
+    //查询
+    query() {
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
     }
   }
 };

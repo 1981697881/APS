@@ -2,7 +2,7 @@
   <div class="app-list">
     <div class="list-containerOther">
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @uploadList="upload" @theDelivery="delivery"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @queryBtn="query" @uploadList="upload" @theDelivery="delivery"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog"/>
     </div>
@@ -58,6 +58,9 @@ export default {
     handlerDialog(obj){
       if(obj)this.oid = obj.oid;this.orderId=obj.orderId;this.createTime=obj.createTime
       this.visible = true
+    },// 查询
+    query() {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     // 更新列表
     upload(val){

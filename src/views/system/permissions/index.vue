@@ -3,7 +3,7 @@
     <Tree ref="tree" class="list-tree" @handler-node="handlerNode" />
     <div class="list-container">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @saveRoles="handlerSave" />
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @queryBtn="query" @saveRoles="handlerSave" />
       </div>
       <list ref="list" @showDialog="handlerDialog" @showTree="handlerTree" />
     </div>
@@ -45,7 +45,10 @@ export default {
   methods: {
       hideWindow(val){
           this.visible = val
-      },
+      },// 查询
+    query() {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+    },
       handlerSave(){
           this.loading = true;
           let val = this.$refs.list.getClickRow();

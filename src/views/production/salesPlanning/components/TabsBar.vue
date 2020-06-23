@@ -1,9 +1,9 @@
 <template>
   <div class="list-header">
-    <el-form  :size="'mini'" :label-width="'50px'">
+    <el-form  :size="'mini'" :label-width="'70px'">
       <el-row :gutter="10">
         <el-col :span="6">
-          <el-form-item :label="'日期'">
+          <el-form-item :label="'订单日期'">
             <el-date-picker
               v-model="value"
               type="daterange"
@@ -236,7 +236,7 @@
       },
       // 关键字查询
       query() {
-        this.$emit('uploadList', this.qFilter())
+        this.$emit('queryBtn', this.qFilter())
       },
       confirm(form) {
         this.fullscreenLoading = true
@@ -262,11 +262,11 @@
         })
       },
       upload() {
-        this.$emit('uploadList')
         this.search.keyword = ''
         this.search.color = ''
         this.search.itemCode = ''
         this.value = ''
+        this.$emit('uploadList')
       },
       handleSync() {
         this.visible = true

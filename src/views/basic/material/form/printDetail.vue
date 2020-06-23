@@ -124,10 +124,10 @@
           label: 'OEM产品_美瓷胶标签'
         }, {
           value: '3',
-          label: '色石&Base标签'
+          label: '半成品_色石&Base标签'
         }, {
           value: '4',
-          label: '美瓷胶标签'
+          label: '半成品_美瓷胶标签'
         }, {
           value: '5',
           label: '外购物料标签'
@@ -160,6 +160,7 @@
         this.visible = true
       },
       printType(type, data) {
+        console.log(data)
        if(type == "0"){
          PrintAccount(data, this.form.printingQuantity)
          LODOP.PREVIEW()
@@ -185,7 +186,6 @@
           //判断必填项
           if (valid) {
             if (this.isLog) {
-              console.log(this.form)
               this.printType(this.form.printModel, [this.form])
             } else {
               barcodeGoods({barcodeList:[{gid: this.form.gid,

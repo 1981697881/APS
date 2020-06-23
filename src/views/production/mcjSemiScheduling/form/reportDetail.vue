@@ -347,7 +347,7 @@
         this.rArray = []
           this.options = [{
             value: '4',
-            label: '美瓷胶标签'
+            label: '半成品_美瓷胶标签'
           }]
         getMcjSemiSchedulingType().then(res => {
             this.pArray = res.data

@@ -2,7 +2,7 @@
   <div class="app-list">
     <div class="list-containerOther">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @uploadList="upload" @queryBtn="query"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @uploadList="upload" @queryBtn="query"/>
       </div>
       <list ref="list" @showDialog="handlerDialog"  />
     </div>
@@ -51,9 +51,9 @@ export default {
       }
       this.visible = true
     },
-    // 查询
-    query(val) {
-      this.$refs.list.uploadPr(val)
+   // 查询
+    query() {
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
     },
     // 更新列表
     upload() {

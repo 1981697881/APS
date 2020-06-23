@@ -119,6 +119,7 @@
           this.fetchData({name: this.name})
         }
       },
+
       fetchData(val, data = {
         pageNum: this.list.current || 1,
         pageSize: this.list.size || 50

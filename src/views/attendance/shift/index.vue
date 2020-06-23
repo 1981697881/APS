@@ -3,7 +3,7 @@
     <Tree ref="tree" class="list-table" @showTree="handlerNode" />
     <div class="list-containerT">
       <div>
-        <tabs-bar @del="delList" @uploadList="upload" @showDialog="handlerDialog" @showScheduling="handlerSch" />
+        <tabs-bar ref="tabs" @del="delList" @queryBtn="query" @uploadList="upload" @showDialog="handlerDialog" @showScheduling="handlerSch" />
       </div>
       <list ref="list" @uploadList="upload" />
     </div>
@@ -94,6 +94,9 @@ export default {
     // 更新列表
     uploadSch(val) {
       this.$refs.list.fetchData(val)
+    },// 查询
+    query() {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     handlerNode(val) {
       this.oowId = val.oowId

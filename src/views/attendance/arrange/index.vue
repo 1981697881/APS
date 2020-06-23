@@ -3,7 +3,7 @@
     <Tree ref="tree" class="list-table" @handler-node="handlerNode" />
     <div class="list-containerT">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @del="delList" @uploadList="upload"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @queryBtn="query" @del="delList" @uploadList="upload"/>
       </div>
       <list ref="list" @showDialog="handlerDialog"  />
     </div>
@@ -42,7 +42,10 @@ export default {
       //更新列表
       upload(){
           this.$refs.list.fetchData()
-      },
+      },// 查询
+    query() {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+    },
     handlerNode(node) {
       // 触发列表的获取数据函数（原为像list组件传入id并监听变动在list组件里触发函数，已销毁）
       this.$refs.list.fetchData(node.data.fid,node.data.type)

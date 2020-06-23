@@ -3,7 +3,7 @@
     <type ref="tree" class="list-tree" @queryList="queryList" />
     <div class="list-container">
       <div>
-        <tabs-bar @showDialog="handlerDialog" @delList="delList" @uploadList="uploadAll" @delGroup="delType" @showGroupDialog="groupDialog"  />
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @delList="delList" @uploadList="uploadAll" @queryBtn="query" @delGroup="delType" @showGroupDialog="groupDialog"  />
       </div>
       <list ref="list" @showDialog="handlerDialog"  />
     </div>
@@ -92,6 +92,9 @@ export default {
     // 更新列表
     upload() {
       this.$refs.list.fetchData()
+    },// 查询
+    query() {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     // 更新列表
     uploadGroup() {

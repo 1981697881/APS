@@ -6,7 +6,6 @@
       :loading="loading"
       :list="list"
       index
-       show-summary
        :selfAdaption="false"
       @handle-size="handleSize"
       @handle-current="handleCurrent"
@@ -56,21 +55,26 @@ export default {
     };
   },
   methods: {
-    // 监听每页显示几条
     handleSize(val) {
       this.list.size = val
-      this.fetchData()
+      this.$emit('uploadList')
     },
     // 监听当前页
     handleCurrent(val) {
-      this.list.current = val
-      this.fetchData();
+      this.list.current = val;
+      this.$emit('uploadList')
     },
     dblclick(obj) {//this.$emit('showDialog',obj.row)
     },
     // 监听单击某一行
     rowClick(obj) {
       this.$store.dispatch("list/setClickData", obj.row)
+    },
+    uploadPr(val) {
+      this.fetchData(val,{
+        pageNum: 1,
+        pageSize: this.list.size || 50
+      })
     },
     fetchData(val, data = {
       pageNum: this.list.current || 1,
