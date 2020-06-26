@@ -19,22 +19,27 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-form-item :label="'料号'">
             <el-input v-model="search.goodCode" />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-form-item :label="'旧料号'">
             <el-input v-model="search.oldCode" />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-form-item :label="'库位号'">
             <el-input v-model="search.positionCode" />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
+          <el-form-item :label="''">
+            <el-checkbox v-model="showZero" @change="clickChange">显示0库存</el-checkbox>
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
           <el-form-item :label="'仓库'" prop="plaIdS">
             <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
               <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">
@@ -93,6 +98,7 @@ export default {
         }]
       },
       parent: null,
+      showZero: false,
       plaArray: [],
       search: {
         oldCode: null,
@@ -106,6 +112,10 @@ export default {
     this.fetchWare(-1)
   },
   methods: {
+    clickChange(val) {
+      this.showZero = val
+      this.$emit('queryBtn', this.qFilter())
+    },
     // 切换仓库
     selectWorn(val) {
       this.$emit('queryBtn', this.qFilter())
@@ -145,6 +155,7 @@ export default {
       this.search.goodCode != null && this.search.goodCode != '' ? obj.goodCode = this.search.goodCode : null
       this.search.positionCode != null && this.search.positionCode != '' ? obj.positionCode = this.search.positionCode : null
       this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
+      this.showZero != null && this.showZero != undefined ? obj.showZero = this.showZero : null
       this.value != null && this.value != undefined ? obj.endDate = this.value[1] : null
       this.value != null && this.value != undefined ? obj.startDate = this.value[0] : null
       return obj

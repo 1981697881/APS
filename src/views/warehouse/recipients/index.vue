@@ -38,7 +38,7 @@ export default {
       this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
     },
     // 查询
-    query(val) {
+    upload(val) {
       this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
     },
   }

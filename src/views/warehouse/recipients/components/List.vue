@@ -5,6 +5,7 @@
       :columns="columns"
       :loading="loading"
       :list="list"
+       type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"

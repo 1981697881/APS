@@ -43,8 +43,9 @@ const PrintAccount = (data, printingQuantity, apiece, repeat) => {
     LODOP.ADD_PRINT_TEXT('22mm', '16mm', '30mm', '10mm', data[0].executiveStandard);
     LODOP.SET_PRINT_STYLEA(0, 'FontSize', 9);
     LODOP.SET_PRINT_STYLEA(0,'Bold',1);// 给前面的那个文本加粗。
-    /*LODOP.ADD_PRINT_TEXT('26mm', '17mm', '29mm', '10mm', 'GB 24408-2009');
-    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);*/
+    LODOP.ADD_PRINT_TEXT('26mm', '16mm', '30mm', '10mm', data[0].standardForSubstances);
+    LODOP.SET_PRINT_STYLEA(0, 'FontSize', 9);
+    LODOP.SET_PRINT_STYLEA(0,'Bold',1);// 给前面的那个文本加粗。
     LODOP.ADD_PRINT_TEXT('24mm', '64mm', '33mm', '10mm', data[0].mixtureRatio);
     LODOP.SET_PRINT_STYLEA(0, 'FontSize', 11.5);
     LODOP.SET_PRINT_STYLEA(0,'Bold',1);// 给前面的那个文本加粗。

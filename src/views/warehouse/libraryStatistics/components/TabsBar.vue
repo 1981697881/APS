@@ -1,6 +1,6 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'" :label-width="'60px'">
       <el-row :gutter="10">
         <el-col :span="6">
           <el-form-item :label="'日期'">
@@ -19,7 +19,12 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
+          <el-form-item :label="'料号'">
+            <el-input v-model="search.goodCode" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
           <el-form-item :label="'旧料号'">
             <el-input v-model="search.keyword" />
           </el-form-item>
@@ -86,6 +91,7 @@ export default {
       parent: null,
       search: {
         keyword: null,
+        goodCode: null,
         type: null
       }
     };
@@ -112,6 +118,7 @@ export default {
     upload() {
       this.$emit('uploadList')
       this.search.keyword = ''
+      this.search.goodCode = ''
       this.value = ''
       this.parent = null
     },
@@ -119,6 +126,7 @@ export default {
     qFilter() {
       let obj = {}
       this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
+      this.search.goodCode != null || this.search.goodCode != undefined ? obj.goodCode = this.search.goodCode : null
       this.value != null || this.value != undefined ? obj.endDate = this.value[1] : null
       this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
       this.value != null || this.value != undefined ? obj.startDate = this.value[0] : null

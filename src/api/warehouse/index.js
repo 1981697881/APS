@@ -315,6 +315,19 @@ export function notarizeOutputList(params) {
     method: 'put'
   })
 }
+// 批量出货确认
+export function notarizeOutputMorn(params) {
+  const url = '/ship-order/batchConfirm'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: params
+  })
+}
 // 出货取消确认
 export function notarizeCancelOutputList(params) {
   const url = '/ship-order/cConfirm/' + params

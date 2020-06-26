@@ -71,6 +71,20 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row :gutter="20" type="flex" justify="center">
+          <el-col :span="12">
+            <el-form-item :label="'日期'" prop="productionDate">
+              <div class="block" >
+                <el-date-picker
+                  v-model="form.productionDate"
+                  type="date"
+                  value-format="yyyy-MM-dd"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </div>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <div slot="footer" style="text-align:center">
         <el-button type="primary" @click.native="saveNum('form')">确定</el-button>
@@ -99,13 +113,26 @@
           gid: null,
           lotNo: null,
           printModel: null,
+          productionDate: null,
           printingQuantity: 1,
+        },
+        getTime: function() {
+          var _this = this;
+          let yy = new Date().getFullYear();
+          let mm = new Date().getMonth() + 1;
+          let dd = new Date().getDate();
+          let hh = new Date().getHours();
+          let mf = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes();
+          let ss = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();
+          _this.form.productionDate = yy + '-' + mm + '-' + dd;
         },
         rules: {
           printModel: [
             {required: true, message: '请选择模板', trigger: 'change'},
           ],printingQuantity: [
             {required: true, message: '请输入数量', trigger: 'change'},
+          ],productionDate: [
+            {required: true, message: '请选择日期', trigger: 'change'}
           ],lotNo: [
             {required: true, message: '请输入编码', trigger: 'blur'},
           ],
@@ -147,6 +174,7 @@
     created() {
     },
     mounted() {
+      this.getTime()
       this.form.gid = this.listInfo.gid
       if (this.form.gid) {
         this.fetchData(this.listInfo.gid)
@@ -191,6 +219,7 @@
               barcodeGoods({barcodeList:[{gid: this.form.gid,
                   printNum: this.form.printingQuantity,
                   lotNo: this.form.lotNo,
+                  productionDate: this.form.productionDate,
                   type: 4}]}).then(res => {
                     if(res.flag){
                       res.data[0].color = res.data[0].oldCode

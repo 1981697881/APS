@@ -138,7 +138,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import {syncShipInfo, exportRecipients, notarizeOutputList, notarizeCancelOutputList} from "@/api/warehouse/index";
+import {syncShipInfo, exportRecipients, notarizeOutputMorn, notarizeCancelOutputList} from "@/api/warehouse/index";
 export default {
   components: {},
   computed: {
@@ -241,8 +241,15 @@ export default {
       this.$emit('uploadList')
     },
     notarize() {
-      if (this.clickData.spId) {
-        notarizeOutputList(this.clickData.spId).then(res => {
+      if (this.selections.length>0) {
+        const selection = this.selections
+        let arrray = []
+        selection.forEach((item, index) => {
+          if(arrray.indexOf(item.spId) == -1){
+            arrray.push(item.spId)
+          }
+        })
+        notarizeOutputMorn(arrray).then(res => {
           if(res.flag) {
             this.upload()
           }
