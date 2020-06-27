@@ -84,6 +84,12 @@
               </div>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item :label="'打印规格'">
+              <!--<el-input-number v-model="repeat"  label="请输入数量" :min="0"></el-input-number>-->
+              <el-input v-model="form.spec"></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <div slot="footer" style="text-align:center">
@@ -111,6 +117,7 @@
         visible: false,
         form: {
           gid: null,
+          spec: null,
           lotNo: null,
           printModel: null,
           productionDate: null,
@@ -167,6 +174,7 @@
           { text: "旧料号", name: "oldCode" },
           { text: "规格", name: "spec" },
           { text: "批号", name: "lotNo" },
+          { text: "日期", name: "productionDate" },
           { text: "打印时间", name: "createTime" },
         ],
       };
@@ -174,7 +182,6 @@
     created() {
     },
     mounted() {
-      this.getTime()
       this.form.gid = this.listInfo.gid
       if (this.form.gid) {
         this.fetchData(this.listInfo.gid)
@@ -218,12 +225,14 @@
             } else {
               barcodeGoods({barcodeList:[{gid: this.form.gid,
                   printNum: this.form.printingQuantity,
+                  spec: this.form.spec,
                   lotNo: this.form.lotNo,
-                  productionDate: this.form.productionDate,
+                  productionDate: this.form.productionDate + ' 00:00:00',
                   type: 4}]}).then(res => {
                     if(res.flag){
                       res.data[0].color = res.data[0].oldCode
                       this.printType(this.form.printModel, res.data)
+                      this.fetchData(this.form.gid)
                     }
               });
             }
@@ -239,12 +248,15 @@
           lotNo: null,
           gid: this.listInfo.gid,
           printModel: null,
+          spec: null,
+          productionDate: null,
           color: this.listInfo.oldCode,
           oldCode: this.listInfo.oldCode,
           printingQuantity: 1,
         }
         this.isLog = false
         this.visible = true
+        this.getTime()
       },
       fetchData(val) {
         getMattersPrint(val).then(res => {

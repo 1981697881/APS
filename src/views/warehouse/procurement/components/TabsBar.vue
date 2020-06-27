@@ -20,6 +20,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
+          <el-form-item :label="'单号'">
+            <el-input v-model="search.docNo" placeholder="单号"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
           <el-form-item :label="'旧料号'">
             <el-input v-model="search.keyword" placeholder="旧料号"/>
           </el-form-item>
@@ -197,6 +202,7 @@ export default {
       search: {
         keyword: null,
         whName: null,
+        docNo: null,
         type: null
       }
     };
@@ -262,6 +268,7 @@ export default {
     upload() {
       this.search.keyword = ''
       this.search.whName = ''
+      this.search.docNo = ''
       /*this.isConfirm = false*/
      /* this.planArriveDate = ''*/
       this.value = ''
@@ -272,6 +279,7 @@ export default {
       let obj = {}
       console.log(this.value)
       this.search.keyword != null && this.search.keyword != '' ? obj.color = this.search.keyword : null
+      this.search.docNo != null && this.search.docNo != '' ? obj.docNo = this.search.docNo : null
       this.search.whName != null && this.search.whName != '' ? obj.whName = this.search.whName : null
      /* this.planArriveDate != null && this.planArriveDate != '' ? obj.planArriveDate = this.planArriveDate : null*/
       this.value != null || this.value != undefined ? obj.planArriveDateEnd = this.value[1] : null

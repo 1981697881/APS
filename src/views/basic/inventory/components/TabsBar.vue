@@ -13,6 +13,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
+          <el-form-item :label="'料号'">
+            <el-input v-model="search.goodCode" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
           <el-form-item :label="'合格'" >
             <el-select v-model="search.status" placeholder="请选择" @change="selectChange">
               <el-option
@@ -49,6 +54,7 @@ export default {
         name: null,
         oldCode: null,
         status: null,
+        goodCode: null,
       },
       options: [{
         value: 1,
@@ -71,12 +77,14 @@ export default {
       this.$emit('uploadList')
       this.search.name = ''
       this.search.oldCode = ''
+      this.search.goodCode = ''
       this.search.status = ''
     },
     // 查询条件过滤
     qFilter() {
       let obj = {}
       this.search.name != null && this.search.name != '' ? obj.name = this.search.name : null
+      this.search.goodCode != null && this.search.goodCode != '' ? obj.goodCode = this.search.goodCode : null
       this.search.status != null && this.search.status != '' ? obj.status = this.search.status : null
       this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       return obj

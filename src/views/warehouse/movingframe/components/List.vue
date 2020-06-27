@@ -6,6 +6,7 @@
       :loading="loading"
       :list="list"
       index
+       show-summary
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"

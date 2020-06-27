@@ -29,12 +29,22 @@
             <el-input v-model="search.keyword" />
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-form-item :label="'仓库'" prop="plaIdS">
             <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
               <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">
               </el-option>
             </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'库位号'">
+            <el-input v-model="search.positionCode" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'操作人'">
+            <el-input v-model="search.username" />
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -92,6 +102,8 @@ export default {
       search: {
         keyword: null,
         goodCode: null,
+        positionCode: null,
+        username: null,
         type: null
       }
     };
@@ -119,6 +131,8 @@ export default {
       this.$emit('uploadList')
       this.search.keyword = ''
       this.search.goodCode = ''
+      this.search.positionCode = ''
+      this.search.username = ''
       this.value = ''
       this.parent = null
     },
@@ -127,6 +141,8 @@ export default {
       let obj = {}
       this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
       this.search.goodCode != null || this.search.goodCode != undefined ? obj.goodCode = this.search.goodCode : null
+      this.search.positionCode != null || this.search.positionCode != undefined ? obj.positionCode = this.search.positionCode : null
+      this.search.username != null || this.search.username != undefined ? obj.username = this.search.username : null
       this.value != null || this.value != undefined ? obj.endDate = this.value[1] : null
       this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
       this.value != null || this.value != undefined ? obj.startDate = this.value[0] : null
