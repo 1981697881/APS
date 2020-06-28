@@ -115,8 +115,8 @@ export default {
         }]
       },
       options: [{
-        value: '待计划',
-        label: '待计划'
+        value: '计划中',
+        label: '计划中'
       }, {
         value: '已暂停',
         label: '已暂停'
@@ -129,7 +129,7 @@ export default {
       }],
       visible: false,
       search: {
-        allocatedStatus: '待计划',
+        allocatedStatus: '计划中',
         oldCode: null,
         taskNum: null,
         soName: null,

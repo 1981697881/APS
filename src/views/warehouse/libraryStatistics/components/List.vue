@@ -44,6 +44,7 @@ export default {
         //{ text: '计划数量', name: 'allocatedNum' },
         { text: '入库数量', name: 'num' },
         { text: '库位', name: 'positionName' },
+        { text: '合格状态', name: 'status' },
         { text: '操作员', name: 'username' },
       ]
     };

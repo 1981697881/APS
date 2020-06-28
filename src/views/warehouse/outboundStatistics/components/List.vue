@@ -43,6 +43,7 @@ export default {
         { text: '批号', name: 'lotNo' },
         { text: '数量', name: 'num' },
         { text: '库位号', name: 'positionCode' },
+        { text: '合格状态', name: 'status' },
         //{ text: '出库去向', name: 'outbound' },
         { text: '操作员', name: 'username' },
       ]
