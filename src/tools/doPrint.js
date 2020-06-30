@@ -56,7 +56,7 @@ const PrintAccount = (data, printingQuantity, apiece, repeat) => {
     LODOP.SET_PRINT_STYLEA(0,'Bold',1);// 给前面的那个文本加粗。
     LODOP.ADD_PRINT_TEXT('43mm', '16mm', '31mm', '10mm', data[0].qualityGuaranteePeriod);
     LODOP.SET_PRINT_STYLEA(0,'Bold',1);// 给前面的那个文本加粗。
-    LODOP.ADD_PRINT_TEXT('41mm', '64mm', '32mm', '10mm', data[0].spec);
+    LODOP.ADD_PRINT_TEXT('41mm', '64mm', '33mm', '10mm', data[0].spec);
     LODOP.SET_PRINT_STYLEA(0, 'FontSize', 26);
     LODOP.SET_PRINT_STYLEA(0,'FontName','黑体');
     LODOP.SET_PRINT_STYLEA(0,'LineSpacing', 1);

@@ -43,7 +43,7 @@ export default {
         { text: '批号', name: 'lotNo' },
         //{ text: '计划数量', name: 'allocatedNum' },
         { text: '入库数量', name: 'num' },
-        { text: '库位', name: 'positionName' },
+        { text: '库位', name: 'positionCode' },
         { text: '合格状态', name: 'status' },
         { text: '操作员', name: 'username' },
       ]
@@ -53,12 +53,12 @@ export default {
     // 监听每页显示几条
     handleSize(val) {
       this.list.size = val
-      this.fetchData();
+      this.$emit('uploadList');
     },
     // 监听当前页
     handleCurrent(val) {
       this.list.current = val;
-      this.fetchData();
+      this.$emit('uploadList');
     },
     dblclick(obj) {
       this.$emit('showDialog', obj.row)

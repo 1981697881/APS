@@ -97,9 +97,9 @@ export default {
       link.click()
     },
     upload() {
-      this.$emit('uploadList')
       this.search.keyword = ''
       this.value = ''
+      this.$emit('uploadList')
     },
     // 查询条件过滤
     qFilter() {

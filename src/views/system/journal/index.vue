@@ -51,11 +51,11 @@ export default {
       this.$refs.list.fetchData(node.data.fid,node.data.type)
     },// 查询
     query() {
-      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
     },
       //更新列表
       upload(){
-          this.$refs.list.fetchData()
+          this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
       }
   }
 };

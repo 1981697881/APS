@@ -124,13 +124,13 @@ export default {
       })
     },
     upload() {
-      this.$emit('uploadList')
       this.search.keyword = ''
       this.search.goodCode = ''
       this.search.positionCode = ''
       this.search.username = ''
       this.value = ''
       this.parent = null
+      this.$emit('uploadList')
     },
     // 查询条件过滤
     qFilter() {

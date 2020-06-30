@@ -39,7 +39,7 @@ export default {
     },
       //更新列表
       upload(){
-          this.$refs.list.fetchData()
+          this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
       }
   }
 };

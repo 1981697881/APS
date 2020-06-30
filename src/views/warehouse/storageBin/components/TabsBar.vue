@@ -141,12 +141,12 @@ export default {
       link.click()
     },
     upload() {
-      this.$emit('uploadList')
       this.search.oldCode = ''
       this.search.goodCode = ''
       this.search.positionCode = ''
       this.value = ''
       this.parent = null
+      this.$emit('uploadList')
     },
     // 查询条件过滤
     qFilter() {

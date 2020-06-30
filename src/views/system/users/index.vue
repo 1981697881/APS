@@ -81,11 +81,11 @@ export default {
     },
     // 更新列表
     upload() {
-      this.$refs.list.fetchData()
+      this.$refs.list.uploadPr()
     },
     // 更新列表
     uploadAll() {
-      this.$refs.list.fetchData()
+      this.$refs.list.uploadPr()
       this.$refs.tree.fetchData()
     },
     // 更新列表
@@ -98,7 +98,7 @@ export default {
       }
     },// 查询
     query() {
-      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
     },
     delGroup(val) {
       if(val) {

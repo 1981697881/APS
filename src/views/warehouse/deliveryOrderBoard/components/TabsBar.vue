@@ -47,10 +47,10 @@ export default {
       this.$emit('queryBtn', this.qFilter())
     },
     upload() {
-      this.$emit('uploadList')
       this.search.oldCode = ''
       this.search.shipNo = ''
       this.value = ''
+      this.$emit('uploadList')
     },
     // 查询条件过滤
     qFilter() {

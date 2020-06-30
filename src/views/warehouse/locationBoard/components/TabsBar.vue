@@ -46,9 +46,9 @@ export default {
       this.$emit('queryBtn', this.qFilter())
     },
     upload() {
-      this.$emit('uploadList')
       this.search.keyword = ''
       this.parent = null
+      this.$emit('uploadList')
     },
     fetchWare(val) {
       getWarehouseList(val).then(res => {

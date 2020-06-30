@@ -37,10 +37,12 @@ export default {
         { text: '移库时间', name: 'moveTime' },
         { text: 'U9料号', name: 'goodCode' },
         { text: '旧料号', name: 'oldCode' },
+        { text: '批号', name: 'lotNo' },
         { text: '原仓位', name: 'pastPositionCode' },
         { text: '原数量', name: 'pastNum' },
         { text: '现仓位', name: 'nowPositionCode' },
         { text: '现数量', name: 'nowNum' },
+        { text: '合格状态', name: 'status' },
         { text: '操作员', name: 'username' },
       ]
     };

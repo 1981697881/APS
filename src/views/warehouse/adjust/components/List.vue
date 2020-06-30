@@ -41,10 +41,12 @@ export default {
         { text: '旧料号', name: 'oldCode' },
         { text: '批号', name: 'pastLotNo' },
         { text: '数量', name: 'pastNum' },
+        { text: '合格状态', name: 'pastStatus' },
         { text: '调后U9料号', name: 'adjGoodCode' },
         { text: '调后旧料号', name: 'adjOldCode' },
         { text: '调后批号', name: 'adjLotNo' },
         { text: '调后数量', name: 'adjNum' },
+        { text: '调后合格状态', name: 'adjStatus' },
         { text: '操作员', name: 'username' },
 
       ]

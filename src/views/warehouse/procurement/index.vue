@@ -46,7 +46,6 @@ export default {
       this.visible = val
     },
     handlerDialog(obj) {
-      console.log(obj)
       this.listInfo = null
       if (obj) {
         const info = JSON.parse(JSON.stringify(obj))
@@ -60,8 +59,7 @@ export default {
     },
     // 更新列表
     upload() {
-      console.log(this.$refs.tabs.qFilter())
-      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
     }
   }
 };
