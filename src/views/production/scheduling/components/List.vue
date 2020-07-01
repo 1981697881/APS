@@ -77,12 +77,17 @@ export default {
     rowClick(obj) {
       this.$store.dispatch('list/setClickData', obj.row);
     },
-    fetchData(val) {
-      this.loading = true
-      const data = {
-        pageNum: this.list.current || 1,
+    uploadPr(val) {
+      this.fetchData(val,{
+        pageNum: 1,
         pageSize: this.list.size || 50
-      }
+      })
+    },
+    fetchData(val, data = {
+      pageNum: this.list.current || 1,
+      pageSize: this.list.size || 50
+    }) {
+      this.loading = true
       let obj = {}
       val != null || val != undefined ? obj = val : null
       getSchedulingList(data, obj).then(res => {

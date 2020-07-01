@@ -13,7 +13,7 @@
       <div>
         <tabs-bar ref="tabs" @queryBtn="query" @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload" @reportInfo="report"/>
       </div>
-      <list ref="list"  @showDialog="handlerDialog" />
+      <list ref="list"  @uploadList="uploadPage" @showDialog="handlerDialog" />
     </div>
     <el-dialog
       :visible.sync="visible"
@@ -110,6 +110,11 @@ export default {
         this.listInfo = info
       }
       this.visibleR = true
+    },
+    uploadPage(val) {
+      const obj = this.$refs.tabs.qFilter()
+      obj.tpId = this.plaIdS
+      this.$refs.list.fetchData(obj)
     },
     // 更新列表
     upload(val = { tpId: this.plaIdS }) {

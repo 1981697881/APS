@@ -160,6 +160,7 @@
           this.form.alertStatus = Number(this.listInfo.alertStatus)
           this.form.plId = Number(this.listInfo.plId)
           this.form.tpId = Number(this.listInfo.tpId)
+          this.disPl = false
         }
       }
     },

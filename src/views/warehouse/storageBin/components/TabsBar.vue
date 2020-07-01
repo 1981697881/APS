@@ -34,9 +34,9 @@
             <el-input v-model="search.positionCode" />
           </el-form-item>
         </el-col>
-        <el-col :span="3">
-          <el-form-item :label="''">
-            <el-checkbox v-model="showZero" @change="clickChange">显示0库存</el-checkbox>
+        <el-col :span="2">
+          <el-form-item :label-width="'10px'">
+            <el-checkbox v-model="showZero" @change="clickChange">0库存</el-checkbox>
           </el-form-item>
         </el-col>
         <el-col :span="3">

@@ -5,7 +5,7 @@
       <div>
         <tabs-bar ref="tabs" @uploadList="upload" @queryBtn="query"/>
       </div>
-      <list ref="list"/>
+      <list ref="list"  @uploadList="uploadPage"/>
     </div>
   </div>
 </template>
@@ -40,7 +40,11 @@ export default {
     // 更新列表
     upload(){
       this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
-    }
+    },
+    // 查询
+    uploadPage(val) {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+    },
   }
 };
 </script>

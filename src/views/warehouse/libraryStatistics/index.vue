@@ -4,7 +4,7 @@
       <div>
         <tabs-bar ref="tabs" @showDialog="handlerDialog" @uploadList="upload" @queryBtn="query"/>
       </div>
-      <list ref="list" @showDialog="handlerDialog" @uploadList="upload" />
+      <list ref="list" @showDialog="handlerDialog" @uploadList="uploadPage" />
     </div>
     <el-dialog
       :visible.sync="visible"
@@ -57,6 +57,9 @@ export default {
     },
     // 更新列表
     upload() {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+    }, // 查询
+    uploadPage(val) {
       this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
   }
