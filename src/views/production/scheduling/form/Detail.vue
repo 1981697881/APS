@@ -266,6 +266,7 @@ export default {
         this.form = this.listInfo
         const listInfo = this.listInfo
         const form = this.form
+        this.disPl = false
         this.fetchLine(this.form.tpId)
         this.options.forEach(function(item, index) {
           if (item.label == listInfo.productionType) {

@@ -264,6 +264,7 @@ export default {
         this.form.tpId = this.listInfo.tpId
         this.fetchLine(this.listInfo.tpId)
       } else {
+        this.disPl = false
         this.form = this.listInfo
         const listInfo = this.listInfo
         const form = this.form
