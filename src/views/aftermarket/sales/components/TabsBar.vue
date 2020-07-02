@@ -40,7 +40,7 @@
         <el-button-group style="float:right;padding-right: 10px">
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">确认</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">核准</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
       </el-row>

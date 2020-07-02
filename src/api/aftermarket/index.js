@@ -43,6 +43,19 @@ export function notarizeList(params) {
     data: params
   })
 }
+// 批量确认单据
+export function notarizeBatchList(params) {
+  const url = '/sale-order/batchConfirm'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
 // 二次确认单据
 export function notarizeAgain(params) {
   const url = '/sale-order/confirmAgain'

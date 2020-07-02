@@ -236,7 +236,6 @@
                     } else {
                       arr.some((item,index1)=>{
                         if(item.plName == item2.plName) {
-                          console.log(item2.taskNum)
                           if (result3.indexOf(item2.taskNum) == '-1') {
                             // 根据每个时间插入数据列
                             eval("arr[" + index1 + "].oldCode" + index + "='" + item2.color + "'")

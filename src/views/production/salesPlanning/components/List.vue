@@ -6,6 +6,7 @@
       :loading="loading"
       :list="list"
       index
+       type
        :selfAdaption="false"
       @handle-size="handleSize"
       @handle-current="handleCurrent"
@@ -49,7 +50,7 @@ export default {
         { text: '入库', name: 'inStockNum' },
         { text: '制造单位', name: '' },
         { text: '供应商', name: '' },
-        { text: '确认状态', name: 'auditStatus' },
+        { text: '核准状态', name: 'auditStatus' },
         { text: '最近同步时间', name: 'syncTime', width: '150px' },
       ]
     };

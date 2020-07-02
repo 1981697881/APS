@@ -41,7 +41,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-warning" @click="errorInfo">异常排程信息</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">确认</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">核准</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
       </el-row>
@@ -126,7 +126,7 @@
 </template>
 <script>
   import { mapGetters } from 'vuex'
-  import { salesListSync, exportSales, notarizeList} from "@/api/aftermarket/index"
+  import { salesListSync, exportSales, notarizeBatchList} from "@/api/aftermarket/index"
   export default {
     components: {},
     computed: {
@@ -210,8 +210,15 @@
         this.form.businessDateStart = val[0]
       },
       notarize() {
-        if (this.clickData.soId) {
-          notarizeList({soId: this.clickData.soId}).then(res => {
+        if (this.selections.length>0) {
+          const selection = this.selections
+          let arrray = []
+          selection.forEach((item, index) => {
+            if(arrray.indexOf(item.soId) == -1){
+              arrray.push(item.soId)
+            }
+          })
+          notarizeBatchList({soIds: arrray}).then(res => {
             if(res.flag) {
               this.upload()
             }

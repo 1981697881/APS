@@ -14,7 +14,7 @@
         </el-col>
         <el-col :span="4">
           <el-form-item :label="'料号'">
-            <el-input v-model="search.goodCode" />
+            <el-input v-model="search.code" />
           </el-form-item>
         </el-col>
         <el-col :span="4">
@@ -54,7 +54,7 @@ export default {
         name: null,
         oldCode: null,
         status: null,
-        goodCode: null,
+        code: null,
       },
       options: [{
         value: 1,
@@ -76,7 +76,7 @@ export default {
     upload() {
       this.search.name = ''
       this.search.oldCode = ''
-      this.search.goodCode = ''
+      this.search.code = ''
       this.search.status = ''
       this.$emit('uploadList')
     },
@@ -84,7 +84,7 @@ export default {
     qFilter() {
       let obj = {}
       this.search.name != null && this.search.name != '' ? obj.name = this.search.name : null
-      this.search.goodCode != null && this.search.goodCode != '' ? obj.goodCode = this.search.goodCode : null
+      this.search.code != null && this.search.code != '' ? obj.code = this.search.code : null
       this.search.status != null && this.search.status != '' ? obj.status = this.search.status : null
       this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       return obj
