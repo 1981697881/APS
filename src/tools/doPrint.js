@@ -1208,7 +1208,7 @@ const PrintSemi = (data, codetype, url, code) => {
 
   let fenyeSize = 0;
   let num = 2
-  LODOP.SET_PRINT_PAGESIZE(2, '297mm', '210mm', "");// 一开始用的是像素，后来都改成用mm为单位
+  LODOP.SET_PRINT_PAGESIZE(0, '297mm', '210mm', );// 一开始用的是像素，后来都改成用mm为单位
   LODOP.SET_SHOW_MODE('LANDSCAPE_DEFROTATED', 1);
   LODOP.SET_PRINT_STYLEA(0, 'AngleOfPageInside', 90);
   // 动态列表信息

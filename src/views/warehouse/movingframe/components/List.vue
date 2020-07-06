@@ -43,6 +43,7 @@ export default {
         { text: '现仓位', name: 'nowPositionCode' },
         { text: '现数量', name: 'nowNum' },
         { text: '合格状态', name: 'status' },
+        { text: '备注', name: 'remark' },
         { text: '操作员', name: 'username' },
       ]
     };

@@ -43,6 +43,7 @@ export default {
         { text: '规格', name: 'spec' },
         { text: '数量', name: 'evenNum' },
         { text: '合格状态', name: 'status' },
+        { text: '备注', name: 'remark' },
         { text: '入库日期', name: 'createTime' },
       ]
     };

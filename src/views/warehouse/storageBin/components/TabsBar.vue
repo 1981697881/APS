@@ -51,6 +51,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
         <el-button-group style="float:right">
+           <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleAlter">修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click.native="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
@@ -170,15 +171,13 @@ export default {
       this.$emit('queryBtn', this.qFilter())
     },
     handleAlter() {
-      if (this.clickData.gid) {
-        this.$emit('showDialog',{
-          gid: this.clickData.gid,
-        })
+      if (this.clickData.invId) {
+        this.$emit('showDialog', this.clickData)
       } else {
         this.$message({
           message: "无选中行",
           type: "warning"
-        });
+        })
       }
     },
   }

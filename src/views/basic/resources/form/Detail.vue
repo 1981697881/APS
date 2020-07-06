@@ -46,6 +46,13 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20" >
+        <el-col :span="24">
+          <el-form-item :label="'描述'">
+            <el-input v-model="form.description"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'工作时段'" prop="workDay">
@@ -60,8 +67,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'描述'">
-            <el-input v-model="form.description"></el-input>
+          <el-form-item :label="'规则'" prop="rules">
+            <el-select v-model="form.rules" multiple placeholder="请选择">
+              <el-option
+                v-for="item in rArray"
+                :key="item.trId"
+                :label="item.trName"
+                :value="item.trId">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -73,7 +87,7 @@
 </template>
 
 <script>
-  import{productionLineAdd, productionLineAlter, getResourcesList} from '@/api/basic/index'
+  import{productionLineAdd, productionLineAlter, getResourcesList, productionRules} from '@/api/basic/index'
 
   export default {
     props: {
@@ -99,7 +113,7 @@
           overtimeResources: null,
           description: null,
           workDay: [],
-         /* rules: [],*/
+          rules: [],
         },
         list: [],
         pArray: [],
@@ -130,6 +144,9 @@
           plName: [
             {required: true, message: '请输入名稱', trigger: 'blur'},
           ],
+          rules: [
+            {type: 'array', required: true, message: '请选择规则', trigger: 'change'},
+          ],
           tpId: [
             {required: true, message: '请选择产线', trigger: 'change'},
           ], workDay: [
@@ -143,12 +160,18 @@
       if (this.listInfo) {
         this.form = this.listInfo
       }
-      console.log(this.form)
     },
     mounted() {
 
     },
     methods: {
+      alterFormat(val) {
+        productionRules(val).then(res => {
+          if(res.flag) {
+            this.form.rules = res.data
+          }
+        })
+      },
       handleClick(tab, event) {
         console.log(tab, event);
       },

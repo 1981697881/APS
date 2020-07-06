@@ -65,19 +65,20 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'打印批号'" prop="lotNo">
+            <el-form-item :label="'打印批号'" prop="lotNo" >
               <!--<el-input-number v-model="repeat"  label="请输入数量" :min="0"></el-input-number>-->
-              <el-input v-model="form.lotNo"></el-input>
+              <el-input v-model="form.lotNo" :disabled="disPl"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row :gutter="20" type="flex" justify="center">
+        <el-row :gutter="20" type="flex" justify="center" >
           <el-col :span="12">
             <el-form-item :label="'日期'" prop="productionDate">
               <div class="block" >
                 <el-date-picker
                   v-model="form.productionDate"
                   type="date"
+                  :disabled="disPl"
                   value-format="yyyy-MM-dd"
                   placeholder="选择日期">
                 </el-date-picker>
@@ -148,6 +149,7 @@
         },
         repeat: 0,
         apiece: 0,
+        disPl: true,
         loading: false,
         options: [{
           value: '0',
@@ -191,6 +193,7 @@
     },
     methods: {
       alterNum(row) {
+        this.disPl = true
         this.form = row
         this.form.color = row.oldCode
         this.isLog = true
@@ -256,6 +259,7 @@
           oldCode: this.listInfo.oldCode,
           printingQuantity: 1,
         }
+        this.disPl = false
         this.isLog = false
         this.visible = true
         this.getTime()

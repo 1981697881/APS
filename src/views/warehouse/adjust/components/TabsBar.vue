@@ -30,6 +30,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="3">
+          <el-form-item :label="'批号'">
+            <el-input v-model="search.lotNo" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
           <el-form-item :label="'仓库'" prop="plaIdS">
             <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
               <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">
@@ -47,10 +52,8 @@
             <el-input v-model="search.username" />
           </el-form-item>
         </el-col>
-        <el-col :span="2">
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
-        </el-col>
         <el-button-group style="float:right">
+          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click.native="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
@@ -104,6 +107,7 @@ export default {
         goodCode: null,
         positionCode: null,
         username: null,
+        lotNo: null,
         type: null
       }
     };
@@ -125,6 +129,7 @@ export default {
       this.search.goodCode = ''
       this.search.positionCode = ''
       this.search.username = ''
+      this.search.lotNo = ''
       this.value = ''
       this.parent = null
       this.$emit('uploadList')
@@ -141,6 +146,7 @@ export default {
       let obj = {}
       this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
       this.search.positionCode != null || this.search.positionCode != undefined ? obj.positionCode = this.search.positionCode : null
+      this.search.lotNo != null || this.search.lotNo != undefined ? obj.lotNo = this.search.lotNo : null
       this.search.username != null || this.search.username != undefined ? obj.username = this.search.username : null
       this.search.goodCode != null || this.search.goodCode != undefined ? obj.goodCode = this.search.goodCode : null
       this.value != null || this.value != undefined ? obj.endDate = this.value[1] : null

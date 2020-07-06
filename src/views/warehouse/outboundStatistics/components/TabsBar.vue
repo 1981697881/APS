@@ -20,13 +20,18 @@
           </el-form-item>
         </el-col>
         <el-col :span="3">
+          <el-form-item :label="'旧料号'">
+            <el-input v-model="search.keyword" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
           <el-form-item :label="'料号'">
             <el-input v-model="search.goodCode" />
           </el-form-item>
         </el-col>
         <el-col :span="3">
-          <el-form-item :label="'旧料号'">
-            <el-input v-model="search.keyword" />
+          <el-form-item :label="'批号'">
+            <el-input v-model="search.lotNo" />
           </el-form-item>
         </el-col>
         <el-col :span="3">
@@ -47,10 +52,8 @@
             <el-input v-model="search.username" />
           </el-form-item>
         </el-col>
-        <el-col :span="2">
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
-        </el-col>
         <el-button-group style="float:right">
+          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click.native="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
@@ -104,6 +107,7 @@ export default {
         goodCode: null,
         positionCode: null,
         username: null,
+        lotNo: null,
         type: null
       }
     };
@@ -128,6 +132,7 @@ export default {
       this.search.goodCode = ''
       this.search.positionCode = ''
       this.search.username = ''
+      this.search.lotNo = ''
       this.value = ''
       this.parent = null
       this.$emit('uploadList')
@@ -139,6 +144,7 @@ export default {
       this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
       this.search.positionCode != null || this.search.positionCode != undefined ? obj.positionCode = this.search.positionCode : null
       this.search.username != null || this.search.username != undefined ? obj.username = this.search.username : null
+      this.search.lotNo != null || this.search.lotNo != undefined ? obj.lotNo = this.search.lotNo : null
       this.value != null || this.value != undefined ? obj.endDate = this.value[1] : null
       this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
       this.value != null || this.value != undefined ? obj.startDate = this.value[0] : null

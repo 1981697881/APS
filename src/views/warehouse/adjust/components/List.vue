@@ -41,6 +41,7 @@ export default {
         { text: '旧料号', name: 'oldCode' },
         { text: '批号', name: 'pastLotNo' },
         { text: '数量', name: 'pastNum' },
+        { text: '备注', name: 'remark' },
         { text: '合格状态', name: 'pastStatus' },
         { text: '调后U9料号', name: 'adjGoodCode' },
         { text: '调后旧料号', name: 'adjOldCode' },
