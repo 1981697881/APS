@@ -74,6 +74,7 @@ export default {
         delete this.obj.type
         this.listInfo = this.obj
       }
+      console.log(this.listInfo)
       this.visible = true
     },
     groupDialog(obj) {

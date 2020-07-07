@@ -10,7 +10,7 @@
       </el-row>
       <el-row :gutter="20" >
         <el-col :span="12" :offset="7">
-          <el-form-item :label="'备注'" prop="remark">
+          <el-form-item :label="'备注'">
             <el-input v-model="form.remark"></el-input>
           </el-form-item>
         </el-col>
@@ -35,7 +35,7 @@ export default {
     return {
       form: {
         invId: null,
-        remark: null,
+        remark: '',
       },
       fullscreenLoading: false,
       rules: {

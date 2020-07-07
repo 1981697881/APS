@@ -24,6 +24,18 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
+          <el-form-item :label="'排产数量上限'" >
+            <el-input-number v-model="form.upperLimit"  :min="0"  label="描述文字"></el-input-number>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'排产数量下限'">
+            <el-input-number v-model="form.lowerLimit"  :min="0"  label="描述文字"></el-input-number>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
           <el-form-item :label="'正常资源'" >
             <el-input-number v-model="form.normalResources"  :min="0"  label="描述文字"></el-input-number>
           </el-form-item>
@@ -87,7 +99,7 @@
 </template>
 
 <script>
-  import{productionLineAdd, productionLineAlter, getResourcesList, productionRules} from '@/api/basic/index'
+  import{productionLineAdd, productionLineAlter, getResourcesList, productionRules, regulationList} from '@/api/basic/index'
 
   export default {
     props: {
@@ -106,6 +118,8 @@
         form: {
           plId: null,
           tpId: null,
+          upperLimit: null,
+          lowerLimit: null,
           singleLotNum: null,
           plName: null, // 名称
           normalResources: null,
@@ -203,6 +217,9 @@
         };
         getResourcesList(data).then(res => {
           this.pArray = res.data.records
+        });
+        regulationList(data).then(res => {
+          this.rArray = res.data.records
         });
       },
     }

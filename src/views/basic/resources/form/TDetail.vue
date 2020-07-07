@@ -27,7 +27,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20" >
+      <!--<el-row :gutter="20" >
         <el-col :span="12">
           <el-form-item :label="'规则'" prop="rules">
             <el-select v-model="form.rules" multiple placeholder="请选择">
@@ -40,7 +40,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-      </el-row>
+      </el-row>-->
       <el-row :gutter="20" >
         <el-col :span="12">
           <el-form-item :label="'注意事项1'" >
@@ -113,6 +113,13 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20" >
+        <el-col :span="12">
+          <el-form-item>
+            <el-checkbox v-model="form.isOverwork">是否加班</el-checkbox>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">
       <el-button type="primary" @click="saveData('form')">保存</el-button>
@@ -133,6 +140,7 @@
       return {
         form: {
           tpId: null,
+          isOverwork: false,
           tpName: null, // 名称
           tpCategory: '产线设备',
           type: null,
@@ -192,12 +200,11 @@
       };
     },
     created() {
-      this.fetchFormat()
+     /* this.fetchFormat()*/
       if (this.gpInfo) {
         this.form = this.gpInfo
         this.form.type = this.gpInfo.parent
-        console.log(this.form)
-        this.alterFormat(this.form.tpId)
+        /*this.alterFormat(this.form.tpId)*/
         this.alterMatters(this.form.tpId)
       }
     },
@@ -217,10 +224,12 @@
         return arr1.ipMatId-arr2.ipMatId
       },
       alterMatters(val) {
+        const me = this
         getListMatters(val).then(res => {
           if(res.flag) {
-            if(res.data.length> 0){
-              const matterArray = res.data.sort(this.compare)
+            me.form.isOverwork = res.data.isOverwork
+            if(res.data.listMatters.length> 0){
+              const matterArray = res.data.listMatters.sort(this.compare)
               let martterObj = {}
               matterArray.forEach((item,index) => {
                 martterObj['matters'+index] = item
@@ -230,6 +239,7 @@
             }
           }
         })
+        console.log(this.form)
       },
       fetchFormat() {
         const data = {

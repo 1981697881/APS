@@ -762,7 +762,7 @@ export function productionRules(params) {
 }
 // 资源管理重要事项-查询
 export function getListMatters(params) {
-  const url = '/production-line/listMatters/' + params
+  const url = '/production-line/attr/' + params
   return request({
     url: url,
     headers: {
