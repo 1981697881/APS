@@ -65,6 +65,17 @@ export function outboundStatisticsInfo(data) {
     method: 'get'
   })
 }
+// 出库统计-获取详情
+export function outboundStatisticsInfo2(data) {
+  const url = 'outOrder/getByOutNo/' + data.outNo
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'get'
+  })
+}
 // 导出出库统计
 export function exportOutboundStatistics(data) {
   const url = '/excel/export/outOrder'

@@ -243,30 +243,45 @@
                       arr.some((item,index1)=>{
                         if(item.plName == item2.plName) {
                           if (result3.indexOf(item2.taskNum) == '-1') {
-                            // 根据每个时间插入数据列
-                            eval("arr[" + index1 + "].oldCode" + index + "='" + item2.color + "'")
-                            eval("arr[" + index1 + "].goodName" + index + "='" + item2.goodName + "'")
-                            eval("arr[" + index1 + "].taskId" + index + "='" + item2.taskId + "'")
-                            eval("arr[" + index1 + "].allocatedNum" + index + "='" + item2.allocatedNum + "'")
-                            eval("arr[" + index1 + "].taskNum" + index + "='" + item2.taskNum + "'")
-                            eval("arr[" + index1 + "].alertStatus" + index + "=" + item2.alertStatus)
-                            eval("arr[" + index1 + "].plId" + index + "='" + item2.plId + "'")
-                            eval("arr[" + index1 + "].tpId" + index + "='" + item2.tpId + "'")
-                            eval("arr[" + index1 + "].singleLotNum" + index + "='" + item2.singleLotNum + "'")
-                            eval("arr[" + index1 + "].lotNum" + index + "='" + item2.lotNum + "'")
-                            eval("arr[" + index1 + "].productionDate" + index + "='" + item2.productionDate + "'")
-                            eval("arr[" + index1 + "].remark" + index + "='" + (item2.remark == null ? '' : item2.remark) + "'")
-                            eval("arr[" + index1 + "].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
-                            result3.push(item2.taskNum)
+                            if(item['oldCode'+index] == undefined){
+                              // 根据每个时间插入数据列
+                              console.log(index1)
+                              // console.log(index)
+                              eval("arr[" + index1 + "].oldCode" + index + "='" + item2.color + "'")
+                              eval("arr[" + index1 + "].goodName" + index + "='" + item2.goodName + "'")
+                              eval("arr[" + index1 + "].taskId" + index + "='" + item2.taskId + "'")
+                              eval("arr[" + index1 + "].allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                              eval("arr[" + index1 + "].taskNum" + index + "='" + item2.taskNum + "'")
+                              eval("arr[" + index1 + "].alertStatus" + index + "=" + item2.alertStatus)
+                              eval("arr[" + index1 + "].plId" + index + "='" + item2.plId + "'")
+                              eval("arr[" + index1 + "].tpId" + index + "='" + item2.tpId + "'")
+                              eval("arr[" + index1 + "].singleLotNum" + index + "='" + item2.singleLotNum + "'")
+                              eval("arr[" + index1 + "].lotNum" + index + "='" + item2.lotNum + "'")
+                              eval("arr[" + index1 + "].productionDate" + index + "='" + item2.productionDate + "'")
+                              eval("arr[" + index1 + "].remark" + index + "='" + (item2.remark == null ? '' : item2.remark) + "'")
+                              eval("arr[" + index1 + "].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                              result3.push(item2.taskNum)
+                            } else {
+                              console.log(item['plName']+"/"+item['productionDate'+index]+"/"+item['taskNum'+index])
+                              console.log(item2.plName+"/"+item2.productionDate+"/"+item2.taskNum)
+                              /*if(result3.indexOf(item2.taskNum) == '-1'){
+
+                                result2.push(item2.plName+"/"+item2.productionDate)
+                              }*/
+                                console.log()
+
+                            }
                           }
                         }
                       })
-                      result2.push(item2.plName+"/"+item2.productionDate)
+                      //console.log(result3)
+                      //
                     }
                   }
                 }
               })
             })
+            //console.log(arr)
             this.loading = false
             this.list = arr
           }

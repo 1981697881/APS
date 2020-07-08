@@ -11,7 +11,7 @@
       title="明细信息"
       v-if="visible"
       v-dialogDrag
-      :width="'40%'"
+      :width="'70%'"
       destroy-on-close
     >
       <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>

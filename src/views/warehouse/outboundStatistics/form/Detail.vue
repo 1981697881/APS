@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-  import{ outboundStatisticsInfo } from '@/api/warehouse/index'
+  import{ outboundStatisticsInfo2 } from '@/api/warehouse/index'
   import List from '@/components/List'
   export default {
     components: {
@@ -36,12 +36,15 @@
         list: {},
         columns: [
           { text: 'gid', name: 'gid',default:false },
+          { text: '单号', name: 'outNo' },
           { text: 'U9料号', name: 'goodCode' },
           { text: '旧料号', name: 'oldCode' },
-          { text: '规格', name: '' },
+          { text: '品名', name: 'goodName' },
+          { text: '规格', name: 'spec' },
           { text: '批号', name: 'lotNo' },
           { text: '数量', name: 'num' },
-          { text: '库位', name: 'positionName' },
+          { text: '库位', name: 'positionCode' },
+          { text: '状态', name: 'status' },
         ]
       };
     },
@@ -51,7 +54,8 @@
 
     mounted() {
       if (this.listInfo) {
-        this.fetchFormat(this.listInfo.gid)
+        console.log(this.listInfo)
+        this.fetchFormat(this.listInfo.outNo)
       }
     },
     methods: {
@@ -66,13 +70,14 @@
         this.fetchData();
       },
       fetchFormat(val) {
+        console.log(val)
         const data = {
           pageNum: this.list.current || 1,
           pageSize: this.list.size || 50,
-          id: val || ''
+          outNo: val || ''
         };
-        outboundStatisticsInfo(data).then(res => {
-          this.list = res.data
+        outboundStatisticsInfo2(data).then(res => {
+          this.list = {records: res.data}
         });
       },
     }
