@@ -355,8 +355,8 @@ const PrintThree = (data, codetype, url, code) => {
     LODOP.ADD_PRINT_TEXT('28mm', '2mm', '17mm', '10mm', '料  号');
     LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.SET_PRINT_STYLEA(0,'Bold',1);
-    LODOP.ADD_PRINT_TEXT('28mm', '18.5mm', '53mm', '10mm', data[i].goodCode);
-    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 1);
+    LODOP.ADD_PRINT_TEXT('28mm', '17mm', '53mm', '10mm', data[i].goodCode);
+    LODOP.SET_PRINT_STYLEA(0, 'Alignment', 2);
     LODOP.SET_PRINT_STYLEA(0, 'TextNeatRow', true);
     LODOP.SET_PRINT_STYLEA(0, 'FontSize', 11);
     LODOP.SET_PRINT_STYLEA(0,'Bold',1);

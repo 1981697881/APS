@@ -115,8 +115,8 @@
       </el-row>
       <el-row :gutter="20" >
         <el-col :span="12">
-          <el-form-item>
-            <el-checkbox v-model="form.isOverwork">是否加班</el-checkbox>
+          <el-form-item :label="'是否加班'">
+            <el-switch v-model="form.isOverwork" active-value="0" inactive-value="1"></el-switch>
           </el-form-item>
         </el-col>
       </el-row>
@@ -140,7 +140,7 @@
       return {
         form: {
           tpId: null,
-          isOverwork: false,
+          isOverwork: '1',
           tpName: null, // 名称
           tpCategory: '产线设备',
           type: null,
@@ -216,7 +216,6 @@
         productionRules(val).then(res => {
           if(res.flag) {
             this.form.rules = res.data
-            console.log(this.form)
           }
         })
       },
@@ -227,7 +226,7 @@
         const me = this
         getListMatters(val).then(res => {
           if(res.flag) {
-            me.form.isOverwork = res.data.isOverwork
+            me.form.isOverwork = res.data.isOverwork + ''
             if(res.data.listMatters.length> 0){
               const matterArray = res.data.listMatters.sort(this.compare)
               let martterObj = {}

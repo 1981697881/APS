@@ -7,17 +7,25 @@
       :loading="loading"
       :list="list"
       index
+      type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
     />
+    <div slot="footer" style="text-align:center;padding-top: 15px">
+      <el-button type="primary" @click.native="saveData()">驳回</el-button>
+    </div>
   </div>
 </template>
 <script>
+  import { mapGetters } from 'vuex';
   import{ outboundStatisticsInfo2 } from '@/api/warehouse/index'
   import List from '@/components/List'
   export default {
     components: {
       List
+    },
+    computed: {
+      ...mapGetters(['selections'])
     },
     props: {
       listInfo: {
@@ -35,7 +43,7 @@
         loading: false,
         list: {},
         columns: [
-          { text: 'gid', name: 'gid',default:false },
+          { text: 'gid', name: 'gid', default: false },
           { text: '单号', name: 'outNo' },
           { text: 'U9料号', name: 'goodCode' },
           { text: '旧料号', name: 'oldCode' },
@@ -59,6 +67,28 @@
       }
     },
     methods: {
+      saveData() {
+        if (this.selections.length>0) {
+          const selection = this.selections
+          let arrray = []
+          selection.forEach((item, index) => {
+            if(arrray.indexOf(item.soId) == -1){
+              arrray.push(item.soId)
+            }
+          })
+          notarizeBatchList({soIds: arrray}).then(res => {
+            if(res.flag) {
+              this.upload()
+            }
+          })
+          /*this.$emit('showDialog', this.clickData)*/
+        } else {
+          this.$message({
+            message: "无选中行",
+            type: "warning"
+          });
+        }
+      },
       // 监听每页显示几条
       handleSize(val) {
         this.list.size = val

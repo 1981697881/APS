@@ -351,3 +351,16 @@ export function notarizeCancelOutputList(params) {
     method: 'put'
   })
 }
+// 出库驳回
+export function OutBackputList() {
+  const url = '/outOrder/OutOrderBackInvDetail'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
+}

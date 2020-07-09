@@ -234,6 +234,13 @@ export default {
     query() {
       this.$emit('uploadList', this.qFilter())
     },
+    upload() {
+      this.$emit('uploadList')
+      this.search.keyword = ''
+      this.search.color = ''
+      this.search.itemCode = ''
+      this.value = ''
+    },
     confirm(form) {
       this.fullscreenLoading = true
       this.$refs[form].validate((valid) => {
@@ -257,13 +264,7 @@ export default {
         }
       })
     },
-    upload() {
-      this.$emit('uploadList')
-      this.search.keyword = ''
-      this.search.color = ''
-      this.search.itemCode = ''
-      this.value = ''
-    },
+
     handleSync() {
       this.visible = true
     },

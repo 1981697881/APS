@@ -153,6 +153,13 @@
           }
         }
       },
+      compare(p){
+          return function (m, n) {
+            let a = m[p]
+            let b = n[p]
+            return b - a
+          }
+      },
       fetchData(val) {
         this.loading = true
         const data = {
@@ -173,6 +180,8 @@
             var result = []
             var result2 = []
             var result3 = []
+            var result4 = []
+            var result5 = []
             // 根据时间生成表头 把时间包含数据重新组装 -》array
             for (const i in data) {
               columns.push({text: i + '', name: i + '', colspan: true, data: [{text: '旧料号', name: 'oldCode' + count}, {text: '单批次数量（kg）', default: this.isBatch, name: 'singleLotNum' + count }, {text: '批次数', default: this.isBatch, name: 'lotNum' + count }, {text: '数量(kg)', name: 'allocatedNum' + count},{text: '生产状态', name: 'allocatedStatus' + count},{text: '任务警示', name: 'alertStatus' + count, formatt: 'taskWarning'}]})
@@ -180,12 +189,263 @@
               data[i][0].time = i
               array.push(data[i])
             }
-            // 遍历组装数据
+            var arrObj = {}
             array.forEach((item1, index) => {
+              item1.sort(this.compare('plId'))
+              item1.forEach((item2, index2) => {
+                if(result4.indexOf(item2.plName) == '-1') {
+                  arrObj[item2.plName] = [item2]
+                  result4.push(item2.plName)
+                }else{
+                  for(var key in arrObj){
+                    if(arrObj.hasOwnProperty(key)){ //判断是否是对象自身的属性，而不包含继承自原型链上的属性
+                      if(key == item2.plName){
+                        arrObj[key].push(item2)
+                      }
+                    }
+                  }
+                }
+              })
+            })
+            let index = 0
+            for(let key in data){
+
+              for(let i in arrObj){
+                let test = null
+                arrObj[i].forEach((item2, index2) => {
+                  if(data.hasOwnProperty(key)){
+                    if(key == item2.productionDate){
+                      var obj = {}
+                      // 根据每个时间里的数据量生成数据行
+                      if(result.length == 0){
+                        eval("obj.oldCode" + index + "='" + item2.color + "'")
+                        eval("obj.goodName" + index + "='" + item2.goodName + "'")
+                        eval("obj.taskId" + index + "='" + item2.taskId + "'")
+                        eval("obj.allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                        eval("obj.taskNum" + index + "='" + item2.taskNum + "'")
+                        eval("obj.plId" + index + "='" + item2.plId + "'")
+                        eval("obj.tpId" + index + "='" + item2.tpId + "'")
+                        eval("obj.singleLotNum" + index + "='" + item2.singleLotNum + "'")
+                        eval("obj.lotNum" + index + "='" + item2.lotNum + "'")
+                        eval("obj.alertStatus" + index + "=" + item2.alertStatus )
+                        eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
+                        eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
+                        eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                        eval("obj.plName ='" + item2.plName + "'")
+                        result.push(item2.plName)
+                        result2.push(item2.plName+"/"+item2.productionDate)
+                        arr.push(obj)
+                      } else {
+                        if(result.indexOf(item2.plName) == '-1'){
+                          eval("obj.oldCode" + index + "='" + item2.color + "'")
+                          eval("obj.goodName" + index + "='" + item2.goodName + "'")
+                          eval("obj.taskId" + index + "='" + item2.taskId + "'")
+                          eval("obj.allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                          eval("obj.taskNum" + index + "='" + item2.taskNum + "'")
+                          eval("obj.plId" + index + "='" + item2.plId + "'")
+                          eval("obj.tpId" + index + "='" + item2.tpId + "'")
+                          eval("obj.singleLotNum" + index + "='" + item2.singleLotNum + "'")
+                          eval("obj.lotNum" + index + "='" + item2.lotNum + "'")
+                          eval("obj.alertStatus" + index + "=" + item2.alertStatus )
+                          eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
+                          eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
+                          eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                          eval("obj.plName ='" + item2.plName + "'")
+                          result.push(item2.plName)
+                          result2.push(item2.plName+"/"+item2.productionDate)
+                          arr.push(obj)
+                        } else {
+                          if(result2.indexOf((item2.plName+"/"+item2.productionDate)) != '-1'){
+                            eval("obj.oldCode" + index + "='" + item2.color + "'")
+                            eval("obj.goodName" + index + "='" + item2.goodName + "'")
+                            eval("obj.taskId" + index + "='" + item2.taskId + "'")
+                            eval("obj.allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                            eval("obj.taskNum" + index + "='" + item2.taskNum + "'")
+                            eval("obj.plId" + index + "='" + item2.plId + "'")
+                            eval("obj.tpId" + index + "='" + item2.tpId + "'")
+                            eval("obj.singleLotNum" + index + "='" + item2.singleLotNum + "'")
+                            eval("obj.lotNum" + index + "='" + item2.lotNum + "'")
+                            eval("obj.alertStatus" + index + "=" + item2.alertStatus )
+                            eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
+                            eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
+                            eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                            eval("obj.plName ='" + item2.plName + "'")
+                            result2.push(item2.plName+"/"+item2.productionDate)
+                            arr.push(obj)
+                          } else {
+                            arr.some((item,index1)=>{
+                              if(item.plName == item2.plName) {
+                                if (result3.indexOf(item2.taskNum) == '-1') {
+                                  if(item['oldCode'+index] == undefined){
+                                    // 根据每个时间插入数据列
+                                    // console.log(index)
+                                    eval("arr[" + index1 + "].oldCode" + index + "='" + item2.color + "'")
+                                    eval("arr[" + index1 + "].goodName" + index + "='" + item2.goodName + "'")
+                                    eval("arr[" + index1 + "].taskId" + index + "='" + item2.taskId + "'")
+                                    eval("arr[" + index1 + "].allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                                    eval("arr[" + index1 + "].taskNum" + index + "='" + item2.taskNum + "'")
+                                    eval("arr[" + index1 + "].alertStatus" + index + "=" + item2.alertStatus)
+                                    eval("arr[" + index1 + "].plId" + index + "='" + item2.plId + "'")
+                                    eval("arr[" + index1 + "].tpId" + index + "='" + item2.tpId + "'")
+                                    eval("arr[" + index1 + "].singleLotNum" + index + "='" + item2.singleLotNum + "'")
+                                    eval("arr[" + index1 + "].lotNum" + index + "='" + item2.lotNum + "'")
+                                    eval("arr[" + index1 + "].productionDate" + index + "='" + item2.productionDate + "'")
+                                    eval("arr[" + index1 + "].remark" + index + "='" + (item2.remark == null ? '' : item2.remark) + "'")
+                                    eval("arr[" + index1 + "].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                                    result3.push(item2.taskNum)
+                                  } else {
+                                    if( test == null){
+                                      test = item2.plName+"/"+item2.productionDate
+                                    }else if(test == item2.plName+"/"+item2.productionDate){
+                                      console.log(item2.plName+"/"+item2.productionDate+"/"+item2.allocatedNum)
+                                      result2.push(item2.plName+"/"+item2.productionDate)
+                                      test = null
+                                    } else {
+                                      console.log(3)
+                                     console.log(item2.plName+"/"+item2.productionDate+"/"+item2.allocatedNum)
+                                    }
+                                  }
+                                }
+                              }
+                            })
+                          }
+                        }
+                      }
+                    }
+                  }
+                })
+              }
+              index++
+            }
+            // 遍历组装数据
+            /*array.forEach((item1, index) => {
               item1.forEach((item2, index2) => {
                 var obj = {}
-                // 根据每个时间里的数据量生成数据行
                 if(result.length == 0){
+                  eval("obj.oldCode" + index + "='" + item2.color + "'")
+                  eval("obj.goodName" + index + "='" + item2.goodName + "'")
+                  eval("obj.taskId" + index + "='" + item2.taskId + "'")
+                  eval("obj.allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                  eval("obj.taskNum" + index + "='" + item2.taskNum + "'")
+                  eval("obj.plId" + index + "='" + item2.plId + "'")
+                  eval("obj.tpId" + index + "='" + item2.tpId + "'")
+                  eval("obj.singleLotNum" + index + "='" + item2.singleLotNum + "'")
+                  eval("obj.lotNum" + index + "='" + item2.lotNum + "'")
+                  eval("obj.alertStatus" + index + "=" + item2.alertStatus )
+                  eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
+                  eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
+                  eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                  eval("obj.plName ='" + item2.plName + "'")
+                  result3.push(item2.taskNum)
+                  result.push(item2.plName)
+                  arr.push(obj)
+                } else {
+                  arr.some((item, index1) => {
+                    if(item.plName == item2.plName) {
+                      if(item['oldCode'+index] == undefined){
+                        if (result3.indexOf(item2.taskNum) == '-1') {
+                          // 根据每个时间插入数据列
+                          eval("arr[" + index1 + "].oldCode" + index + "='" + item2.color + "'")
+                          eval("arr[" + index1 + "].goodName" + index + "='" + item2.goodName + "'")
+                          eval("arr[" + index1 + "].taskId" + index + "='" + item2.taskId + "'")
+                          eval("arr[" + index1 + "].allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                          eval("arr[" + index1 + "].taskNum" + index + "='" + item2.taskNum + "'")
+                          eval("arr[" + index1 + "].alertStatus" + index + "=" + item2.alertStatus)
+                          eval("arr[" + index1 + "].plId" + index + "='" + item2.plId + "'")
+                          eval("arr[" + index1 + "].tpId" + index + "='" + item2.tpId + "'")
+                          eval("arr[" + index1 + "].singleLotNum" + index + "='" + item2.singleLotNum + "'")
+                          eval("arr[" + index1 + "].lotNum" + index + "='" + item2.lotNum + "'")
+                          eval("arr[" + index1 + "].productionDate" + index + "='" + item2.productionDate + "'")
+                          eval("arr[" + index1 + "].remark" + index + "='" + (item2.remark == null ? '' : item2.remark) + "'")
+                          eval("arr[" + index1 + "].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                          result3.push(item2.taskNum)
+                        }
+                      } else {
+                        console.log(item2.plName+"/"+item2.productionDate+"/"+item2.allocatedNum+"/"+item2.taskNum)
+                        console.log(item)
+                        if (result3.indexOf(item2.taskNum) == '-1') {
+                          eval("obj.oldCode" + index + "='" + item2.color + "'")
+                          eval("obj.goodName" + index + "='" + item2.goodName + "'")
+                          eval("obj.taskId" + index + "='" + item2.taskId + "'")
+                          eval("obj.allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                          eval("obj.taskNum" + index + "='" + item2.taskNum + "'")
+                          eval("obj.plId" + index + "='" + item2.plId + "'")
+                          eval("obj.tpId" + index + "='" + item2.tpId + "'")
+                          eval("obj.singleLotNum" + index + "='" + item2.singleLotNum + "'")
+                          eval("obj.lotNum" + index + "='" + item2.lotNum + "'")
+                          eval("obj.alertStatus" + index + "=" + item2.alertStatus)
+                          eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
+                          eval("obj.remark" + index + "='" + (item2.remark == null ? '' : item2.remark) + "'")
+                          eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                          eval("obj.plName ='" + item2.plName + "'")
+                          result3.push(item2.taskNum)
+                          arr.push(obj)
+                        }
+                        /!*if (result3.indexOf(item2.taskNum) == '-1') {
+                          if(item['oldCode'+index] != undefined){
+                            eval("obj.oldCode" + index + "='" + item2.color + "'")
+                            eval("obj.goodName" + index + "='" + item2.goodName + "'")
+                            eval("obj.taskId" + index + "='" + item2.taskId + "'")
+                            eval("obj.allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                            eval("obj.taskNum" + index + "='" + item2.taskNum + "'")
+                            eval("obj.plId" + index + "='" + item2.plId + "'")
+                            eval("obj.tpId" + index + "='" + item2.tpId + "'")
+                            eval("obj.singleLotNum" + index + "='" + item2.singleLotNum + "'")
+                            eval("obj.lotNum" + index + "='" + item2.lotNum + "'")
+                            eval("obj.alertStatus" + index + "=" + item2.alertStatus )
+                            eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
+                            eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
+                            eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                            eval("obj.plName ='" + item2.plName + "'")
+                            result.push(item2.plName)
+                            result2.push(item2.plName+"/"+item2.productionDate)
+                            arr.push(obj)
+                          }
+                        }*!/
+                      }
+                    }
+                   /!* if (result2.indexOf(item2.plName+"/"+item2.productionDate) == '-1') {
+                      eval("obj.oldCode" + index + "='" + item2.color + "'")
+                      eval("obj.goodName" + index + "='" + item2.goodName + "'")
+                      eval("obj.taskId" + index + "='" + item2.taskId + "'")
+                      eval("obj.allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                      eval("obj.taskNum" + index + "='" + item2.taskNum + "'")
+                      eval("obj.plId" + index + "='" + item2.plId + "'")
+                      eval("obj.tpId" + index + "='" + item2.tpId + "'")
+                      eval("obj.singleLotNum" + index + "='" + item2.singleLotNum + "'")
+                      eval("obj.lotNum" + index + "='" + item2.lotNum + "'")
+                      eval("obj.alertStatus" + index + "=" + item2.alertStatus )
+                      eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
+                      eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
+                      eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                      eval("obj.plName ='" + item2.plName + "'")
+                      result.push(item2.plName)
+                      result2.push(item2.plName+"/"+item2.productionDate)
+                      arr.push(obj)
+                      }else{*!/
+                     /!* if(item['oldCode'+index] == undefined){
+                        // 根据每个时间插入数据列
+                        console.log(index1)
+                        // console.log(index)
+                        eval("arr[" + index1 + "].oldCode" + index + "='" + item2.color + "'")
+                        eval("arr[" + index1 + "].goodName" + index + "='" + item2.goodName + "'")
+                        eval("arr[" + index1 + "].taskId" + index + "='" + item2.taskId + "'")
+                        eval("arr[" + index1 + "].allocatedNum" + index + "='" + item2.allocatedNum + "'")
+                        eval("arr[" + index1 + "].taskNum" + index + "='" + item2.taskNum + "'")
+                        eval("arr[" + index1 + "].alertStatus" + index + "=" + item2.alertStatus)
+                        eval("arr[" + index1 + "].plId" + index + "='" + item2.plId + "'")
+                        eval("arr[" + index1 + "].tpId" + index + "='" + item2.tpId + "'")
+                        eval("arr[" + index1 + "].singleLotNum" + index + "='" + item2.singleLotNum + "'")
+                        eval("arr[" + index1 + "].lotNum" + index + "='" + item2.lotNum + "'")
+                        eval("arr[" + index1 + "].productionDate" + index + "='" + item2.productionDate + "'")
+                        eval("arr[" + index1 + "].remark" + index + "='" + (item2.remark == null ? '' : item2.remark) + "'")
+                        eval("arr[" + index1 + "].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                      }*!/
+                    //}
+                  })
+                }
+                // 根据每个时间里的数据量生成数据行
+                /!*if(result.length == 0){
                   eval("obj.oldCode" + index + "='" + item2.color + "'")
                   eval("obj.goodName" + index + "='" + item2.goodName + "'")
                   eval("obj.taskId" + index + "='" + item2.taskId + "'")
@@ -262,26 +522,16 @@
                               eval("arr[" + index1 + "].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
                               result3.push(item2.taskNum)
                             } else {
-                              console.log(item['plName']+"/"+item['productionDate'+index]+"/"+item['taskNum'+index])
-                              console.log(item2.plName+"/"+item2.productionDate+"/"+item2.taskNum)
-                              /*if(result3.indexOf(item2.taskNum) == '-1'){
-
-                                result2.push(item2.plName+"/"+item2.productionDate)
-                              }*/
-                                console.log()
-
+                              result2.push(item2.plName+"/"+item2.productionDate)
                             }
                           }
                         }
                       })
-                      //console.log(result3)
-                      //
                     }
                   }
-                }
+                }*!/
               })
-            })
-            //console.log(arr)
+            })*/
             this.loading = false
             this.list = arr
           }
