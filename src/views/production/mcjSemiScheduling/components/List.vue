@@ -191,7 +191,6 @@
             }
             var arrObj = {}
             array.forEach((item1, index) => {
-              item1.sort(this.compare('plId'))
               item1.forEach((item2, index2) => {
                 if(result4.indexOf(item2.plName) == '-1') {
                   arrObj[item2.plName] = [item2]
@@ -209,7 +208,6 @@
             })
             let index = 0
             for(let key in data){
-
               for(let i in arrObj){
                 let test = null
                 arrObj[i].forEach((item2, index2) => {
@@ -232,6 +230,7 @@
                         eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                         eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
                         eval("obj.plName ='" + item2.plName + "'")
+                        eval("obj.plId ='" + item2.plId + "'")
                         result.push(item2.plName)
                         result2.push(item2.plName+"/"+item2.productionDate)
                         arr.push(obj)
@@ -251,6 +250,7 @@
                           eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                           eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
                           eval("obj.plName ='" + item2.plName + "'")
+                          eval("obj.plId ='" + item2.plId + "'")
                           result.push(item2.plName)
                           result2.push(item2.plName+"/"+item2.productionDate)
                           arr.push(obj)
@@ -270,6 +270,7 @@
                             eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                             eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
                             eval("obj.plName ='" + item2.plName + "'")
+                            eval("obj.plId ='" + item2.plId + "'")
                             result2.push(item2.plName+"/"+item2.productionDate)
                             arr.push(obj)
                           } else {
@@ -295,9 +296,10 @@
                                     result3.push(item2.taskNum)
                                   } else {
                                     if( test == null){
+                                      //console.log(item2.plName+"/"+item2.productionDate+"/"+item2.allocatedNum)
                                       test = item2.plName+"/"+item2.productionDate
                                     }else if(test == item2.plName+"/"+item2.productionDate){
-                                      console.log(item2.plName+"/"+item2.productionDate+"/"+item2.allocatedNum)
+                                      //console.log(item2.plName+"/"+item2.productionDate+"/"+item2.allocatedNum)
                                       result2.push(item2.plName+"/"+item2.productionDate)
                                       test = null
                                     } else {
@@ -532,6 +534,7 @@
                 }*!/
               })
             })*/
+            arr.sort(this.compare('plId'))
             this.loading = false
             this.list = arr
           }

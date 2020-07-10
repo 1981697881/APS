@@ -39,6 +39,11 @@
             <el-checkbox v-model="showZero" @change="clickChange">0库存</el-checkbox>
           </el-form-item>
         </el-col>
+        <el-col :span="2">
+          <el-form-item :label-width="'10px'">
+            <el-checkbox v-model="showSort" @change="clickChange2">按时间排序</el-checkbox>
+          </el-form-item>
+        </el-col>
         <el-col :span="3">
           <el-form-item :label="'仓库'" prop="plaIdS">
             <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
@@ -100,6 +105,7 @@ export default {
       },
       parent: null,
       showZero: false,
+      showSort: true,
       plaArray: [],
       search: {
         oldCode: null,
@@ -115,6 +121,10 @@ export default {
   methods: {
     clickChange(val) {
       this.showZero = val
+      this.$emit('queryBtn', this.qFilter())
+    },
+    clickChange2(val) {
+      this.showSort = val
       this.$emit('queryBtn', this.qFilter())
     },
     // 切换仓库
@@ -145,6 +155,8 @@ export default {
       this.search.oldCode = ''
       this.search.goodCode = ''
       this.search.positionCode = ''
+      this.showSort = true
+      this.showZero = false
       this.value = ''
       this.parent = null
       this.$emit('uploadList')
@@ -157,6 +169,7 @@ export default {
       this.search.positionCode != null && this.search.positionCode != '' ? obj.positionCode = this.search.positionCode : null
       this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
       this.showZero != null && this.showZero != undefined ? obj.showZero = this.showZero : null
+      this.showSort != null && this.showSort != undefined ? obj.showSort = this.showSort : null
       this.value != null && this.value != undefined ? obj.endDate = this.value[1] : null
       this.value != null && this.value != undefined ? obj.startDate = this.value[0] : null
       return obj

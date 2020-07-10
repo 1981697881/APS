@@ -20,6 +20,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="3">
+          <el-form-item :label="'单号'">
+            <el-input v-model="search.outNo" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
           <el-form-item :label="'旧料号'">
             <el-input v-model="search.keyword" />
           </el-form-item>
@@ -62,14 +67,14 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-import { exportOutboundStatistics } from '@/api/warehouse/index';
-import {getWarehouseList} from "@/api/basic/index"
+import { mapGetters } from 'vuex'
+import { exportOutboundStatistics } from '@/api/warehouse/index'
+import { getWarehouseList } from '@/api/basic/index'
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(['node','clickData','selections'])
-    },
+  components: {},
+  computed: {
+    ...mapGetters(['node','clickData','selections'])
+  },
   data() {
     return {
       value: '',
@@ -104,6 +109,7 @@ export default {
       parent: null,
       search: {
         keyword: null,
+        outNo: null,
         goodCode: null,
         positionCode: null,
         username: null,
@@ -129,6 +135,7 @@ export default {
     },
     upload() {
       this.search.keyword = ''
+      this.search.outNo = ''
       this.search.goodCode = ''
       this.search.positionCode = ''
       this.search.username = ''
@@ -142,6 +149,7 @@ export default {
       let obj = {}
       this.search.goodCode != null || this.search.goodCode != undefined ? obj.goodCode = this.search.goodCode : null
       this.search.keyword != null || this.search.keyword != undefined ? obj.oldCode = this.search.keyword : null
+      this.search.outNo != null || this.search.outNo != undefined ? obj.outNo = this.search.outNo : null
       this.search.positionCode != null || this.search.positionCode != undefined ? obj.positionCode = this.search.positionCode : null
       this.search.username != null || this.search.username != undefined ? obj.username = this.search.username : null
       this.search.lotNo != null || this.search.lotNo != undefined ? obj.lotNo = this.search.lotNo : null
@@ -181,7 +189,7 @@ export default {
         this.$message({
           message: '无选中行',
           type: 'warning'
-        });
+        })
       }
     },
   }

@@ -352,7 +352,7 @@ export function notarizeCancelOutputList(params) {
   })
 }
 // 出库驳回
-export function OutBackputList() {
+export function OutBackputList(params) {
   const url = '/outOrder/OutOrderBackInvDetail'
   return request({
     url: url,

@@ -47,6 +47,7 @@ export default {
         { text: '备注', name: 'remark' },
         //{ text: '出库去向', name: 'outbound' },
         { text: '操作员', name: 'username' },
+        { text: '状态', name: 'isBack' },
       ]
     };
   },

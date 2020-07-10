@@ -18,7 +18,7 @@
 </template>
 <script>
   import { mapGetters } from 'vuex';
-  import{ outboundStatisticsInfo2 } from '@/api/warehouse/index'
+  import{ outboundStatisticsInfo2, OutBackputList} from '@/api/warehouse/index'
   import List from '@/components/List'
   export default {
     components: {
@@ -52,7 +52,7 @@
           { text: '批号', name: 'lotNo' },
           { text: '数量', name: 'num' },
           { text: '库位', name: 'positionCode' },
-          { text: '状态', name: 'status' },
+          { text: '状态', name: 'isBack' },
         ]
       };
     },
@@ -72,13 +72,15 @@
           const selection = this.selections
           let arrray = []
           selection.forEach((item, index) => {
-            if(arrray.indexOf(item.soId) == -1){
-              arrray.push(item.soId)
+            if(arrray.indexOf(item.outDeId) == -1){
+              arrray.push(item.outDeId)
             }
           })
-          notarizeBatchList({soIds: arrray}).then(res => {
+          OutBackputList(arrray).then(res => {
             if(res.flag) {
-              this.upload()
+              this.fetchFormat(this.listInfo.outNo)
+
+              this.$emit('uploadList')
             }
           })
           /*this.$emit('showDialog', this.clickData)*/
