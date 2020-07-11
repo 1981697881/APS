@@ -39,12 +39,12 @@ export default {
         { text: 'U9料号', name: 'goodCode' },
         { text: '物料名称', name: 'goodName' },
         { text: '旧料号', name: 'oldCode' },
-        { text: '批号', name: 'lotNo' },
+        { text: '批号', name: 'lotNo', default: true },
         { text: '规格', name: 'spec' },
         { text: '数量', name: 'evenNum' },
         { text: '合格状态', name: 'status' },
         { text: '备注', name: 'remark' },
-        { text: '入库日期', name: 'createTime' },
+        { text: '入库日期', name: 'createTime', default: true },
       ]
     };
   },
@@ -61,6 +61,17 @@ export default {
     },
     dblclick(obj) {
       // this.$emit('showDialog',obj.row)
+    },
+    onUploadHead(val){
+      for(let i in this.columns) {
+        if(this.columns[i].name == 'lotNo' || this.columns[i].name == 'createTime') {
+          if(val){
+            this.columns[i].default = false
+          } else {
+            this.columns[i].default = true
+          }
+        }
+      }
     },
     uploadPr(val) {
       this.fetchData(val, {

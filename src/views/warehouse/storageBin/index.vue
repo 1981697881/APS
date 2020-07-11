@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar ref="tabs" @uploadList="upload" @showDialog="handlerDialog" @queryBtn="query"/>
+        <tabs-bar ref="tabs" @uploadList="upload" @showDialog="handlerDialog" @queryBtn="query" @onlist="onList"/>
       </div>
       <list ref="list" @uploadList="uploadPage"/>
     </div>
@@ -59,6 +59,10 @@ export default {
     // 更新列表
     upload() {
       this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
+    },
+    // 更新表头
+    onList(val) {
+      this.$refs.list.onUploadHead(val)
     },
     // 查询
     query() {

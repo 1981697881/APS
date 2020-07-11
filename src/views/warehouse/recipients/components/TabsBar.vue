@@ -52,8 +52,8 @@
         <el-button-group style="float:right;padding-right: 10px">
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">确认</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="cancelNotarize">取消确认</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">核准</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="cancelNotarize">取消核准</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
       </el-row>
@@ -264,11 +264,24 @@ export default {
     },
     cancelNotarize() {
       if (this.clickData.spId) {
-        notarizeCancelOutputList(this.clickData.spId).then(res => {
-          if(res.flag) {
-            this.upload()
-          }
-        })
+        this.$confirm('是否取消核准' + this.clickData.orderNum + '整张单据，取消后PDA将不展示该单?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.loading = true;
+          notarizeCancelOutputList(this.clickData.spId).then(res => {
+            if(res.flag) {
+              this.upload()
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+
         /*this.$emit('showDialog', this.clickData)*/
       } else {
         this.$message({

@@ -34,14 +34,19 @@
             <el-input v-model="search.positionCode" />
           </el-form-item>
         </el-col>
-        <el-col :span="2">
+        <el-col :span="1.5">
           <el-form-item :label-width="'10px'">
             <el-checkbox v-model="showZero" @change="clickChange">0库存</el-checkbox>
           </el-form-item>
         </el-col>
-        <el-col :span="2">
-          <el-form-item :label-width="'10px'">
+        <el-col :span="2.2">
+          <el-form-item :label-width="'0px'">
             <el-checkbox v-model="showSort" @change="clickChange2">按时间排序</el-checkbox>
+          </el-form-item>
+        </el-col>
+        <el-col :span="1.5">
+          <el-form-item :label-width="'0px'">
+            <el-checkbox v-model="lotNoMerge" @change="clickChange3">批号</el-checkbox>
           </el-form-item>
         </el-col>
         <el-col :span="3">
@@ -52,10 +57,8 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="2">
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
-        </el-col>
         <el-button-group style="float:right">
+          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
            <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleAlter">修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click.native="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
@@ -105,6 +108,7 @@ export default {
       },
       parent: null,
       showZero: false,
+      lotNoMerge: false,
       showSort: true,
       plaArray: [],
       search: {
@@ -125,6 +129,11 @@ export default {
     },
     clickChange2(val) {
       this.showSort = val
+      this.$emit('queryBtn', this.qFilter())
+    },
+    clickChange3(val) {
+      this.lotNoMerge = val
+      this.$emit('onlist', val)
       this.$emit('queryBtn', this.qFilter())
     },
     // 切换仓库
@@ -157,6 +166,7 @@ export default {
       this.search.positionCode = ''
       this.showSort = true
       this.showZero = false
+      this.lotNoMerge = false
       this.value = ''
       this.parent = null
       this.$emit('uploadList')
@@ -170,6 +180,7 @@ export default {
       this.parent != null && this.parent != undefined ? obj.grandpaPiId = this.parent : null
       this.showZero != null && this.showZero != undefined ? obj.showZero = this.showZero : null
       this.showSort != null && this.showSort != undefined ? obj.showSort = this.showSort : null
+      this.lotNoMerge != null && this.lotNoMerge != undefined ? obj.lotNoMerge = this.lotNoMerge : null
       this.value != null && this.value != undefined ? obj.endDate = this.value[1] : null
       this.value != null && this.value != undefined ? obj.startDate = this.value[0] : null
       return obj
