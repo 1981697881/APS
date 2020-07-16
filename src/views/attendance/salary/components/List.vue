@@ -205,9 +205,9 @@ export default {
               }else if(i == 1){
                 eval("obj.day" + new Date(item1.startTime).getDate() + "='" + (new Date(item1.endTime).getHours() + ':' + new Date(item1.endTime).getMinutes()) + "'")
               }else if(i == 2){
-                eval("obj.day" + new Date(item1.startTime).getDate() + "='" + item1.overtimeNum + "'")
-              }else{
                 eval("obj.day" + new Date(item1.startTime).getDate() + "='" + item1.normalNum + "'")
+              }else{
+                eval("obj.day" + new Date(item1.startTime).getDate() + "='" + item1.overtimeNum + "'")
               }
             })
             arr.push(obj)

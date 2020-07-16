@@ -223,6 +223,7 @@
                         eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
                         eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                         eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                        eval("obj.productionQuantity" + index + "='" + item2.productionQuantity + "'")
                         eval("obj.plName ='" + item2.plName + "'")
                         eval("obj.plId ='" + item2.plId + "'")
                         result.push(item2.plName)
@@ -243,6 +244,7 @@
                           eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
                           eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                           eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                          eval("obj.productionQuantity" + index + "='" + item2.productionQuantity + "'")
                           eval("obj.plName ='" + item2.plName + "'")
                           eval("obj.plId ='" + item2.plId + "'")
                           result.push(item2.plName)
@@ -263,6 +265,7 @@
                             eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
                             eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                             eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                            eval("obj.productionQuantity" + index + "='" + item2.productionQuantity + "'")
                             eval("obj.plName ='" + item2.plName + "'")
                             eval("obj.plId ='" + item2.plId + "'")
                             result2.push(item2.plName+"/"+item2.productionDate)
@@ -287,6 +290,7 @@
                                     eval("arr[" + index1 + "].productionDate" + index + "='" + item2.productionDate + "'")
                                     eval("arr[" + index1 + "].remark" + index + "='" + (item2.remark == null ? '' : item2.remark) + "'")
                                     eval("arr[" + index1 + "].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                                    eval("arr[" + index1 + "].productionQuantity" + index + "='" + item2.productionQuantity + "'")
                                     result3.push(item2.taskNum)
                                   } else {
                                     if( test == null){

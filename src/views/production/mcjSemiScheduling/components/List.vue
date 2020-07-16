@@ -41,10 +41,14 @@
         list: [],
         isBatch: false,
         result: [],
+        isType: false,
         columns: []
       };
     },
     methods: {
+      setHType(val) {
+        this.isType = val
+      },
       resetBatch(val) {
         this.isBatch = val
       },
@@ -184,7 +188,7 @@
             var result5 = []
             // 根据时间生成表头 把时间包含数据重新组装 -》array
             for (const i in data) {
-              columns.push({text: i + '', name: i + '', colspan: true, data: [{text: '旧料号', name: 'oldCode' + count}, {text: '单批次数量（kg）', default: this.isBatch, name: 'singleLotNum' + count }, {text: '批次数', default: this.isBatch, name: 'lotNum' + count }, {text: '数量(kg)', name: 'allocatedNum' + count},{text: '生产状态', name: 'allocatedStatus' + count},{text: '任务警示', name: 'alertStatus' + count, formatt: 'taskWarning'}]})
+              columns.push({text: i + '', name: i + '', colspan: true, data: [{text: '旧料号', name: 'oldCode' + count}, {text: '单批次数量（kg）', default: this.isBatch, name: 'singleLotNum' + count }, {text: '批次数', default: this.isBatch, name: 'lotNum' + count }, {text: this.isType == true ? '数量（支）' : '数量（kg）', name: 'allocatedNum' + count}, {text: '生产状态', name: 'allocatedStatus' + count},{text: '任务警示', name: 'alertStatus' + count, formatt: 'taskWarning'}]})
               count++
               data[i][0].time = i
               array.push(data[i])
@@ -229,6 +233,7 @@
                         eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
                         eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                         eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                        eval("obj.productionQuantity" + index + "='" + item2.productionQuantity + "'")
                         eval("obj.plName ='" + item2.plName + "'")
                         eval("obj.plId ='" + item2.plId + "'")
                         result.push(item2.plName)
@@ -249,6 +254,7 @@
                           eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
                           eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                           eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                          eval("obj.productionQuantity" + index + "='" + item2.productionQuantity + "'")
                           eval("obj.plName ='" + item2.plName + "'")
                           eval("obj.plId ='" + item2.plId + "'")
                           result.push(item2.plName)
@@ -269,6 +275,7 @@
                             eval("obj.productionDate" + index + "='" + item2.productionDate + "'")
                             eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                             eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
+                            eval("obj.productionQuantity" + index + "='" + item2.productionQuantity + "'")
                             eval("obj.plName ='" + item2.plName + "'")
                             eval("obj.plId ='" + item2.plId + "'")
                             result2.push(item2.plName+"/"+item2.productionDate)
@@ -291,6 +298,7 @@
                                     eval("arr[" + index1 + "].singleLotNum" + index + "='" + item2.singleLotNum + "'")
                                     eval("arr[" + index1 + "].lotNum" + index + "='" + item2.lotNum + "'")
                                     eval("arr[" + index1 + "].productionDate" + index + "='" + item2.productionDate + "'")
+                                    eval("arr[" + index1 + "].productionQuantity" + index + "='" + item2.productionQuantity + "'")
                                     eval("arr[" + index1 + "].remark" + index + "='" + (item2.remark == null ? '' : item2.remark) + "'")
                                     eval("arr[" + index1 + "].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
                                     result3.push(item2.taskNum)

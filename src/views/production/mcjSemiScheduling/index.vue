@@ -69,8 +69,13 @@ export default {
         if(item.tpId == val) {
           if (item.tpName == '美瓷胶调色线') {
             this.batch = true
+            this.$refs.list.setHType(false)
+          } else if(item.tpName == '美瓷胶灌装线') {
+            this.$refs.list.setHType(true)
+            this.batch = false
           } else {
             this.batch = false
+            this.$refs.list.setHType(false)
           }
         }
       })
