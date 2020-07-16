@@ -152,7 +152,7 @@
         return function (m, n) {
           let a = m[p]
           let b = n[p]
-          return b - a
+          return a.localeCompare(b);
         }
       },
       fetchData(val) {
@@ -224,6 +224,8 @@
                         eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                         eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
                         eval("obj.productionQuantity" + index + "='" + item2.productionQuantity + "'")
+                        eval("obj.estimatedStorage" + index + "='" + item2.estimatedStorage + "'")
+                        eval("obj.lotNo" + index + "='" + item2.lotNo + "'")
                         eval("obj.plName ='" + item2.plName + "'")
                         eval("obj.plId ='" + item2.plId + "'")
                         result.push(item2.plName)
@@ -245,6 +247,8 @@
                           eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                           eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
                           eval("obj.productionQuantity" + index + "='" + item2.productionQuantity + "'")
+                          eval("obj.estimatedStorage" + index + "='" + item2.estimatedStorage + "'")
+                          eval("obj.lotNo" + index + "='" + item2.lotNo + "'")
                           eval("obj.plName ='" + item2.plName + "'")
                           eval("obj.plId ='" + item2.plId + "'")
                           result.push(item2.plName)
@@ -266,6 +270,8 @@
                             eval("obj.remark" + index + "='" +  (item2.remark == null? '' : item2.remark) + "'")
                             eval("obj.allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
                             eval("obj.productionQuantity" + index + "='" + item2.productionQuantity + "'")
+                            eval("obj.estimatedStorage" + index + "='" + item2.estimatedStorage + "'")
+                            eval("obj.lotNo" + index + "='" + item2.lotNo + "'")
                             eval("obj.plName ='" + item2.plName + "'")
                             eval("obj.plId ='" + item2.plId + "'")
                             result2.push(item2.plName+"/"+item2.productionDate)
@@ -291,6 +297,8 @@
                                     eval("arr[" + index1 + "].remark" + index + "='" + (item2.remark == null ? '' : item2.remark) + "'")
                                     eval("arr[" + index1 + "].allocatedStatus" + index + "='" + item2.allocatedStatus + "'")
                                     eval("arr[" + index1 + "].productionQuantity" + index + "='" + item2.productionQuantity + "'")
+                                    eval("arr[" + index1 + "].estimatedStorage" + index + "='" + item2.estimatedStorage + "'")
+                                    eval("arr[" + index1 + "].lotNo" + index + "='" + item2.lotNo + "'")
                                     result3.push(item2.taskNum)
                                   } else {
                                     if( test == null){
@@ -396,7 +404,7 @@
                 }
               })
             })*/
-            arr.sort(this.compare('plId'))
+            arr.sort(this.compare('plName'))
             this.loading = false
             this.list = arr
           }
