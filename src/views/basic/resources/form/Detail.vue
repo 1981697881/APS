@@ -65,6 +65,74 @@
           </el-form-item>
         </el-col>
       </el-row>
+     <!-- <el-row :gutter="20" >
+        <el-col :span="12">
+          <el-form-item :label="'星期一'">
+            <el-radio-group v-model="form.Monday">
+              <el-radio :label="1">正常</el-radio>
+              <el-radio :label="2">加班</el-radio>
+              <el-radio :label="0">休息</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col><el-col :span="12">
+          <el-form-item :label="'星期二'">
+            <el-radio-group v-model="form.Tuesday">
+              <el-radio :label="1">正常</el-radio>
+              <el-radio :label="2">加班</el-radio>
+              <el-radio :label="0">休息</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20" >
+        <el-col :span="12">
+          <el-form-item :label="'星期三'">
+            <el-radio-group v-model="form.Wednesday">
+              <el-radio :label="1">正常</el-radio>
+              <el-radio :label="2">加班</el-radio>
+              <el-radio :label="0">休息</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col><el-col :span="12">
+          <el-form-item :label="'星期四'">
+            <el-radio-group v-model="form.Thursday">
+              <el-radio :label="1">正常</el-radio>
+              <el-radio :label="2">加班</el-radio>
+              <el-radio :label="0">休息</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20" >
+        <el-col :span="12">
+          <el-form-item :label="'星期五'">
+            <el-radio-group v-model="form.Friday">
+              <el-radio :label="1">正常</el-radio>
+              <el-radio :label="2">加班</el-radio>
+              <el-radio :label="0">休息</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col><el-col :span="12">
+          <el-form-item :label="'星期六'">
+            <el-radio-group v-model="form.Saturday">
+              <el-radio :label="1">正常</el-radio>
+              <el-radio :label="2">加班</el-radio>
+              <el-radio :label="0">休息</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20" >
+        <el-col :span="12">
+          <el-form-item :label="'星期日'">
+            <el-radio-group v-model="form.Sunday">
+              <el-radio :label="1">正常</el-radio>
+              <el-radio :label="2">加班</el-radio>
+              <el-radio :label="0">休息</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>-->
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'工作时段'" prop="workDay">
@@ -116,6 +184,13 @@
     data() {
       return {
         form: {
+         /* Monday: 0,
+          Tuesday: 0,
+          Wednesday: 0,
+          Thursday: 0,
+          Friday: 0,
+          Saturday: 0,
+          Sunday: 0,*/
           plId: null,
           tpId: null,
           upperLimit: null,

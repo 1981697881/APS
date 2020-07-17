@@ -51,6 +51,19 @@ export function empBind(params) {
     data: params
   })
 }
+// 排班-职员绑定班次
+export function empRemByEid(params) {
+  const url = '/employee-oow/empRemByEid'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'delete',
+    data: params
+  })
+}
 // 班次-修改
 export function shiftAlter(params) {
   const url = '/order-of-work/update'

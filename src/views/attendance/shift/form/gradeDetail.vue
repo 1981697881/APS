@@ -26,6 +26,8 @@
           :list="list"
           index
           type
+          @handle-size="handleSize"
+          @handle-current="handleCurrent"
           @selection-change="handleSelectionChange"
           />
       </el-row>
@@ -89,6 +91,16 @@
       }
     },
     methods: {
+      //监听每页显示几条
+      handleSize(val) {
+        this.list.size = val
+        this.fetchData()
+      },
+      //监听当前页
+      handleCurrent(val) {
+        this.list.current = val
+        this.fetchData()
+      },
       // 监听多选 参数-所有选中的值
       handleSelectionChange(val){
         this.$store.dispatch('list/setSelections', val)
@@ -115,9 +127,10 @@
         })
       },
       query() {
-        if(this.name != null && this.name != ''){
-          this.fetchData({name: this.name})
-        }
+        this.fetchData({name: this.name}, {
+          pageNum: 1,
+          pageSize: this.list.size
+        })
       },
 
       fetchData(val, data = {

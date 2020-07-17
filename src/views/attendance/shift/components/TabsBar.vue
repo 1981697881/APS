@@ -5,6 +5,7 @@
         <el-button :size="'mini'" type="primary" @click="handlerAdd">新建</el-button>
         <el-button :size="'mini'" type="primary" @click="handlerAlter">修改</el-button>
         <el-button :size="'mini'" type="primary" @click="handlerScheduling">排班</el-button>
+        <el-button :size="'mini'" type="primary" @click="handlerUnScheduling">取消排班</el-button>
         <el-button :size="'mini'" type="primary" @click="del">删除</el-button>
       </el-button-group>
     </el-form>
@@ -13,7 +14,8 @@
 
 <script>
 
-import { mapGetters } from "vuex";
+import { mapGetters } from "vuex"
+import { empRemByEid } from "@/api/attendance/index"
 export default {
   data() {
     return {
@@ -23,7 +25,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["node","clickData"])
+    ...mapGetters(["node","clickData","selections"])
   },
   methods:{
     handleTab(node){
@@ -47,7 +49,47 @@ export default {
     },
     del() {
       if (this.clickData.oowId) {
-        this.$emit('del', this.clickData.oowId)
+        this.$confirm('是否删除(' + this.clickData.oowName+ ')，删除后将无法恢复?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$emit('del', this.clickData.oowId)
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+      }
+    },
+    handlerUnScheduling() {
+      if (this.selections.length > 0) {
+        this.$confirm('是否取消排班', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const selections = this.selections
+          let array = []
+          selections.forEach((item, index) => {
+            array.push(item.eid)
+          })
+          empRemByEid(array).then(res => {
+            this.$emit('hideDialog', false)
+            this.$emit('uploadList', this.form.oowId)
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       } else {
         this.$message({
           message: "无选中行",

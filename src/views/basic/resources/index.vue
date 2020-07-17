@@ -11,7 +11,7 @@
       :visible.sync="visible"
       title="用户设备信息"
       v-if="visible"
-      :width="'40%'"
+      :width="'60%'"
       v-dialogDrag
       destroy-on-close
     >
@@ -22,7 +22,7 @@
       title="生产线信息"
       v-if="visible2"
       v-dialogDrag
-      :width="'40%'"
+      :width="'60%'"
       destroy-on-close
     >
       <t-detail @hideGroupDialog="hideGroupWindow" @uploadGroup="uploadGroup" :gpInfo="gpInfo"></t-detail>

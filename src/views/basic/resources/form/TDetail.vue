@@ -113,13 +113,27 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20" >
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'加班时段'">
+            <el-select v-model="form.overWorkDay" multiple placeholder="请选择">
+              <el-option
+                v-for="item in dayOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <!--<el-row :gutter="20" >
         <el-col :span="12">
           <el-form-item :label="'是否加班'">
             <el-switch v-model="form.isOverwork" active-value="0" inactive-value="1"></el-switch>
           </el-form-item>
         </el-col>
-      </el-row>
+      </el-row>-->
     </el-form>
     <div slot="footer" style="text-align:center">
       <el-button type="primary" @click="saveData('form')">保存</el-button>
@@ -144,8 +158,31 @@
           tpName: null, // 名称
           tpCategory: '产线设备',
           type: null,
+          overWorkDay: [],
           rules: []
         },
+        dayOptions: [{
+          value: '1',
+          label: '星期一'
+        }, {
+          value: '2',
+          label: '星期二'
+        }, {
+          value: '3',
+          label: '星期三'
+        }, {
+          value: '4',
+          label: '星期四'
+        }, {
+          value: '5',
+          label: '星期五'
+        }, {
+          value: '6',
+          label: '星期六'
+        }, {
+          value: '7',
+          label: '星期日'
+        }],
         matters: {
           matters0: {
             note: null,
@@ -226,7 +263,8 @@
         const me = this
         getListMatters(val).then(res => {
           if(res.flag) {
-            me.form.isOverwork = res.data.isOverwork + ''
+            me.form.overWorkDay = res.data.overWorkDay ==''?[]: res.data.overWorkDay .split(',')
+
             if(res.data.listMatters.length> 0){
               const matterArray = res.data.listMatters.sort(this.compare)
               let martterObj = {}
@@ -264,6 +302,7 @@
               array.push(marrter[i])
             }
             this.form.importantMatters = array
+            this.form.overWorkDay = this.form.overWorkDay.toString()
             if (typeof (this.form.tpId) != undefined && this.form.tpId != null) {
               resourcesAlter(this.form).then(res => {
                 this.$emit('hideGroupDialog', false)

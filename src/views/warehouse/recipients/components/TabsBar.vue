@@ -264,7 +264,7 @@ export default {
     },
     cancelNotarize() {
       if (this.clickData.spId) {
-        this.$confirm('是否取消核准' + this.clickData.orderNum + '整张单据，取消后PDA将不展示该单?', '提示', {
+        this.$confirm('是否取消核准' + this.clickData.shipNo + '整张单据，取消后PDA将不展示该单?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
