@@ -43,7 +43,7 @@ export default {
         { text: '规格', name: 'spec' },
         { text: '数量', name: 'evenNum' },
         { text: '合格状态', name: 'status' },
-        { text: '备注', name: 'remark' },
+        { text: '备注', name: 'remark', default: true },
         { text: '入库日期', name: 'createTime', default: true },
       ]
     };
@@ -64,7 +64,7 @@ export default {
     },
     onUploadHead(val){
       for(let i in this.columns) {
-        if(this.columns[i].name == 'lotNo' || this.columns[i].name == 'createTime') {
+        if(this.columns[i].name == 'lotNo' || this.columns[i].name == 'createTime'|| this.columns[i].name == 'remark') {
           if(val){
             this.columns[i].default = false
           } else {

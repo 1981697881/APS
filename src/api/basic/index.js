@@ -795,3 +795,28 @@ export function barcodeGoods(params) {
     data: params
   })
 }
+// 库位管理-获取列表
+export function getStorageU9List(data, query) {
+  const url = '/ware-position/list/' + data.pageNum + '/' + data.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
+  })
+}
+// 库位管理-获取列表
+export function getWarehouseU9List(data) {
+  const url = '/warehouse/list/' + data.pageNum + '/' + data.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+  })
+}

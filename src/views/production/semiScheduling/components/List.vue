@@ -184,7 +184,7 @@
               array.push(data[i])
             }
             var arrObj = {}
-            array.forEach((item1, index) => {
+           /* array.forEach((item1, index) => {
               item1.forEach((item2, index2) => {
                 if(result4.indexOf(item2.plName) == '-1') {
                   arrObj[item2.plName] = [item2]
@@ -324,9 +324,9 @@
                 })
               }
               index++
-            }
+            }*/
             // 遍历组装数据
-            /*array.forEach((item1, index) => {
+            array.forEach((item1, index) => {
               item1.forEach((item2, index2) => {
                 var obj = {}
                 // 根据每个时间里的数据量生成数据行
@@ -403,7 +403,7 @@
                   }
                 }
               })
-            })*/
+            })
             arr.sort(this.compare('plName'))
             this.loading = false
             this.list = arr
