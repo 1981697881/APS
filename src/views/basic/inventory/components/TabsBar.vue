@@ -29,6 +29,14 @@
             </el-select>
           </el-form-item>
         </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'仓库'" prop="plaIdS">
+            <el-select v-model="parent"  placeholder="请选择" @change="selectWorn">
+              <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
@@ -43,6 +51,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import {getWarehouseList} from "@/api/basic/index"
 export default {
     components: {},
     computed: {
@@ -50,6 +59,8 @@ export default {
     },
   data() {
     return {
+      plaArray: [],
+      parent: null,
       search: {
         name: null,
         oldCode: null,
@@ -65,9 +76,23 @@ export default {
       }],
     };
   },
+  mounted(){
+    this.fetchWare(-1)
+  },
   methods: {
+    fetchWare(val) {
+      getWarehouseList(val).then(res => {
+        if(res.flag) {
+          this.plaArray = res.data
+        }
+      })
+    },
     selectChange(val) {
       this.status = val
+      this.$emit('queryBtn', this.qFilter())
+    },
+    // 切换仓库
+    selectWorn(val) {
       this.$emit('queryBtn', this.qFilter())
     },
     query() {
@@ -78,6 +103,7 @@ export default {
       this.search.oldCode = ''
       this.search.code = ''
       this.search.status = ''
+      this.parent = null
       this.$emit('uploadList')
     },
     // 查询条件过滤
@@ -86,18 +112,12 @@ export default {
       this.search.name != null && this.search.name != '' ? obj.name = this.search.name : null
       this.search.code != null && this.search.code != '' ? obj.code = this.search.code : null
       this.search.status != null && this.search.status != '' ? obj.status = this.search.status : null
+      this.parent != null && this.parent != '' ? obj.piId = this.parent : null
       this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       return obj
     },
     handleAlter() {
-      if (this.clickData.invId) {
-        this.$emit('showDialog', this.clickData)
-      } else {
-        this.$message({
-          message: "无选中行",
-          type: "warning"
-        })
-      }
+      this.$emit('showDialog', this.clickData)
     },
     handleAdd() {
       this.$emit('showSync')

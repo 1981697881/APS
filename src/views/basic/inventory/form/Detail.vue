@@ -21,16 +21,11 @@
             <el-row :gutter="20">
               <el-col :span="12">
                 <el-form-item :label="'库位'" prop="wid">
-                    <el-input v-model="form.wid"></el-input>
-                  </el-form-item>
-              </el-col>
-              <!--<el-col :span="12">
-                <el-form-item :label="'库位'" prop="wid">
-                  <el-select v-model="form.wid" class="width-full" >
+                  <el-select v-model="form.wid" multiple class="width-full" >
                     <el-option :label="t.wareName" :value="t.wid" v-for="(t,i) in pArray" :key="i"></el-option>
                   </el-select>
                 </el-form-item>
-              </el-col>-->
+              </el-col>
               <!--<el-col :span="8">
                 <el-form-item :label="'编码'" prop="positionCode">
                   <el-input v-model="form.positionCode"></el-input>
@@ -43,7 +38,7 @@
               </el-col>-->
               <el-col :span="12">
                 <el-form-item :label-width="'0px'">
-                  <el-checkbox v-model="form.eligibility">是否合格</el-checkbox>
+                  <el-checkbox v-model="form.eligibility" true-label="1" false-label="2">是否合格</el-checkbox>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -64,15 +59,15 @@
       </el-container>
     </el-container>
     <div slot="footer" style="text-align:center;padding-top: 15px;">
-      <el-button type="success" @click="createData">新增</el-button>
-      <el-button type="primary" @click="saveData('form')">保存</el-button>
-      <el-button type="danger" @click="Delivery2">删除</el-button>
+      <el-button type="primary" @click="saveData('form')">绑定</el-button>
+      <el-button type="success" @click="createData('form')">修改</el-button>
+    <!--  <el-button type="danger" @click="Delivery2">删除</el-button>-->
     </div>
   </div>
 </template>
 
 <script>
-  import {getWarehouseList, warehouseAdd, warehouseAlter, getStorageU9List, delPosition, getWarehouseU9List} from "@/api/basic/index";
+  import {getWarehouseList, wareBind, getStorageU9List, delPosition, getWarehouseU9List, wareBindUpdate} from "@/api/basic/index";
   import List from '@/components/List';
   export default {
     components: {
@@ -84,7 +79,7 @@
         form: {
           wareName: null, // 名称
           wareCode: null,
-          wid: null,
+          wid: [],
           eligibility: 0,
         },
         pArray: [],
@@ -102,7 +97,7 @@
         ],
         rules: {
           wid: [
-            {required: true, message: '请选择库位', trigger: 'change'},
+            {required: true, type: 'array', message: '请选择库位', trigger: 'change'},
           ],
         },
       };
@@ -112,7 +107,7 @@
     },
     mounted() {
       this.fetchData()
-      //this.formatWarehouse()
+      this.formatWarehouse()
     },
     methods: {
       //监听每页显示几条
@@ -155,7 +150,7 @@
         this.form = {
           wareName: null, // 名称
           wareCode: null,
-          wid: null,
+          wid: [],
           eligibility: 0,
         }
         this.row = obj
@@ -165,7 +160,10 @@
       // 监听单击某一行
       rowClick2(obj) {
         const that = this
-        that.form = obj.row
+        that.form = {
+          wid: [obj.row.wid],
+          eligibility: obj.row.eligibility
+        }
       },
       formatArea(val, data = {
         pageNum: this.list2.current || 1,
@@ -197,14 +195,19 @@
           this.list1 = res.data;
         });
       },
-      createData() {
-        this.form = {
-          positionName: null, // 名称
-          positionCode: null,
-          piId: null,
-          parent: null,
-          type: 2,
-        }
+      createData(form) {
+        this.$refs[form].validate((valid) => {
+          //判断必填项
+          if (valid) {
+            // 修改
+            if(typeof (this.row.piId) != undefined && this.row.piId != null){
+              wareBindUpdate({piId: this.row.piId, wids: this.form.wid, eligibility: this.form.eligibility}).then(res => {
+                this.formatArea({ piId: this.row.piId })
+              });
+              // 保存
+            }
+          }
+        })
       },
       saveData(form) {
         this.$refs[form].validate((valid) => {
@@ -212,8 +215,8 @@
           if (valid) {
             // 修改
             if(typeof (this.row.piId) != undefined && this.row.piId != null){
-                warehouseAlter(this.form).then(res => {
-                  this.formatArea(this.row.piId)
+              wareBind({piId: this.row.piId, wids: this.form.wid, eligibility: this.form.eligibility}).then(res => {
+                  this.formatArea({ piId: this.row.piId })
                 });
                 // 保存
               }

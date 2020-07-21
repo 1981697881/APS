@@ -820,3 +820,29 @@ export function getWarehouseU9List(data) {
     method: 'POST',
   })
 }
+// 库位管理-绑定库位
+export function wareBind(data) {
+  const url = '/ware-position/wareBind'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: data
+  })
+}
+// 库位管理-绑定库位修改
+export function wareBindUpdate(data) {
+  const url = '/ware-position/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: data
+  })
+}
