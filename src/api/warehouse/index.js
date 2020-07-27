@@ -364,3 +364,16 @@ export function OutBackputList(params) {
     method: 'post'
   })
 }
+// 效率统计
+export function logisticsEfficiencyReport(params) {
+  const url = '/report-form/logisticsEfficiencyReport'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
+}

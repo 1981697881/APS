@@ -61,13 +61,13 @@
     <div slot="footer" style="text-align:center;padding-top: 15px;">
       <el-button type="primary" @click="saveData('form')">绑定</el-button>
       <el-button type="success" @click="createData('form')">修改</el-button>
-    <!--  <el-button type="danger" @click="Delivery2">删除</el-button>-->
+      <el-button type="danger" @click="Delivery2">解除</el-button>
     </div>
   </div>
 </template>
 
 <script>
-  import {getWarehouseList, wareBind, getStorageU9List, delPosition, getWarehouseU9List, wareBindUpdate} from "@/api/basic/index";
+  import {getWarehouseList, wareBind, getStorageU9List, delPosition, getWarehouseU9List, wareBindUpdate, wareBindDelete} from "@/api/basic/index";
   import List from '@/components/List';
   export default {
     components: {
@@ -80,6 +80,7 @@
           wareName: null, // 名称
           wareCode: null,
           wid: [],
+          wpId: null,
           eligibility: 0,
         },
         pArray: [],
@@ -121,15 +122,15 @@
         this.formatArea()
       },
       Delivery2(){
-        if (this.form.piId) {
-          this.$confirm('是否删除(' + this.form.positionCode + ')，删除后将无法恢复?', '提示', {
+        if (this.form.wpId) {
+          this.$confirm('是否解除?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            delPosition(this.form.piId).then(res => {
+            wareBindDelete(this.form.wpId).then(res => {
               if(res.flag){
-                this.formatArea(this.row.piId)
+                this.formatArea({ piId: this.row.piId })
               }
             });
           }).catch(() => {
@@ -150,6 +151,7 @@
         this.form = {
           wareName: null, // 名称
           wareCode: null,
+          wpId: null,
           wid: [],
           eligibility: 0,
         }
@@ -162,6 +164,7 @@
         const that = this
         that.form = {
           wid: [obj.row.wid],
+          wpId: obj.row.wpId,
           eligibility: obj.row.eligibility
         }
       },

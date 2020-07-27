@@ -846,3 +846,14 @@ export function wareBindUpdate(data) {
     data: data
   })
 }
+// 库位管理-绑定库位修改
+export function wareBindDelete(data) {
+  const url = '/ware-position/delete/' + data
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'delete'
+  })
+}

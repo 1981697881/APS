@@ -48,6 +48,18 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
+          <el-form-item :label="'生产状态'" :label-width="'70px'">
+            <el-select v-model="search.allocatedStatus" placeholder="请选择" @change="selectChange">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
           <el-form-item :label="'旧料号'">
             <el-input v-model="search.oldCode" placeholder="输入关键字"/>
           </el-form-item>
@@ -76,6 +88,19 @@
         headers: {
           'authorization': getToken('apsrx'),
         },
+        options: [{
+          value: '计划中',
+          label: '计划中'
+        }, {
+          value: '已暂停',
+          label: '已暂停'
+        }, {
+          value: '已结束',
+          label: '已结束'
+        }, {
+          value: '已完工',
+          label: '已完工'
+        }],
         pickerOptions: {
           shortcuts: [{
             text: '最近一周',
@@ -105,6 +130,7 @@
         },
         search: {
           oldCode: null,
+          allocatedStatus: '计划中',
         }
       };
     },
@@ -116,6 +142,9 @@
       this.$emit('firstLoad', this.value)
     },
     methods: {
+      selectChange(val) {
+        this.$emit('uploadList')
+      },
       submitUpload() {
         this.$refs.upload.submit()
       },
@@ -234,6 +263,7 @@
       qFilter() {
         let obj = {}
         this.search.oldCode != null && this.search.oldCode != undefined ? obj.oldCode = this.search.oldCode : null
+        this.search.allocatedStatus != null && this.search.allocatedStatus != undefined ? obj.allocatedStatus = this.search.allocatedStatus : null
         this.value != null && this.value != undefined ? obj.productionDateEnd = this.value[1] : null
         this.value != null && this.value != undefined ? obj.productionDateStart = this.value[0] : null
         return obj
@@ -314,8 +344,9 @@
         }
       },
       upload() {
-        this.$emit('uploadList')
         this.search.oldCode = null
+        this.search.allocatedStatus = '计划中'
+        this.$emit('uploadList')
       },
       handleDialog(){
         this.$emit('showDialog')

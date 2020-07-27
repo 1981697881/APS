@@ -99,7 +99,7 @@ export default {
     },
      RetnWF2(year, month, nowday) {//JS判断的if elseif方法
       let wstr = ""
-      const date = new Date(year,month,nowday)
+      const date = new Date(year,month-1,nowday)
       const day = date.getDay()
       if (day==0){wstr='日'}
       else if(day==1){wstr='一'}
@@ -147,6 +147,7 @@ export default {
         { text: '日期', name: '', colspan: true, data: [{text: '星期', name: 'time'}]
         },
       ]
+      console.log(123)
       for (let i = 1; i <= mouthLength; i++) {
         const week = this.RetnWF2(val.month.split('-')[0], val.month.split('-')[1], i)
         const obj = { text: i + '', name: '', colspan: true, data: [{ width: '250px', text: week + '', name: 'day' + i }] }
@@ -179,7 +180,6 @@ export default {
         { text: '餐补', name: '' },
         { text: '出差补贴', name: '' })
       this.loading = true
-      console.log(this.columns)
       getSalaryList(val).then(res => {
         this.loading = false
         const data = res.data
@@ -199,7 +199,6 @@ export default {
               eval("obj.time='加班时长'")
             }
             item.detail.forEach((item1, index1)=> {
-              console.log()
               if(i == 0) {
                 eval("obj.day" + new Date(item1.startTime).getDate() + "='" + (new Date(item1.startTime).getHours() + ':' + new Date(item1.startTime).getMinutes()) + "'")
               }else if(i == 1){
@@ -213,7 +212,6 @@ export default {
             arr.push(obj)
           }
         })
-        console.log(arr)
         this.list = arr
       })
     }

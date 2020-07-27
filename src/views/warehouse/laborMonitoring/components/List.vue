@@ -11,13 +11,12 @@
       @dblclick="dblclick"
        @row-click="rowClick"
     />
-
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import { delMaterial,getMaterialList} from '@/api/basic/index'
+import { logisticsEfficiencyReport } from '@/api/warehouse/index'
 import List from '@/components/List'
 
 export default {
@@ -32,7 +31,7 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: '', name: '',default:false },
+        { text: '', name: '', default: false },
         { text: '项目', name: '' },
         { text: '3.1', name: '' },
         { text: '3.2', name: '' },
@@ -45,16 +44,6 @@ export default {
     };
   },
   methods: {
-    // 监听每页显示几条
-    handleSize(val) {
-      this.list.size = val
-      this.fetchData();
-    },
-    // 监听当前页
-    handleCurrent(val) {
-      this.list.current = val;
-      this.fetchData();
-    },
     dblclick(obj) {
       // this.$emit('showDialog',obj.row)
     },
@@ -62,18 +51,12 @@ export default {
     rowClick(obj) {
       this.$store.dispatch("list/setClickData", obj.row);
     },
-    fetchData(fid, type) {
-      /*this.loading = true;
-      const data = {
-      /!*  fid: fid,
-        type: type,*!/
-        pageNum: this.list.current || 1,
-        pageSize: this.list.size || 50
-      };
-      getMaterialList(data).then(res => {
+    fetchData( val ) {
+      this.loading = true;
+      logisticsEfficiencyReport(val).then(res => {
         this.loading = false;
         this.list = res.data;
-      });*/
+      });
     }
   }
 };
