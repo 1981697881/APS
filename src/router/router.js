@@ -62,6 +62,8 @@ const map = {
   'shipmentBoard': () => import('@/views/warehouse/shipmentBoard'),
   'receivingBoard': () => import('@/views/warehouse/receivingBoard'),
   'locationBoard': () => import('@/views/warehouse/locationBoard'),
+  'homework': () => import('@/views/warehouse/homework'),
+  'monthly': () => import('@/views/warehouse/monthly'),
 
   'sales': () => import('@/views/aftermarket/sales'),
   'shipping': () => import('@/views/aftermarket/shipping'),

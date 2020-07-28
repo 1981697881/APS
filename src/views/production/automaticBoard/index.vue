@@ -3,7 +3,7 @@
     <el-container>
       <el-container>
         <el-aside width="calc(100vh/2)">
-          <pie-chart></pie-chart>
+          <pie-chart ref="pie"></pie-chart>
         </el-aside>
         <el-container>
           <el-main>
@@ -21,7 +21,7 @@
               <div slot="header" class="clearfix" style="text-align: left">
                 <span>重要事项</span>
               </div>
-              <info/>
+              <info ref="info"/>
             </el-card>
           </el-footer>
         </el-container>
@@ -32,7 +32,7 @@
 
 <script>
 import { List, PieChart, Info } from "./components";
-
+import { productBoard } from "@/api/production/index"
 export default {
   components: {
     List,
@@ -43,36 +43,26 @@ export default {
     return {
       visible: null,
       oid: null,
-        orderId: null,
-        createTime: null,
+      loading: false,
+      orderId: null,
+      createTime: null,
       treeId: null, // null
       floorId: null
     };
   },
-    mounted() {
-        this.$refs.list.fetchData()
-    },
+  mounted() {
+    this.loading = true;
+    productBoard('真石漆自动').then(res => {
+      this.loading = false;
+      console.log()
+      this.$refs.pie.fetchData({quantityToBeProduced: res.data['quantityToBeProduced']},{numberOfPeopleOnDuty: res.data['numberOfPeopleOnDuty']},{numberOfCompleted: res.data['numberOfCompleted']})
+      this.$refs.info.fetchData(res.data['importantMatters'])
+      this.$refs.list.fetchData(res.data['urgentTask'])
+    });
+
+  },
   methods: {
-      delivery(obj){
-          if(obj){
-              this.$refs.list.Delivery(obj.oid)
-              this.$refs.list.fetchData()
-          }
-      },
-      hideWindow(val){
-          this.visible = val
-      },
-    handlerDialog(obj){
-      if(obj)this.oid = obj.oid;this.orderId=obj.orderId;this.createTime=obj.createTime
-      this.visible = true
-    },
-    handlerNode(node) {
-      this.$refs.list.fetchData(node.data.fid,node.data.type)
-    },
-      //更新列表
-      upload(){
-          this.$refs.list.fetchData()
-      }
+
   }
 };
 </script>

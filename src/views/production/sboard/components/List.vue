@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { salesList ,delivery} from "@/api/basic/index";
-import List from "@/components/List";
+import { mapGetters } from "vuex"
+import { productBoard } from "@/api/production/index"
+import List from "@/components/List"
 
 export default {
   components: {
@@ -35,18 +35,10 @@ export default {
     };
   },
   methods: {
-    fetchData(fid, type) {
-     // this.loading = true;
-      const data = {
-      /*  fid: fid,
-        type: type,*/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
-      };
-       /* salesList(data).then(res => {
-        this.loading = false;
-        this.list = res.data;
-      });*/
+    fetchData(val) {
+      this.loading = true
+      this.list = val
+      this.loading = false;
     }
   }
 };

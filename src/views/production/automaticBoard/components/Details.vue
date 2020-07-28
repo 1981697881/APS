@@ -1,14 +1,23 @@
 <template>
   <div class="list-details">
-    <p>1:</p>
-    <p>2:</p>
-    <p>3:</p>
+    <p v-for="(t,i) in pArray" :key="i">{{(i+1) +':'+t.note}}</p>
   </div>
 </template>
 
 <script>
     export default {
-        name: "Details"
+      name: "Details",
+      data() {
+        return {
+          pArray: [],
+        };
+      },
+      methods: {
+        fetchData(value) {
+          console.log(value)
+          this.pArray = value
+        }
+      }
     }
 </script>
 

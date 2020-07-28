@@ -30,7 +30,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.initChart()
+      this.initChart(this.fetchData())
     })
   },
   beforeDestroy() {
@@ -41,9 +41,11 @@ export default {
     this.chart = null
   },
   methods: {
-    initChart() {
+    fetchData(value) {
+     return value
+    },
+    initChart(value) {
       this.chart = echarts.init(this.$el, 'macarons')
-
       this.chart.setOption({
         tooltip: {
           trigger: 'item',
@@ -57,11 +59,12 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['当日已完工任务', '当日待产任务', 'XX线当班人数']
+          data: ['当日已完工任务', '当日待产任务']
         },
         series: [
           {
             type: 'pie',
+            name: '分类',
             radius: '55%',
             center: ['50%', '50%'],
             emphasis: {
@@ -74,7 +77,6 @@ export default {
             data: [
               { value: 320, name: '当日已完工任务' },
               { value: 240, name: '当日待产任务' },
-              { value: 40, name: 'XX线当班人数' }
             ]
           }
         ]

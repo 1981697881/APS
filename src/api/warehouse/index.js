@@ -377,3 +377,16 @@ export function logisticsEfficiencyReport(params) {
     method: 'post'
   })
 }
+// 员工作业统计
+export function employeeJobReport(params) {
+  const url = '/report-form/employeeJobReport'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
+}

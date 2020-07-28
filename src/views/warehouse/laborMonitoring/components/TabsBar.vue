@@ -19,11 +19,11 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+       <!-- <el-col :span="4">
           <el-form-item :label="'关键字'">
             <el-input v-model="search.keyword" />
           </el-form-item>
-        </el-col>
+        </el-col>-->
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
@@ -127,9 +127,10 @@ export default {
       link.click()
     },
     upload() {
-      this.$emit('uploadList')
       this.search.keyword = ''
-      this.value = ''
+      this.value[0] = this.getDay('', -15).date
+      this.value[1] = this.getDay('', 0).date
+      this.$emit('uploadList')
     },
     // 查询条件过滤
     qFilter() {
@@ -151,18 +152,6 @@ export default {
     // 关键字查询
     query() {
       this.$emit('queryBtn', this.qFilter())
-    },
-    handleAlter() {
-      if (this.clickData.gid) {
-        this.$emit('showDialog',{
-          gid: this.clickData.gid,
-        })
-      } else {
-        this.$message({
-          message: "无选中行",
-          type: "warning"
-        });
-      }
     },
   }
 };

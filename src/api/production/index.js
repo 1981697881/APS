@@ -182,3 +182,14 @@ export function getStorageSchedulingList(data, query) {
     data: query
   })
 }
+// 生产看板
+export function productBoard(params) {
+  const url = '/infoBoard/productLine/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'get'
+  })
+}

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
+    <el-form :model="form" :rules="rules" ref="form" label-width="80px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'uid'" style="display: none">
