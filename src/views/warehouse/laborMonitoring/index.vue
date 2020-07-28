@@ -30,17 +30,21 @@ export default {
     };
   },
     mounted() {
-        this.$refs.list.fetchData()
+        this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
   methods: {
     // 查询
     query() {
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
+    },
+    // 查询
+    uploadPage(val) {
       this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
-      //更新列表
-      upload(){
-          this.$refs.list.fetchData()
-      }
+    //更新列表
+    upload(){
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
+    }
   }
 };
 </script>

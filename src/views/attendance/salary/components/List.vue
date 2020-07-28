@@ -139,6 +139,7 @@ export default {
       this.columns = []
       // 初始化列表
       const aData = new Date(val.month.split('-')[0], val.month.split('-')[1], 0)
+      console.log(aData)
       const mouthLength = aData.getDate()
       this.columns = [
         { text: '', name: '', default: false},
