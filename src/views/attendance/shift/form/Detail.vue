@@ -38,7 +38,7 @@
                   arrow-control
                   v-model="form1.punchTimeLast"
                   :picker-options="{
-                selectableRange: '16:30:00 - 23:30:00'
+                selectableRange: '16:30:00 - 23:59:59'
                }"
                   value-format="HH:mm:ss"
                   placeholder="任意时间点">

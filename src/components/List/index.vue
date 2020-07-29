@@ -23,7 +23,7 @@
         :key="i"
         :prop="t.name"
         :sortable="t.sort"
-        :formatter="t.formatt!=undefined?taskWarning : null"
+        :formatter="t.formatt!=undefined? (t.formatt == 'checkWarning'? checkWarning : taskWarning) : null"
         v-if="t.default!=undefined?t.default:true"
         :label="t.text"
         :width="t.width?t.width:(selfAdaption?'':'120px')"
@@ -135,6 +135,17 @@ export default {
         }else{
           stau = '正常'
         }
+      }
+      return  stau
+    },
+    checkWarning(row, column) {
+      let stau = ''
+      if(row.nature == 1) {
+        stau = '办公室'
+      }else if(row.nature == 2) {
+        stau = '一线'
+      }else if(row.nature == 3) {
+        stau = '其他'
       }
       return  stau
     },
