@@ -265,7 +265,7 @@
             // apiece: 打印
             // repeat: 重复打印第几张
             // printModel: 打印模板
-            schedulingPrint({barcodeList:[{printId: this.form.taskId,
+            schedulingPrint({ barcodeList: [{ printId: this.form.taskId,
                 printNum: this.printingQuantity,
                 type: 2}]}).then(res => {
               if(res.flag) {

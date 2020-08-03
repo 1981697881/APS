@@ -14,7 +14,6 @@
       },
       methods: {
         fetchData(value) {
-          console.log(value)
           this.pArray = value
         }
       }

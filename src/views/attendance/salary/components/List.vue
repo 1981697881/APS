@@ -74,6 +74,7 @@ export default {
   },
   data() {
     return {
+      dayLength: 0,
       loading: false,
       list: {},
       columns: []
@@ -141,6 +142,7 @@ export default {
       const aData = new Date(val.month.split('-')[0], val.month.split('-')[1], 0)
       console.log(aData)
       const mouthLength = aData.getDate()
+      this.dayLength = mouthLength
       this.columns = [
         { text: '', name: '', default: false},
         { text: '工号', name: 'jobNum' },
@@ -148,7 +150,6 @@ export default {
         { text: '日期', name: '', colspan: true, data: [{text: '星期', name: 'time'}]
         },
       ]
-      console.log(123)
       for (let i = 1; i <= mouthLength; i++) {
         const week = this.RetnWF2(val.month.split('-')[0], val.month.split('-')[1], i)
         const obj = { text: i + '', name: '', colspan: true, data: [{ width: '250px', text: week + '', name: 'day' + i }] }

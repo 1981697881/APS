@@ -1,5 +1,6 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}" />
+  <div :class="className" :style="{height:height,width:width}" >
+  </div>
 </template>
 
 <script>
@@ -25,12 +26,13 @@ export default {
   },
   data() {
     return {
+      number: 0,
       chart: null
     }
   },
   mounted() {
     this.$nextTick(() => {
-      this.initChart(this.fetchData())
+      //this.initChart(this.fetchData())
     })
   },
   beforeDestroy() {
@@ -41,10 +43,11 @@ export default {
     this.chart = null
   },
   methods: {
-    fetchData(value) {
-     return value
-    },
     initChart(value) {
+      console.log(value)
+      this.number = value.numberOfPeopleOnDuty
+      this.numberOfCompleted = value.numberOfCompleted
+      this.quantityToBeProduced = value.quantityToBeProduced
       this.chart = echarts.init(this.$el, 'macarons')
       this.chart.setOption({
         tooltip: {
@@ -52,7 +55,7 @@ export default {
           formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
         title: {
-          text: 'XX线生产进度',
+          text: '真石漆线生产进度',
           left: 'center',
           top: '15'
         },
@@ -75,8 +78,8 @@ export default {
               }
             },
             data: [
-              { value: 320, name: '当日已完工任务' },
-              { value: 240, name: '当日待产任务' },
+              { value: this.numberOfCompleted, name: '当日已完工任务' },
+              { value: this.quantityToBeProduced, name: '当日待产任务' },
             ]
           }
         ]

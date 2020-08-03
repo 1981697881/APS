@@ -12,7 +12,7 @@
                 <div slot="header" class="clearfix" style="text-align: left">
                   <span>加急生产任务</span>
                 </div>
-                <list ref="list"  @showDialog="handlerDialog"/>
+                <list ref="list" />
               </el-card>
             </div>
           </el-main>

@@ -1,6 +1,6 @@
 <template>
   <div class="app-list">
-    <el-container>
+    <el-container style="height: 100%">
       <el-container>
         <el-aside width="calc(100vh/2)">
           <pie-chart ref="pie"></pie-chart>
@@ -12,7 +12,7 @@
                 <div slot="header" class="clearfix" style="text-align: left">
                   <span>加急生产任务</span>
                 </div>
-                <list ref="list"  @showDialog="handlerDialog"/>
+                <list ref="list"/>
               </el-card>
             </div>
           </el-main>
@@ -27,6 +27,7 @@
         </el-container>
       </el-container>
     </el-container>
+    <span class="numberTitle">真石漆自动线当班人数：{{number}}</span>
   </div>
 </template>
 
@@ -42,6 +43,7 @@ export default {
   data() {
     return {
       visible: null,
+      number: 0,
       oid: null,
       loading: false,
       orderId: null,
@@ -55,9 +57,12 @@ export default {
     productBoard('真石漆自动').then(res => {
       this.loading = false;
       console.log()
-      this.$refs.pie.fetchData({quantityToBeProduced: res.data['quantityToBeProduced']},{numberOfPeopleOnDuty: res.data['numberOfPeopleOnDuty']},{numberOfCompleted: res.data['numberOfCompleted']})
-      this.$refs.info.fetchData(res.data['importantMatters'])
-      this.$refs.list.fetchData(res.data['urgentTask'])
+      this.number = res.data['numberOfPeopleOnDuty']
+      this.$nextTick(() => {
+        this.$refs.pie.initChart({quantityToBeProduced: res.data['quantityToBeProduced'],numberOfPeopleOnDuty: res.data['numberOfPeopleOnDuty'],numberOfCompleted: res.data['numberOfCompleted']})
+        this.$refs.info.fetchData(res.data['importantMatters'])
+        this.$refs.list.fetchData(res.data['urgentTask'])
+      })
     });
 
   },
@@ -83,7 +88,11 @@ export default {
     color: #333;
     text-align: center;
   }
-
+  .numberTitle{
+    text-align: center;
+    position: absolute;
+    width: calc(100vh/2);
+  }
   .el-aside {
     text-align: center;
     line-height: 200px;
