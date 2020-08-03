@@ -1,9 +1,9 @@
 <template>
   <div class="app-list">
-    <el-container>
+    <el-container style="height: 100%">
       <el-container>
         <el-aside width="calc(100vh/2)">
-          <pie-chart></pie-chart>
+          <pie-chart ref="pie"></pie-chart>
         </el-aside>
         <el-container>
           <el-main>
@@ -12,7 +12,7 @@
                 <div slot="header" class="clearfix" style="text-align: left">
                   <span>加急生产任务</span>
                 </div>
-                <list ref="list" />
+                <list ref="list"/>
               </el-card>
             </div>
           </el-main>
@@ -21,18 +21,19 @@
               <div slot="header" class="clearfix" style="text-align: left">
                 <span>重要事项</span>
               </div>
-              <info/>
+              <info ref="info"/>
             </el-card>
           </el-footer>
         </el-container>
       </el-container>
     </el-container>
+    <span class="numberTitle">色石线当班人数：{{number}}</span>
   </div>
 </template>
 
 <script>
 import { List, PieChart, Info } from "./components";
-
+import { productBoard } from "@/api/production/index"
 export default {
   components: {
     List,
@@ -42,37 +43,31 @@ export default {
   data() {
     return {
       visible: null,
+      number: 0,
       oid: null,
-        orderId: null,
-        createTime: null,
+      loading: false,
+      orderId: null,
+      createTime: null,
       treeId: null, // null
       floorId: null
     };
   },
-    mounted() {
-        this.$refs.list.fetchData()
-    },
+  mounted() {
+    this.loading = true;
+    productBoard('色石').then(res => {
+      this.loading = false;
+      console.log()
+      this.number = res.data['numberOfPeopleOnDuty']
+      this.$nextTick(() => {
+        this.$refs.pie.initChart({quantityToBeProduced: res.data['quantityToBeProduced'],numberOfPeopleOnDuty: res.data['numberOfPeopleOnDuty'],numberOfCompleted: res.data['numberOfCompleted']})
+        this.$refs.info.fetchData(res.data['importantMatters'])
+        this.$refs.list.fetchData(res.data['urgentTask'])
+      })
+    });
+
+  },
   methods: {
-      delivery(obj){
-          if(obj){
-              this.$refs.list.Delivery(obj.oid)
-              this.$refs.list.fetchData()
-          }
-      },
-      hideWindow(val){
-          this.visible = val
-      },
-    handlerDialog(obj){
-      if(obj)this.oid = obj.oid;this.orderId=obj.orderId;this.createTime=obj.createTime
-      this.visible = true
-    },
-    handlerNode(node) {
-      this.$refs.list.fetchData(node.data.fid,node.data.type)
-    },
-      //更新列表
-      upload(){
-          this.$refs.list.fetchData()
-      }
+
   }
 };
 </script>
@@ -93,7 +88,11 @@ export default {
     color: #333;
     text-align: center;
   }
-
+  .numberTitle{
+    text-align: center;
+    position: absolute;
+    width: calc(100vh/2);
+  }
   .el-aside {
     text-align: center;
     line-height: 200px;

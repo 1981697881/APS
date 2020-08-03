@@ -27,26 +27,16 @@ export default {
       list: {},
       columns: [
         { text: "", name: "",default:false },
-        { text: "设备", name: "" },
-        { text: '旧料号', name: '' },
-        { text: "数量", name: "" },
-        { text: "状态", name: "" },
+        { text: "设备", name: "plName" },
+        { text: '旧料号', name: 'color' },
+        { text: "数量", name: "productionQuantity" },
+        { text: "状态", name: "allocatedStatus" },
       ]
     };
   },
   methods: {
-    fetchData(fid, type) {
-     // this.loading = true;
-      const data = {
-      /*  fid: fid,
-        type: type,*/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
-      };
-       /* salesList(data).then(res => {
-        this.loading = false;
-        this.list = res.data;
-      });*/
+    fetchData(data) {
+    this.list = { records: data }
     }
   }
 };

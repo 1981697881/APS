@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
-import { productBoard } from "@/api/production/index"
-import List from "@/components/List"
+import { mapGetters } from "vuex";
+import { salesList ,delivery} from "@/api/basic/index";
+import List from "@/components/List";
 
 export default {
   components: {
@@ -27,18 +27,16 @@ export default {
       list: {},
       columns: [
         { text: "", name: "",default:false },
-        { text: "设备", name: "" },
-        { text: '旧料号', name: '' },
-        { text: "数量", name: "" },
-        { text: "状态", name: "" },
+        { text: "设备", name: "plName" },
+        { text: '旧料号', name: 'color' },
+        { text: "数量", name: "productionQuantity" },
+        { text: "状态", name: "allocatedStatus" },
       ]
     };
   },
   methods: {
-    fetchData(val) {
-      this.loading = true
-      this.list = val
-      this.loading = false;
+    fetchData(data) {
+    this.list = { records: data }
     }
   }
 };

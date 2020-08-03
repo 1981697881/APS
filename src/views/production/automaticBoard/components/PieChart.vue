@@ -55,7 +55,7 @@ export default {
           formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
         title: {
-          text: '真石漆线生产进度',
+          text: '真石漆自动线生产进度',
           left: 'center',
           top: '15'
         },

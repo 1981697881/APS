@@ -84,19 +84,28 @@ export default {
   },
   methods: {
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-      if (columnIndex === 0 || columnIndex === 1) {
-        if (rowIndex % 4 === 0) {
-          return {
-            rowspan: 4,
-            colspan: 1
-          };
-        } else {
-          return {
-            rowspan: 0,
-            colspan: 0
-          };
+      console.log()
+      if(Number(columnIndex) > Number(this.dayLength + 2)){
+        return {
+          rowspan: 4,
+          colspan: 1
+        };
+      }else{
+        if ((columnIndex === 0 || columnIndex === 1)) {
+          if (rowIndex % 4 === 0) {
+            return {
+              rowspan: 4,
+              colspan: 1
+            };
+          } else {
+            return {
+              rowspan: 0,
+              colspan: 0
+            };
+          }
         }
       }
+
     },
      RetnWF2(year, month, nowday) {//JS判断的if elseif方法
       let wstr = ""
@@ -214,6 +223,7 @@ export default {
             arr.push(obj)
           }
         })
+        console.log(arr)
         this.list = arr
       })
     }
