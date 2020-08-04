@@ -52,7 +52,6 @@
 import { mapGetters } from "vuex"
 import { getSalaryList } from "@/api/attendance/index"
 import List from "@/components/List"
-
 export default {
   components: {
     List

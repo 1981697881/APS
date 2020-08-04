@@ -220,7 +220,7 @@
           })
           notarizeBatchList({soIds: arrray}).then(res => {
             if(res.flag) {
-              this.upload()
+              this.$emit('queryBtn', this.qFilter())
             }
           })
           /*this.$emit('showDialog', this.clickData)*/
