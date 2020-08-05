@@ -389,4 +389,40 @@ export function employeeJobReport(params) {
     data: params,
     method: 'post'
   })
+}// 月度统计统计
+export function materialMonthlyReport(params) {
+  const url = '/report-form/materialMonthlyReport'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
+}// 出库统计看板
+export function outBoardReport(params) {
+  const url = '/report-form/outBoardReport'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
+}// 入库统计看板
+export function putBoardReport(params) {
+  const url = '/report-form/putBoardReport'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
 }

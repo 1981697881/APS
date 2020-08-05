@@ -56,7 +56,32 @@ export default {
       this.visible = val
     },
     handlerDialog(obj){
-      if(obj)this.oid = obj.oid;this.orderId=obj.orderId;this.createTime=obj.createTime
+      console.log(obj)
+      if(obj.length > 0) {
+        const listBlank = obj[0]
+        const listInfo = {}
+        for(const i in listBlank) {
+          if(i.match(/\d+/g) != null){
+            if(i.match(/\d+/g)[0] == obj[1]){
+              let day = listBlank['noteDate']+"-"+i.match(/\d+/g)[0]
+              eval("listInfo.jobNum='" + listBlank['jobNum'] + "'")
+              eval("listInfo.date='" + day + "'")
+            }
+          }
+          /*if(i.match(/\d+/g) != null) {
+            if(i[0] == obj[1]) {
+              eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + "'")
+            }
+          }*/
+        }
+        console.log(listInfo)
+        this.listInfo = listInfo
+      } else {
+        this.$message({
+          message: "当前选中无数据！",
+          type: "warning"
+        });
+      }
       this.visible = true
     },// 查询
     query() {

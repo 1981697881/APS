@@ -45,6 +45,7 @@ const map = {
   'efficiency': () => import('@/views/production/efficiency'),
   'salesPlanning': () => import('@/views/production/salesPlanning'),
   'safetyStock': () => import('@/views/production/safetyStock'),
+  'rowOfTheEvent': () => import('@/views/production/rowOfTheEvent'),
 
   'procurement': () => import('@/views/warehouse/procurement'),
   'recipients': () => import('@/views/warehouse/recipients'),

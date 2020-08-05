@@ -12,7 +12,7 @@
       @dblclick="dblclick"
        @row-click="rowClick"
     />-->
-    <el-table :height="height"   :data="list" border size="mini" :highlight-current-row="true" :span-method="objectSpanMethod" >
+    <el-table :height="height" :data="list" border size="mini" @cell-dblclick="celldblclick" @cell-click="cellclick"  :cell-style="tableCellStyle" :span-method="objectSpanMethod" >
       <el-table-column
         v-for="(t,i) in columns"
         :key="i"
@@ -82,9 +82,20 @@ export default {
   created() {
   },
   methods: {
+    tableCellStyle(row, rowIndex, column) {
+      if (this.row === row.row) {
+        let col1 = row.column.property
+        let col2 = this.column.property
+        if(col1 == col2 && (col1 != undefined && col2 != undefined)){
+          return 'background-color:#ccc;'
+        }else {
+          return 'background-color:#fff;'
+        }
+      }
+    },
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       console.log()
-      if(Number(columnIndex) > Number(this.dayLength + 2)){
+      if(Number(columnIndex) > Number(this.dayLength + 3)){
         return {
           rowspan: 4,
           colspan: 1
@@ -132,17 +143,26 @@ export default {
     dblclick(obj) {
       this.$emit('showDialog', obj.row)
     },
-    Delivery(val) {
-      delivery(val).then(res => {
-        if(res.flag){
-          this.$store.dispatch('list/setClickData', '');
-          this.fetchData()
-        }
-      })
+    celldblclick(row, column, cell, event) {
+      console.log(column)
+      this.$emit('showDialog', [row, column.property.match(/\d+/g)[0]])
+    },
+    cellclick(row, column, cell, event) {
+      this.row = row
+      this.column = column
+      console.log(column)
+      this.$store.dispatch("list/setClickData", [row, column.property.match(/\d+/g)[0]])
     },
     // 监听单击某一行
     rowClick(obj) {
       this.$store.dispatch('list/setClickData', obj.row)
+    },
+    doHandleMonth(month) {
+      var m = month;
+      if(month.toString().length == 1) {
+        m = "0" + month;
+      }
+      return m;
     },
     fetchData(val) {
       this.columns = []
@@ -155,6 +175,7 @@ export default {
         { text: '', name: '', default: false},
         { text: '工号', name: 'jobNum' },
         { text: '姓名', name: 'name' },
+        { text: '日期', name: 'noteDate' },
         { text: '日期', name: '', colspan: true, data: [{text: '星期', name: 'time'}]
         },
       ]
@@ -188,7 +209,9 @@ export default {
         { text: '上月剩余年假/H', name: '' },
         { text: '本月剩余年假/H', name: '' },
         { text: '餐补', name: '' },
-        { text: '出差补贴', name: '' })
+        { text: '出差补贴', name: '' },
+
+      )
       this.loading = true
       getSalaryList(val).then(res => {
         this.loading = false
@@ -198,6 +221,8 @@ export default {
           for(let i = 0;i < 4;i++){
             let obj = {}
             eval("obj.jobNum='" + item.jobNum + "'")
+            let nMonth = new Date(item.detail[0].startTime).getMonth()+1
+            eval("obj.noteDate='" + (new Date(item.detail[0].startTime).getFullYear()+"-"+this.doHandleMonth(nMonth)) + "'")
             eval("obj.name='" + item.name + "'")
             if(i == 0) {
               eval("obj.time='上班时间'")

@@ -30,7 +30,7 @@ export default {
     };
   },
     mounted() {
-        this.$refs.list.fetchData()
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
   methods: {
     // 查询
@@ -39,7 +39,7 @@ export default {
     },
       //更新列表
       upload(){
-          this.$refs.list.fetchData()
+          this.$refs.list.fetchData(this.$refs.tabs.qFilter())
       }
   }
 };

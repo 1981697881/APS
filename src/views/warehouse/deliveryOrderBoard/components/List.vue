@@ -5,7 +5,10 @@
       :columns="columns"
       :loading="loading"
       :list="list"
+      :highlight=false
+      :timeColor=true
       index
+       :formatRow = true
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -42,7 +45,6 @@ export default {
         { text: '规格', name: 'spec' },
         { text: '即时库存', name: 'evenNum' },
         { text: '出货数量', name: 'qty' }
-
       ]
     };
   },

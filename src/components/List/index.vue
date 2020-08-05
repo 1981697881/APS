@@ -3,12 +3,13 @@
     <el-table
       :data="list.records"
       border
-      :stripe="timeColor?false : true"
+      :stripe="timeColor? false : true"
       size="mini"
-      :highlight-current-row="true"
+      :highlight-current-row="highlight"
       @row-dblclick="dblclick"
       @row-click="rowClick"
       :row-class-name="tableRowClassName"
+      :row-style="formatRow ? rowClass : null"
        @selection-change="handleSelectionChange"
       :height="height"
       :show-summary="showSummary"
@@ -73,6 +74,14 @@ export default {
       // 是否需要序号列
       type: Boolean,
       default: false
+    }, formatRow: {
+      // 是否需要序号列
+      type: Boolean,
+      default: false
+    },highlight: {
+      // 是否需要序号列
+      type: Boolean,
+      default: true
     },
     // 是否开启多选
     type: {
@@ -170,6 +179,11 @@ export default {
         }else{
           return '';
         }
+      }
+    },
+    rowClass(row, index) {
+      if(row.row.evenNum > row.row.qty){
+        return { "background-color": "#FFDAB9" }
       }
     },
     // 监听多选 参数-所有选中的值
