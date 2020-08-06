@@ -15,7 +15,7 @@
       :width="'50%'"
       destroy-on-close
     >
-      <info @hideDialog="hideWindow" @uploadList="upload" :oid="oid" :orderId="orderId" :createTime="createTime"></info>
+      <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
 
     </el-dialog>
   </div>
@@ -34,11 +34,7 @@ export default {
   data() {
     return {
       visible: null,
-      oid: null,
-      orderId: null,
-      createTime: null,
-      treeId: null, // null
-      floorId: null
+      listInfo: null,
     };
   },
   mounted() {
