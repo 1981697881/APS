@@ -75,7 +75,7 @@ export default {
     return {
       dayLength: 0,
       loading: false,
-      list: {},
+      list: [],
       columns: []
     };
   },

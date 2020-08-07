@@ -101,7 +101,7 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'woId'" style="display: none">
-              <el-input v-model="form2.woId"></el-input>
+              <el-input v-model="form2.woId" ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12" >

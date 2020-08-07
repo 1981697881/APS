@@ -72,12 +72,12 @@ export default {
       this.fetchData(val)
     },
     fetchData(val) {
-      this.loading = true;
+     /* this.loading = true;
         materialMonthlyReport(val).then(res => {
         this.loading = false;
         console.log(res)
         this.list = {records: res.data};
-      });
+      });*/
     }
   }
 };

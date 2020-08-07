@@ -264,7 +264,6 @@
         getListMatters(val).then(res => {
           if(res.flag) {
             me.form.overWorkDay = res.data.overWorkDay ==''?[]: res.data.overWorkDay .split(',')
-
             if(res.data.listMatters.length> 0){
               const matterArray = res.data.listMatters.sort(this.compare)
               let martterObj = {}

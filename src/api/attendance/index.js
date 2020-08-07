@@ -104,11 +104,25 @@ export function getSalaryList(params) {
   const url = '/attend-manage/list'
   return request({
     url: url,
+    async: false,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
+    data: params
+  })
+}// 考勤管理-修改考勤记录
+export function updateSalary(params) {
+  const url = '/attend-manage/update'
+  return request({
+    url: url,
+    async: false,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
     data: params
   })
 }

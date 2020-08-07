@@ -12,7 +12,7 @@
       @handle-current="handleCurrent"
     />
     <div slot="footer" style="text-align:center;padding-top: 15px">
-      <el-button type="primary" @click.native="saveData()">驳回</el-button>
+      <el-button type="primary" @click.native="saveData()" :disabled="dsp">驳回</el-button>
     </div>
   </div>
 </template>
@@ -41,6 +41,7 @@
     data() {
       return {
         loading: false,
+        dsp: false,
         list: {},
         columns: [
           { text: 'gid', name: 'gid', default: false },
@@ -69,6 +70,7 @@
     methods: {
       saveData() {
         if (this.selections.length>0) {
+          this.dsp = true
           const selection = this.selections
           let arrray = []
           selection.forEach((item, index) => {
@@ -79,7 +81,7 @@
           OutBackputList(arrray).then(res => {
             if(res.flag) {
               this.fetchFormat(this.listInfo.outNo)
-
+              this.$emit('hideDialog')
               this.$emit('uploadList')
             }
           })

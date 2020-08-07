@@ -24,6 +24,7 @@
 <script>
 import { TabsBar, List } from "./components";
 import { Info } from "./form";
+import { getSalaryList } from "@/api/attendance/index"
 
 export default {
   components: {
@@ -59,18 +60,12 @@ export default {
         for(const i in listBlank) {
           if(i.match(/\d+/g) != null){
             if(i.match(/\d+/g)[0] == obj[1]){
-              let day = listBlank['noteDate']+"-"+i.match(/\d+/g)[0]
+              let day = listBlank['noteDate']+"-"+this.doHandleMonth(obj[1])
               eval("listInfo.jobNum='" + listBlank['jobNum'] + "'")
               eval("listInfo.date='" + day + "'")
             }
           }
-          /*if(i.match(/\d+/g) != null) {
-            if(i[0] == obj[1]) {
-              eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + "'")
-            }
-          }*/
         }
-        console.log(listInfo)
         this.listInfo = listInfo
       } else {
         this.$message({
@@ -79,13 +74,21 @@ export default {
         });
       }
       this.visible = true
-    },// 查询
+    },
+    doHandleMonth(month) {
+      var m = month;
+      if(month.toString().length == 1) {
+        m = "0" + month;
+      }
+      return m;
+    },
+    // 查询
     query() {
       this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     // 更新列表
     upload(val){
-      this.$refs.list.fetchData(val)
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     }
   }
 };
