@@ -1,90 +1,144 @@
 <template>
   <div>
-    <el-card class="box-card box-card-component">
-      <list
-        class="list-main box-shadow"
-        :columns="columns"
-        :loading="loading"
-        :list="list"
-        across
-        acrosstitle="主营业务成品线效率表"
-        selfAdaption
-        @handle-size="handleSize"
-        @handle-current="handleCurrent"
-        @dblclick="dblclick"
-        @row-click="rowClick"
-      />
-    </el-card>
+    <list
+       class="list-main box-shadow"
+      :columns="columns"
+      :loading="loading"
+      :list="list"
+      index
+      @dblclick="dblclick"
+       @row-click="rowClick"
+    />
   </div>
 </template>
 
 <script>
-  import { mapGetters } from "vuex";
-  import { salesList ,delivery} from "@/api/basic/index";
-  import List from "@/components/List";
+import { mapGetters } from 'vuex'
+import { efficiency } from '@/api/production/index'
+import List from '@/components/List'
 
-  export default {
-    components: {
-      List
+export default {
+  components: {
+    List
+  },
+  computed: {
+    ...mapGetters(["node"])
+  },
+  data() {
+    return {
+      loading: false,
+      list: {},
+      columns: []
+    };
+  },
+  methods: {
+    getDaysBetween(dateString1,dateString2){
+      let dateStart = Date.parse(dateString1);
+      let dateEnd = Date.parse(dateString2);
+      let days = (dateEnd - dateStart)/(1*24*60*60*1000);
+      // alert(days);
+      return  days
     },
-    computed: {
-      ...mapGetters(["node"])
+    uploadPr(val) {
+      this.fetchData(val)
     },
-    data() {
+    dblclick(obj) {
+      // this.$emit('showDialog',obj.row)
+    },
+    // 监听单击某一行
+    rowClick(obj) {
+      this.$store.dispatch('list/setClickData', obj.row);
+    },
+    // 查询前后日期
+    getDay(date, day){
+      var today = new Date(date[0], date[1]-1, date[2]);
+      var targetday_milliseconds=today.getTime() + 1000*60*60*24*day
+      today.setTime(targetday_milliseconds) // 注意，这行是关键代码
+      var tYear = today.getFullYear()
+      var tMonth = today.getMonth()
+      var tDate = today.getDate()
+      var getDay = today.getDay()
+      tMonth = this.doHandleMonth(tMonth + 1)
+      tDate = this.doHandleMonth(tDate)
+      var weeks = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
+      var week = weeks[getDay]
       return {
-        loading: false,
-        list: {},
-        columns: [
-          { text: "oid", name: "oid",default:false },
-          { text: "项目", name: "" },
-        ]
-      };
+        day: tDate,
+        week: week,
+        date: (tMonth + '/' + tDate)
+      }
     },
-    methods: {
-      //监听每页显示几条
-      handleSize(val) {
-        this.list.size = val
-        this.fetchData();
-      },
-      //监听当前页
-      handleCurrent(val) {
-        this.list.current = val;
-        this.fetchData();
-      },
-      dblclick(obj) {
-        this.$emit('showDialog',obj.row)
-      },
-      Delivery(val){
-        delivery(val).then(res => {
-          if(res.flag){
-            this.$store.dispatch("list/setClickData", '');
-            this.fetchData();
-          }
+    doHandleMonth(month) {
+      var m = month;
+      if(month.toString().length == 1) {
+        m = '0' + month;
+      }
+      return m;
+    },
+    fetchData(val) {
+      this.loading = true
+      let interval = this.getDaysBetween(val.dateStart, val.dateEnd)
+      if(interval > 100){
+        return this.$message({
+          message: '抱歉，超出可查询范围！',
+          type: 'warning'
         });
-      },
-      //监听单击某一行
-      rowClick(obj) {
-        this.$store.dispatch("list/setClickData", obj.row);
-      },
-      fetchData(fid, type) {
-        //this.loading = true;
-        const data = {
-          /*  fid: fid,
-            type: type,*/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
-        };
-        /* salesList(data).then(res => {
-         this.loading = false;
-         this.list = res.data;
-       });*/
+      } else {
+        let startData = val.dateStart
+        startData = startData.replace(/:/g,'-')
+        startData = startData.replace(/ /g,'-')
+        let arr = startData.split('-')
+        this.columns = [
+          {text: '项目', width: '150px', name: 'project' }
+        ]
+        const columns = this.columns
+        for (let i = 0; i<= Number(interval); i++) {
+          // 根据时间生成表头 把时间包含数据重新组装 -》array
+          columns.push({text: this.getDay(arr, i).date + '', name: this.getDay(arr, i).date + ''})
+        }
+        efficiency('主业成品', val).then(res => {
+          if (res.flag) {
+            const data = res.data
+            let array = [
+              { project: '真石漆线产量(kg)' },
+              { project: '真石漆线效率(kg/h)' },
+              { project: 'PCK线产量(kg)' },
+              { project: 'PCK线效率(kg/h)' },
+
+            ]
+            data.forEach((item, index) => {
+              array.forEach((item2, index2) => {
+                console.log()
+                let date = item['date']
+                date = date.replace(/:/g,'-')
+                date = date.replace(/ /g,'-')
+                let arr1 = date.split('-')
+                let key = this.getDay(arr1, 0).date + ''
+                if(index2 == 0) {
+                  item2[key] = item.mainYield
+                } else if(index2 == 1){
+                  item2[key] = item.mainEfficiency
+                }else if(index2 == 2){
+                  item2[key] = item.otherYield
+                }else if(index2 == 3){
+                  item2[key] = item.otherEfficiency
+                }
+              })
+            })
+            console.log(array)
+            console.log(columns)
+            this.list = { records: array }
+            this.loading = false
+          }
+        })
       }
     }
-  };
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  .list-main {
-    height: calc(100vh - 250px);
-  }
+.list-main {
+  height: calc(100vh - 250px);
+}
 </style>

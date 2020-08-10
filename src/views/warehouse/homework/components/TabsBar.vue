@@ -147,6 +147,7 @@ export default {
     },
     upload() {
       this.search.uid = null
+      this.value = []
       this.value[0] = this.getDay('', -15).date
       this.value[1] = this.getDay('', 0).date
       this.$emit('uploadList')

@@ -155,6 +155,19 @@ export function schedulingPrint(params) {
     data: params
   })
 }
+// 生产排程-效率表
+export function efficiency(params, query) {
+  const url = '/report-form/efficiency/' + params
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: query
+  })
+}
 // 半成品-导出
 export function exportSemiSchedulin(data) {
   const url = '/excel/export/semiTaskScheduling'

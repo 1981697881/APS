@@ -2,9 +2,9 @@
   <div class="app-list">
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
-      <!--<div>
-        <tabs-bar @uploadList="upload"/>
-      </div>-->
+      <div>
+        <tabs-bar ref="tabs" @uploadList="upload" @queryBtn="query"/>
+      </div>
       <list ref="list"/>
     </div>
   </div>
@@ -30,13 +30,21 @@ export default {
     };
   },
     mounted() {
-        this.$refs.list.fetchData()
+        this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
   methods: {
-      //更新列表
-      upload(){
-          this.$refs.list.fetchData()
-      }
+    // 查询
+    query() {
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
+    },
+    // 查询
+    uploadPage(val) {
+      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+    },
+    //更新列表
+    upload(){
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
+    }
   }
 };
 </script>
