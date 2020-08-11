@@ -19,7 +19,7 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-         <el-col :span="3">
+        <!-- <el-col :span="3">
            <el-form-item :label="'产线'">
              <el-input v-model="search.keyword" />
            </el-form-item>
@@ -27,7 +27,8 @@
            <el-form-item :label="'设备'">
              <el-input v-model="search.keyword" />
            </el-form-item>
-         </el-col><el-col :span="3">
+         </el-col>-->
+        <el-col :span="3">
            <el-form-item :label="'排产单号'">
              <el-input v-model="search.keyword" />
            </el-form-item>

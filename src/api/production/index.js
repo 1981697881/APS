@@ -195,6 +195,19 @@ export function getStorageSchedulingList(data, query) {
     data: query
   })
 }
+// 库存排产-获取列表
+export function getSaleTaskOrderList(data, query) {
+  const url = '/TaskSaleOrder/saleTaskOrder/' + data.pageNum + '/' + data.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
+  })
+}
 // 生产看板
 export function productBoard(params) {
   const url = '/infoBoard/productLine/' + params

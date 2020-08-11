@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import {materialMonthlyReport} from '@/api/warehouse/index'
+import {getSaleTaskOrderList} from '@/api/production/index'
 import List from '@/components/List'
 
 export default {
@@ -34,17 +34,14 @@ export default {
       columns: [
         { text: '', name: '',default:false },
         { text: '日期', name: '' },
-        { text: '色号/旧料号', name: 'color', width: '180px' },
+        { text: '色号/旧料号', name: 'oldCode', width: '180px' },
         { text: '排程数量', name: 'odPrNum' },
         { text: '计划数量', name: 'allocatedNum' },
         { text: '计划日期', name: 'productionDate', width: '150px' },
         { text: '生产设备', name: 'plName' },
-        { text: '产品分类', name: 'productType' },
         { text: '项目名称', name: 'soName' , width: '150px' },
-        { text: '生产状态', name: 'allocatedStatus' },
-        { text: '生产类型', name: 'productionType', width: '100px' },
-        { text: '备注', name: 'remark' },
-        { text: '订单号', name: 'soNum' , width: '150px' },
+        { text: '生产状态', name: 'status' },
+        { text: '订单号', name: 'orderNum' , width: '150px' },
         { text: '排产单号', name: 'taskNum', width: '150px' },
       ]
     };
@@ -69,16 +66,21 @@ export default {
           this.$store.dispatch("list/setClickData", obj.row);
       },
     uploadPr(val) {
-      this.fetchData(val)
+      this.fetchData(val,{
+        pageNum: 1,
+        pageSize: this.list.size || 50
+      })
     },
-    fetchData(val) {
-     /* this.loading = true;
-        materialMonthlyReport(val).then(res => {
-        this.loading = false;
-        console.log(res)
-        this.list = {records: res.data};
-      });*/
-    }
+    fetchData(val, data = {
+      pageNum: this.list.current || 1,
+      pageSize: this.list.size || 50
+    }) {
+      this.loading = true
+      getSaleTaskOrderList(data, val).then(res => {
+        this.loading = false
+        this.list = res.data
+      })
+    },
   }
 };
 </script>
