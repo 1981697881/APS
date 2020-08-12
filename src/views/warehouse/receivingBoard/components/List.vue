@@ -61,6 +61,9 @@ export default {
       rowClick(obj) {
           this.$store.dispatch("list/setClickData", obj.row);
       },
+    uploadPr(val) {
+      this.fetchData(val)
+    },
     fetchData(val) {
       this.loading = true;
       putBoardReport(val).then(res => {
