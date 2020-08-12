@@ -110,6 +110,8 @@ export default {
               { project: '半成品出库批次' },
               { project: '成品入库重量（KG)' },
               { project: '成品入库批次' },
+              { project: '成品出库重量（KG)' },
+              { project: '成品出库批次' },
               { project: '成品出货重量（KG)' },
               { project: '成品出货批次' },
               { project: '办公室人员工时' },
@@ -153,30 +155,34 @@ export default {
                 }else if(index2 == 9){
                   item2[key] = item.finishPutBatch
                 }else if(index2 == 10){
-                  item2[key] = item.finishOutWeight
+                  item2[key] = item.finishOutShipWeight
                 }else if(index2 == 11){
-                  item2[key] = item.finishOutBatch
+                  item2[key] = item.finishOutShipBatch
                 }else if(index2 == 12){
-                  item2[key] = item.officeHour
+                  item2[key] = item.finishOutWeight
                 }else if(index2 == 13){
-                  item2[key] = item.lineHour
+                  item2[key] = item.finishOutBatch
                 }else if(index2 == 14){
-                  item2[key] = item.officeAddHour
+                  item2[key] = item.officeHour
                 }else if(index2 == 15){
-                  item2[key] = item.lineAddHour
+                  item2[key] = item.lineHour
                 }else if(index2 == 16){
-                  item2[key] = item.sumAddHour
+                  item2[key] = item.officeAddHour
                 }else if(index2 == 17){
-                  item2[key] = item.sumHour
+                  item2[key] = item.lineAddHour
                 }else if(index2 == 18){
-                  item2[key] = item.efficiency
+                  item2[key] = item.sumAddHour
                 }else if(index2 == 19){
-                  item2[key] = item.invStockWeight
+                  item2[key] = item.sumHour
                 }else if(index2 == 20){
-                  item2[key] = item.invBlankWeight
+                  item2[key] = item.efficiency
                 }else if(index2 == 21){
-                  item2[key] = item.invFinishWeight
+                  item2[key] = item.invStockWeight
                 }else if(index2 == 22){
+                  item2[key] = item.invBlankWeight
+                }else if(index2 == 23){
+                  item2[key] = item.invFinishWeight
+                }else if(index2 == 24){
                   item2[key] = item.positionVelocity
                 }
               })

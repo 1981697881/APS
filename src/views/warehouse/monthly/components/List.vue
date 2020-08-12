@@ -41,10 +41,12 @@ export default {
         { text: '移库重量', name: 'warehouseMoveWeight' },
         { text: '调整批次', name: 'adjustBatch' },
         { text: '调整重量', name: 'adjustWeight' },
-        { text: '备料批次', name: 'stockBatch' },
-        { text: '备料重量', name: 'stockWeight' },
+       /* { text: '备料批次', name: 'stockBatch' },
+        { text: '备料重量', name: 'stockWeight' },*/
         { text: '出库批次', name: 'outBatch' },
         { text: '出库重量', name: 'outWeight' },
+        { text: '出货批次', name: 'outShipBatch' },
+        { text: '出货重量', name: 'outShipWeight' },
       ]
     };
   },

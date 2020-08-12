@@ -107,10 +107,12 @@
                 { project: '移库批次' },
                 { project: '调整重量' },
                 { project: '调整批次' },
-                { project: '调整批次' },
-                { project: '备料重量' },
+              /*  { project: '备料批次' },
+                { project: '备料重量' },*/
                 { project: '出库重量' },
-                { project: '出库批次' }
+                { project: '出库批次' },
+                { project: '出货重量' },
+                { project: '出货批次' },
               ]
               data.forEach((item, index) => {
                 array.forEach((item2, index2) => {
@@ -134,14 +136,20 @@
                     item2[key] = item.adjustWeight
                   }else if(index2 == 6){
                     item2[key] = item.adjustBatch
-                  }else if(index2 == 7){
+                  }
+                  /*else if(index2 == 7){
                     item2[key] = item.stockWeight
                   }else if(index2 == 8){
                     item2[key] = item.stockBatch
-                  }else if(index2 == 9){
+                  }*/
+                  else if(index2 == 7){
                     item2[key] = item.outWeight
-                  }else if(index2 == 10){
+                  }else if(index2 == 8){
                     item2[key] = item.outBatch
+                  }else if(index2 == 9){
+                    item2[key] = item.outShipWeight
+                  }else if(index2 == 10){
+                    item2[key] = item.outShipBatch
                   }
                 })
               })
