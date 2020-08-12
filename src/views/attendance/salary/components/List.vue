@@ -94,26 +94,25 @@ export default {
       }
     },
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-      console.log()
       if(Number(columnIndex) > Number(this.dayLength + 3)){
         return {
           rowspan: 4,
           colspan: 1
         };
       }else{
-        if ((columnIndex === 0 || columnIndex === 1)) {
-          if (rowIndex % 4 === 0) {
-            return {
-              rowspan: 4,
-              colspan: 1
-            };
-          } else {
-            return {
-              rowspan: 0,
-              colspan: 0
-            };
+          if ((columnIndex === 0 || columnIndex === 1)) {
+            if (rowIndex % 4 === 0) {
+              return {
+                rowspan: 4,
+                colspan: 1
+              };
+            } else {
+              return {
+                rowspan: 0,
+                colspan: 0
+              };
+            }
           }
-        }
       }
 
     },
@@ -172,7 +171,6 @@ export default {
       const mouthLength = aData.getDate()
       this.dayLength = mouthLength
       this.columns = [
-        { text: '', name: '', default: false},
         { text: '工号', name: 'jobNum' },
         { text: '姓名', name: 'name' },
         { text: '日期', name: 'noteDate' },
@@ -184,10 +182,8 @@ export default {
         const obj = { text: i + '', name: '', colspan: true, data: [{ width: '250px', text: week + '', name: 'day' + i }] }
         this.columns.push(obj)
       }
-      this.columns.push(/* { text: '', name: '', default: false},
-        { text: '', name: '', default: false},
-        { text: '', name: '', default: false},*/
-        { text: '总工时', name: 'totalTime' },
+      this.columns.push(
+        { text: '总工时', name: 'totalTime'},
         { text: '平时', name: 'normalOverWTime' },
         { text: '双休', name: 'weekendOverWTime' },
         { text: '法定', name: 'statutoryOverWTime' },
@@ -208,9 +204,8 @@ export default {
         { text: '本月剩余调休/H', name: 'restOfTheMonth' },
         { text: '上月剩余年假/H', name: 'remainingAnnualLeaveLastMonth' },
         { text: '本月剩余年假/H', name: 'annualLeaveRemainingThisMonth' },
-        { text: '餐补', name: 'mealSupplement;' },
-        { text: '出差补贴', name: 'travelAllowance' },
-
+        { text: '餐补', name: 'mealSupplement' },
+        { text: '出差补贴', name: 'travelAllowance'}
       )
       this.loading = true
       getSalaryList(val).then(res => {
@@ -221,9 +216,10 @@ export default {
           for(let i = 0;i < 4;i++){
             let obj = {}
             eval("obj.jobNum='" + item.jobNum + "'")
+            eval("obj.name='" + item.name + "'")
             let nMonth = new Date(item.detail[0].startTime).getMonth()+1
             eval("obj.noteDate='" + (new Date(item.detail[0].startTime).getFullYear()+"-"+this.doHandleMonth(nMonth)) + "'")
-            eval("obj.name='" + item.name + "'")
+
             if(i == 0) {
               eval("obj.time='上班时间'")
             }else if(i == 1){
@@ -236,17 +232,45 @@ export default {
             item.detail.forEach((item1, index1)=> {
               if(i == 0) {
                 eval("obj.day" + new Date(item1.startTime).getDate() + "='" + (new Date(item1.startTime).getHours() + ':' + new Date(item1.startTime).getMinutes()) + "'")
-              }else if(i == 1){
+              }else if(i == 1) {
                 eval("obj.day" + new Date(item1.startTime).getDate() + "='" + (new Date(item1.endTime).getHours() + ':' + new Date(item1.endTime).getMinutes()) + "'")
-              }else if(i == 2){
+              }else if(i == 2) {
                 eval("obj.day" + new Date(item1.startTime).getDate() + "='" + item1.normalNum + "'")
               }else{
                 eval("obj.day" + new Date(item1.startTime).getDate() + "='" + item1.overtimeNum + "'")
               }
             })
+            if(i == 0) {
+              eval("obj.totalTime='" + item.totalTime + "'")
+              eval("obj.normalOverWTime='" + item.normalOverWTime + "'")
+              eval("obj.weekendOverWTime='" + item.weekendOverWTime + "'")
+              eval("obj.annualLeaveDeduction='" + item.annualLeaveDeduction + "'")
+              eval("obj.statutoryOverWTime='" + item.statutoryOverWTime + "'")
+              eval("obj.statutoryOverWTime='" + item.statutoryOverWTime + "'")
+              eval("obj.useAnnualLeave='" + item.useAnnualLeave + "'")
+              eval("obj.sickLeave='" + item.sickLeave + "'")
+              eval("obj.personalLeave='" + item.personalLeave + "'")
+              eval("obj.rest='" + item.rest + "'")
+              eval("obj.bereavementLeave='" + item.bereavementLeave + "'")
+              eval("obj.maternityLeave='" + item.maternityLeave + "'")
+              eval("obj.publicHoliday='" + item.publicHoliday + "'")
+              eval("obj.weddingLeave='" + item.weddingLeave + "'")
+              eval("obj.paternityLeave='" + item.paternityLeave + "'")
+              eval("obj.breastfeedingLeave='" + item.breastfeedingLeave + "'")
+              eval("obj.workInjuryLeave='" + item.workInjuryLeave + "'")
+              eval("obj.addRest='" + item.addRest + "'")
+              eval("obj.remainingRestOfLastMonth='" + item.remainingRestOfLastMonth + "'")
+              eval("obj.restOfTheMonth='" + item.restOfTheMonth + "'")
+              eval("obj.remainingAnnualLeaveLastMonth='" + item.remainingAnnualLeaveLastMonth + "'")
+              eval("obj.annualLeaveRemainingThisMonth='" + item.annualLeaveRemainingThisMonth + "'")
+              eval("obj.mealSupplement='" + item.mealSupplement + "'")
+              eval("obj.travelAllowance='" + item.travelAllowance + "'")
+            }
+
             arr.push(obj)
           }
         })
+
         console.log(arr)
         this.list = arr
       })

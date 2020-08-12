@@ -4,8 +4,8 @@
       <el-row :gutter="12">
         <el-col :span="4">
           <el-form-item :label="'部门'">
-            <el-select v-model="deptIds" class="width-full"  placeholder="请选择部门">
-              <el-option :label="t.deptName" :value="t.deptId" v-for="(t,i) in pArray" :key="i"></el-option>
+            <el-select v-model="search.deptName" class="width-full"  placeholder="请选择部门" @change="changeCheck">
+              <el-option :label="t.deptName" :value="t.deptName" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -66,7 +66,7 @@ export default {
       value: null,
       deptIds: null,
       search: {
-        keyword: null
+        deptName: null
       }
     };
   },
@@ -77,6 +77,10 @@ export default {
     this.fetchFormat();
   },
   methods: {
+    // 切换仓库
+    changeCheck(val) {
+      this.$emit('queryBtn', this.qFilter())
+    },
     submitUpload() {
       this.$refs.upload.submit()
     },
@@ -116,9 +120,14 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.deptIds != null && this.deptIds != undefined ? obj.deptIds = this.deptIds : null
+      this.search.deptName != null && this.search.deptName != undefined ? obj.deptName = this.search.deptName : null
       this.value != null && this.value != undefined ? obj.month = this.value : null
       return obj
+    },
+    upload() {
+      this.search.deptName = null
+      this.value = []
+      this.$emit('uploadList')
     },
     // 关键字查询
     query() {
