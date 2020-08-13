@@ -38,7 +38,7 @@ const PrintAccount = (data, printingQuantity, apiece, repeat) => {
       LODOP.SET_PRINT_STYLEA(0,'Bold',1);// 给前面的那个文本加粗。
       LODOP.SET_PRINT_STYLEA(0, 'Alignment', 1);
     }
-    LODOP.SET_PRINT_STYLEA(0, 'QRCodeVersion', 1);
+    LODOP.SET_PRINT_STYLEA(0, 'QRCodeVersion', 7);
     LODOP.ADD_PRINT_BARCODE('10mm', '81mm', '13mm', '13mm', 'QRCode', data[0].barcode)
     LODOP.ADD_PRINT_TEXT('22mm', '16mm', '33mm', '10mm', data[0].executiveStandard);
     console.log(getLength(data[0].executiveStandard))

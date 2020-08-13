@@ -24,6 +24,14 @@
              <el-input v-model="search.keyword" />
            </el-form-item>
          </el-col>-->
+        <el-col :span="3">
+          <el-form-item :label="'仓库'" prop="plaIdS">
+            <el-select v-model="grandpaPiId"  placeholder="请选择" @change="selectWorn">
+              <el-option :label="t.positionName" :value="t.piId" v-for="(t,i) in plaArray" :key="i">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
@@ -37,7 +45,7 @@
 </template>
 <script>
   import { mapGetters } from "vuex";
-  import {getMType} from "@/api/basic/index";
+  import { getWarehouseList } from '@/api/basic/index'
   export default {
     components: {},
     computed: {
@@ -73,6 +81,8 @@
             }
           }]
         },
+        plaArray: [],
+        grandpaPiId: null,
         search: {
           keyword: null,
           type: null
@@ -84,9 +94,20 @@
       this.value[1] = this.getDay('', 0).date
     },
     mounted() {
-
+      this.fetchWare(-1)
     },
     methods: {
+      // 切换仓库
+      selectWorn(val) {
+        this.$emit('queryBtn', this.qFilter())
+      },
+      fetchWare(val) {
+        getWarehouseList(val).then(res => {
+          if(res.flag) {
+            this.plaArray = res.data
+          }
+        })
+      },
       // 查询前后三天日期
       getDay(date, day){
         var today = new Date();
@@ -128,6 +149,7 @@
       },
       upload() {
         this.value = []
+        this.grandpaPiId = null
         this.value[0] = this.getDay('', -15).date
         this.value[1] = this.getDay('', 0).date
         this.$emit('uploadList')
@@ -135,6 +157,7 @@
       // 查询条件过滤
       qFilter() {
         let obj = {}
+        this.grandpaPiId != null || this.grandpaPiId != undefined ? obj.grandpaPiId = this.grandpaPiId : null
         this.value != null || this.value != undefined ? obj.endDate = this.value[1] : null
         this.value != null || this.value != undefined ? obj.startDate = this.value[0] : null
         return obj

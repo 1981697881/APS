@@ -21,7 +21,7 @@
         </el-col>
         <el-col :span="4">
           <el-form-item :label="'员工姓名'">
-            <el-select v-model="search.uid" class="width-full" placeholder="请选择员工" @change="changeCheck">
+            <el-select v-model="search.uid" filterable class="width-full" placeholder="请选择员工" @change="changeCheck">
               <el-option :label="t.name" :value="t.uid" v-for="(t,i) in levelFormat" :key="i"></el-option>
             </el-select>
           </el-form-item>

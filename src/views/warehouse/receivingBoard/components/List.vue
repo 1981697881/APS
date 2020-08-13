@@ -68,7 +68,7 @@ export default {
       this.loading = true;
       putBoardReport(val).then(res => {
         this.loading = false;
-        this.list = res.data;
+        this.list = {records: res.data};
       });
     }
   }

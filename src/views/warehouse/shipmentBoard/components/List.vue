@@ -39,6 +39,7 @@ export default {
         { text: '末完成批次', name: 'unFinishBatch' },
         { text: '其它日期完成批次', name: 'otherDateFinishBatch' },
         { text: '累积完成批次', name: 'accumulateFinishBatch' },
+        { text: '累积出货数量', name: 'accumulateFinishNum' },
         { text: '即时率', name: 'instantRate' }
       ]
     };
