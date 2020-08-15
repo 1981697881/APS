@@ -54,7 +54,7 @@ export default {
   },
   mounted() {
     this.loading = true;
-    productBoard('美磁胶').then(res => {
+    productBoard('美瓷胶').then(res => {
       this.loading = false;
       console.log()
       this.number = res.data['numberOfPeopleOnDuty']

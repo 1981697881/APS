@@ -143,6 +143,7 @@ export default {
       this.$emit('showDialog', obj.row)
     },
     celldblclick(row, column, cell, event) {
+      console.log(row)
       console.log(column)
       this.$emit('showDialog', [row, column.property.match(/\d+/g)[0]])
     },

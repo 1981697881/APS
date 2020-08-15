@@ -147,9 +147,9 @@ export default {
     handleAudit(){
       if (this.clickData.oid) {
         this.$emit('showDialog',{
-          oid:this.clickData.oid,
-          orderId:this.clickData.orderId,
-          createTime:this.clickData.createTime
+          oid: this.clickData.oid,
+          orderId: this.clickData.orderId,
+          createTime: this.clickData.createTime
         })
       } else {
         this.$message({

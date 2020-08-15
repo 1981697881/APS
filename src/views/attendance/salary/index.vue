@@ -57,15 +57,9 @@ export default {
       if(obj.length > 0) {
         const listBlank = obj[0]
         const listInfo = {}
-        for(const i in listBlank) {
-          if(i.match(/\d+/g) != null){
-            if(i.match(/\d+/g)[0] == obj[1]){
-              let day = listBlank['noteDate']+"-"+this.doHandleMonth(obj[1])
-              eval("listInfo.jobNum='" + listBlank['jobNum'] + "'")
-              eval("listInfo.date='" + day + "'")
-            }
-          }
-        }
+        let day = listBlank['noteDate'] + "-" + this.doHandleMonth(obj[1])
+        eval("listInfo.jobNum='" + listBlank['jobNum'] + "'")
+        eval("listInfo.date='" + day + "'")
         this.listInfo = listInfo
       } else {
         this.$message({
