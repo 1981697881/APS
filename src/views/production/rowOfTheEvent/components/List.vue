@@ -32,7 +32,7 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: '', name: '',default:false },
+        { text: '', name: '', default: false },
         { text: '色号/旧料号', name: 'oldCode', width: '180px' },
         { text: '计划数量', name: 'allocatedNum' },
         { text: '排程日期', name: 'productionDate' },

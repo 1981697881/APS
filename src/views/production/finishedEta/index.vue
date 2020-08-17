@@ -118,45 +118,38 @@ export default {
         efficiency('主业成品', val).then(res => {
           if (res.flag) {
             const data = res.data
+            let results = []
             for (let i = 0; i <= Number(interval); i++) {
               // 根据时间生成表头 把时间包含数据重新组装 -》array
               columns.push({text: this.getDay(arr, i).date + '', name: this.getDay(arr, i).date + ''})
-              arrayDay.push(this.getDay(arr, i).day)
-              if(typeof data[i] == 'undefined') {
+              arrayDay.push(this.getDay(arr, i).date)
+              data.forEach((item, index) => {
+                for (let j in item) {
+                    let aDate = item.date.replace(/:/g, '-')
+                    aDate = aDate.replace(/ /g, '-')
+                    let nDate = aDate.split('-')
+                    if (this.doHandleMonth(i + 1) == this.getDay(nDate, 0).day) {
+                      if (j == 'mainYield') {
+                        mainYield.push((item.mainYield == null ? 0 : item.mainYield))
+                      } else if (j == 'mainEfficiency') {
+                        mainEfficiency.push((item.mainEfficiency == null ? 0 : item.mainEfficiency))
+                      } else if (j == 'otherYield') {
+                        otherYield.push((item.otherYield == null ? 0 : item.otherYield))
+                      } else if (j == 'otherEfficiency') {
+                        otherEfficiency.push((item.otherEfficiency == null ? 0 : item.otherEfficiency))
+                      }
+                      results.push(i)
+                    }
+                  }
+                })
+              if(results.indexOf(i) == -1){
                 mainYield.push(0)
                 mainEfficiency.push(0)
                 otherYield.push(0)
                 otherEfficiency.push(0)
-              } else {
-                for(let j in data[i]){
-                  if (j == 'mainYield') {
-                    mainYield.push((data[i].mainYield == null ? 0 : data[i].mainYield))
-                  } else if (j == 'mainEfficiency') {
-                    mainEfficiency.push((data[i].mainEfficiency == null ? 0 : data[i].mainEfficiency))
-                  } else if (j == 'otherYield') {
-                    otherYield.push((data[i].otherYield == null ? 0 : data[i].otherYield))
-                  } else if (j == 'otherEfficiency') {
-                    otherEfficiency.push((data[i].otherEfficiency == null ? 0 : data[i].otherEfficiency))
-                  }
-                }
-                /*let aDate = data[i].date.replace(/:/g, '-')
-                aDate = aDate.replace(/ /g, '-')
-                let nDate = aDate.split('-')
-                console.log(this.doHandleMonth(i+1) +","+ this.getDay(nDate, 0).day)
-                if (this.doHandleMonth(i+1) == this.getDay(nDate, 0).day) {
-                  arrayTemp.forEach((item2, index2) => {
-                    if (index2 == 0) {
-                      mainYield.push((data[i].mainYield == null ? 0 : data[i].mainYield))
-                    } else if (index2 == 1) {
-                      mainEfficiency.push((data[i].mainEfficiency == null ? 0 : data[i].mainEfficiency))
-                    } else if (index2 == 2) {
-                      otherYield.push((data[i].otherYield == null ? 0 : data[i].otherYield))
-                    } else if (index2 == 3) {
-                      otherEfficiency.push((data[i].otherEfficiency == null ? 0 : data[i].otherEfficiency))
-                    }
-                  })
-                }*/
+                results.push(i)
               }
+
             }
             data.forEach((item, index) => {
               array.forEach((item2, index2) => {

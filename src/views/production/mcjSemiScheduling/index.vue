@@ -11,7 +11,7 @@
         </el-option>
       </el-select>
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @queryBtn="query" @theDelivery="delivery" @uploadList="upload" @reportInfo="report" />
+        <tabs-bar ref="tabs" @exportData="exportData" @showDialog="handlerDialog" @queryBtn="query" @theDelivery="delivery" @uploadList="upload" @reportInfo="report" />
       </div>
       <list ref="list"  @showDialog="handlerDialog"/>
     </div>
@@ -42,7 +42,7 @@
 import { TabsBar, List  } from "./components"
 import { Info, Report} from "./form"
 import { getMcjSemiSchedulingType } from "@/api/basic"
-import { schedulingDel } from "@/api/production/index"
+import { schedulingDel, exportSemiSchedulin } from "@/api/production/index"
 export default {
   components: {
     TabsBar,
@@ -64,6 +64,13 @@ export default {
     this.fetchFormat()
   },
   methods: {
+    exportData() {
+      const obj = this.$refs.tabs.qFilter()
+      obj.tpId = this.plaIdS
+      exportSemiSchedulin(obj).then(res => {
+        this.$refs.tabs.download(res)
+      })
+    },
     selectChange(val) {
       this.plaArray.forEach((item, index) =>{
         if(item.tpId == val) {

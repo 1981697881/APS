@@ -30,11 +30,11 @@
          </el-col>-->
         <el-col :span="3">
            <el-form-item :label="'排产单号'">
-             <el-input v-model="search.keyword" />
+             <el-input v-model="search.taskNum" />
            </el-form-item>
          </el-col><el-col :span="3">
            <el-form-item :label="'订单单号'">
-             <el-input v-model="search.keyword" />
+             <el-input v-model="search.orderNum" />
            </el-form-item>
          </el-col>
         <el-col :span="2">
@@ -87,7 +87,8 @@
           }]
         },
         search: {
-          keyword: null,
+          orderNum: null,
+          taskNum: null,
           type: null
         }
       };
@@ -148,6 +149,8 @@
       qFilter() {
         let obj = {}
         this.value != null || this.value != undefined ? obj.endDate = this.value[1] : null
+        this.search.orderNum != null || this.search.orderNum != undefined ? obj.orderNum = this.search.orderNum : null
+        this.search.taskNum != null || this.search.taskNum != undefined ? obj.taskNum = this.search.taskNum : null
         this.value != null || this.value != undefined ? obj.startDate = this.value[0] : null
         return obj
       },

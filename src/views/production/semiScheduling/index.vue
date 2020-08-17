@@ -11,7 +11,7 @@
         </el-option>
       </el-select>
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @queryBtn="query" @theDelivery="delivery" @uploadList="upload" @reportInfo="report" />
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @exportData="exportData" @queryBtn="query" @theDelivery="delivery" @uploadList="upload" @reportInfo="report" />
       </div>
       <list ref="list"  @showDialog="handlerDialog"/>
     </div>
@@ -42,7 +42,7 @@
 import { TabsBar, List  } from "./components"
 import { Info, Report} from "./form"
 import { getSemiFinishedProductsType } from "@/api/basic"
-import { schedulingDel } from "@/api/production/index"
+import { schedulingDel, exportSemiSchedulin } from "@/api/production/index"
 export default {
   components: {
     TabsBar,
@@ -67,6 +67,13 @@ export default {
   methods: {
     selectChange(val) {
       this.upload({tpId: val })
+    },
+    exportData() {
+      const obj = this.$refs.tabs.qFilter()
+      obj.tpId = this.plaIdS
+      exportSemiSchedulin(obj).then(res => {
+        this.$refs.tabs.download(res)
+      })
     },
     delivery(obj) {
       if(obj) {

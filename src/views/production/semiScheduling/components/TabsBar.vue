@@ -189,9 +189,7 @@
         link.click()
       },
       exportData() {
-        exportSemiSchedulin(this.qFilter()).then(res => {
-          this.download(res)
-        })
+        this.$emit('exportData')
       },
       report() {
         const clickData = this.clickData
