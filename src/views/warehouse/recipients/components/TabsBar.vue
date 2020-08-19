@@ -167,7 +167,7 @@ export default {
         value: false,
         label: '未核准'
       }],
-      value: '',
+      value: [],
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -204,9 +204,39 @@ export default {
       }
     };
   },
+  created: function() {
+    this.value[0] = this.getDay('', -30).date
+    this.value[1] = this.getDay('', 0).date
+  },
   mounted() {
   },
   methods: {
+    // 查询前后三天日期
+    getDay(date, day){
+      var today = new Date();
+      var targetday_milliseconds=today.getTime() + 1000*60*60*24*day
+      today.setTime(targetday_milliseconds) //注意，这行是关键代码
+      var tYear = today.getFullYear()
+      var tMonth = today.getMonth()
+      var tDate = today.getDate()
+      var getDay = today.getDay()
+      tMonth = this.doHandleMonth(tMonth + 1)
+      tDate = this.doHandleMonth(tDate)
+      var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+      var week = weeks[getDay]
+      return {
+        day: tDate,
+        week: week,
+        date: tYear + "-" + tMonth + "-" + tDate
+      }
+    },
+    doHandleMonth(month) {
+      var m = month;
+      if(month.toString().length == 1) {
+        m = "0" + month;
+      }
+      return m;
+    },
     changeDate(val) {
       this.form.businessDateEnd = val[1]
       this.form.businessDateStart = val[0]
@@ -236,7 +266,9 @@ export default {
       this.search.whName = ''
       this.search.keyword = ''
       this.search.docNo = ''
-      this.value = ''
+      this.value = []
+      this.value[0] = this.getDay('', -15).date
+      this.value[1] = this.getDay('', 0).date
       this.isConfirm = false
       this.$emit('uploadList')
     },

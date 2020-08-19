@@ -182,7 +182,7 @@ export default {
       }
     },
     rowClass(row, index) {
-      if(row.row.evenNum > row.row.qty){
+      if(row.row.evenNum >= row.row.qty){
         return { "background-color": "#FFDAB9" }
       }
     },
