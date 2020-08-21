@@ -13,6 +13,7 @@ const map = {
   'inventory': () => import('@/views/basic/inventory'),
   'resources': () => import('@/views/basic/resources'),
   'regulation': () => import('@/views/basic/regulation'),
+  'reportRules': () => import('@/views/basic/reportRules'),
   'barcode': () => import('@/views/basic/barcode'),
   'storageLocation': () => import('@/views/basic/storageLocation'),
 
@@ -78,5 +79,6 @@ const map = {
   'users': () => import('@/views/system/users'),
   'journal': () => import('@/views/system/journal'),
   'notice': () => import('@/views/system/notice'),
+  'dataDictionary': () => import('@/views/system/dataDictionary'),
   'board': () => import('@/views/system/board'),
 }

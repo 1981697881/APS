@@ -155,13 +155,13 @@ export default {
                 }else if(index2 == 9){
                   item2[key] = item.finishPutBatch
                 }else if(index2 == 10){
-                  item2[key] = item.finishOutShipWeight
-                }else if(index2 == 11){
-                  item2[key] = item.finishOutShipBatch
-                }else if(index2 == 12){
                   item2[key] = item.finishOutWeight
-                }else if(index2 == 13){
+                }else if(index2 == 11){
                   item2[key] = item.finishOutBatch
+                }else if(index2 == 12){
+                  item2[key] = item.finishOutShipWeight
+                }else if(index2 == 13){
+                  item2[key] = item.finishOutShipBatch
                 }else if(index2 == 14){
                   item2[key] = item.officeHour
                 }else if(index2 == 15){

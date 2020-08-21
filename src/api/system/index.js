@@ -227,4 +227,25 @@ export function delBoard(params) {
     params
   })
 }
-
+// 数据字典-查找
+export function dictGetById(params) {
+  return request({
+    url: '/dict/getById/' + params,
+    headers: {
+      'authorization': getToken('apsrx')
+    },
+    method: 'get',
+  })
+}
+// 数据字典-修改
+export function alterDict(params) {
+  return request({
+    url: '/dict/update',
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'PUT',
+    data: params
+  })
+}

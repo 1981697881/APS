@@ -366,7 +366,9 @@ export function alterInventory(params) {
   })
 }
 // 生产资源-获取列表
-export function getResourcesList(data) {
+export function getResourcesList(data, val = {
+  tpCategory: '产线设备'
+}) {
   const url = '/type/list/' + data.pageNum + '/' + data.pageSize
   return request({
     url: url,
@@ -375,9 +377,7 @@ export function getResourcesList(data) {
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    data: {
-      tpCategory: '产线设备'
-    }
+    data: val
   })
 }
 // 生产资源-获取成品产线
@@ -760,7 +760,7 @@ export function productionRules(params) {
     method: 'post'
   })
 }
-// 资源管理重要事项-查询
+// 资源管理重要事项-查询/type/list/
 export function getListMatters(params) {
   const url = '/production-line/attr/' + params
   return request({
@@ -820,6 +820,55 @@ export function getWarehouseU9List(data) {
     method: 'POST',
   })
 }
+// 报表规则管理-获取列表
+export function getReportRulesList(data) {
+  const url = '/prod-report-rules/list/' + data.pageNum + '/' + data.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+  })
+}
+// 报表规则管理-新增
+export function addReportRules(data) {
+  const url = '/prod-report-rules/add'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: data
+  })
+}
+// 报表规则管理-修改
+export function updateReportRules(data) {
+  const url = '/prod-report-rules/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: data
+  })
+}
+// 报表规则管理-删除
+export function delReportRules(data) {
+  const url = '/prod-report-rules/del/' + data
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'delete'
+  })
+}
 // 库位管理-绑定库位
 export function wareBind(data) {
   const url = '/ware-position/wareBind'
@@ -846,7 +895,7 @@ export function wareBindUpdate(data) {
     data: data
   })
 }
-// 库位管理-绑定库位修改
+// 库位管理-绑定库位删除
 export function wareBindDelete(data) {
   const url = '/ware-position/delete/' + data
   return request({
