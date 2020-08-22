@@ -3,34 +3,20 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="110px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'priId'" style="display: none">
-            <el-input v-model="form.trId"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'规格名称'" prop="name">
+          <el-form-item :label="'名称'" prop="name">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'类型'" prop="tpId">
-            <el-select v-model="form.tpId" class="width-full"  placeholder="请选择">
-              <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in aArray" :key="i"></el-option>
-            </el-select>
+          <el-form-item :label="'编码'" prop="code">
+            <el-input v-model="form.code"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'包含料号'" >
-            <el-input v-model="form.includeCode"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'包含旧料号'" >
-            <el-input v-model="form.includeOldCode"></el-input>
+        <el-col :span="24">
+          <el-form-item :label="'内容'" prop="remark">
+            <el-input v-model="form.remark"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -42,7 +28,7 @@
 </template>
 
 <script>
-import {addReportRules, updateReportRules, getResourcesList} from "@/api/basic/index";
+import {alterDict} from "@/api/system/index";
 
 export default {
   props: {
@@ -54,23 +40,19 @@ export default {
   data() {
     return {
       form: {
-        priId: null,
         name: null, // 名称
-        includeCode: null,
-        includeOldCode: null,
-        tpId: null,
+        code: null,
+        remark: null,
       },
       aArray: [],
         rules: {
           name: [
                 {required: true, message: '请输入', trigger: 'blur'},
             ],
-          tpId: [
-                {required: true, message: '请选择', trigger: 'change'},
+          code: [
+                {required: true, message: '请选择', trigger: 'blur'},
             ],
-          includeCode: [
-            {required: true, message: '请输入', trigger: 'blur'},
-          ], includeOldCode: [
+          remark: [
             {required: true, message: '请输入', trigger: 'blur'},
           ],
         },
@@ -80,38 +62,19 @@ export default {
 
   },
   mounted() {
-    this.fetchType()
     if(this.listInfo) {
       this.form = this.listInfo
     }
   },
   methods: {
-    fetchType() {
-      const data = {
-        pageNum: 1,
-        pageSize: 1000
-      };
-      getResourcesList(data, { tpCategory: '报表类别'}).then(res => {
-        if(res.flag) {
-          this.aArray = res.data.records
-        }
-      })
-    },
     saveData(form) {
         this.$refs[form].validate((valid) => {
             //判断必填项
             if (valid) {
-              if (typeof (this.form.priId) != undefined && this.form.priId != null) {
-                updateReportRules(this.form).then(res => {
-                  this.$emit('hideDialog', false)
-                  this.$emit('uploadList')
-                });
-              } else {
-                addReportRules(this.form).then(res => {
-                  this.$emit('hideDialog', false)
-                  this.$emit('uploadList')
-                });
-              }
+              alterDict(this.form).then(res => {
+                this.$emit('hideDialog', false)
+                this.$emit('uploadList')
+              });
             }else{
                 return false;
             }

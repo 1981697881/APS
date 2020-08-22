@@ -44,7 +44,7 @@ export default {
   methods: {
       delivery(obj){
           if(obj){
-              this.$refs.list.Delivery(obj.tpId)
+              this.$refs.list.Delivery(obj.priId)
           }
       },
       hideWindow(val){

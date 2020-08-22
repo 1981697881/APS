@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { delReportRules, dictGetById} from "@/api/system/index";
+import { delReportRules, getDictList} from "@/api/system/index";
 import List from "@/components/List";
 
 export default {
@@ -34,9 +34,8 @@ export default {
       columns: [
         { text: "trId", name: "trId", default: false },
         { text: "名称", name: "name" },
-        { text: "类型", name: "type" },
-        { text: "包含料号", name: "includeCode" },
-        { text: "包含旧料号", name: "includeOldCode" },
+        { text: "编码", name: "code" },
+        { text: "内容", name: "remark" },
        /* { text: "数量大于", name: "numGe" },
         { text: "数量小于", name: "numLe" },*/
       ]
@@ -70,9 +69,15 @@ export default {
       },
     fetchData(fid, type) {
       this.loading = true
-      dictGetById(1).then(res => {
+      const data = {
+        /*  fid: fid,
+          type: type,*/
+        pageNum: this.list.current || 1,
+        pageSize: this.list.size || 50
+      };
+      getDictList(data).then(res => {
         this.loading = false
-        this.list = {records: res.data}
+        this.list = res.data
       });
     }
   }

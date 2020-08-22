@@ -34,6 +34,18 @@
             <el-input v-model="search.itemCode" placeholder="料号"/>
           </el-form-item>
         </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'状态'" :label-width="'70px'">
+            <el-select v-model="isConfirm" placeholder="请选择" @change="selectChange">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
@@ -148,6 +160,14 @@
           businessDateEnd: '',
           value: [],
         },
+        options: [{
+          value: true,
+          label: '已排产'
+        }, {
+          value: false,
+          label: '未排产'
+        }],
+        isConfirm: false,
         value: '',
         pickerOptions: {
           shortcuts: [{
@@ -184,6 +204,10 @@
       }
     },
     methods: {
+      selectChange(val) {
+        this.isConfirm = val
+        this.$emit('uploadList')
+      },
       errorInfo() {
         this.$emit('showDialog')
       },
@@ -239,6 +263,7 @@
         this.search.color != null && this.search.color != '' ? obj.color = this.search.color : null
         this.value != null && this.value != undefined ? obj.businessDateEnd = this.value[1] : null
         this.value != null && this.value != undefined ? obj.businessDateStart = this.value[0] : null
+        obj.isConfirm = this.isConfirm
         return obj
       },
       // 关键字查询
@@ -273,6 +298,7 @@
         this.search.color = ''
         this.search.itemCode = ''
         this.value = ''
+        this.isConfirm = false
         this.$emit('uploadList')
       },
       handleSync() {

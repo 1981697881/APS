@@ -32,9 +32,9 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: "trId", name: "trId", default: false },
+        { text: "priId", name: "priId", default: false },
         { text: "名称", name: "name" },
-        { text: "类型", name: "type" },
+        { text: "类型", name: "tpName" },
         { text: "包含料号", name: "includeCode" },
         { text: "包含旧料号", name: "includeOldCode" },
        /* { text: "数量大于", name: "numGe" },

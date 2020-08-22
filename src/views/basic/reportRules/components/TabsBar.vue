@@ -55,14 +55,14 @@ export default {
           }
       },
       del() {
-      if (this.clickData.tpId) {
+      if (this.clickData.priId) {
         this.$confirm('是否删除（' + this.clickData.name + '），删除后将无法恢复?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.$emit('delList', {
-            tpId: this.clickData.tpId,
+            priId: this.clickData.priId,
           })
         }).catch(() => {
           this.$message({
@@ -78,7 +78,7 @@ export default {
       }
     },
     handleAlter() {
-      if (this.clickData.tpId) {
+      if (this.clickData.priId) {
         this.$emit('showDialog', this.clickData)
       } else {
         this.$message({

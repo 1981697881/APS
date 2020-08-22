@@ -227,6 +227,19 @@ export function delBoard(params) {
     params
   })
 }
+// 数据字典-获取列表
+export function getDictList(data) {
+  const url = '/dict/list/' + data.pageNum + '/' + data.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST'
+  })
+}
+
 // 数据字典-查找
 export function dictGetById(params) {
   return request({
@@ -234,7 +247,7 @@ export function dictGetById(params) {
     headers: {
       'authorization': getToken('apsrx')
     },
-    method: 'get',
+    method: 'get'
   })
 }
 // 数据字典-修改
