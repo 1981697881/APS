@@ -54,7 +54,7 @@
 </template>
 <script>
   import { mapGetters } from "vuex";
-  import {getMType} from "@/api/basic/index";
+  import {exportTaskSaleOrder} from "@/api/production/index";
   export default {
     components: {},
     computed: {
@@ -148,6 +148,7 @@
         this.search.orderNum = null
         this.search.taskNum = null
         this.search.oldCode = null
+        this.value = []
         this.value[0] = this.getDay('', -15).date
         this.value[1] = this.getDay('', 0).date
         this.$emit('uploadList')
@@ -163,13 +164,9 @@
         return obj
       },
       exportData() {
-        this.$message({
-          message: "抱歉，功能尚未完善！",
-          type: "warning"
-        });
-        /* exportOutboundStatistics(this.qFilter()).then(res => {
+         exportTaskSaleOrder(this.qFilter()).then(res => {
            this.download(res)
-         })*/
+         })
       },
       // 关键字查询
       query() {

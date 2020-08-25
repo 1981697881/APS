@@ -218,4 +218,17 @@ export function productBoard(params) {
     },
     method: 'get'
   })
+}// 排程明细导出
+export function exportTaskSaleOrder(params) {
+  const url = '/excel/export/taskSaleOrder'
+  return request({
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    responseType: 'blob',
+    url: url,
+    method: 'post',
+    data: params
+  })
 }
