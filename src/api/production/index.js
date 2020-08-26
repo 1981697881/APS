@@ -232,3 +232,17 @@ export function exportTaskSaleOrder(params) {
     data: params
   })
 }
+// 工时比例统计表
+export function ratioOfWorkingHours(params) {
+  const url = '/report-form/ratioOfWorkingHours'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
+}
+

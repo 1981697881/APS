@@ -37,7 +37,7 @@
 </template>
 <script>
   import { mapGetters } from "vuex";
-  import {getMType} from "@/api/basic/index";
+  import {monthlyReport} from "@/api/warehouse/index";
   export default {
     components: {},
     computed: {
@@ -140,13 +140,9 @@
         return obj
       },
       exportData() {
-        this.$message({
-          message: "抱歉，功能尚未完善！",
-          type: "warning"
-        });
-        /* exportOutboundStatistics(this.qFilter()).then(res => {
+        monthlyReport(this.qFilter()).then(res => {
            this.download(res)
-         })*/
+         })
       },
       // 关键字查询
       query() {

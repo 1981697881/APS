@@ -425,4 +425,18 @@ export function putBoardReport(params) {
     data: params,
     method: 'post'
   })
+}// 排程明细导出
+export function monthlyReport(params) {
+  const url = '/excel/export/materialMonthlyReport'
+  return request({
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    responseType: 'blob',
+    url: url,
+    method: 'post',
+    data: params
+  })
 }
+
