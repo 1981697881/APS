@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <el-container class="list-containerOther">
       <el-header>
-        <tabs-bar ref="tabs" @uploadList="upload" @queryBtn="query"/>
+        <tabs-bar ref="tabs" @uploadList="upload" @queryBtn="query" @exportData="exportData"/>
       </el-header>
       <el-main>
         <list ref="list"/>
@@ -39,6 +39,9 @@ export default {
         this.$refs.list.fetchData(this.fetchData(this.$refs.tabs.qFilter()))
     },
   methods: {
+    exportData() {
+      this.$refs.list.ExportData()
+    },
     // 查询前后日期
     getDay(date, day){
       var today = new Date(date[0], date[1]-1, date[2]);

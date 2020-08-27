@@ -49,14 +49,14 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'生产线'">
-            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" @change="selectChange">
+            <el-select v-model="form.tpId" clearable class="width-full" placeholder="生产线" @change="selectChange">
               <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in aArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'生产设备'">
-            <el-select v-model="form.plId" class="width-full" placeholder="生产设备" :disabled="disPl">
+            <el-select v-model="form.plId" clearable class="width-full" placeholder="生产设备" :disabled="disPl">
               <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray"  :key="i"></el-option>
             </el-select>
           </el-form-item>

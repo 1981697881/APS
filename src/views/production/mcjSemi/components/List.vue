@@ -32,6 +32,30 @@ export default {
     };
   },
   methods: {
+    ExportData() {
+      import('@/vendor/Export2Excel').then(excel => {
+        // 表格的表头列表
+        const columns = this.columns
+        const tHeader = []
+        // 与表头相对应的数据里边的字段
+        const filterVal = []
+        columns.forEach((item, index) => {
+          tHeader.push(item.text)
+          filterVal.push(item.name)
+        })
+        const list = this.list.records
+        const data = this.formatJson(filterVal, list);
+        // 这里还是使用export_json_to_excel方法比较好，方便操作数据
+        excel.export_json_to_excel(tHeader,data,'美瓷胶半成品线效率表')
+      })
+    },
+    formatJson(filter, jsonDate){
+      return jsonDate.map(v =>
+        filter.map(j => {
+          return v[j]
+        })
+      )
+    },
     getDaysBetween(dateString1,dateString2){
       let dateStart = Date.parse(dateString1);
       let dateEnd = Date.parse(dateString2);

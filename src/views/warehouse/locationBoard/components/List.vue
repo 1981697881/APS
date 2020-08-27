@@ -35,7 +35,7 @@ export default {
         { text: '', name: '',default: false },
         { text: '总库位', name: 'sumPosition' },
         { text: '占用库位', name: 'occupyPosition' },
-        { text: '技术库位', name: 'technicalPosition' },
+        { text: '其他部门库位', name: 'technicalPosition' },
         { text: '可用库位', name: 'availablePosition' },
         { text: '占用率', name: 'occupancyRate' }
       ]

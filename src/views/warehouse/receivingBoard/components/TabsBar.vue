@@ -163,10 +163,11 @@
         return obj
       },
       exportData() {
-        this.$message({
+        /*this.$message({
           message: "抱歉，功能尚未完善！",
           type: "warning"
-        });
+        });*/
+        this.$emit('exportData')
         /* exportOutboundStatistics(this.qFilter()).then(res => {
            this.download(res)
          })*/
