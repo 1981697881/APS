@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="list-main box-shadow">
    <!-- <list
       class="list-main box-shadow"
       :columns="columns"
@@ -9,7 +9,7 @@
       @dblclick="dblclick"
       @row-click="rowClick"
     />-->
-    <el-table :height="height" :data="list" border size="mini" >
+    <el-table   :height="height" :data="list.records" border size="mini" >
       <el-table-column
         v-for="(t,i) in columns"
         :key="i"
@@ -60,11 +60,54 @@
     data() {
       return {
         loading: false,
-        list: [],
+        list: {},
         columns: []
       };
     },
     methods: {
+      ExportData() {
+        import('@/vendor/Export2Excel').then(excel => {
+          // 表格的表头列表
+          const columns = this.columns
+          const tHeader = []
+          const multiHeader = []
+          // 与表头相对应的数据里边的字段
+          const filterVal = []
+          let result = []
+          columns.forEach((item, index) => {
+            if(item.colspan){
+              item.data.forEach((item2, index2) =>{
+                multiHeader.push(item2.text)
+                if(result.indexOf(item.text)==-1){
+                  tHeader.push(item.text)
+                  result.push(item.text)
+                }else{
+                  tHeader.push('')
+                }
+                filterVal.push(item2.name)
+              })
+            }else{
+              multiHeader.push('')
+              tHeader.push(item.text)
+              filterVal.push(item.name)
+            }
+          })
+          const merges = [
+            "A1:A2",
+          ];
+          const list = this.list.records
+          const data = this.formatJson(filterVal, list);
+          // 这里还是使用export_json_to_excel方法比较好，方便操作数据
+          excel.export_json_to_excel([tHeader],data,'工时比例统计表', multiHeader, merges)
+        })
+      },
+      formatJson(filter, jsonDate){
+        return jsonDate.map(v =>
+            filter.map(j => {
+              return v[j]
+            })
+        )
+      },
       getDaysBetween(dateString1,dateString2){
         let startDate = Date.parse(dateString1);
         let endDate = Date.parse(dateString2);
@@ -115,78 +158,63 @@
           startData = startData.replace(/ /g,'-')
           let arr = startData.split('-')
           this.columns = [
-            {text: '项目', width: '150px', name: 'project' }
+            {text: '工时比例', width: '150px', name: 'project' }
           ]
           const columns = this.columns
           for (let i = 0; i<= Number(interval); i++) {
             // 根据时间生成表头 把时间包含数据重新组装 -》array
-            const obj = { text: this.getDay(arr, i).date + '', name: '', colspan: true, data: [{ width: '250px', text: '正班工时', name: 'day' + i },{ width: '250px', text: '加班工时', name: 'day' + i }] }
+            const obj = { text: this.getDay(arr, i).date + '', name: '', colspan: true, data: [{ width: '250px', text: '正班工时', name: 'a' + this.getDay(arr, i).date },{ width: '250px', text: '加班工时', name: 'b' + this.getDay(arr, i).date }] }
             columns.push(obj)
           }
           ratioOfWorkingHours(val).then(res => {
             if (res.flag) {
               const data = res.data
               let array = [
-                { project: '工时' },
-                { project: '入库重量' },
-                { project: '入库批次' },
-                { project: '移库重量' },
-                { project: '移库批次' },
-                { project: '调整重量' },
-                { project: '调整批次' },
-              /*  { project: '备料批次' },
-                { project: '备料重量' },*/
-                { project: '出库重量' },
-                { project: '出库批次' },
-                { project: '出货重量' },
-                { project: '出货批次' },
+                { project: '真石漆线' },
+                { project: 'PCK线' },
+                { project: 'Base线' },
+                { project: '色石线' },
+                { project: '美瓷胶Base线' },
+                { project: '美瓷胶调色线' },
+                { project: '美瓷胶灌装线' },
+                { project: '美瓷胶包装线' },
               ]
               data.forEach((item, index) => {
                 array.forEach((item2, index2) => {
-                  console.log()
                   let date = item['date']
                   date = date.replace(/:/g,'-')
                   date = date.replace(/ /g,'-')
                   let arr1 = date.split('-')
                   let key = this.getDay(arr1, 0).date + ''
-                  if(index2 == 0) {
-                    item2[key] = item.hour
-                  } else if(index2 == 1){
-                    item2[key] = item.putWeight
-                  }else if(index2 == 2){
-                    item2[key] = item.putBatch
-                  }else if(index2 == 3){
-                    item2[key] = item.warehouseMoveWeight
-                  }else if(index2 == 4){
-                    item2[key] = item.warehouseMoveBatch
-                  }else if(index2 == 5){
-                    item2[key] = item.adjustWeight
-                  }else if(index2 == 6){
-                    item2[key] = item.adjustBatch
+                  if(item.normal){
+                    key = 'a' + key
+                  }else{
+                    key = 'b' + key
                   }
-                  /*else if(index2 == 7){
-                    item2[key] = item.stockWeight
-                  }else if(index2 == 8){
-                    item2[key] = item.stockBatch
-                  }*/
-                  else if(index2 == 7){
-                    item2[key] = item.outWeight
-                  }else if(index2 == 8){
-                    item2[key] = item.outBatch
-                  }else if(index2 == 9){
-                    item2[key] = item.outShipWeight
-                  }else if(index2 == 10){
-                    item2[key] = item.outShipBatch
+                  if(index2 == 0) {
+                    item2[key] = item.rspWorkHours
+                  } else if(index2 == 1){
+                    item2[key] = item.pckWorkHours
+                  }else if(index2 == 2){
+                    item2[key] = item.baseWorkHours
+                  }else if(index2 == 3){
+                    item2[key] = item.colorStoreWorkHours
+                  }else if(index2 == 4){
+                    item2[key] = item.apgBaseWorkHours
+                  }else if(index2 == 5){
+                    item2[key] = item.apgToningWorkHours
+                  }else if(index2 == 6){
+                    item2[key] = item.apgFillingWorkHours
+                  } else if(index2 == 7){
+                    item2[key] = item.apgPackageWorkHours
                   }
                 })
               })
               console.log(array)
-              console.log(columns)
               this.list = { records: array }
               this.loading = false
             }
           })
-          console.log(columns)
         }
       }
     }

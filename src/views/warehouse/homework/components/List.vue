@@ -44,7 +44,10 @@
             filterVal.push(item.name)
           })
           const list = this.list.records
+          console.log(list)
+          console.log(filterVal)
           const data = this.formatJson(filterVal, list);
+          console.log(data)
           // 这里还是使用export_json_to_excel方法比较好，方便操作数据
           excel.export_json_to_excel(tHeader,data,'作业统计')
         })
@@ -177,9 +180,9 @@
                   }
                 })
               })
-              console.log(array)
-              console.log(columns)
+
               this.list = { records: array }
+              console.log(this.list)
               this.loading = false
             }
           })

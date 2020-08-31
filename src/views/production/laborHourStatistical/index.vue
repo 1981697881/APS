@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar ref="tabs" @uploadList="upload" @queryBtn="query"/>
+        <tabs-bar ref="tabs" @uploadList="upload" @queryBtn="query" @exportData="exportData"/>
       </div>
       <list ref="list"/>
     </div>
@@ -33,6 +33,9 @@
       this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     methods: {
+      exportData() {
+        this.$refs.list.ExportData()
+      },
       // 查询
       query() {
         this.$refs.list.uploadPr(this.$refs.tabs.qFilter())

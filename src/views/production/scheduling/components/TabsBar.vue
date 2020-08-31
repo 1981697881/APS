@@ -52,7 +52,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item :label="'单号'">
+          <el-form-item :label="'排产单号'" :label-width="'70px'">
             <el-input v-model="search.taskNum" placeholder="输入关键字"/>
           </el-form-item>
         </el-col>
@@ -232,7 +232,7 @@ export default {
       this.search.allocatedStatus != null && this.search.allocatedStatus != '' ? obj.allocatedStatus = this.search.allocatedStatus : null
       this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       this.search.soName != null && this.search.soName != '' ? obj.soName = this.search.soName : null
-      this.search.taskNum != null && this.search.taskNum != '' ? obj.soNum = this.search.taskNum : null
+      this.search.taskNum != null && this.search.taskNum != '' ? obj.taskNum = this.search.taskNum : null
       this.value != null && this.value != undefined ? obj.productionDateEnd = this.value[1] : null
       this.value != null && this.value != undefined ? obj.productionDateStart = this.value[0] : null
       return obj

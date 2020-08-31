@@ -53,7 +53,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item :label="'单号'">
+          <el-form-item :label="'排产单号'" :label-width="'70px'">
             <el-input v-model="search.taskNum" placeholder="输入关键字"/>
           </el-form-item>
         </el-col>

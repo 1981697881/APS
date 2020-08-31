@@ -77,7 +77,6 @@ export default {
   created: function() {
     this.value[0] = this.getDay('', -15).date
     this.value[1] = this.getDay('', 0).date
-    this.fetchFormat()
   },
   mounted() {
 
@@ -140,10 +139,11 @@ export default {
       return obj
     },
     exportData() {
-      this.$message({
+      /*this.$message({
         message: "抱歉，功能尚未完善！",
         type: "warning"
-      });
+      });*/
+      this.$emit('exportData')
       /* exportOutboundStatistics(this.qFilter()).then(res => {
          this.download(res)
        })*/
