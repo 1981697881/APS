@@ -244,5 +244,17 @@ export function ratioOfWorkingHours(params) {
     data: params,
     method: 'post'
   })
+}// 工时比例统计表
+export function colorStoreParticleSize(params) {
+  const url = '/report-form/colorStoreParticleSize'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
 }
 

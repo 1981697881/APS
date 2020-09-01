@@ -100,7 +100,7 @@ export default {
         pageNum: 1,
         pageSize: 1500
       };
-      getClerkList(data).then(res => {
+      getClerkList(data, {deptIds: [4]}).then(res => {
         this.search.uid = res.data.records[0].uid
         this.levelFormat = res.data.records
         this.$emit('queryBtn', this.qFilter())
@@ -162,6 +162,7 @@ export default {
       this.search.uid != null || this.search.uid != undefined ? obj.uid = this.search.uid : null
       this.value != null || this.value != undefined ? obj.endDate = this.value[1] : null
       this.value != null || this.value != undefined ? obj.startDate = this.value[0] : null
+
       return obj
     },
     exportData() {
