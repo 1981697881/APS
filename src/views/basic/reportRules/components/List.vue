@@ -37,8 +37,8 @@ export default {
         { text: "类型", name: "tpName" },
         { text: "包含料号", name: "includeCode" },
         { text: "包含旧料号", name: "includeOldCode" },
-       /* { text: "数量大于", name: "numGe" },
-        { text: "数量小于", name: "numLe" },*/
+        { text: "料号开头", name: "startCode" },
+        { text: "旧料号开头", name: "startOldCode" },
       ]
     };
   },

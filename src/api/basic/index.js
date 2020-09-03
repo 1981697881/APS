@@ -821,7 +821,7 @@ export function getWarehouseU9List(data) {
   })
 }
 // 报表规则管理-获取列表
-export function getReportRulesList(data) {
+export function getReportRulesList(data, query) {
   const url = '/prod-report-rules/list/' + data.pageNum + '/' + data.pageSize
   return request({
     url: url,
@@ -830,6 +830,7 @@ export function getReportRulesList(data) {
       'Content-Type': 'application/json'
     },
     method: 'POST',
+    data: query
   })
 }
 // 报表规则管理-新增

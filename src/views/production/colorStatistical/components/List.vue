@@ -36,6 +36,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import { colorStoreParticleSize } from '@/api/production/index'
+  import { getReportRulesList } from '@/api/basic/index'
   import List from '@/components/List'
 
   export default {
@@ -111,15 +112,14 @@
       getDaysBetween(date1,date2){
         // 拆分年月日
         date1 = date1.split('-');
-// 得到月数
+        // 得到月数
         date1 = parseInt(date1[0]) * 12 + parseInt(date1[1]);
-// 拆分年月日
+        // 拆分年月日
         date2 = date2.split('-');
-// 得到月数
+        // 得到月数
         date2 = parseInt(date2[0]) * 12 + parseInt(date2[1]);
         var m = Math.abs(date1 - date2);
         // alert(days);
-        console.log(m)
         return  m
       },
       uploadPr(val) {
@@ -134,7 +134,6 @@
         var tMonth = today.getMonth()
         var tDate = today.getDate()
         var getDay = today.getDay()
-        console.log(tMonth)
         tMonth = this.doHandleMonth(tMonth + 1 + day)
         tDate = this.doHandleMonth(tDate)
         var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
@@ -154,77 +153,94 @@
       },
       fetchData(val) {
         this.loading = true
-        let interval = this.getDaysBetween(val.startDate, val.endDate)
-        if(interval > 3){
-          return this.$message({
-            message: '抱歉，超出可查询范围！',
-            type: 'warning'
-          });
-        } else {
-          let startData = val.startDate
-          startData = startData.replace(/:/g,'-')
-          startData = startData.replace(/ /g,'-')
-          let arr = startData.split('-')
-          console.log(arr)
-          this.columns = [
-            {text: '时间段', width: '150px', name: 'project' , colspan: true, data: [ {width: '250px', text: '色系\ 粒径'} ] }
-          ]
-          const columns = this.columns
-          for (let i = 0; i<= Number(interval); i++) {
-            // 根据时间生成表头 把时间包含数据重新组装 -》array
-            const obj = { text: this.getMonth(arr, i).month + '', name: '', colspan: true, data: [{ width: '250px', text: '正班工时', name: 'a' + this.getMonth(arr, i).month },{ width: '250px', text: '加班工时', name: 'b' + this.getMonth(arr, i).month }] }
-            columns.push(obj)
-          }
-          colorStoreParticleSize(val).then(res => {
-            if (res.flag) {
-              const data = res.data
-              let array = [
-                { project: '真石漆线' },
-                { project: 'PCK线' },
-                { project: 'Base线' },
-                { project: '色石线' },
-                { project: '美瓷胶Base线' },
-                { project: '美瓷胶调色线' },
-                { project: '美瓷胶灌装线' },
-                { project: '美瓷胶包装线' },
+        let array1 = []
+        let array2 = []
+        getReportRulesList({
+          pageNum: 1,
+          pageSize: 50
+        }, { tpName: '色石色系' }).then(reso => {
+          array1 = reso.data.records
+          getReportRulesList({
+            pageNum: 1,
+            pageSize: 50
+          }, { tpName: '色石粒径' }).then(rest => {
+            array2 = rest.data.records
+            let interval = this.getDaysBetween(val.startDate, val.endDate)
+            if(interval > 3){
+              return this.$message({
+                message: '抱歉，超出可查询范围！',
+                type: 'warning'
+              });
+            } else {
+              let startData = val.startDate
+              startData = startData.replace(/:/g,'-')
+              startData = startData.replace(/ /g,'-')
+              let arr = startData.split('-')
+              this.columns = [
+                {text: '时间段', width: '150px', colspan: true, data: [{width: '250px', text: '色系\粒径', name: 'project'}] }
               ]
-              data.forEach((item, index) => {
-                array.forEach((item2, index2) => {
-                  let date = item['date']
-                  date = date.replace(/:/g,'-')
-                  date = date.replace(/ /g,'-')
-                  let arr1 = date.split('-')
-                  let key = this.getMonth(arr1, 0).month + ''
-                  if(item.normal){
-                    key = 'a' + key
-                  }else{
-                    key = 'b' + key
-                  }
-                  if(index2 == 0) {
-                    item2[key] = item.rspWorkHours
-                  } else if(index2 == 1){
-                    item2[key] = item.pckWorkHours
-                  }else if(index2 == 2){
-                    item2[key] = item.baseWorkHours
-                  }else if(index2 == 3){
-                    item2[key] = item.colorStoreWorkHours
-                  }else if(index2 == 4){
-                    item2[key] = item.apgBaseWorkHours
-                  }else if(index2 == 5){
-                    item2[key] = item.apgToningWorkHours
-                  }else if(index2 == 6){
-                    item2[key] = item.apgFillingWorkHours
-                  } else if(index2 == 7){
-                    item2[key] = item.apgPackageWorkHours
-                  }
+              const columns = this.columns
+              for (let i = 0; i <= Number(interval); i++) {
+                // 根据时间生成表头 把时间包含数据重新组装 -》array
+                const obj = { text: this.getMonth(arr, i).month + '', name: '', colspan: true}
+                let rArray = []
+                array2.forEach((ao, aoIndex) => {
+                  let rbj = { width: '250px', text: ao.name, name: this.getMonth(arr, i).month + '/' + aoIndex }
+                  rArray.push(rbj)
                 })
+                obj.data = rArray
+                columns.push(obj)
+              }
+              let array = []
+              array1.forEach((a, b) => {
+                let obj = { project: a.name }
+                array.push(obj)
               })
-              console.log(array)
-              this.list = { records: array }
-              this.loading = false
+              console.log(columns)
+               colorStoreParticleSize(val).then(res => {
+                 if (res.flag) {
+                   const data = res.data
+
+                   for(let item in data){
+                     let key = item
+                     for(let val in data[item]) {
+                       let num = 0
+                       array.forEach((item2, index2) => {
+                         if(num <= array2.length) {
+                           if(item2.project == data[item][val].name) {
+                            item2[key+'/'+num] = data[item][val].num
+                           }
+                         }
+                        /*if(index2 == 0) {
+                          item2[key] = item.rspWorkHours
+                        } else if(index2 == 1){
+                          item2[key] = item.pckWorkHours
+                        }else if(index2 == 2){
+                          item2[key] = item.baseWorkHours
+                        }else if(index2 == 3){
+                          item2[key] = item.colorStoreWorkHours
+                        }else if(index2 == 4){
+                          item2[key] = item.apgBaseWorkHours
+                        }else if(index2 == 5){
+                          item2[key] = item.apgToningWorkHours
+                        }else if(index2 == 6){
+                          item2[key] = item.apgFillingWorkHours
+                        } else if(index2 == 7){
+                          item2[key] = item.apgPackageWorkHours
+                        }*/
+                      })
+                     }
+                   }
+                    console.log(array)
+                   this.list = { records: array }
+                   this.loading = false
+                 }
+               })
             }
           })
-        }
+        })
+
+
       }
     }
   };
