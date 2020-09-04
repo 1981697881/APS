@@ -113,7 +113,7 @@ export default {
         startData = startData.replace(/ /g,'-')
         let arr = startData.split('-')
         this.columns = [
-          {text: '项目', width: '150px', name: 'project' }
+          {text: '项目', width: '150px',fixed: true, name: 'project' }
         ]
         const columns = this.columns
         for (let i = 0; i<= Number(interval); i++) {

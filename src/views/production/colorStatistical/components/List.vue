@@ -16,6 +16,7 @@
         align="center"
         :prop="t.name"
         :label="t.text"
+        :fixed="t.fixed"
         v-if="t.default!=undefined?t.default:true"
         :width="t.width?t.width:(selfAdaption?'':'120px')"
       >
@@ -93,13 +94,11 @@
               filterVal.push(item.name)
             }
           })
-          const merges = [
-            "A1:A2",
-          ];
+          const merges = []
           const list = this.list.records
-          const data = this.formatJson(filterVal, list);
+          const data = this.formatJson(filterVal, list)
           // 这里还是使用export_json_to_excel方法比较好，方便操作数据
-          excel.export_json_to_excel([tHeader],data,'工时比例统计表', multiHeader, merges)
+          excel.export_json_to_excel([tHeader], data, '色石线色系粒径统计表', multiHeader, merges)
         })
       },
       formatJson(filter, jsonDate){
@@ -177,7 +176,7 @@
               startData = startData.replace(/ /g,'-')
               let arr = startData.split('-')
               this.columns = [
-                {text: '时间段', width: '150px', colspan: true, data: [{width: '250px', text: '色系\粒径', name: 'project'}] }
+                {text: '时间段', width: '150px',fixed: true, colspan: true, data: [{width: '250px', text: '色系/粒径', name: 'project'}] }
               ]
               const columns = this.columns
               for (let i = 0; i <= Number(interval); i++) {
@@ -185,7 +184,7 @@
                 const obj = { text: this.getMonth(arr, i).month + '', name: '', colspan: true}
                 let rArray = []
                 array2.forEach((ao, aoIndex) => {
-                  let rbj = { width: '250px', text: ao.name, name: this.getMonth(arr, i).month + '/' + aoIndex }
+                  let rbj = { width: '250px', text: ao.name, name: this.getMonth(arr, i).month + '/' + ao.name }
                   rArray.push(rbj)
                 })
                 obj.data = rArray
@@ -196,45 +195,40 @@
                 let obj = { project: a.name }
                 array.push(obj)
               })
-              console.log(columns)
-               colorStoreParticleSize(val).then(res => {
+               colorStoreParticleSize(val, '色石色系粒径').then(res => {
                  if (res.flag) {
                    const data = res.data
-
-                   for(let item in data){
-                     let key = item
-                     for(let val in data[item]) {
-                       let num = 0
-                       array.forEach((item2, index2) => {
-                         if(num <= array2.length) {
-                           if(item2.project == data[item][val].name) {
-                            item2[key+'/'+num] = data[item][val].num
+                     for(let item in data){
+                       let key = item
+                       for(let val in data[item]) {
+                         data[item][val].forEach((item2, index2) => {
+                           if(array[index2]['project'] == item2.name) {
+                             array[index2][key+'/'+val] = item2.num
                            }
-                         }
-                        /*if(index2 == 0) {
-                          item2[key] = item.rspWorkHours
-                        } else if(index2 == 1){
-                          item2[key] = item.pckWorkHours
-                        }else if(index2 == 2){
-                          item2[key] = item.baseWorkHours
-                        }else if(index2 == 3){
-                          item2[key] = item.colorStoreWorkHours
-                        }else if(index2 == 4){
-                          item2[key] = item.apgBaseWorkHours
-                        }else if(index2 == 5){
-                          item2[key] = item.apgToningWorkHours
-                        }else if(index2 == 6){
-                          item2[key] = item.apgFillingWorkHours
-                        } else if(index2 == 7){
-                          item2[key] = item.apgPackageWorkHours
-                        }*/
-                      })
+                           /*if(index2 == 0) {
+                             item2[key] = item.rspWorkHours
+                           } else if(index2 == 1){
+                             item2[key] = item.pckWorkHours
+                           }else if(index2 == 2){
+                             item2[key] = item.baseWorkHours
+                           }else if(index2 == 3){
+                             item2[key] = item.colorStoreWorkHours
+                           }else if(index2 == 4){
+                             item2[key] = item.apgBaseWorkHours
+                           }else if(index2 == 5){
+                             item2[key] = item.apgToningWorkHours
+                           }else if(index2 == 6){
+                             item2[key] = item.apgFillingWorkHours
+                           } else if(index2 == 7){
+                             item2[key] = item.apgPackageWorkHours
+                           }*/
+                         })
+                       }
                      }
                    }
                     console.log(array)
                    this.list = { records: array }
                    this.loading = false
-                 }
                })
             }
           })

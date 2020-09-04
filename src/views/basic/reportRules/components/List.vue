@@ -36,7 +36,11 @@ export default {
         { text: "名称", name: "name" },
         { text: "类型", name: "tpName" },
         { text: "包含料号", name: "includeCode" },
+        { text: "不包含料号", name: "excludeCode" },
+        { text: "包含名称", name: "includeName" },
+        { text: "不包含名称", name: "excludeName" },
         { text: "包含旧料号", name: "includeOldCode" },
+        { text: "不包含旧料号", name: "excludeOldCode" },
         { text: "料号开头", name: "startCode" },
         { text: "旧料号开头", name: "startOldCode" },
       ]

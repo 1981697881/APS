@@ -15,6 +15,7 @@
         :key="i"
         align="center"
         :prop="t.name"
+        :fixed="t.fixed"
         :label="t.text"
         v-if="t.default!=undefined?t.default:true"
         :width="t.width?t.width:(selfAdaption?'':'120px')"
@@ -158,7 +159,7 @@
           startData = startData.replace(/ /g,'-')
           let arr = startData.split('-')
           this.columns = [
-            {text: '工时比例', width: '150px', name: 'project' }
+            {text: '工时比例', width: '150px', name: 'project',fixed: true, }
           ]
           const columns = this.columns
           for (let i = 0; i<= Number(interval); i++) {

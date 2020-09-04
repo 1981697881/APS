@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">APS</h3>
+        <h3 class="title">APS（测试）</h3>//测试
       </div>
 
       <el-form-item prop="username">

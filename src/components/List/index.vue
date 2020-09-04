@@ -23,6 +23,7 @@
         v-for="(t,i) in columns"
         :key="i"
         :prop="t.name"
+        :fixed="t.fixed"
         :sortable="t.sort"
         :formatter="t.formatt!=undefined? (t.formatt == 'checkWarning'? checkWarning : taskWarning) : null"
         v-if="t.default!=undefined?t.default:true"

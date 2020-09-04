@@ -1,11 +1,12 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'" :label-width="'40px'">
       <el-row :gutter="10">
         <el-col :span="7">
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
+              style="width: auto"
               type="monthrange"
               align="right"
               unlink-panels
@@ -16,7 +17,7 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="2">
+        <el-col :span="3">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
         <el-button-group style="float:right">
@@ -29,7 +30,6 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { getClerkList } from "@/api/basic/index"
 export default {
   components: {},
   computed: {

@@ -29,8 +29,32 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
+          <el-form-item :label="'不包含料号'" >
+            <el-input v-model="form.excludeCode"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
           <el-form-item :label="'包含旧料号'" >
             <el-input v-model="form.includeOldCode"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'不包含旧料号'" >
+            <el-input v-model="form.excludeOldCode"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'包含名字'" >
+            <el-input v-model="form.includeName"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'不包含名字'" >
+            <el-input v-model="form.excludeName"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -69,7 +93,11 @@ export default {
         priId: null,
         name: null, // 名称
         includeCode: null,
+        excludeCode: null,
         includeOldCode: null,
+        excludeOldCode: null,
+        includeName: null,
+        excludeName: null,
         startOldCode: null,
         startCode: null,
         tpId: null,
