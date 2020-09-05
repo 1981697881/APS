@@ -70,6 +70,18 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'生产设备包含名称'" >
+            <el-input v-model="form.includePlName"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'生产设备不包含名称'" >
+            <el-input v-model="form.excludePlName"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">
         <el-button type="primary" @click="saveData('form')">保存</el-button>
@@ -100,6 +112,8 @@ export default {
         excludeName: null,
         startOldCode: null,
         startCode: null,
+        includePlName: null,
+        excludePlName: null,
         tpId: null,
       },
       aArray: [],

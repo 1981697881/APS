@@ -41,6 +41,8 @@ export default {
         { text: "不包含名称", name: "excludeName" },
         { text: "包含旧料号", name: "includeOldCode" },
         { text: "不包含旧料号", name: "excludeOldCode" },
+        { text: "生产设备包含名称", name: "includePlName" },
+        { text: "生产设备不包含名称", name: "excludePlName" },
         { text: "料号开头", name: "startCode" },
         { text: "旧料号开头", name: "startOldCode" },
       ]
