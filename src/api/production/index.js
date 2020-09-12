@@ -245,9 +245,21 @@ export function ratioOfWorkingHours(params) {
     method: 'post'
   })
 }
-// 工时比例统计表
+// 色系
 export function colorStoreParticleSize(params, type) {
   const url = '/report-form/colorClass/' + type
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
+}// 订单按时交付率统计表
+export function orderDeliveryRate(params) {
+  const url = '/report-form/orderDeliveryRate'
   return request({
     url: url,
     headers: {

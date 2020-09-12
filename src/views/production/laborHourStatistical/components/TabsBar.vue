@@ -6,15 +6,13 @@
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
-              type="daterange"
-              align="right"
               style="width: auto"
-              class="input-class"
+              type="monthrange"
+              align="right"
               unlink-panels
               range-separator="至"
-              value-format="yyyy-MM-dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="开始月份"
+              end-placeholder="结束月份"
               :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
@@ -43,27 +41,23 @@ export default {
       value: [],
       pickerOptions: {
         shortcuts: [{
-          text: '最近一周',
+          text: '本月',
+          onClick(picker) {
+            picker.$emit('pick', [new Date(), new Date()]);
+          }
+        }, {
+          text: '今年至今',
           onClick(picker) {
             const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            const start = new Date(new Date().getFullYear(), 0);
             picker.$emit('pick', [start, end]);
           }
         }, {
-          text: '最近一个月',
+          text: '最近六个月',
           onClick(picker) {
             const end = new Date();
             const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近三个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            start.setMonth(start.getMonth() - 6);
             picker.$emit('pick', [start, end]);
           }
         }]
@@ -75,8 +69,8 @@ export default {
     };
   },
   created: function() {
-    this.value[0] = this.getDay('', -15).date
-    this.value[1] = this.getDay('', 0).date
+    this.value[0] = this.getMonth('', -3).month
+    this.value[1] = this.getMonth('', 0).month
   },
   mounted() {
 
@@ -101,6 +95,25 @@ export default {
         date: tYear + "-" + tMonth + "-" + tDate
       }
     },
+    // 查询前后三天日期
+    getMonth(date, day){
+      var today = new Date();
+      var targetday_milliseconds=today.getTime()
+      today.setTime(targetday_milliseconds) //注意，这行是关键代码
+      var tYear = today.getFullYear()
+      var tMonth = today.getMonth()
+      var tDate = today.getDate()
+      var getDay = today.getDay()
+      tMonth = this.doHandleMonth(tMonth + 1 + day)
+      tDate = this.doHandleMonth(tDate)
+      var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+      var week = weeks[getDay]
+      return {
+        day: tDate,
+        week: week,
+        month: tYear + "-" + tMonth
+      }
+    },
     doHandleMonth(month) {
       var m = month;
       if(month.toString().length == 1) {
@@ -123,8 +136,8 @@ export default {
     },
     upload() {
       this.value = []
-      this.value[0] = this.getDay('', -15).date
-      this.value[1] = this.getDay('', 0).date
+      this.value[0] = this.getMonth('', -3).month
+      this.value[1] = this.getMonth('', 0).month
       this.$emit('uploadList')
     },
     // 切换仓库

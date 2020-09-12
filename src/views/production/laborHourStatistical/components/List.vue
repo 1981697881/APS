@@ -109,33 +109,39 @@
             })
         )
       },
-      getDaysBetween(dateString1,dateString2){
-        let startDate = Date.parse(dateString1);
-        let endDate = Date.parse(dateString2);
-        let days = (endDate - startDate)/(1*24*60*60*1000);
+      getDaysBetween(date1,date2){
+        // 拆分年月日
+        date1 = date1.split('-');
+        // 得到月数
+        date1 = parseInt(date1[0]) * 12 + parseInt(date1[1]);
+        // 拆分年月日
+        date2 = date2.split('-');
+        // 得到月数
+        date2 = parseInt(date2[0]) * 12 + parseInt(date2[1]);
+        var m = Math.abs(date1 - date2);
         // alert(days);
-        return  days
+        return  m
       },
       uploadPr(val) {
         this.fetchData(val)
       },
-      // 查询前后日期
-      getDay(date, day){
-        var today = new Date(date[0], date[1]-1, date[2]);
-        var targetday_milliseconds=today.getTime() + 1000*60*60*24*day
-        today.setTime(targetday_milliseconds) // 注意，这行是关键代码
+      // 查询前后三天日期
+      getMonth(date, day){
+        var today = new Date(date[0], date[1]-1);
+        var targetday_milliseconds=today.getTime()
+        today.setTime(targetday_milliseconds) //注意，这行是关键代码
         var tYear = today.getFullYear()
         var tMonth = today.getMonth()
         var tDate = today.getDate()
         var getDay = today.getDay()
-        tMonth = this.doHandleMonth(tMonth + 1)
+        tMonth = this.doHandleMonth(tMonth + 1 + day)
         tDate = this.doHandleMonth(tDate)
-        var weeks = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
+        var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
         var week = weeks[getDay]
         return {
           day: tDate,
           week: week,
-          date: (tMonth + '/' + tDate)
+          month: tYear + "-" + tMonth
         }
       },
       doHandleMonth(month) {
@@ -164,7 +170,7 @@
           const columns = this.columns
           for (let i = 0; i<= Number(interval); i++) {
             // 根据时间生成表头 把时间包含数据重新组装 -》array
-            const obj = { text: this.getDay(arr, i).date + '', name: '', colspan: true, data: [{ width: '250px', text: '正班工时', name: 'a' + this.getDay(arr, i).date },{ width: '250px', text: '加班工时', name: 'b' + this.getDay(arr, i).date }] }
+            const obj = { text: this.getMonth(arr, i).month + '', name: '', colspan: true, data: [{ width: '250px', text: '正班工时', name: 'a' + this.getMonth(arr, i).month },{ width: '250px', text: '加班工时', name: 'b' + this.getMonth(arr, i).month }] }
             columns.push(obj)
           }
           ratioOfWorkingHours(val).then(res => {
@@ -184,9 +190,8 @@
                 array.forEach((item2, index2) => {
                   let date = item['date']
                   date = date.replace(/:/g,'-')
-                  date = date.replace(/ /g,'-')
                   let arr1 = date.split('-')
-                  let key = this.getDay(arr1, 0).date + ''
+                  let key = this.getMonth(arr1, 0).month + ''
                   if(item.normal){
                     key = 'a' + key
                   }else{
