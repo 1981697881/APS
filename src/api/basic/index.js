@@ -16,7 +16,7 @@ export function getFrameTree(params) {
 }
 
 // 组织架构-获取列表
-export function getFrameList(params) {
+export function getFrameList(params, data) {
   const url = '/department/list/' + params.pageNum + '/' + params.pageSize
   return request({
     url: url,
@@ -24,7 +24,8 @@ export function getFrameList(params) {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    method: 'POST'
+    method: 'POST',
+    data: data
   })
 }
 

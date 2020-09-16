@@ -58,6 +58,13 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
+          <el-form-item :label="'生产设备'" :label-width="'70px'">
+            <el-select v-model="search.plId" class="width-full" placeholder="生产设备" @change="selectLine">
+              <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray"  :key="i"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
           <el-form-item :label="'生产状态'" :label-width="'70px'">
             <el-select v-model="search.allocatedStatus" placeholder="请选择" @change="selectChange">
               <el-option
@@ -79,6 +86,7 @@
 <script>
 import { mapGetters } from "vuex"
 import { PrintSchedule } from '@/tools/doPrint'
+import { getFinalGoodsT} from '@/api/basic/index'
 import { schedulingStop, exportSemiSchedulin } from "@/api/production/index"
 export default {
   components: {},
@@ -128,10 +136,12 @@ export default {
         value: '已完工',
         label: '已完工'
       }],
+      rArray: [],
       visible: false,
       search: {
         allocatedStatus: '计划中',
         oldCode: null,
+        plId: null,
         taskNum: null,
         soName: null,
       }
@@ -139,6 +149,17 @@ export default {
   },
 
   methods: {
+    fetchLine(val) {
+      this.search.plId = null
+      getFinalGoodsT(val).then(res => {
+        if(res.flag) {
+          this.rArray = res.data
+        }
+      })
+    },
+    selectLine(val) {
+      this.$emit('uploadList')
+    },
     selectChange(val) {
         this.$emit('uploadList')
     },
@@ -224,6 +245,7 @@ export default {
       this.search.oldCode = null
       this.search.soName = null
       this.search.taskNum = null
+      this.search.plId = null
       this.value = []
       this.$emit('uploadList')
     },
@@ -252,6 +274,7 @@ export default {
       this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       this.search.soName != null && this.search.soName != '' ? obj.soName = this.search.soName : null
       this.search.taskNum != null && this.search.taskNum != '' ? obj.taskNum = this.search.taskNum : null
+      this.search.plId != null && this.search.plId != '' ? obj.plId = this.search.plId : null
       this.value != null && this.value != undefined ? obj.productionDateEnd = this.value[1] : null
       this.value != null && this.value != undefined ? obj.productionDateStart = this.value[0] : null
       console.log(obj)

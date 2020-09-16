@@ -9,18 +9,6 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint" >打印</el-button>
-          <!--<el-popover
-            placement="bottom"
-            width="200"
-            :size="'mini'"
-            v-model="visible">
-            <p>请选择需要打印的内容</p>
-            <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="primary" @click="confirmPrint">打印单据</el-button>
-              <el-button type="success" size="mini" @click="visible = false">打印标签</el-button>
-            </div>
-            <el-button :size="'mini'" type="primary" icon="el-icon-printer" slot="reference"  >打印</el-button>
-          </el-popover>-->
         </el-button-group>
       </el-row>
       <el-row :gutter="24"  style="padding-top: 15px;">
@@ -57,6 +45,12 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
+          <el-form-item :label="'生产设备'" :label-width="'70px'">
+            <el-select v-model="search.plId" class="width-full" placeholder="生产设备" @change="selectLine">
+              <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray"  :key="i"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col> <el-col :span="4">
           <el-form-item :label="'生产状态'" :label-width="'70px'">
             <el-select v-model="search.allocatedStatus" placeholder="请选择" @change="selectChange">
               <el-option
@@ -78,6 +72,7 @@
 <script>
 import { mapGetters } from "vuex"
 import { schedulingStop } from "@/api/production/index";
+import { getFinalGoodsT} from '@/api/basic/index'
 import { PrintSchedule } from '@/tools/doPrint'
 export default {
   components: {},
@@ -128,9 +123,11 @@ export default {
         label: '已完工'
       }],
       visible: false,
+      rArray: [],
       search: {
         allocatedStatus: '计划中',
         oldCode: null,
+        plId: null,
         taskNum: null,
         soName: null,
       }
@@ -138,6 +135,17 @@ export default {
   },
 
   methods: {
+    fetchLine(val) {
+      this.search.plId = null
+      getFinalGoodsT(val).then(res => {
+        if(res.flag) {
+          this.rArray = res.data
+        }
+      })
+    },
+    selectLine(val) {
+      this.$emit('uploadList')
+    },
     selectChange(val) {
       this.$emit('uploadList')
     },
@@ -205,6 +213,7 @@ export default {
       this.search.oldCode = null
       this.search.soName = null
       this.search.taskNum = null
+      this.search.plId = null
       this.value = []
       this.$emit('uploadList')
     },
@@ -233,6 +242,7 @@ export default {
       this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       this.search.soName != null && this.search.soName != '' ? obj.soName = this.search.soName : null
       this.search.taskNum != null && this.search.taskNum != '' ? obj.taskNum = this.search.taskNum : null
+      this.search.plId != null && this.search.plId != '' ? obj.plId = this.search.plId : null
       this.value != null && this.value != undefined ? obj.productionDateEnd = this.value[1] : null
       this.value != null && this.value != undefined ? obj.productionDateStart = this.value[0] : null
       return obj

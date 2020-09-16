@@ -48,6 +48,13 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
+          <el-form-item :label="'生产设备'" :label-width="'70px'">
+            <el-select v-model="search.plId" class="width-full" placeholder="生产设备" @change="selectLine">
+              <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray"  :key="i"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
           <el-form-item :label="'生产状态'" :label-width="'70px'">
             <el-select v-model="search.allocatedStatus" placeholder="请选择" @change="selectChange">
               <el-option
@@ -76,6 +83,7 @@
   import { mapGetters } from "vuex";
   import { PrintSemi } from '@/tools/doPrint'
   import { schedulingStop, exportSemiSchedulin } from "@/api/production/index"
+  import { getSemiFinishedProducts} from '@/api/basic/index'
   import {getToken} from '@/utils/auth'
   export default {
     components: {},
@@ -128,7 +136,9 @@
             }
           }]
         },
+        rArray: [],
         search: {
+          plId: null,
           oldCode: null,
           allocatedStatus: '计划中',
         }
@@ -142,6 +152,17 @@
       this.$emit('firstLoad', this.value)
     },
     methods: {
+      fetchLine(val) {
+        this.search.plId = null
+        getSemiFinishedProducts(val).then(res => {
+          if(res.flag) {
+            this.rArray = res.data
+          }
+        })
+      },
+      selectLine(val) {
+        this.$emit('uploadList')
+      },
       selectChange(val) {
         this.$emit('uploadList')
       },
@@ -261,6 +282,7 @@
       qFilter() {
         let obj = {}
         this.search.oldCode != null && this.search.oldCode != undefined ? obj.oldCode = this.search.oldCode : null
+        this.search.plId != null && this.search.plId != undefined ? obj.plId = this.search.plId : null
         this.search.allocatedStatus != null && this.search.allocatedStatus != undefined ? obj.allocatedStatus = this.search.allocatedStatus : null
         this.value != null && this.value != undefined ? obj.productionDateEnd = this.value[1] : null
         this.value != null && this.value != undefined ? obj.productionDateStart = this.value[0] : null
@@ -343,6 +365,7 @@
       },
       upload() {
         this.search.oldCode = null
+        this.search.plId = null
         this.search.allocatedStatus = '计划中'
         this.$emit('uploadList')
       },

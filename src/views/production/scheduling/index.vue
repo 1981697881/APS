@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     selectChange(val) {
+      this.$refs.tabs.fetchLine(val)
       this.upload({tpId: val })
     },
     delivery(obj) {
@@ -80,6 +81,7 @@ export default {
         if(res.flag) {
           console.log(res)
           this.plaArray = res.data
+          this.$refs.tabs.fetchLine(res.data[0].tpId)
           this.plaIdS = res.data[0].tpId
           this.upload()
         }

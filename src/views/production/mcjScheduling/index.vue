@@ -63,6 +63,7 @@ export default {
   },
   methods: {
     selectChange(val) {
+      this.$refs.tabs.fetchLine(val)
       this.upload({tpId: val })
     },
     delivery(obj) {
@@ -79,6 +80,7 @@ export default {
         if (res.flag) {
           console.log(res)
           this.plaArray = res.data
+          this.$refs.tabs.fetchLine(res.data[0].tpId)
           this.plaIdS = res.data[0].tpId
           this.upload();
         }
@@ -121,6 +123,10 @@ export default {
       const obj = this.$refs.tabs.qFilter()
       obj.tpId = this.plaIdS
       this.$refs.list.fetchData(obj)
+    },
+    // 查询
+    query() {
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
     },
   }
 };

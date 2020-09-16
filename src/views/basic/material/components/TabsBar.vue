@@ -35,9 +35,27 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="del">删除</el-button>-->
           <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleAlter">信息维护</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
+         <!-- <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>-->
           <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleSync" >同步</el-button>
+          <el-upload
+            name="order"
+            :on-success="uploadSuccess"
+            :on-error="uploadError"
+            accept="xlsx,xls"
+            ref="upload"
+            :headers="headers"
+            :show-file-list="false"
+            action="web/excel/import/goodsMMStock"
+            class="upload-demo"
+            multiple
+            :auto-upload="false"
+            :on-change="handleUpload"
+            :limit="3"
+          >
+            <el-button size="mini" type="primary" icon="el-icon-upload2" >导入</el-button>
+            <el-button style="margin-left: 10px;display: none" size="mini" type="success" @click="submitUpload">上传到服务器</el-button>
+          </el-upload>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh"    @click="upload">刷新</el-button>
         </el-button-group>
       </el-row>
@@ -47,6 +65,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { PrintFour } from '@/tools/doPrint'
+import {getToken} from '@/utils/auth'
 export default {
   components: {},
   computed: {
@@ -54,6 +73,10 @@ export default {
   },
   data() {
     return {
+      isUpload: null,
+      headers: {
+        'authorization': getToken('apsrx'),
+      },
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -99,6 +122,35 @@ export default {
 
   },
   methods: {
+    submitUpload() {
+      this.$refs.upload.submit()
+    },
+    uploadError(res) {
+      this.$message({
+        message: '上传失败',
+        type: "warning"
+      });
+      this.$emit('uploadList')
+    },
+    uploadSuccess(res) {
+      if(res.flag){
+        this.$message({
+          message: res.msg,
+          type: "success"
+        });
+        this.$emit('uploadList')
+      }else{
+        this.$message({
+          message: res.msg,
+          type: "warning"
+        });
+      }
+    },
+    handleUpload(file, fileList){
+      if(file.status=="ready"){
+        this.submitUpload()
+      }
+    },
     query() {
       this.$emit('queryBtn', this.qFilter())
     },
@@ -187,6 +239,8 @@ export default {
   }
 };
 </script>
-
 <style>
+  .upload-demo{
+    float: right;
+  }
 </style>

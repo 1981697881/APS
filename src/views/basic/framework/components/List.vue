@@ -54,7 +54,7 @@ export default {
         { text: "上级组织", name: "deptParent", default: false },
         { text: "上级组织", name: "deptParentName" },
         { text: "组织属性", name: "orgAttr" },
-        { text: "状态", name: "isDel" },
+        { text: "状态", name: "disableDesc" },
       ]
     };
   },

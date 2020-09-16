@@ -121,10 +121,10 @@ export default {
       fetchFormat() {
         const data = {
           pageNum: 1,
-          pageSize: 1000
+          pageSize: 1000,
         }
         //获取上级下拉
-        getFrameList(data).then(res => {
+        getFrameList(data, { disable: false }).then(res => {
           console.log(res)
               this.pArray = res.data.records;
           });

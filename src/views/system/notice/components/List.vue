@@ -83,9 +83,9 @@ export default {
       /*  fid: fid,
         type: type,*/
           pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
+          pageSize: this.list.size || 50,
       };
-        /*getFrameList(data).then(res => {
+        /*getFrameList(data,{ disable: false }).then(res => {
         this.loading = false;
         this.list = res.data;
       });*/

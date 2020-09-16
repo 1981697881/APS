@@ -138,9 +138,9 @@ export default {
     fetchFormat() {
       const data = {
         pageNum: 1,
-        pageSize: 1000
+        pageSize: 1000,
       };
-      getFrameList(data).then(res => {
+      getFrameList(data,{ disable: false }).then(res => {
         this.pArray = res.data.records
       });
     },

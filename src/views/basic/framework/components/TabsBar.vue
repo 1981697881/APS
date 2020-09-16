@@ -15,7 +15,8 @@
 
 <script>
 
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
+import { FrameAlter } from '@/api/basic/index';
 export default {
   data() {
     return {
@@ -25,7 +26,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["node","clickData"])
+    ...mapGetters(['node','clickData'])
   },
   methods:{
     handleTab(node){
@@ -36,16 +37,16 @@ export default {
         }
       }else{
         this.$message({
-          type:"warning",
-          message:"请先选择房产"
+          type:'warning',
+          message:'请先选择房产'
         })
       }
     },
     handlerAdd() {
-      this.$emit("showDialog", {rid: null})
+      this.$emit('showDialog', {rid: null})
     },
     upload() {
-      this.$emit("uploadList")
+      this.$emit('uploadList')
     },
     del() {
       if (this.clickData.deptId) {
@@ -63,8 +64,8 @@ export default {
         });
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         })
       }
     },
@@ -73,34 +74,36 @@ export default {
         this.$emit('showDialog', this.clickData)
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
     disable() {
       if (this.clickData.deptId) {
-        this.$message({
-          message: "抱歉，功能尚未完善！",
-          type: "warning"
+        FrameAlter({deptId: this.clickData.deptId, disable: true}).then(res => {
+          if(res.flag) {
+            this.$emit('uploadList')
+          }
         });
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
     enable() {
       if (this.clickData.deptId) {
-        this.$message({
-          message: "抱歉，功能尚未完善！",
-          type: "warning"
-        });
+        FrameAlter({deptId: this.clickData.deptId, disable: false}).then(res => {
+          if(res.flag){
+            this.$emit('uploadList')
+          }
+        })
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },

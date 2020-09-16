@@ -87,6 +87,7 @@ export default {
         }
       })
       this.$refs.list.resetBatch(this.batch)
+      this.$refs.tabs.fetchLine(val)
       this.upload({tpId: val })
     },
     delivery(obj) {
@@ -102,6 +103,7 @@ export default {
       getMcjSemiSchedulingType().then(res => {
         if(res.flag) {
           this.plaArray = res.data
+          this.$refs.tabs.fetchLine(res.data[0].tpId)
           this.plaIdS = res.data[0].tpId
           const array = this.$refs.tabs.getODate()
           this.$refs.list.fetchData({tpId: this.plaIdS, productionDateStart: array[0], productionDateEnd: array[1], allocatedStatus: '计划中'})
