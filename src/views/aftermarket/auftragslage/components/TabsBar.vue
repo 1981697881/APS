@@ -6,97 +6,164 @@
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
-              type="datetimerange"
+              type="daterange"
+              align="right"
               style="width: auto"
-              :picker-options="pickerOptions"
+              class="input-class"
+              unlink-panels
               range-separator="至"
-              value-format="yyyy-MM-dd HH:mm:ss"
+              value-format="yyyy-MM-dd"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              align="right">
+              :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item :label="'关键字'">
-            <el-input v-model="search.keyword" placeholder=""/>
+          <el-form-item :label="'U9料号'">
+            <el-input v-model="search.goodCode" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item :label="'旧料号'">
+            <el-input v-model="search.oldCode" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item :label="'名称'">
+            <el-input v-model="search.goodName" />
           </el-form-item>
         </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
+        <el-button-group style="float:right">
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click.native="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
+        </el-button-group>
       </el-row>
     </el-form>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import {getMType} from "@/api/basic/index";
-export default {
+  import { mapGetters } from "vuex";
+  export default {
     components: {},
     computed: {
-        ...mapGetters(["node","clickData","selections"])
+      ...mapGetters(["node","clickData","selections"])
     },
-  data() {
-    return {
-      value: '',
-      pickerOptions: {
-        shortcuts: [{
-          text: '最近一周',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近一个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近三个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-            picker.$emit('pick', [start, end]);
-          }
-        }]
-      },
-      search: {
-          keyword: null,
-          type:null
-      }
-    };
-  },
-  mounted(){
-
-  },
-  methods:{
-      //关键字查询
-      query(){
-          if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
-          }
-      },
-    handleAlter() {
-      if (this.clickData.gid) {
-        this.$emit('showDialog',{
-          gid: this.clickData.gid,
-        })
-      } else {
-        this.$message({
-          message: "无选中行",
-          type: "warning"
-        });
-      }
+    data() {
+      return {
+        value: [],
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
+        search: {
+          goodCode: null,
+          goodName: null,
+          oldCode: null
+        }
+      };
     },
-  }
-};
+    created: function() {
+      this.value[0] = this.getDay('', -15).date
+      this.value[1] = this.getDay('', 0).date
+    },
+    mounted() {
+
+    },
+    methods: {
+      // 查询前后三天日期
+      getDay(date, day){
+        var today = new Date();
+        var targetday_milliseconds=today.getTime() + 1000*60*60*24*day
+        today.setTime(targetday_milliseconds) //注意，这行是关键代码
+        var tYear = today.getFullYear()
+        var tMonth = today.getMonth()
+        var tDate = today.getDate()
+        var getDay = today.getDay()
+        tMonth = this.doHandleMonth(tMonth + 1)
+        tDate = this.doHandleMonth(tDate)
+        var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+        var week = weeks[getDay]
+        return {
+          day: tDate,
+          week: week,
+          date: tYear + "-" + tMonth + "-" + tDate
+        }
+      },
+      doHandleMonth(month) {
+        var m = month;
+        if(month.toString().length == 1) {
+          m = "0" + month;
+        }
+        return m;
+      },
+      // 下载文件
+      download(res) {
+        if (!res.data) {
+          return
+        }
+        let url = window.URL.createObjectURL(new Blob([res.data]))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', res.headers['content-disposition'].split('filename=')[1])
+        document.body.appendChild(link)
+        link.click()
+      },
+      upload() {
+        this.value = []
+        this.search.goodCode = null
+        this.search.oldCode = null
+        this.search.goodName = null
+        this.value[0] = this.getDay('', -15).date
+        this.value[1] = this.getDay('', 0).date
+        this.$emit('uploadList')
+      },
+      // 查询条件过滤
+      qFilter() {
+        let obj = {}
+        this.search.goodCode != null && this.search.goodCode != '' ? obj.goodCode = this.search.goodCode : null
+        this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
+        this.search.goodName != null && this.search.goodName != '' ? obj.goodName = this.search.goodName : null
+        this.value != null || this.value != undefined ? obj.endDate = this.value[1] : null
+        this.value != null || this.value != undefined ? obj.startDate = this.value[0] : null
+        return obj
+      },
+      exportData() {
+        this.$emit('exportData')
+      },
+      // 关键字查询
+      query() {
+        this.$emit('queryBtn', this.qFilter())
+      },
+    }
+  };
 </script>
 
 <style>

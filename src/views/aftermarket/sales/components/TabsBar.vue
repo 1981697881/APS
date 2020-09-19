@@ -197,9 +197,10 @@ export default {
       link.click()
     },
     exportData() {
-      exportSales(this.qFilter()).then(res => {
+     /* exportSales(this.qFilter()).then(res => {
         this.download(res)
-      })
+      })*/
+      this.$emit('exportData')
     },
     changeDate(val) {
       this.form.businessDateEnd = val[1]

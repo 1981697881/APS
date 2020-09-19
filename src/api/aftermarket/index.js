@@ -108,3 +108,28 @@ export function getShiftList(params, query) {
     data: query
   })
 }
+// 产品可出货库存表
+export function orderShipping(params) {
+  const url = '/report-form/orderShipping'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
+}// 项目订货情况分析表
+export function itemOrderingData(params) {
+  const url = '/report-form/itemOrderingData'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
+}

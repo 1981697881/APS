@@ -49,7 +49,7 @@
           const data = this.formatJson(filterVal, list);
           console.log(data)
           // 这里还是使用export_json_to_excel方法比较好，方便操作数据
-          excel.export_json_to_excel(tHeader,data,'作业统计')
+          excel.export_json_to_excel([tHeader],data,'作业统计')
         })
       },
       formatJson(filter, jsonDate){

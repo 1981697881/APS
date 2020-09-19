@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { delMaterial,getMaterialList} from '@/api/basic/index'
+import {orderShipping} from '@/api/aftermarket/index'
 import List from '@/components/List'
 
 export default {
@@ -32,45 +32,68 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: '', name: '',default:false },
-        { text: '产品名称', name: '' },
-        { text: '旧料号', name: '' },
-        { text: '库存数量', name: '' },
-        { text: '待发数量', name: '' },
-        { text: '剩余可发数量', name: '' },
+        { text: '产品名称', name: 'goodName' },
+        { text: '色 号', name: 'oldCode' },
+        { text: '料号', name: 'goodCode' },
+        { text: '库存数量', name: 'stockNum' },
+        { text: '待发数量', name: 'beSendNum' },
+        { text: '剩余可发数量', name: 'remainingNum' },
       ]
-    };
+    }
   },
+
   methods: {
-      //监听每页显示几条
-      handleSize(val) {
-          this.list.size = val
-          this.fetchData();
-      },
-      //监听当前页
-      handleCurrent(val) {
-          this.list.current = val;
-          this.fetchData();
-      },
-    dblclick(obj) {
-      //this.$emit('showDialog',obj.row)
+    ExportData() {
+      import("@/vendor/Export2Excel").then(excel => {
+        // 表格的表头列表
+        const columns = this.columns
+        const tHeader = []
+        // 与表头相对应的数据里边的字段
+        const filterVal = []
+        columns.forEach((item, index) => {
+          tHeader.push(item.text)
+          filterVal.push(item.name)
+        })
+        const list = this.list.records
+        const data = this.formatJson(filterVal, list);
+        // 这里还是使用export_json_to_excel方法比较好，方便操作数据
+        excel.export_json_to_excel([tHeader],data,'产品可出货库存表')
+      })
     },
-      //监听单击某一行
-      rowClick(obj) {
-          this.$store.dispatch("list/setClickData", obj.row);
-      },
-    fetchData(fid, type) {
-      /*this.loading = true;
-      const data = {
-      /!*  fid: fid,
-        type: type,*!/
-          pageNum: this.list.current || 1,
-          pageSize: this.list.size || 50
-      };
-        getMaterialList(data).then(res => {
+    formatJson(filter, jsonDate){
+      return jsonDate.map(v =>
+        filter.map(j => {
+          return v[j]
+        })
+      )
+    },
+    // 监听每页显示几条
+    handleSize(val) {
+      this.list.size = val
+      this.$emit('uploadList')
+    },
+    // 监听当前页
+    handleCurrent(val) {
+      this.list.current = val;
+      this.$emit('uploadList')
+    },
+    dblclick(obj) {
+      // this.$emit('showDialog',obj.row)
+    },
+    // 监听单击某一行
+    rowClick(obj) {
+      this.$store.dispatch("list/setClickData", obj.row);
+    },
+    uploadPr(val) {
+      this.fetchData(val)
+    },
+    fetchData(val) {
+      this.loading = true;
+      orderShipping(val).then(res => {
         this.loading = false;
-        this.list = res.data;
-      });*/
+        console.log(res)
+        this.list = {records: res.data};
+      });
     }
   }
 };
