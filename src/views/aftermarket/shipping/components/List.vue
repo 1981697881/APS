@@ -46,8 +46,8 @@ export default {
         { text: '价税合计', name: '' },
         { text: '料号', name: 'goodCode', width: '150px' },
         { text: '订单号', name: 'orderNum', width: '150px', sort: true },
-        { text: '已出货数量', name: '' },
-        { text: '待运输数量', name: '' },
+        { text: '已出货数量', name: 'sendNum' },
+        { text: '待运输数量', name: 'beSendNum' },
         { text: '已运输', name: '' },
       ]
     };

@@ -121,15 +121,15 @@ export function orderShipping(params) {
     method: 'post'
   })
 }// 项目订货情况分析表
-export function itemOrderingData(params) {
-  const url = '/report-form/itemOrderingData'
+export function itemOrderingData(params, query) {
+  const url = '/report-form/itemOrderingData/' + params.pageNum + '/' + params.pageSize
   return request({
     url: url,
     headers: {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    data: params,
-    method: 'post'
+    method: 'post',
+    data: query
   })
 }

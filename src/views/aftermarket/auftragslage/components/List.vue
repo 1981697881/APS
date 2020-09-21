@@ -32,19 +32,19 @@ export default {
       loading: false,
       list: {},
       columns: [
-        { text: '销售部门', name: 'goodName' },
-        { text: '业务员', name: 'oldCode' },
-        { text: '客户名称', name: 'goodCode' },
-        { text: '项目名称', name: 'stockNum' },
-        { text: '产品名称', name: 'beSendNum' },
-        { text: '色号', name: 'remainingNum' },
-        { text: '料号', name: 'remainingNum' },
-        { text: '订货总次数', name: 'remainingNum' },
-        { text: '订单总数量', name: 'remainingNum' },
-        { text: '出货总数量', name: 'remainingNum' },
-        { text: '最高单次订货数量', name: 'remainingNum' },
-        { text: '最低单次订单数量', name: 'remainingNum' },
-        { text: '平均单次订货数量', name: 'remainingNum' },
+        { text: '销售部门', name: 'saleDeptName' },
+        { text: '业务员', name: 'sellerName' },
+        { text: '客户名称', name: 'customerName' },
+        { text: '项目名称', name: 'soName' },
+        { text: '产品名称', name: 'goodName' },
+        { text: '色号', name: 'oldCode' },
+        { text: '料号', name: 'goodCode' },
+        { text: '订货总次数', name: 'sumSONum' },
+        { text: '订单总数量', name: 'countOrder' },
+        { text: '出货总数量', name: 'sumShipNum' },
+        { text: '最高单次订货数量', name: 'maxShipNum' },
+        { text: '最低单次订单数量', name: 'minShipNum' },
+        { text: '平均单次订货数量', name: 'avgShipNum' },
       ]
     }
   },
@@ -92,11 +92,17 @@ export default {
       this.$store.dispatch("list/setClickData", obj.row);
     },
     uploadPr(val) {
-      this.fetchData(val)
+      this.fetchData(val,{
+        pageNum: 1,
+        pageSize: this.list.size || 50
+      })
     },
-    fetchData(val) {
+    fetchData(val, data = {
+      pageNum: this.list.current || 1,
+      pageSize: this.list.size || 50
+    }) {
       this.loading = true;
-      itemOrderingData(val).then(res => {
+      itemOrderingData(data, val).then(res => {
         this.loading = false;
         this.list = res.data;
       });

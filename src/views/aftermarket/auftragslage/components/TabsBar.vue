@@ -20,6 +20,26 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
+          <el-form-item :label="'销售部门'">
+            <el-input v-model="search.saleDeptName" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item :label="'业务员'">
+            <el-input v-model="search.sellerName" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item :label="'客户'">
+            <el-input v-model="search.customerName" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item :label="'项目'">
+            <el-input v-model="search.soName" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
           <el-form-item :label="'U9料号'">
             <el-input v-model="search.goodCode" />
           </el-form-item>
@@ -85,7 +105,11 @@
         search: {
           goodCode: null,
           goodName: null,
-          oldCode: null
+          oldCode: null,
+          soName: null,
+          saleDeptName: null,
+          sellerName: null,
+          customerName: null,
         }
       };
     },
@@ -141,6 +165,10 @@
         this.search.goodCode = null
         this.search.oldCode = null
         this.search.goodName = null
+        this.search.saleDeptName = null
+        this.search.sellerName = null
+        this.search.customerName = null
+        this.search.soName = null
         this.value[0] = this.getDay('', -15).date
         this.value[1] = this.getDay('', 0).date
         this.$emit('uploadList')
@@ -151,6 +179,10 @@
         this.search.goodCode != null && this.search.goodCode != '' ? obj.goodCode = this.search.goodCode : null
         this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
         this.search.goodName != null && this.search.goodName != '' ? obj.goodName = this.search.goodName : null
+        this.search.saleDeptName != null && this.search.saleDeptName != '' ? obj.saleDeptName = this.search.saleDeptName : null
+        this.search.sellerName != null && this.search.sellerName != '' ? obj.sellerName = this.search.sellerName : null
+        this.search.customerName != null && this.search.customerName != '' ? obj.customerName = this.search.customerName : null
+        this.search.soName != null && this.search.soName != '' ? obj.soName = this.search.soName : null
         this.value != null || this.value != undefined ? obj.endDate = this.value[1] : null
         this.value != null || this.value != undefined ? obj.startDate = this.value[0] : null
         return obj

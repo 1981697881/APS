@@ -19,6 +19,7 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
+
         <el-col :span="4">
           <el-form-item :label="'U9料号'">
             <el-input v-model="search.goodCode" />
