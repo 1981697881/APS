@@ -32,8 +32,8 @@
         <el-button style="float: right" :size="'mini'" type="primary" >权限管理</el-button>
         <el-button style="float: right" :size="'mini'" type="primary" >权限浏览</el-button>
         <el-button style="float: right" :size="'mini'" type="primary" @click="upload" >刷新</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >启用</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >禁用</el-button>
+        <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
+        <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
         <el-button style="float: right" :size="'mini'" type="primary" >保存权限</el-button>
       </el-button-group>
     </el-form>
@@ -43,6 +43,7 @@
 <script>
 
 import { mapGetters } from "vuex";
+import { alterUsers } from '@/api/system/index';
 export default {
   data() {
     return {
@@ -87,6 +88,36 @@ export default {
       },
     upload() {
       this.$emit('uploadAll')
+    },
+    disable() {
+      if (this.clickData.uid) {
+        this.clickData.disable = true
+        alterUsers(this.clickData).then(res => {
+          if(res.flag) {
+            this.$emit('uploadList')
+          }
+        });
+      } else {
+        this.$message({
+          message: '无选中行',
+          type: 'warning'
+        });
+      }
+    },
+    enable() {
+      if (this.clickData.uid) {
+        this.clickData.disable = false
+        alterUsers(this.clickData).then(res => {
+          if(res.flag){
+            this.$emit('uploadList')
+          }
+        })
+      } else {
+        this.$message({
+          message: '无选中行',
+          type: 'warning'
+        });
+      }
     },
     handlerDel(command) {
       if(command=="1") {

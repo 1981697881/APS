@@ -42,6 +42,7 @@ export default {
         { text: "联系电话", name: "tel" },
         { text: "员工性质", name: "nature", formatt: 'checkWarning'},
         { text: "描述", name: "remark" },
+        { text: "状态", name: "disableDesc" },
       ]
     };
   },

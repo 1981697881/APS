@@ -106,6 +106,18 @@ export function updateProductNum(params) {
     method: 'put',
     data: params
   })
+}// 销售计划-修改厂务预计日期
+export function updateSaleOrderDetail(params) {
+  const url = '/sale-order-detail/update'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'put',
+    data: params
+  })
 }
 // 生产排程-录入批号
 export function updateLotNo(params) {

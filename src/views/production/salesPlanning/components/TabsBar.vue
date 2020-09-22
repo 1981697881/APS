@@ -54,6 +54,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">核准</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="open">日期修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
       </el-row>
@@ -139,6 +140,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import { salesListSync, exportSales, notarizeBatchList} from "@/api/aftermarket/index"
+  import { updateSaleOrderDetail} from "@/api/production/index"
   export default {
     components: {},
     computed: {
@@ -204,6 +206,33 @@
       }
     },
     methods: {
+      open() {
+        if (this.clickData) {
+          if(this.clickData.factoryEstimatedDate.indexOf("KC") !== -1){
+            this.$prompt('请输入', '厂务预计出货日期', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              inputValue: this.clickData.factoryEstimatedDate,
+            }).then(({ value }) => {
+              updateSaleOrderDetail({soDeId: this.clickData.soDeId, factoryEstimatedDate: value}).then(res => {
+                if(res.flag) {
+                  this.$emit('uploadList')
+                }
+              })
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '取消输入'
+              });
+            });
+          }
+        } else {
+        this.$message({
+          message: "无选中行",
+          type: "warning"
+        });
+       }
+      },
       selectChange(val) {
         this.isConfirm = val
         this.$emit('uploadList')

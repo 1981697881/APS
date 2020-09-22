@@ -15,6 +15,8 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="alter">修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="Delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
         </el-button-group>
       </el-row>
     </el-form>
@@ -22,6 +24,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { alterClerk } from '@/api/basic/index';
 export default {
   components: {},
   computed: {
@@ -67,6 +70,36 @@ export default {
           message: "无选中行",
           type: "warning"
         })
+      }
+    },
+    disable() {
+      if (this.clickData.eid) {
+        this.clickData.disable = true
+        alterClerk(this.clickData).then(res => {
+          if(res.flag) {
+            this.$emit('uploadList')
+          }
+        });
+      } else {
+        this.$message({
+          message: '无选中行',
+          type: 'warning'
+        });
+      }
+    },
+    enable() {
+      if (this.clickData.eid) {
+        this.clickData.disable = true
+        alterClerk(this.clickData).then(res => {
+          if(res.flag){
+            this.$emit('uploadList')
+          }
+        })
+      } else {
+        this.$message({
+          message: '无选中行',
+          type: 'warning'
+        });
       }
     },
     query() {
