@@ -29,12 +29,12 @@
             <el-dropdown-item command="2">用户</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button style="float: right" :size="'mini'" type="primary" >权限管理</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >权限浏览</el-button>
+    <!--    <el-button style="float: right" :size="'mini'" type="primary" >权限管理</el-button>
+        <el-button style="float: right" :size="'mini'" type="primary" >权限浏览</el-button>-->
         <el-button style="float: right" :size="'mini'" type="primary" @click="upload" >刷新</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >保存权限</el-button>
+       <!-- <el-button style="float: right" :size="'mini'" type="primary" >保存权限</el-button>-->
       </el-button-group>
     </el-form>
   </div>
@@ -92,9 +92,10 @@ export default {
     disable() {
       if (this.clickData.uid) {
         this.clickData.disable = true
+        this.clickData.status = 2
         alterUsers(this.clickData).then(res => {
           if(res.flag) {
-            this.$emit('uploadList')
+            this.$emit('uploadAll')
           }
         });
       } else {
@@ -107,9 +108,10 @@ export default {
     enable() {
       if (this.clickData.uid) {
         this.clickData.disable = false
+        this.clickData.status = 0
         alterUsers(this.clickData).then(res => {
           if(res.flag){
-            this.$emit('uploadList')
+            this.$emit('uploadAll')
           }
         })
       } else {

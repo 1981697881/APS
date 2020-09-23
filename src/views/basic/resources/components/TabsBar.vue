@@ -32,7 +32,7 @@
         <el-button style="float: right" :size="'mini'" icon="el-icon-refresh" type="primary" @click="upload">刷新</el-button>
         <el-button style="float: right" :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
         <el-button style="float: right" :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
-        <el-button style="float: right" :size="'mini'" icon="el-icon-view" type="primary" @click="usage">资源使用情况</el-button>
+       <!-- <el-button style="float: right" :size="'mini'" icon="el-icon-view" type="primary" @click="usage">资源使用情况</el-button>-->
       </el-button-group>
     </el-form>
   </div>

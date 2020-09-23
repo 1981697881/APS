@@ -100,7 +100,7 @@ export default {
         pageNum: 1,
         pageSize: 1500
       };
-      getClerkList(data, {deptIds: [4]}).then(res => {
+      getClerkList(data, {deptIds: [4], disable: false }).then(res => {
         this.search.uid = res.data.records[0].uid
         this.levelFormat = res.data.records
         this.$emit('queryBtn', this.qFilter())

@@ -153,7 +153,7 @@
         methods: {
           changeCheck(val) {
             const levelFormat = this.levelFormat
-            levelFormat.forEach((item, index)=>{
+            levelFormat.forEach((item, index)=> {
              if( val == item.eid ) {
                this.form.jobNum = item.jobNum
              }
@@ -217,7 +217,7 @@
                 pageNum: this.list.current || 1,
                 pageSize: this.list.size || 1500
               };
-              getClerkList(data).then(res => {
+              getClerkList(data, { disable: false }).then(res => {
                 this.levelFormat = res.data.records
               });
             },
