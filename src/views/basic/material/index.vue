@@ -106,7 +106,7 @@ export default {
     },
     // 查询
     query() {
-      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+      this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
     },
   }
 };

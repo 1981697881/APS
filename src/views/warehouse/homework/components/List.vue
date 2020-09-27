@@ -59,13 +59,6 @@
           })
         )
       },
-      getDaysBetween(dateString1,dateString2){
-        let startDate = Date.parse(dateString1);
-        let endDate = Date.parse(dateString2);
-        let days = (endDate - startDate)/(1*24*60*60*1000);
-        // alert(days);
-        return  days
-      },
       uploadPr(val) {
         this.fetchData(val)
       },
@@ -75,6 +68,13 @@
       // 监听单击某一行
       rowClick(obj) {
         this.$store.dispatch('list/setClickData', obj.row);
+      },
+      getDaysBetween(dateString1,dateString2){
+        let startDate = Date.parse(dateString1);
+        let endDate = Date.parse(dateString2);
+        let days = (endDate - startDate)/(1*24*60*60*1000);
+        // alert(days);
+        return  days
       },
       // 查询前后日期
       getDay(date, day){
