@@ -224,8 +224,8 @@
               var arrObj = {}
               // 遍历组装数据
               for(let i in data){
-                array.forEach((item2, index2) => {
                   data[i].some((item3, index3) => {
+                    array.forEach((item2, index2) => {
                     let date = item3['productionDate']
                     date = date.replace(/:/g,'-')
                     date = date.replace(/ /g,'-')
@@ -234,24 +234,30 @@
                     if(item2 == key){
                       if(result.length > 0){
                         result.some((item4, index4)=>{
-                          if(typeof(item4['oldCode'+index2]) == 'undefined' && item4['plName'] == i){
-                            eval("item4.oldCode" + index2 + "='" + item3.color + "'")
-                            eval("item4.goodName" + index2 + "='" + item3.goodName + "'")
-                            eval("item4.taskId" + index2 + "='" + item3.taskId + "'")
-                            eval("item4.allocatedNum" + index2 + "='" + item3.allocatedNum + "'")
-                            eval("item4.taskNum" + index2 + "='" + item3.taskNum + "'")
-                            eval("item4.alertStatus" + index2 + "=" + item3.alertStatus)
-                            eval("item4.plId" + index2 + "='" + item3.plId + "'")
-                            eval("item4.tpId" + index2 + "='" + item3.tpId + "'")
-                            eval("item4.lotNo" + index2 + "='" + item3.lotNo + "'")
-                            eval("item4.estimatedStorage" + index2 + "='" + item3.estimatedStorage + "'")
-                            eval("item4.singleLotNum" + index2 + "='" + item3.singleLotNum + "'")
-                            eval("item4.lotNum" + index2 + "='" + item3.lotNum + "'")
-                            eval("item4.productionDate" + index2 + "='" + item3.productionDate + "'")
-                            eval("item4.productionQuantity" + index2 + "='" + item3.productionQuantity + "'")
-                            eval("item4.remark" + index2 + "='" + (item3.remark == null ? '' : item3.remark) + "'")
-                            eval("item4.allocatedStatus" + index2 + "='" + item3.allocatedStatus + "'")
-                          } else {
+                            console.log(index4)
+                            if(typeof(item4['oldCode'+index2]) == 'undefined' && item4['plName'] == i){
+                              console.log(1)
+                              console.log(item3.allocatedNum)
+                              eval("item4.oldCode" + index2 + "='" + item3.color + "'")
+                              eval("item4.goodName" + index2 + "='" + item3.goodName + "'")
+                              eval("item4.taskId" + index2 + "='" + item3.taskId + "'")
+                              eval("item4.allocatedNum" + index2 + "='" + item3.allocatedNum + "'")
+                              eval("item4.taskNum" + index2 + "='" + item3.taskNum + "'")
+                              eval("item4.alertStatus" + index2 + "=" + item3.alertStatus)
+                              eval("item4.plId" + index2 + "='" + item3.plId + "'")
+                              eval("item4.tpId" + index2 + "='" + item3.tpId + "'")
+                              eval("item4.lotNo" + index2 + "='" + item3.lotNo + "'")
+                              eval("item4.estimatedStorage" + index2 + "='" + item3.estimatedStorage + "'")
+                              eval("item4.singleLotNum" + index2 + "='" + item3.singleLotNum + "'")
+                              eval("item4.lotNum" + index2 + "='" + item3.lotNum + "'")
+                              eval("item4.productionDate" + index2 + "='" + item3.productionDate + "'")
+                              eval("item4.productionQuantity" + index2 + "='" + item3.productionQuantity + "'")
+                              eval("item4.remark" + index2 + "='" + (item3.remark == null ? '' : item3.remark) + "'")
+                              eval("item4.allocatedStatus" + index2 + "='" + item3.allocatedStatus + "'")
+                              return true
+                            } else {
+                              console.log(2)
+                              console.log(item3.allocatedNum)
                               var obj = {}
                               // 根据每个时间里的数据量生成数据行
                               eval("obj.oldCode" + index2 + "='" + item3.color + "'")
@@ -271,7 +277,7 @@
                               eval("obj.lotNo" + index2 + "='" + item3.lotNo + "'")
                               result.push(obj)
                               return true
-                          }
+                            }
                         })
                       } else {
                         var obj = {}
