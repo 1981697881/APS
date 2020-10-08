@@ -68,7 +68,7 @@ export default {
             }]
         },
       search: {
-          keyword: null
+          keyword: null,
       }
     };
   },
@@ -86,12 +86,23 @@ export default {
               });
           }
       },
-      //关键字查询
-      query(){
-          if((typeof this.search.keyword != null) && (this.search.keyword !='')){
-
-          }
-      },
+    // 查询条件过滤
+    qFilter() {
+      let obj = {}
+      this.search.keyword != null && this.search.keyword != '' ? obj.keyword = this.search.keyword : null
+      this.value != null && this.value != undefined ? obj.productionDateEnd = this.value[1] : null
+      this.value != null && this.value != undefined ? obj.productionDateStart = this.value[0] : null
+      return obj
+    },
+    // 关键字查询
+    query() {
+      this.$emit('uploadList')
+    },
+    upload() {
+      this.search.keyword = null
+      this.value = []
+      this.$emit('uploadList')
+    },
       handleAudit(){
         if (this.clickData.oid) {
             this.$emit('showDialog',{

@@ -7,8 +7,6 @@
       </div>
       <list ref="list"  @showDialog="handlerDialog"/>
     </div>
-
-
   </div>
 </template>
 

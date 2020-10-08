@@ -74,7 +74,7 @@ export default {
     },
     disable() {
       if (this.clickData.eid) {
-        this.clickData.disable = true
+        this.clickData.disable = false
         alterClerk(this.clickData).then(res => {
           if(res.flag) {
             this.$emit('uploadList')
