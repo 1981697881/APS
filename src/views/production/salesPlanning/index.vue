@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @queryBtn="query" @uploadList="uploadList"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @showDialogT="handlerDialogT" @queryBtn="query" @uploadList="uploadList"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog" @uploadList="uploadPage"/>
     </div>
@@ -17,22 +17,35 @@
     >
       <info @hideDialog="hideWindow" @uploadList="uploadList" :soId="soId"></info>
     </el-dialog>
+    <el-dialog
+      :visible.sync="visible2"
+      title="厂务预计出厂日期"
+      v-if="visible2"
+      v-dialogDrag
+      :width="'60%'"
+      destroy-on-close
+    >
+      <detail-t @hideDialog="hideWindow2" @uploadList="uploadList" :soDeId="soDeId"></detail-t>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { TabsBar, List } from "./components"
-import { Info } from "./form"
+import { Info,DetailT } from "./form"
 
 export default {
   components: {
     TabsBar,
     List,
+    DetailT,
     Info
   },
   data() {
     return {
       visible: null,
+      visible2: null,
+      soDeId: null,
       soId: null
     };
   },
@@ -43,9 +56,16 @@ export default {
     hideWindow(val) {
       this.visible = val
     },
+    hideWindow2(val) {
+      this.visible2 = val
+    },
     handlerDialog(obj) {
       if (obj) this.soId = obj.soId
       this.visible = true
+    },
+    handlerDialogT(obj) {
+      if (obj) this.soDeId = obj.soDeId
+      this.visible2 = true
     },
     // 更新列表
     uploadList(val) {

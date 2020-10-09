@@ -9,6 +9,7 @@
               style="width: auto"
               type="monthrange"
               align="right"
+              value-format="yyyy-MM"
               unlink-panels
               range-separator="至"
               start-placeholder="开始月份"

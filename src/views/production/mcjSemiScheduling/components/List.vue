@@ -197,6 +197,47 @@
         }
         return m;
       },
+      ExportData() {
+        import('@/vendor/Export2Excel').then(excel => {
+          // 表格的表头列表
+          const columns = this.columns
+          const tHeader = []
+          const multiHeader = []
+          // 与表头相对应的数据里边的字段
+          const filterVal = []
+          let result = []
+          columns.forEach((item, index) => {
+            if(item.colspan){
+              item.data.forEach((item2, index2) =>{
+                multiHeader.push(item2.text)
+                if(result.indexOf(item.text)==-1){
+                  tHeader.push(item.text)
+                  result.push(item.text)
+                }else{
+                  tHeader.push('')
+                }
+                filterVal.push(item2.name)
+              })
+            }else{
+              multiHeader.push('')
+              tHeader.push(item.text)
+              filterVal.push(item.name)
+            }
+          })
+          const merges = []
+          const list = this.list
+          const data = this.formatJson(filterVal, list)
+          // 这里还是使用export_json_to_excel方法比较好，方便操作数据
+          excel.export_json_to_excel([tHeader], data, '美瓷胶半成品生产计划', multiHeader, merges)
+        })
+      },
+      formatJson(filter, jsonDate){
+        return jsonDate.map(v =>
+          filter.map(j => {
+            return v[j]
+          })
+        )
+      },
       fetchData(val) {
         this.loading = true
         const data = {

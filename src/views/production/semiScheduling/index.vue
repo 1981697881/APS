@@ -68,11 +68,12 @@ export default {
       this.upload({tpId: val })
     },
     exportData() {
-      const obj = this.$refs.tabs.qFilter()
+      this.$refs.list.ExportData()
+     /* const obj = this.$refs.tabs.qFilter()
       obj.tpId = this.plaIdS
       exportSemiSchedulin(obj).then(res => {
         this.$refs.tabs.download(res)
-      })
+      })*/
     },
     delivery(obj) {
       if(obj) {

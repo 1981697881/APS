@@ -10,6 +10,7 @@
               type="monthrange"
               align="right"
               unlink-panels
+              value-format="yyyy-MM"
               range-separator="至"
               start-placeholder="开始月份"
               end-placeholder="结束月份"

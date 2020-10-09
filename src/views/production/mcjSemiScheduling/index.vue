@@ -65,11 +65,12 @@ export default {
   },
   methods: {
     exportData() {
-      const obj = this.$refs.tabs.qFilter()
+     /* const obj = this.$refs.tabs.qFilter()
       obj.tpId = this.plaIdS
       exportSemiSchedulin(obj).then(res => {
         this.$refs.tabs.download(res)
-      })
+      })*/
+      this.$refs.list.ExportData()
     },
     selectChange(val) {
       this.plaArray.forEach((item, index) =>{

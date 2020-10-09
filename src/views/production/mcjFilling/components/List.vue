@@ -164,6 +164,7 @@
             pageSize: 50
           }, { tpName: '美瓷胶灌装分类' }).then(rest => {
             array2 = rest.data.records
+            console.log(val)
             let interval = this.getDaysBetween(val.startDate, val.endDate)
             if(interval > 3){
               return this.$message({

@@ -9,7 +9,7 @@
       @dblclick="dblclick"
       @row-click="rowClick"
     />-->
-    <el-table   :height="height" :data="list.records" border size="mini" >
+    <el-table :height="height" :data="list.records" border size="mini" >
       <el-table-column
         v-for="(t,i) in columns"
         :key="i"
