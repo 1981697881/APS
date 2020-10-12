@@ -160,7 +160,7 @@ export function getMenuList(params) {
 }
 
 // 日志管理-获取列表
-export function journalList(data) {
+export function journalList(data, query) {
   const url = '/operation-log/list/' + data.pageNum + '/' + data.pageSize
   return request({
     url: url,
@@ -168,7 +168,8 @@ export function journalList(data) {
       'authorization': getToken('apsrx'),
       'Content-Type': 'application/json'
     },
-    method: 'POST'
+    method: 'POST',
+    data: query
   })
 }
 // 日志管理-清除
@@ -237,6 +238,18 @@ export function getDictList(data) {
       'Content-Type': 'application/json'
     },
     method: 'POST'
+  })
+}
+// 日志管理-添加日志
+export function addOperationLog(data) {
+  const url = '/operation-log/add'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+    },
+    method: 'get',
+    params: data
   })
 }
 

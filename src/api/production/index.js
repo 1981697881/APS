@@ -133,7 +133,7 @@ export function updateLotNo(params) {
   })
 }
 // 生产排程-结束
-export function schedulingStop(params) {
+export function schedulingStop(params, query) {
   const url = '/task-scheduling/stop/' + params
   return request({
     url: url,
@@ -141,10 +141,11 @@ export function schedulingStop(params) {
       'authorization': getToken('apsrx'),
     },
     method: 'post',
+    data: query
   })
 }
 // 生产排程-删除
-export function schedulingDel(params) {
+export function schedulingDel(params, query) {
   const url = '/task-scheduling/delete/' + params
   return request({
     url: url,
@@ -152,6 +153,7 @@ export function schedulingDel(params) {
       'authorization': getToken('apsrx'),
     },
     method: 'delete',
+    data: query
   })
 }
 // 生产排程-标签打印

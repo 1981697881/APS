@@ -208,8 +208,8 @@
     methods: {
       open() {
         if (this.clickData) {
-          if(this.clickData.factoryEstimatedDate.indexOf("KC") !== -1){
-            this.$emit('showDialogT')
+          if(this.clickData.inventory == 'KC'){
+            this.$emit('showDialogT', this.clickData)
            /* this.$prompt('请输入', '厂务预计出货日期', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',

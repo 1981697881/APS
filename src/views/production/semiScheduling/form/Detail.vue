@@ -163,6 +163,7 @@
           this.disPl = false
         }
       }
+      this.form.interfaceType = '主业半成品线计划'
     },
     methods: {
       // 切换类别

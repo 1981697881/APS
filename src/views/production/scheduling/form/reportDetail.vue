@@ -245,6 +245,7 @@
         }
         this.getTime()
       }
+      this.form.interfaceType = '主业成品线计划'
     },
     methods: {
       print() {

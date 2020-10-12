@@ -242,6 +242,7 @@
         }
         this.getTime()
       }
+      this.form.interfaceType = '主业半成品线计划'
     },
     methods: {
       print() {

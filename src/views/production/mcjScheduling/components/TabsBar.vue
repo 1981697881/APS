@@ -8,7 +8,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
-         <!-- <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>-->
+          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint" >打印</el-button>
           <!--<el-popover
             placement="bottom"
@@ -87,6 +87,7 @@
 import { mapGetters } from "vuex"
 import { PrintSchedule } from '@/tools/doPrint'
 import { getFinalGoodsT} from '@/api/basic/index'
+import { addOperationLog } from "@/api/system/index"
 import { schedulingStop, exportSemiSchedulin } from "@/api/production/index"
 export default {
   components: {},
@@ -149,6 +150,12 @@ export default {
   },
 
   methods: {
+    exportData() {
+      this.$emit('exportData')
+      let qFilter = this.qFilter()
+      addOperationLog({message: '导出主业成品生产计划,导出条件日期:'+qFilter.productionDateStart+'-'+ qFilter.productionDateEnd +'设备:'+qFilter.plId+'生产状态:'+qFilter.allocatedStatus+'旧料号:'+qFilter.oldCode+'排产单号:'+qFilter.taskNum}).then(res => {
+      })
+    },
     fetchLine(val) {
       this.search.plId = null
       getFinalGoodsT(val).then(res => {
@@ -176,11 +183,11 @@ export default {
       document.body.appendChild(link)
       link.click()
     },
-    exportData() {
+  /*  exportData() {
       exportSemiSchedulin(this.qFilter()).then(res => {
         this.download(res)
       })
-    },
+    },*/
     delivery() {
       if (this.selections[0].taskId) {
         this.$confirm('是否删除(' + this.selections[0].productionDate + '/' + this.selections[0].plName + '/' + this.selections[0].color + ')，删除后将无法恢复?', '提示', {
@@ -222,7 +229,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          schedulingStop(this.selections[0].taskId).then(res => {
+          schedulingStop(this.selections[0].taskId, {interfaceType: '美瓷胶成品线计划' }).then(res => {
             if (res.flag) {
               this.$emit('uploadList')
             }

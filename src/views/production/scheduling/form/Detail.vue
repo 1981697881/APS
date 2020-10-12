@@ -276,6 +276,7 @@ export default {
         this.form.oldCode = this.listInfo.color
       }
     }
+    this.form.interfaceType = '主业成品线计划'
   },
   methods: {
     // 查询前后三天日期

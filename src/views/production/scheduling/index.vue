@@ -11,7 +11,7 @@
         </el-option>
       </el-select>
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @theDelivery="delivery" @queryBtn="query" @uploadList="upload" @reportInfo="report"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @exportData="exportData" @theDelivery="delivery" @queryBtn="query" @uploadList="upload" @reportInfo="report"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog" @uploadList="uploadPage" />
     </div>
@@ -63,13 +63,16 @@ export default {
     this.fetchFormat()
   },
   methods: {
+    exportData() {
+      this.$refs.list.ExportData()
+    },
     selectChange(val) {
       this.$refs.tabs.fetchLine(val)
       this.upload({tpId: val })
     },
     delivery(obj) {
       if(obj) {
-        schedulingDel(obj.taskId).then(res => {
+        schedulingDel(obj.taskId, {interfaceType: '主业成品线计划' }).then(res => {
           if (res.flag) {
             this.upload({ tpId: this.plaIdS })
           }

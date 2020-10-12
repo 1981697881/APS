@@ -19,6 +19,12 @@
             <el-input-number v-model="form.minStock" :max="form.maxStock"></el-input-number>
           </el-form-item>
         </el-col>
+      </el-row> <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'商品分类'" >
+            <el-input v-model="form.productType"></el-input>
+          </el-form-item>
+        </el-col>
       </el-row>
     </el-form>
     <div slot="footer" style="text-align:center">
@@ -43,6 +49,7 @@ export default {
         gid: null,
         maxStock: null, // 名称
         minStock: null,
+        productType: null,
       },
       rules: {
         maxStock: [
@@ -56,6 +63,7 @@ export default {
   },
   created() {
     this.form.gid = this.listInfo.gid
+    this.form.productType = this.listInfo.productType
     this.form.maxStock = (this.listInfo.maxStock == null?0:this.listInfo.maxStock)
     this.form.minStock = (this.listInfo.minStock == null?0:this.listInfo.minStock)
   },

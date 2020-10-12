@@ -83,6 +83,7 @@
   import { mapGetters } from "vuex";
   import { PrintSemi } from '@/tools/doPrint'
   import { schedulingStop, exportSemiSchedulin } from "@/api/production/index"
+  import { addOperationLog } from "@/api/system/index"
   import { getSemiFinishedProducts} from '@/api/basic/index'
   import {getToken} from '@/utils/auth'
   export default {
@@ -211,6 +212,9 @@
       },
       exportData() {
         this.$emit('exportData')
+        let qFilter = this.qFilter()
+        addOperationLog({message: '导出主业半成品生产计划,导出条件日期:'+qFilter.productionDateStart+'-'+ qFilter.productionDateEnd +'设备:'+qFilter.plId+'生产状态:'+qFilter.allocatedStatus+'旧料号:'+qFilter.oldCode}).then(res => {
+        })
       },
       report() {
         const clickData = this.clickData
@@ -345,7 +349,7 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            schedulingStop(listInfo.taskId).then(res => {
+            schedulingStop(listInfo.taskId, {interfaceType: '主业半成品线计划' }).then(res => {
               if (res.flag) {
                 this.$emit('uploadList')
               }

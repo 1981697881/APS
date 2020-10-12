@@ -22,10 +22,10 @@
       title="厂务预计出厂日期"
       v-if="visible2"
       v-dialogDrag
-      :width="'60%'"
+      :width="'40%'"
       destroy-on-close
     >
-      <detail-t @hideDialog="hideWindow2" @uploadList="uploadList" :soDeId="soDeId"></detail-t>
+      <detail-t @hideDialog="hideWindow2" @uploadList="uploadList" :listInfo="listInfo"></detail-t>
     </el-dialog>
   </div>
 </template>
@@ -46,6 +46,7 @@ export default {
       visible: null,
       visible2: null,
       soDeId: null,
+      listInfo: null,
       soId: null
     };
   },
@@ -64,8 +65,12 @@ export default {
       this.visible = true
     },
     handlerDialogT(obj) {
-      if (obj) this.soDeId = obj.soDeId
-      this.visible2 = true
+      this.listInfo = null
+      if (obj) {
+        this.obj = JSON.parse(JSON.stringify(obj));
+        this.listInfo = this.obj
+        this.visible2 = true
+      }
     },
     // 更新列表
     uploadList(val) {

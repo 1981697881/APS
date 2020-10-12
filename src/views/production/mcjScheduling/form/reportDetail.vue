@@ -242,6 +242,7 @@
         }
         this.getTime()
       }
+      this.form.interfaceType = '美瓷胶成品线计划'
     },
     methods: {
       print() {

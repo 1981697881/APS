@@ -11,7 +11,7 @@
         </el-option>
       </el-select>
       <div>
-        <tabs-bar ref="tabs" @queryBtn="query" @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload" @reportInfo="report"/>
+        <tabs-bar ref="tabs" @queryBtn="query" @exportData="exportData" @showDialog="handlerDialog" @theDelivery="delivery" @uploadList="upload" @reportInfo="report"/>
       </div>
       <list ref="list"  @uploadList="uploadPage" @showDialog="handlerDialog" />
     </div>
@@ -62,13 +62,16 @@ export default {
     this.fetchFormat()
   },
   methods: {
+    exportData() {
+      this.$refs.list.ExportData()
+    },
     selectChange(val) {
       this.$refs.tabs.fetchLine(val)
       this.upload({tpId: val })
     },
     delivery(obj) {
       if(obj) {
-        schedulingDel(obj.taskId).then(res => {
+        schedulingDel(obj.taskId, {interfaceType: '美瓷胶成品线计划' }).then(res => {
           if (res.flag) {
             this.upload({ tpId: this.plaIdS })
           }

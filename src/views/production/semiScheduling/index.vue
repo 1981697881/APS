@@ -77,7 +77,7 @@ export default {
     },
     delivery(obj) {
       if(obj) {
-        schedulingDel(obj.taskId).then(res => {
+        schedulingDel(obj.taskId, {interfaceType: '主业半成品线计划' }).then(res => {
           if (res.flag) {
             this.upload({ tpId: this.plaIdS })
           }

@@ -34,10 +34,10 @@ export default {
       list: {},
       columns: [
         { text: "lid", name: "lid",default:false },
-        { text: "操作用户", name: "" },
-        { text: "操作时间", name: "updateTime" },
-        { text: "业务对象", name: "" },
-        { text: "操作名称", name: "" },
+        { text: "操作用户", name: "username" },
+        { text: "操作时间", name: "createTime" },
+       /* { text: "业务对象", name: "" },
+        { text: "操作名称", name: "" },*/
           { text: "操作描述", name: "remark" },
       ]
     };
@@ -81,11 +81,11 @@ export default {
       pageSize: this.list.size || 50
     }) {
      this.loading = true;
-        journalList(data).then(res => {
+        journalList(data, val).then(res => {
         this.loading = false;
         this.list = res.data;
       });
-    } 
+    }
   }
 };
 </script>

@@ -93,7 +93,7 @@ export default {
     },
     delivery(obj) {
       if(obj) {
-        schedulingDel(obj.taskId).then(res => {
+        schedulingDel(obj.taskId, {interfaceType: '美瓷胶半成品生产计划' }).then(res => {
           if (res.flag) {
             this.upload({ tpId: this.plaIdS })
           }

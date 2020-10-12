@@ -8,6 +8,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint" >打印</el-button>
         </el-button-group>
       </el-row>
@@ -72,6 +73,7 @@
 <script>
 import { mapGetters } from "vuex"
 import { schedulingStop } from "@/api/production/index";
+import { addOperationLog } from "@/api/system/index"
 import { getFinalGoodsT} from '@/api/basic/index'
 import { PrintSchedule } from '@/tools/doPrint'
 export default {
@@ -135,6 +137,12 @@ export default {
   },
 
   methods: {
+    exportData() {
+      this.$emit('exportData')
+      let qFilter = this.qFilter()
+      addOperationLog({message: '导出主业成品生产计划,导出条件日期:'+qFilter.productionDateStart+'-'+ qFilter.productionDateEnd +'设备:'+qFilter.plId+'生产状态:'+qFilter.allocatedStatus+'旧料号:'+qFilter.oldCode+'排产单号:'+qFilter.taskNum}).then(res => {
+      })
+    },
     fetchLine(val) {
       this.search.plId = null
       getFinalGoodsT(val).then(res => {
@@ -190,7 +198,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          schedulingStop(this.selections[0].taskId).then(res => {
+          schedulingStop(this.selections[0].taskId, {interfaceType: '主业成品线计划' }).then(res => {
             if (res.flag) {
               this.$emit('uploadList')
             }

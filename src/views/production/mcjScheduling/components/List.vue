@@ -34,8 +34,6 @@ export default {
       list: {},
       multipleSelection: [],
       columns: [
-        { text: 'taskId', name: 'taskId',default: false },
-        { text: 'plId', name: 'plId',default: false },
         { text: '订单日期', name: 'soDate', width: '150px' },
         { text: '色号/旧料号', name: 'color', width: '180px' },
         { text: '订单数量', name: 'odPrNum' },
@@ -58,6 +56,33 @@ export default {
     };
   },
   methods: {
+    ExportData() {
+      import("@/vendor/Export2Excel").then(excel => {
+        // 表格的表头列表
+        const columns = this.columns
+        const tHeader = []
+        // 与表头相对应的数据里边的字段
+        const filterVal = []
+        columns.forEach((item, index) => {
+          tHeader.push(item.text)
+          filterVal.push(item.name)
+        })
+        const list = this.list.records
+        console.log(list)
+        console.log(filterVal)
+        const data = this.formatJson(filterVal, list);
+        console.log(data)
+        // 这里还是使用export_json_to_excel方法比较好，方便操作数据
+        excel.export_json_to_excel([tHeader],data,'美瓷胶成品线计划')
+      })
+    },
+    formatJson(filter, jsonDate){
+      return jsonDate.map(v =>
+        filter.map(j => {
+          return v[j]
+        })
+      )
+    },
     // 监听多选 参数-所有选中的值
     handleSelectionChange(val){
       this.$store.dispatch('list/setSelections',val)

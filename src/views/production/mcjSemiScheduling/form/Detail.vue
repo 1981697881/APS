@@ -175,6 +175,7 @@
           this.disPl = false
         }
       }
+      this.form.interfaceType = '美瓷胶半成品生产计划'
     },
     mounted() {
 

@@ -6,20 +6,22 @@
           <el-form-item :label="'日期'">
             <el-date-picker
               v-model="value"
-              type="datetimerange"
+              type="daterange"
               style="width: auto"
-              :picker-options="pickerOptions"
+              align="right"
+              class="input-class"
+              unlink-panels
               range-separator="至"
-              value-format="yyyy-MM-dd HH:mm:ss"
+              value-format="yyyy-MM-dd"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              align="right">
+              :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
         </el-col>
         <el-col :span="4">
           <el-form-item :label="'操作员'">
-            <el-input v-model="search.keyword" placeholder="输入操作员"/>
+            <el-input v-model="search.username" placeholder="输入操作员"/>
           </el-form-item>
         </el-col>
 
@@ -68,7 +70,7 @@ export default {
             }]
         },
       search: {
-          keyword: null,
+        username: null,
       }
     };
   },
@@ -89,9 +91,9 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.keyword != null && this.search.keyword != '' ? obj.keyword = this.search.keyword : null
-      this.value != null && this.value != undefined ? obj.productionDateEnd = this.value[1] : null
-      this.value != null && this.value != undefined ? obj.productionDateStart = this.value[0] : null
+      this.search.username != null && this.search.username != '' ? obj.username = this.search.username : null
+      this.value != null && this.value != undefined ? obj.createTimeEnd = this.value[1] : null
+      this.value != null && this.value != undefined ? obj.createTimeStart = this.value[0] : null
       return obj
     },
     // 关键字查询
@@ -99,7 +101,7 @@ export default {
       this.$emit('uploadList')
     },
     upload() {
-      this.search.keyword = null
+      this.search.username = null
       this.value = []
       this.$emit('uploadList')
     },
