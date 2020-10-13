@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: 'APS（测试）',//测试
+      title: 'APS（测试）',//（测试）
       logo: require('@/assets/logo/logo.png')
     }
   }

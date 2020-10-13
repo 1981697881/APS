@@ -53,10 +53,10 @@ export default {
       },
       rules: {
         maxStock: [
-          {required: true, message: '请输入最高库存', trigger: 'blur'},
+          { required: true, message: '请输入最高库存', trigger: 'blur' },
         ],
         minStock: [
-          {required: true, message: '请输入最低库存', trigger: 'blur'},
+          { required: true, message: '请输入最低库存', trigger: 'blur' },
         ],
       },
     };
@@ -64,11 +64,10 @@ export default {
   created() {
     this.form.gid = this.listInfo.gid
     this.form.productType = this.listInfo.productType
-    this.form.maxStock = (this.listInfo.maxStock == null?0:this.listInfo.maxStock)
-    this.form.minStock = (this.listInfo.minStock == null?0:this.listInfo.minStock)
+    this.form.maxStock = (this.listInfo.maxStock == null ? 0 : this.listInfo.maxStock)
+    this.form.minStock = (this.listInfo.minStock == null ? 0 : this.listInfo.minStock)
   },
   mounted() {
-
   },
   methods: {
     saveData(form) {
