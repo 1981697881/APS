@@ -23,7 +23,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'对应职员'" prop="eid">
-            <el-select v-model="form.eid" class="width-full" placeholder="请选择职员" @change="changeCheck">
+            <el-select v-model="form.eid" filterable  class="width-full" placeholder="请选择职员" @change="changeCheck">
               <el-option :label="t.name" :value="t.eid" v-for="(t,i) in levelFormat" :key="i"></el-option>
             </el-select>
           </el-form-item>

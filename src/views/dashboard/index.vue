@@ -1,18 +1,27 @@
 <template>
   <div class="dashboard-container">
-    <el-alert
+   <!-- <el-alert
       :title="'欢迎回来！'+name"
       type="success"
       effect="dark"
       :closable="false"
-    ></el-alert>
-
- <!--   <panel-group @handleSetLineChartData="handleSetLineChartData" />
+    ></el-alert>-->
+<!--
+    <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
     <panel-group @handleSetLineChartData="handleSetLineChartData" />-->
 
+    <el-row  style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <zy-list ref="zyList" />
+    </el-row>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <line-chart :chart-data="lineChartData" />
+      <zy-line-chart ref="zyLine" :chart-data="lineChartData" />
+    </el-row>
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <mcj-list ref="mcjList" />
+    </el-row>
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <mcj-line-chart ref="mcjLine" :chart-data="lineChartData" />
     </el-row>
 
    <!-- <el-row :gutter="32">
@@ -50,11 +59,15 @@
 <script>
 import { mapGetters } from "vuex";
 import PanelGroup from "./components/PanelGroup"
-import LineChart from './components/LineChart'
+import ZyLineChart from './components/ZyLineChart'
+import ZyList from './components/ZyList'
+import McjList from './components/McjList'
+import McjLineChart from './components/McjLineChart'
 import RaddarChart from './components/RaddarChart'
 import PieChart from './components/PieChart'
 import BarChart from './components/BarChart'
 import TodoList from './components/TodoList'
+import { mainReport } from '@/api/system/index'
 
 const lineChartData = {
   newVisitis: {
@@ -79,7 +92,10 @@ export default {
   name: "Dashboard",
   components:{
     PanelGroup,
-    LineChart,
+    ZyLineChart,
+    ZyList,
+    McjList,
+    McjLineChart,
     RaddarChart,
     PieChart,
     BarChart,
@@ -93,7 +109,185 @@ export default {
       lineChartData: lineChartData.newVisitis
     }
   },
+  mounted() {
+    let obj = {
+      startDate: this.getDay('', -15).date,
+      endDate: this.getDay('', 30).date
+    }
+    let data = this.fetchData(obj)
+    this.$refs.zyList.fetchData(data)
+    this.$refs.mcjList.fetchData(data)
+
+  },
   methods: {
+    getDaysBetween(dateString1,dateString2){
+      let dateStart = Date.parse(dateString1);
+      let dateEnd = Date.parse(dateString2);
+      let days = (dateEnd - dateStart)/(1*24*60*60*1000);
+      // alert(days);
+      return  days
+    },
+    // 查询前后三天日期
+    getDay(date, day){
+      if(date == ''){
+        var today = new Date();
+      }else{
+        var today = new Date(date[0], date[1]-1, date[2]);
+      }
+      var targetday_milliseconds=today.getTime() + 1000*60*60*24*day
+      today.setTime(targetday_milliseconds) //注意，这行是关键代码
+      var tYear = today.getFullYear()
+      var tMonth = today.getMonth()
+      var tDate = today.getDate()
+      var getDay = today.getDay()
+      tMonth = this.doHandleMonth(tMonth + 1)
+      tDate = this.doHandleMonth(tDate)
+      var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+      var week = weeks[getDay]
+      return {
+        day: tDate,
+        week: week,
+        date: tYear + "-" + tMonth + "-" + tDate
+      }
+    },
+    doHandleMonth(month) {
+      var m = month;
+      if(month.toString().length == 1) {
+        m = "0" + month;
+      }
+      return m;
+    },
+    // 查询
+    query() {
+
+    },
+    fetchData(val) {
+      let interval = this.getDaysBetween(val.startDate, val.endDate)
+      let columns = []
+      let array = []
+      let array2 = []
+      let arrayDay = []
+      let indentNum = []
+      let invPorcelainNum = []
+      let porcelainYield = []
+      let porcelainDeliveryNum = []
+
+      let orderNum = []
+      let dopeYield = []
+      let dopeDeliveryNum = []
+      if (interval > 100) {
+        return this.$message({
+          message: '抱歉，超出可查询范围！',
+          type: 'warning'
+        });
+      } else {
+        let startData = val.startDate
+        startData = startData.replace(/:/g, '-')
+        startData = startData.replace(/ /g, '-')
+        let arr = startData.split('-')
+        columns = [
+          { text: '数量', width: '150px', name: 'project' }
+        ]
+        array = [
+          { project: '订单量（桶）' },
+          { project: '产量（桶）' },
+          { project: '发货量（桶）' },
+        ]
+        array2 = [
+          { project: '订货量（支）' },
+          { project: '库存量（支）' },
+          { project: '产量（支）' },
+          { project: '发货量（支）' },
+        ]
+        mainReport(val).then(res => {
+          if (res.flag) {
+            const data = res.data
+            let results = []
+            for (let i = 0; i <= Number(interval); i++) {
+              // 根据时间生成表头 把时间包含数据重新组装 -》array
+              columns.push({text: this.getDay(arr, i).date + '', name: this.getDay(arr, i).date + ''})
+              arrayDay.push(this.getDay(arr, i).date)
+              data.forEach((item, index) => {
+                for (let j in item) {
+                  let aDate = item.date.replace(/:/g, '-')
+                  aDate = aDate.replace(/ /g, '-')
+                  let nDate = aDate.split('-')
+                  if (this.doHandleMonth(i + 1) == this.getDay(nDate, 0).day) {
+                    if (j == 'indentNum') {
+                      indentNum.push((item.indentNum == null ? 0 : item.indentNum))
+                    } else if (j == 'invPorcelainNum') {
+                      invPorcelainNum.push((item.invPorcelainNum == null ? 0 : item.invPorcelainNum))
+                    } else if (j == 'porcelainYield') {
+                      porcelainYield.push((item.porcelainYield == null ? 0 : item.porcelainYield))
+                    } else if (j == 'porcelainDeliveryNum') {
+                      porcelainDeliveryNum.push((item.porcelainDeliveryNum == null ? 0 : item.porcelainDeliveryNum))
+                    }else if (j == 'orderNum') {
+                      orderNum.push((item.orderNum == null ? 0 : item.orderNum))
+                    }else if (j == 'dopeYield') {
+                      dopeYield.push((item.dopeYield == null ? 0 : item.dopeYield))
+                    }else if (j == 'dopeDeliveryNum') {
+                      dopeDeliveryNum.push((item.dopeDeliveryNum == null ? 0 : item.dopeDeliveryNum))
+                    }
+                    results.push(i)
+                  }
+                }
+              })
+
+              if(results.indexOf(i) == -1){
+                indentNum.push(0)
+                invPorcelainNum.push(0)
+                porcelainYield.push(0)
+                porcelainDeliveryNum.push(0)
+
+                orderNum.push(0)
+                dopeYield.push(0)
+                dopeDeliveryNum.push(0)
+                results.push(i)
+              }
+            }
+            data.forEach((item, index) => {
+              array.forEach((item2, index2) => {
+                let date = item['date']
+                date = date.replace(/:/g, '-')
+                date = date.replace(/ /g, '-')
+                let arr1 = date.split('-')
+                let key = this.getDay(arr1, 0).date + ''
+                if (index2 == 0) {
+                  item2[key] = item.orderNum
+                } else if (index2 == 1) {
+                  item2[key] = item.dopeYield
+                } else if (index2 == 2) {
+                  item2[key] = item.dopeDeliveryNum
+                }
+              })
+              array2.forEach((item2, index2) => {
+                let date = item['date']
+                date = date.replace(/:/g, '-')
+                date = date.replace(/ /g, '-')
+                let arr1 = date.split('-')
+                let key = this.getDay(arr1, 0).date + ''
+                if (index2 == 0) {
+                  item2[key] = item.indentNum
+                } else if (index2 == 1) {
+                  item2[key] = item.invPorcelainNum
+                } else if (index2 == 2) {
+                  item2[key] = item.porcelainYield
+                } else if (index2 == 3) {
+                  item2[key] = item.porcelainDeliveryNum
+                }
+              })
+            })
+          }
+          this.$nextTick(() => {
+            this.$refs.zyLine.initChart({arrayDay: arrayDay, orderNum: orderNum, dopeYield: dopeYield, dopeDeliveryNum: dopeDeliveryNum})
+          })
+          this.$nextTick(() => {
+            this.$refs.mcjLine.initChart({arrayDay: arrayDay, indentNum: indentNum, invPorcelainNum: invPorcelainNum, porcelainYield: porcelainYield, porcelainDeliveryNum: porcelainDeliveryNum})
+          })
+        })
+      }
+      return {array: array, array2: array2, columns: columns}
+    },
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type]
     }

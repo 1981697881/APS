@@ -275,3 +275,15 @@ export function alterDict(params) {
     data: params
   })
 }
+// 主界面
+export function mainReport(params) {
+  return request({
+    url: '/report-form/mainReport',
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}
