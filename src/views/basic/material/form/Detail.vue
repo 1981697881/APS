@@ -21,8 +21,15 @@
         </el-col>
       </el-row> <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'商品分类'" >
-            <el-input v-model="form.productType"></el-input>
+          <el-form-item :label="'商品分类'" prop="type">
+            <el-select v-model="form.productType" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -51,6 +58,13 @@ export default {
         minStock: null,
         productType: null,
       },
+      options: [{
+        value: '主业',
+        label: '主业'
+      }, {
+        value: '美瓷胶',
+        label: '美瓷胶'
+      }],
       rules: {
         maxStock: [
           { required: true, message: '请输入最高库存', trigger: 'blur' },

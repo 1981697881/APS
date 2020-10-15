@@ -84,15 +84,15 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters } from 'vuex'
 import { PrintSchedule } from '@/tools/doPrint'
-import { getFinalGoodsT} from '@/api/basic/index'
-import { addOperationLog } from "@/api/system/index"
-import { schedulingStop, exportSemiSchedulin } from "@/api/production/index"
+import { getFinalGoodsT } from '@/api/basic/index'
+import { addOperationLog } from '@/api/system/index'
+import { schedulingStop } from '@/api/production/index'
 export default {
   components: {},
   computed: {
-    ...mapGetters(["node","clickData","selections"])
+    ...mapGetters(['node','clickData','selections'])
   },
   data() {
     return {
@@ -206,8 +206,8 @@ export default {
         });
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -217,8 +217,8 @@ export default {
         LODOP.PREVIEW()
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -242,8 +242,8 @@ export default {
         });
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -269,8 +269,8 @@ export default {
         }
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
