@@ -88,7 +88,7 @@
               max: 100000,
               interval: 15000,
               axisLabel: {
-                formatter: '{value} 支'
+                formatter: '{value} 桶'
               }
             },
             {
@@ -98,7 +98,7 @@
               max: 100000,
               interval: 15000,
               axisLabel: {
-                formatter: '{value} 支'
+                formatter: '{value} 桶'
               }
             }
           ],

@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-container">
+  <div class="dashboard-container" v-loading="loading">
    <!-- <el-alert
       :title="'欢迎回来！'+name"
       type="success"
@@ -106,6 +106,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       lineChartData: lineChartData.newVisitis
     }
   },
@@ -117,7 +118,6 @@ export default {
     let data = this.fetchData(obj)
     this.$refs.zyList.fetchData(data)
     this.$refs.mcjList.fetchData(data)
-
   },
   methods: {
     getDaysBetween(dateString1,dateString2){
@@ -205,7 +205,7 @@ export default {
             let results = []
             for (let i = 0; i <= Number(interval); i++) {
               // 根据时间生成表头 把时间包含数据重新组装 -》array
-              columns.push({text: this.getDay(arr, i).date + '', name: this.getDay(arr, i).date + ''})
+              columns.push({text: this.getDay(arr, i).date + '', name: this.getDay(arr, i).date + '', width: '100px'})
               arrayDay.push(this.getDay(arr, i).date)
               data.forEach((item, index) => {
                 for (let j in item) {
@@ -284,6 +284,7 @@ export default {
           this.$nextTick(() => {
             this.$refs.mcjLine.initChart({arrayDay: arrayDay, indentNum: indentNum, invPorcelainNum: invPorcelainNum, porcelainYield: porcelainYield, porcelainDeliveryNum: porcelainDeliveryNum})
           })
+          this.loading = false
         })
       }
       return {array: array, array2: array2, columns: columns}
