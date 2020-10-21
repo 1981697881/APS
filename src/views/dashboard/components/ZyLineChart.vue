@@ -85,8 +85,8 @@
               type: 'value',
               name: '数量',
               min: 0,
-              max: 100000,
-              interval: 15000,
+              max: 20000,
+              interval: 5000,
               axisLabel: {
                 formatter: '{value} 桶'
               }
@@ -95,8 +95,8 @@
               type: 'value',
               name: '数量',
               min: 0,
-              max: 100000,
-              interval: 15000,
+              max: 20000,
+              interval: 5000,
               axisLabel: {
                 formatter: '{value} 桶'
               }

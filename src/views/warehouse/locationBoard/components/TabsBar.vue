@@ -54,6 +54,8 @@ export default {
       getWarehouseList(val).then(res => {
         if(res.flag) {
           this.plaArray = res.data
+          this.parent = res.data[0].piId
+          this.$emit('queryBtn', this.qFilter())
         }
       })
     },

@@ -160,7 +160,6 @@
     </div>
  </div>
 </template>
-
 <script>
   import {getShiftInfoList, shiftAdd, shiftAlter} from "@/api/attendance/index";
 export default {
@@ -168,7 +167,7 @@ export default {
     listInfo: {
       type: Object,
       default: null
-    },
+  },
   },
   data() {
     return {
@@ -247,7 +246,7 @@ export default {
     },
     dblclick(obj) {
       this.visible = true
-      this.form1 = obj
+      this.form2 = obj
       this.$emit('showDialog', obj)
     },
     saveData() {

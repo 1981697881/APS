@@ -30,7 +30,7 @@ export default {
     };
   },
     mounted() {
-        this.$refs.list.fetchData()
+       /* this.$refs.list.fetchData(this.$refs.tabs.qFilter())*/
     },
   methods: {
     // 查询
