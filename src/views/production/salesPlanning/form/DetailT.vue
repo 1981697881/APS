@@ -27,7 +27,6 @@
     </div>
   </div>
 </template>
-
 <script>
   import { updateSaleOrderDetail } from "@/api/production/index"
   import { mapGetters } from 'vuex'
@@ -53,12 +52,19 @@
     mounted() {
       this.form.soDeId = this.listInfo.soDeId
       if(this.listInfo.factoryEstimatedDate.length > 0){
-        let dateList = this.listInfo.factoryEstimatedDate.split(',')
-        dateList.forEach((item, index) =>{
+        if(this.listInfo.factoryEstimatedDate == 'KC'){
           this.dateList.push({
-            factoryEstimatedDate: item
+            factoryEstimatedDate: null
           })
-      })
+        }else{
+          let dateList = this.listInfo.factoryEstimatedDate.split(',')
+          dateList.forEach((item, index) =>{
+            this.dateList.push({
+              factoryEstimatedDate: item
+            })
+          })
+        }
+
       } else {
         this.dateList.push({
           factoryEstimatedDate: null
