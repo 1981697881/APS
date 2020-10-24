@@ -35,12 +35,42 @@
     >
       <Report @hideReport="hideReport" @uploadList="upload" :listInfo="listInfo"></Report>
     </el-dialog>
+    <el-dialog
+      :visible.sync="visible2"
+      title="挪单信息"
+      v-if="visible2"
+      v-dialogDrag
+      :width="'80%'"
+      destroy-on-close
+    >
+      <move-detail @hideMove="hideMove" @uploadList="upload" :listInfo="listInfo"></move-detail>
+    </el-dialog>
+    <el-dialog
+      :visible.sync="visible3"
+      title="拆单信息"
+      v-if="visible3"
+      v-dialogDrag
+      :width="'80%'"
+      destroy-on-close
+    >
+      <split-detail @hideSplit="hideSplit" @uploadList="upload" :listInfo="listInfo"></split-detail>
+    </el-dialog>
+    <el-dialog
+      :visible.sync="visible4"
+      title="拼单信息"
+      v-if="visible4"
+      v-dialogDrag
+      :width="'80%'"
+      destroy-on-close
+    >
+      <spell-detail @hideSpell="hideSpell" @uploadList="upload" :listInfo="listInfo"></spell-detail>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { TabsBar, List } from "./components"
-import { Info, Report} from "./form"
+import {Info, moveDetail, Report, spellDetail, splitDetail} from "./form"
 import { getFinalGoodsType } from "@/api/basic"
 import { schedulingDel } from "@/api/production/index"
 export default {
@@ -48,6 +78,9 @@ export default {
     TabsBar,
     List,
     Info,
+    moveDetail,
+    spellDetail,
+    splitDetail,
     Report
   },
   data() {
@@ -55,6 +88,9 @@ export default {
       listInfo: null,
       visible: null,
       visibleR: null,
+      visible2: null,
+      visible3: null,
+      visible4: null,
       plaIdS: null,
       plaArray: [],
     };
@@ -95,6 +131,12 @@ export default {
     },
     hideReport(val) {
       this.visibleR = val
+    }, hideMove(val) {
+      this.visible2 = val
+    }, hideSplit(val) {
+      this.visible3 = val
+    }, hideSpell(val) {
+      this.visible4 = val
     },
     handlerDialog(obj) {
       this.listInfo = null
