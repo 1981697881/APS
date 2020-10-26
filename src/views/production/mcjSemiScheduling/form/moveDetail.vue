@@ -89,7 +89,7 @@
 </template>
 <script>
   import { moveBill } from "@/api/production/index"
-  import { getFinalGoodsTypeT, getFinalGoodsT} from '@/api/basic/index'
+  import {  getMcjSemiSchedulingType, getMcjSemiFinishedProducts} from '@/api/basic/index'
   export default {
     props: {
       listInfo: {
@@ -149,9 +149,10 @@
         this.form = this.listInfo
         this.fetchLine(this.form.tpId)
         this.fetchLine2(this.form.tpId)
-        this.form.oldCode = this.listInfo.color
-        this.form.rTpId = this.listInfo.tpId
-        this.form.rPlId = this.listInfo.plId
+        this.form.plId = Number(this.listInfo.plId)
+        this.form.tpId = Number(this.listInfo.tpId)
+        this.form.rTpId = Number(this.listInfo.tpId)
+        this.form.rPlId = Number(this.listInfo.plId)
         this.form.rProductionDate = this.listInfo.productionDate
         this.form.isOutbreed = '0'
       }
@@ -178,21 +179,21 @@
         })
       },
       fetchFormat() {
-        getFinalGoodsTypeT().then(res => {
+        getMcjSemiSchedulingType().then(res => {
           if(res.flag) {
             this.pArray = res.data
           }
         })
       },
       fetchLine(val) {
-        getFinalGoodsT(val).then(res => {
+        getMcjSemiFinishedProducts(val).then(res => {
           if(res.flag) {
             this.rArray = res.data
           }
         })
       },
       fetchLine2(val) {
-        getFinalGoodsT(val).then(res => {
+        getMcjSemiFinishedProducts(val).then(res => {
           if(res.flag) {
             this.sArray = res.data
           }

@@ -229,7 +229,8 @@ export default {
       this.$emit('uploadList')
     },
     report() {
-      if (this.selections[0].taskId) {
+      console.log(this.selections)
+      if (this.selections.length > 0) {
         if (this.selections[0].allocatedStatus == '生产完毕') {
           this.selections[0].isF = 0
           this.selections[0].isOver = 1
@@ -247,8 +248,8 @@ export default {
       }
     },
     handleMove() {
-      if (this.selections[0].taskId) {
-
+      if (this.selections.length > 0) {
+        this.$emit('handleMove', this.selections[0])
       } else {
         this.$message({
           message: "无选中行",
@@ -257,18 +258,18 @@ export default {
       }
     },
     handleSplit() {
-      if (this.selections[0].taskId) {
-
+      if (this.selections.length == 1) {
+        this.$emit('handleSplit', this.selections[0])
       } else {
         this.$message({
-          message: "无选中行",
+          message: "无选中行或选中数量大于1",
           type: "warning"
         });
       }
     },
     handleSpell() {
-      if (this.selections[0].taskId) {
-
+      if (this.selections.length > 0) {
+        this.$emit('handleSpell', this.selections)
       } else {
         this.$message({
           message: "无选中行",

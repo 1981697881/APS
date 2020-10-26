@@ -283,5 +283,41 @@ export function orderDeliveryRate(params) {
     data: params,
     method: 'post'
   })
+}// 挪单
+export function moveBill(params) {
+  const url = '/scheduling-extend/moveBill'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
+}// 拆单
+export function separateBill(params) {
+  const url = '/scheduling-extend/separateBill'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
+}// 拼单
+export function shareBill(params) {
+  const url = '/scheduling-extend/shareBill'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
 }
 

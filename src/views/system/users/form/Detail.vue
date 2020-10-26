@@ -179,6 +179,17 @@
                       this.multipleSelection.forEach(function(item, index) {
                         gids.push(item.gpId)
                       })
+                      if(obj.status = '正常状态') {
+                        obj.status = 0
+                      }else if(obj.status = '冻结') {
+                        obj.status = 1
+                      }else if(obj.status = '禁用') {
+                        obj.status = 2
+                      }else if(obj.status = '禁言') {
+                        obj.status = 3
+                      }else if(obj.status = '敏感用户') {
+                        obj.status = 4
+                      }
                       obj.gids = gids
                       obj.mids = this.getChecked()
                         if (typeof (this.form.uid) != undefined && this.form.uid != null) {

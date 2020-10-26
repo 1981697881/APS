@@ -1,2 +1,5 @@
 export { default as Info } from './Detail'
 export { default as Report } from './reportDetail'
+export { default as moveDetail } from './moveDetail'
+export { default as spellDetail } from './spellDetail'
+export { default as splitDetail } from './splitDetail'

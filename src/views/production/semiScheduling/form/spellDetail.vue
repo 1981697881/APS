@@ -70,7 +70,7 @@
 </template>
 <script>
   import { separateBill } from '@/api/production/index'
-  import { getFinalGoodsTypeT, getFinalGoodsT} from '@/api/basic/index'
+  import { getSemiFinishedProductsType, getSemiFinishedProducts} from '@/api/basic/index'
   export default {
     props: {
       listInfo: {
@@ -166,14 +166,14 @@
         })
       },
       fetchFormat() {
-        getFinalGoodsTypeT().then(res => {
+        getSemiFinishedProductsType().then(res => {
           if(res.flag) {
             this.pArray = res.data
           }
         })
       },
       fetchLine(val) {
-        getFinalGoodsT(val).then(res => {
+        getSemiFinishedProducts(val).then(res => {
           if(res.flag) {
             this.rArray = res.data
           }

@@ -4,6 +4,9 @@
       <el-row :gutter="24">
         <el-button-group style="float:right;">
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleMove">挪单</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-sort-up" @click="handleSplit">拆单</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-sort-down" @click="handleSpell">拼单</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
            <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
@@ -238,6 +241,46 @@
         } else {
           this.$message({
             message: "当前选中无数据！",
+            type: "warning"
+          });
+        }
+      },
+      handleMove() {
+        const clickData = this.clickData
+        if(clickData.length > 0) {
+          const listBlank = clickData[0]
+          const listInfo = {}
+          for(const i in listBlank) {
+            if(i.match(/\d+/g) != null) {
+              if(i.match(/\d+/g)[0] == clickData[1]) {
+                eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + "'")
+              }
+            }
+          }
+          this.$emit('handleMove', listInfo)
+        } else {
+          this.$message({
+            message: "当前选中无数据！",
+            type: "warning"
+          });
+        }
+      },
+      handleSplit() {
+        if (this.selections.length == 1) {
+          this.$emit('handleSplit', this.selections[0])
+        } else {
+          this.$message({
+            message: "无选中行或选中数量大于1",
+            type: "warning"
+          });
+        }
+      },
+      handleSpell() {
+        if (this.selections.length > 0) {
+          this.$emit('handleSpell', this.selections)
+        } else {
+          this.$message({
+            message: "无选中行",
             type: "warning"
           });
         }

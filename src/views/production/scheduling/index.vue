@@ -11,7 +11,7 @@
         </el-option>
       </el-select>
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @exportData="exportData" @theDelivery="delivery" @queryBtn="query" @uploadList="upload" @reportInfo="report"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @exportData="exportData" @theDelivery="delivery" @queryBtn="query" @handleMove="handleMove" @handleSplit="handleSplit" @handleSpell="handleSpell" @uploadList="upload" @reportInfo="report"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog" @uploadList="uploadPage" />
     </div>
@@ -70,7 +70,7 @@
 
 <script>
 import { TabsBar, List } from "./components"
-import {Info, moveDetail, Report, spellDetail, splitDetail} from "./form"
+import {Info, Report, moveDetail, spellDetail, splitDetail} from "./form"
 import { getFinalGoodsType } from "@/api/basic"
 import { schedulingDel } from "@/api/production/index"
 export default {
@@ -150,6 +150,30 @@ export default {
         }
       }
       this.visible = true
+    },
+    handleMove(obj) {
+      this.listInfo = null
+      if(obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
+      this.visible2 = true
+    },
+    handleSplit(obj) {
+      this.listInfo = null
+      if(obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
+      this.visible3 = true
+    },
+    handleSpell(obj) {
+      this.listInfo = null
+      if(obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
+      this.visible4 = true
     },
     report(obj) {
       this.listInfo = null

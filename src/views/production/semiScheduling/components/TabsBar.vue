@@ -4,6 +4,9 @@
       <el-row :gutter="24">
         <el-button-group style="float:right;">
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleMove">挪单</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-sort-up" @click="handleSplit">拆单</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-sort-down" @click="handleSpell">拼单</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
            <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
@@ -80,16 +83,16 @@
   </div>
 </template>
 <script>
-  import { mapGetters } from "vuex";
+  import { mapGetters } from 'vuex'
   import { PrintSemi } from '@/tools/doPrint'
-  import { schedulingStop, exportSemiSchedulin } from "@/api/production/index"
-  import { addOperationLog } from "@/api/system/index"
+  import { schedulingStop, exportSemiSchedulin } from '@/api/production/index'
+  import { addOperationLog } from '@/api/system/index'
   import { getSemiFinishedProducts} from '@/api/basic/index'
   import {getToken} from '@/utils/auth'
   export default {
     components: {},
     computed: {
-      ...mapGetters(["node","clickData","selections"])
+      ...mapGetters(['node','clickData','selections'])
     },
     data() {
       return {
@@ -173,7 +176,7 @@
       uploadError(res) {
         this.$message({
           message: res.msg,
-          type: "warning"
+          type: 'warning'
         });
         this.$emit('uploadList')
       },
@@ -181,18 +184,18 @@
         if(res.flag){
           this.$message({
             message: res.msg,
-            type: "success"
+            type: 'success'
           });
           this.$emit('uploadList')
         }else{
           this.$message({
             message: res.msg,
-            type: "warning"
+            type: 'warning'
           });
         }
       },
       handleUpload(file, fileList){
-        if(file.status=="ready"){
+        if(file.status=='ready'){
           this.submitUpload()
         }
 
@@ -224,7 +227,7 @@
           for(const i in listBlank) {
             if(i.match(/\d+/g) != null) {
               if(i.match(/\d+/g)[0] == clickData[1]) {
-                eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + "'")
+                eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + '')
               }
             }
           }
@@ -237,8 +240,49 @@
           this.$emit('reportInfo', listInfo)
         } else {
           this.$message({
-            message: "当前选中无数据！",
-            type: "warning"
+            message: '当前选中无数据！',
+            type: 'warning'
+          });
+        }
+      },
+      handleMove() {
+        const clickData = this.clickData
+        if(clickData.length > 0) {
+          const listBlank = clickData[0]
+          const listInfo = {}
+          for(const i in listBlank) {
+            if(i.match(/\d+/g) != null) {
+              if(i.match(/\d+/g)[0] == clickData[1]) {
+                eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + "'")
+              }
+            }
+          }
+          console.log(listInfo)
+          this.$emit('handleMove', listInfo)
+        } else {
+          this.$message({
+            message: '当前选中无数据！',
+            type: 'warning'
+          });
+        }
+      },
+      handleSplit() {
+        if (this.selections.length == 1) {
+          this.$emit('handleSplit', this.selections[0])
+        } else {
+          this.$message({
+            message: '无选中行或选中数量大于1',
+            type: 'warning'
+          });
+        }
+      },
+      handleSpell() {
+        if (this.selections.length > 0) {
+          this.$emit('handleSpell', this.selections)
+        } else {
+          this.$message({
+            message: '无选中行',
+            type: 'warning'
           });
         }
       },
@@ -256,18 +300,18 @@
         var getDay = today.getDay()
         tMonth = this.doHandleMonth(tMonth + 1)
         tDate = this.doHandleMonth(tDate)
-        var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+        var weeks = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
         var week = weeks[getDay]
         return {
           day: tDate,
           week: week,
-          date: tYear + "-" + tMonth + "-" + tDate
+          date: tYear + '-' + tMonth + '-' + tDate
         }
       },
       doHandleMonth(month) {
         var m = month;
         if(month.toString().length == 1) {
-          m = "0" + month;
+          m = '0' + month;
         }
         return m;
       },
@@ -277,8 +321,8 @@
           LODOP.PREVIEW()
         } else {
           this.$message({
-            message: "无选中行",
-            type: "warning"
+            message: '无选中行',
+            type: 'warning'
           });
         }
       },
@@ -326,8 +370,8 @@
           });
         } else {
           this.$message({
-            message: "无选中行",
-            type: "warning"
+            message: '无选中行',
+            type: 'warning'
           });
         }
       },
@@ -362,8 +406,8 @@
           });
         } else {
           this.$message({
-            message: "无选中行",
-            type: "warning"
+            message: '无选中行',
+            type: 'warning'
           });
         }
       },
