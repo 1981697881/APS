@@ -277,7 +277,7 @@
               if(num <= me.form.allocatedNum){
                 separateBill(data).then(res => {
                   if(res.flag){
-                    me.$emit('handleSplit', false)
+                    me.$emit('hideSplit', false)
                     me.$emit('uploadList')
                   }
                 })

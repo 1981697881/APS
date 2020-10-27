@@ -155,7 +155,6 @@ export default {
     }, hideMove(val) {
       this.visible2 = val
     }, hideSplit(val) {
-      console.log(val)
       this.visible3 = val
     }, hideSpell(val) {
       this.visible4 = val

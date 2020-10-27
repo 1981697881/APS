@@ -169,7 +169,7 @@
                 if(result.length == 1){
                   shareBill(data).then(res => {
                     if(res.flag){
-                      me.$emit('handleSpell', false)
+                      me.$emit('hideSpell', false)
                       me.$emit('uploadList')
                     }
                   })
