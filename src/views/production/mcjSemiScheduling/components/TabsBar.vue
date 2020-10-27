@@ -182,13 +182,13 @@
         this.$emit('uploadList')
       },
       uploadSuccess(res) {
-        if(res.flag){
+        if(res.flag) {
           this.$message({
             message: res.msg,
             type: "success"
           });
           this.$emit('uploadList')
-        }else{
+        } else {
           this.$message({
             message: res.msg,
             type: "warning"

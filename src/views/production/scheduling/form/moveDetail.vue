@@ -169,8 +169,10 @@
           //判断必填项
           if (valid) {
             moveBill({isOutbreed: this.form.isOutbreed, plId: this.form.plId, productionDate: this.form.productionDate, taskId: this.form.taskId }).then(res => {
+              if(res.flag){
                 this.$emit('hideMove', false)
                 this.$emit('uploadList')
+              }
               });
           } else {
             return false;

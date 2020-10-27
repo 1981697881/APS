@@ -255,15 +255,17 @@
             })
             data.taskId = me.form.taskId
             data.extendList = lData
-            if(this.list.length > 1 ){
+            if(me.list.length > 1 ){
               if(num <= me.form.allocatedNum){
                 if(result.length == 1){
                   shareBill(data).then(res => {
-                    this.$emit('handleSpell', false)
-                    this.$emit('uploadList')
+                    if(res.flag){
+                      me.$emit('handleSpell', false)
+                      me.$emit('uploadList')
+                    }
                   })
                 }else{
-                  this.$message({
+                  me.$message({
                     type: 'error',
                     message: '物料信息需要一致!'
                   });

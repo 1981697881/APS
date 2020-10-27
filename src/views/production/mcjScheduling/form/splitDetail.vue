@@ -78,7 +78,7 @@
                     placeholder="选择日期">
                   </el-date-picker>
                 </div>
-                  <el-select size="mini" v-else-if="t.name == 'plId'" v-model="sel[t.name]" placeholder="请选择" @change="changePlId($event, sel)">
+                  <el-select size="mini" v-else-if="t.name == 'plName'" v-model="sel[t.name]" placeholder="请选择" @change="changePlId($event, sel)">
                     <el-option
                       :label="t.plName"
                       :value="t.plName"
@@ -146,7 +146,7 @@
         rArray: [],
         columns: [
           {text: '生产日期', name: 'productionDate'},
-          {text: '生产设备', name: 'plId'},
+          {text: '生产设备', name: 'plName'},
           {text: '生产数量', name: 'allocatedNum'},
         ],
         pidS: [],
@@ -174,8 +174,8 @@
       changePlId(val, row) {
         const me = this
         this.rArray.forEach((item, index) => {
-          if(item.FName == val) {
-            me.$set(row,'plId', item.tpId)
+          if(item.plName === val) {
+            me.$set(row, 'plId', item.plId)
           }
         })
       },
@@ -273,11 +273,13 @@
             data.extendList = lData
             console.log(num)
             console.log(data)
-            if(this.list.length > 0 ){
+            if(me.list.length > 0 ){
               if(num <= me.form.allocatedNum){
                 separateBill(data).then(res => {
-                  this.$emit('handleSplit', false)
-                  this.$emit('uploadList')
+                  if(res.flag){
+                    me.$emit('handleSplit', false)
+                    me.$emit('uploadList')
+                  }
                 })
               } else {
                 this.$message({
