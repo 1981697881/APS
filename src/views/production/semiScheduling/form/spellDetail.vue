@@ -1,6 +1,32 @@
 <template>
   <div>
     <el-form :model="form" :rules="rules" ref="form" label-width="90px" :size="'mini'">
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'日期'">
+            <el-date-picker
+              v-model="value"
+              type="daterange"
+              align="right"
+              style="width: auto"
+              value-format="yyyy-MM-dd"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions">
+            </el-date-picker>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item :label="'旧料号'">
+            <el-input v-model="oldCode" ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="2">
+          <el-button  :size="'mini'" type="success" @click="query" icon="el-icon-search">查询</el-button>
+        </el-col>
+      </el-row>
       <el-row>
         <el-table el-table :height="'calc(100vh/2.8)'"  :data="list" border size="mini" :highlight-current-row="true">
           <el-table-column
@@ -12,6 +38,13 @@
             v-if="t.default!=undefined?t.default:true"
             :width="t.width?t.width:(selfAdaption?'':'150px')"
           >
+          </el-table-column>
+          <el-table-column label="操作" width="100">
+            <template slot-scope="scope">
+              <span v-if="!scope.row.isSet" class="el-tag el-tag--danger el-tag--mini" @click="deleteRow(scope.$index,list)" style="cursor: pointer;">
+                删除
+              </span>
+            </template>
           </el-table-column>
         </el-table>
       </el-row>
@@ -37,7 +70,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'生产线'" prop="tpId">
-            <el-select v-model="form.tpId" class="width-full" placeholder="调整后生产线" >
+            <el-select v-model="form.tpId" class="width-full" placeholder="调整后生产线" @change="selectChange">
               <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i" ></el-option>
             </el-select>
           </el-form-item>
@@ -69,7 +102,7 @@
   </div>
 </template>
 <script>
-  import { separateBill } from '@/api/production/index'
+  import { shareBill, getSemiList } from '@/api/production/index'
   import { getSemiFinishedProductsType, getSemiFinishedProducts} from '@/api/basic/index'
   export default {
     props: {
@@ -85,6 +118,7 @@
     },
     data() {
       return {
+        value: [],
         form: {
           allocatedNum: null,
           tpId: null,
@@ -92,6 +126,7 @@
           productionDate: null,
           isOutbreed: '0',
         },
+        oldCode: null,
         columns: [
           {text: '色号', name: 'color'},
           {text: '排产单号', name: 'taskNum'},
@@ -102,6 +137,33 @@
         list: [],
         pArray: [],
         rArray: [],
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
         rules: {
           tpId: [
             {required: true, message: '请选择产线', trigger: 'change'},
@@ -122,15 +184,44 @@
       this.fetchFormat()
       if (this.listInfo) {
         this.list = this.listInfo
-        let num = 0
-        this.list.forEach((item, index) =>{
-          num += Number(item.allocatedNum)
-        })
-        this.form.allocatedNum = num
+
         this.form.isOutbreed = '0'
       }
     },
     methods: {
+      deleteRow(index, rows) {
+        rows.splice(index, 1);
+      },
+      query() {
+        this.fetchData();
+      },
+      fetchData() {
+        this.loading = true
+        const data = {
+          pageNum: this.list.current || 1,
+          pageSize: this.list.size || 50
+        }
+        let obj = {}
+        this.oldCode != null && this.oldCode != undefined ? obj.oldCode = this.oldCode : null
+        this.value != null && this.value != undefined ? obj.productionDateEnd = this.value[1] : null
+        this.value != null && this.value != undefined ? obj.productionDateStart = this.value[0] : null
+          getSemiList(data, obj).then(res => {
+            if (res.flag) {
+              this.loading = false
+              let list = res.data
+              let lData = []
+              let num = 0
+              for(let i in list){
+                list[i].forEach((item, index) =>{
+                  lData.push(item)
+                  num += Number(item.allocatedNum)
+                })
+              }
+              this.form.allocatedNum = num
+              this.list = lData
+            }
+          })
+      },
       // 切换类别
       selectChange(val) {
         this.form.plId = null
@@ -138,26 +229,56 @@
         this.fetchLine(val)
       },
       saveData(form) {
+        let me = this
         this.$refs[form].validate((valid) => {
           //判断必填项
           if (valid) {
-            let obj = this.form
-            let mids = []
-            let gids = []
-            this.multipleSelection.forEach(function(item, index) {
-              gids.push(item.gpId)
+            let data = {}
+            let lData = []
+            let num = 0
+            let list = this.list
+            let result = []
+            list.forEach(function(item, index) {
+              let obj = {}
+              obj.allocatedNum = item.allocatedNum
+              obj.gid = item.gid
+              obj.isOutbreed = me.form.isOutbreed
+              obj.plId = item.plId
+              obj.productionDate = item.productionDate
+              obj.productionType = item.productionType
+              obj.remark = item.remark
+              num += Number(item.allocatedNum)
+              if(result.indexOf(item.gid) == -1){
+                result.push(item.gid)
+              }
+              lData.push(obj)
             })
-            obj.gids = gids
-            obj.mids = this.getChecked()
-            if (typeof (this.form.uid) != undefined && this.form.uid != null) {
-              alterUsers(obj).then(res => {
-                this.$emit('hideDialog', false)
-                this.$emit('uploadList')
-              });
+            data.taskId = me.form.taskId
+            data.extendList = lData
+            if(this.list.length > 1 ){
+              if(num <= me.form.allocatedNum){
+                if(result.length == 1){
+                  shareBill(data).then(res => {
+                    this.$emit('handleSpell', false)
+                    this.$emit('uploadList')
+                  })
+                }else{
+                  this.$message({
+                    type: 'error',
+                    message: '物料信息需要一致!'
+                  });
+                }
+
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: '拼单数量不能大于原单数量!'
+                });
+              }
             } else {
-              addUsers(obj).then(res => {
-                this.$emit('hideDialog', false)
-                this.$emit('uploadList')
+              this.$message({
+                type: 'error',
+                message: '拼单数量不能小于零并且大于一!'
               });
             }
           } else {

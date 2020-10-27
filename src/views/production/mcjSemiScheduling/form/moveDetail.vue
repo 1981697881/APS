@@ -89,7 +89,7 @@
 </template>
 <script>
   import { moveBill } from "@/api/production/index"
-  import {  getMcjSemiSchedulingType, getMcjSemiFinishedProducts} from '@/api/basic/index'
+  import { getMcjSemiSchedulingType, getMcjSemiFinishedProducts} from '@/api/basic/index'
   export default {
     props: {
       listInfo: {

@@ -163,9 +163,11 @@
       if (this.listInfo) {
         this.form = this.listInfo
         this.fetchLine(this.form.tpId)
-        this.form.oldCode = this.listInfo.color
-        this.form.rTpId = this.listInfo.tpId
-        this.form.rPlId = this.listInfo.plId
+        this.form.plId = Number(this.listInfo.plId)
+        this.form.tpId = Number(this.listInfo.tpId)
+        this.form.rTpId = Number(this.listInfo.tpId)
+        this.form.rPlId = Number(this.listInfo.plId)
+        this.form.allocatedNum = Number(this.listInfo.allocatedNum)
         this.form.rProductionDate = this.listInfo.productionDate
         this.form.isOutbreed = '0'
       }
@@ -243,8 +245,6 @@
             this.list.splice(index2,1);
           }
         })
-        console.log(this.result)
-        console.log(row)
         rows.splice(index, 1);
       },
       saveData(form) {

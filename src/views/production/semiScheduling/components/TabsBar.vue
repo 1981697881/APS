@@ -257,7 +257,6 @@
               }
             }
           }
-          console.log(listInfo)
           this.$emit('handleMove', listInfo)
         } else {
           this.$message({
@@ -267,24 +266,27 @@
         }
       },
       handleSplit() {
-        if (this.selections.length == 1) {
-          this.$emit('handleSplit', this.selections[0])
+        const clickData = this.clickData
+        if(clickData.length > 0) {
+          const listBlank = clickData[0]
+          const listInfo = {}
+          for(const i in listBlank) {
+            if(i.match(/\d+/g) != null) {
+              if(i.match(/\d+/g)[0] == clickData[1]) {
+                eval("listInfo." + i.replace(/\d+/g,'') + "='" + listBlank[i] + "'")
+              }
+            }
+          }
+          this.$emit('handleSplit', listInfo)
         } else {
           this.$message({
-            message: '无选中行或选中数量大于1',
+            message: '当前选中无数据！',
             type: 'warning'
           });
         }
       },
       handleSpell() {
-        if (this.selections.length > 0) {
-          this.$emit('handleSpell', this.selections)
-        } else {
-          this.$message({
-            message: '无选中行',
-            type: 'warning'
-          });
-        }
+        this.$emit('handleSpell')
       },
       getODate() {
         return this.value

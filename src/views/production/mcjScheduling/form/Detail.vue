@@ -16,12 +16,12 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'订单日期'" >
-            <el-input v-model="form.soDate" ></el-input>
+            <el-input v-model="form.soDate" :disabled="isNow"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'订单号'" >
-            <el-input v-model="form.soNum"></el-input>
+            <el-input v-model="form.soNum" :disabled="isNow"></el-input>
           </el-form-item>
         </el-col>
         <!--<el-col :span="2">
@@ -32,38 +32,38 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'项目名称'" >
-            <el-input v-model="form.soName" ></el-input>
+            <el-input v-model="form.soName" :disabled="isNow"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'排产单号'">
-            <el-input v-model="form.taskNum" ></el-input>
+            <el-input v-model="form.taskNum" :disabled="isNow"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'色号/旧料号'" prop="oldCode">
-            <el-input v-model="form.oldCode"></el-input>
+            <el-input v-model="form.oldCode" :disabled="isNow"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'订单数量'" >
-            <el-input v-model="form.odPrNum"></el-input>
+            <el-input v-model="form.odPrNum" :disabled="isNow"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'生产线'" prop="tpId">
-            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" @change="selectChange">
+            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" @change="selectChange" :disabled="isNow">
               <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'生产设备'" prop="plId">
-            <el-select v-model="form.plId" class="width-full" placeholder="生产设备" :disabled="disPl">
+            <el-select v-model="form.plId" class="width-full" placeholder="生产设备" :disabled="isNow">
               <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray"  :key="i"></el-option>
             </el-select>
           </el-form-item>
@@ -81,6 +81,7 @@
               <el-date-picker
                 v-model="form.productionDate"
                 type="date"
+                :disabled="isNow"
                 value-format="yyyy-MM-dd"
                 placeholder="选择日期">
               </el-date-picker>
@@ -185,6 +186,7 @@ export default {
       num1: 1,
       visible: false,
       disPl: true,
+      isNow: true,
       form: {
         taskId: null,
         alertStatus: null,
@@ -261,10 +263,12 @@ export default {
       console.log(this.listInfo)
       if (this.listInfo.flag) {
         this.disPl = false
+        this.isNow = false
         this.form.tpId = this.listInfo.tpId
         this.fetchLine(this.listInfo.tpId)
       } else {
         this.disPl = false
+        this.isNow = true
         this.form = this.listInfo
         const listInfo = this.listInfo
         const form = this.form

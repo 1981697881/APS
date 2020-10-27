@@ -21,21 +21,21 @@
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'色号/旧料号'" prop="oldCode">
-            <el-input v-model="form.oldCode"></el-input>
+            <el-input v-model="form.oldCode" :disabled="isNow"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'生产线'" prop="tpId">
-            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" @change="selectChange">
+            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" @change="selectChange" :disabled="isNow">
               <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'生产设备'" prop="plId">
-            <el-select v-model="form.plId" class="width-full" placeholder="生产设备" :disabled="disPl">
+            <el-select v-model="form.plId" class="width-full" placeholder="生产设备" :disabled="isNow">
               <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
@@ -65,6 +65,7 @@
               <el-date-picker
                 v-model="form.productionDate"
                 type="date"
+                :disabled="isNow"
                 value-format="yyyy-MM-dd"
                 placeholder="选择日期">
               </el-date-picker>
@@ -111,6 +112,7 @@
         radio: null,
         num1: 1,
         visible: false,
+        isNow: true,
         form: {
           taskId: null,
           tips: null,
@@ -166,6 +168,7 @@
           this.form.alertStatus = Number(this.listInfo.alertStatus)
           this.form.isPalette = this.listInfo.isPalette
           this.disPl = false
+          this.isNow = false
         } else {
           this.form = this.listInfo
           this.fetchLine(this.form.tpId)
@@ -173,6 +176,7 @@
           this.form.plId = Number(this.listInfo.plId)
           this.form.tpId = Number(this.listInfo.tpId)
           this.disPl = false
+          this.isNow = true
         }
       }
       this.form.interfaceType = '美瓷胶半成品生产计划'

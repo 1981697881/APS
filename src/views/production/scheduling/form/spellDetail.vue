@@ -37,7 +37,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'生产线'" prop="tpId">
-            <el-select v-model="form.tpId" class="width-full" placeholder="调整后生产线" >
+            <el-select v-model="form.tpId" class="width-full" placeholder="调整后生产线" @change="selectChange">
               <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i" ></el-option>
             </el-select>
           </el-form-item>
@@ -69,7 +69,7 @@
   </div>
 </template>
 <script>
-  import { separateBill } from '@/api/production/index'
+  import { shareBill } from '@/api/production/index'
   import { getFinalGoodsTypeT, getFinalGoodsT} from '@/api/basic/index'
   export default {
     props: {
@@ -138,26 +138,56 @@
         this.fetchLine(val)
       },
       saveData(form) {
+        let me = this
         this.$refs[form].validate((valid) => {
           //判断必填项
           if (valid) {
-            let obj = this.form
-            let mids = []
-            let gids = []
-            this.multipleSelection.forEach(function(item, index) {
-              gids.push(item.gpId)
+            let data = {}
+            let lData = []
+            let num = 0
+            let list = this.list
+            let result = []
+            list.forEach(function(item, index) {
+              let obj = {}
+              obj.allocatedNum = item.allocatedNum
+              obj.gid = item.gid
+              obj.isOutbreed = me.form.isOutbreed
+              obj.plId = item.plId
+              obj.productionDate = item.productionDate
+              obj.productionType = item.productionType
+              obj.remark = item.remark
+              num += Number(item.allocatedNum)
+              if(result.indexOf(item.gid) == -1){
+                result.push(item.gid)
+              }
+              lData.push(obj)
             })
-            obj.gids = gids
-            obj.mids = this.getChecked()
-            if (typeof (this.form.uid) != undefined && this.form.uid != null) {
-              alterUsers(obj).then(res => {
-                this.$emit('hideDialog', false)
-                this.$emit('uploadList')
-              });
+            data.taskId = me.form.taskId
+            data.extendList = lData
+            if(this.list.length > 1 ){
+              if(num <= me.form.allocatedNum){
+                if(result.length == 1){
+                  shareBill(data).then(res => {
+                    this.$emit('handleSpell', false)
+                    this.$emit('uploadList')
+                  })
+                }else{
+                  this.$message({
+                    type: 'error',
+                    message: '物料信息需要一致!'
+                  });
+                }
+
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: '拼单数量不能大于原单数量!'
+                });
+              }
             } else {
-              addUsers(obj).then(res => {
-                this.$emit('hideDialog', false)
-                this.$emit('uploadList')
+              this.$message({
+                type: 'error',
+                message: '拼单数量不能小于零并且大于一!'
               });
             }
           } else {
