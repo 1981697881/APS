@@ -117,7 +117,7 @@
           tpId: null,
           plId: null,
           productionDate: null,
-          isOutbreed: '0',
+          isOutbreed: '1',
           taskId: null
         },
         pArray: [],
@@ -146,6 +146,7 @@
     mounted() {
       this.fetchFormat()
       if (this.listInfo) {
+        this.$set(this.listInfo, 'isOutbreed', '1')
         this.form = this.listInfo
         this.fetchLine(this.form.tpId)
         this.fetchLine2(this.form.tpId)
@@ -154,7 +155,7 @@
         this.form.rTpId = Number(this.listInfo.tpId)
         this.form.rPlId = Number(this.listInfo.plId)
         this.form.rProductionDate = this.listInfo.productionDate
-        this.form.isOutbreed = '0'
+        console.log(this.form)
       }
     },
     methods: {

@@ -126,8 +126,8 @@
         this.list.forEach((item, index) =>{
           num += Number(item.allocatedNum)
         })
+        this.$set(this.form, 'isOutbreed', '1')
         this.form.allocatedNum = num
-        this.form.isOutbreed = '0'
       }
     },
     methods: {

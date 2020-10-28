@@ -161,13 +161,13 @@
       this.fetchFormat()
       console.log(this.listInfo)
       if (this.listInfo) {
+        this.$set(this.listInfo, 'isOutbreed', '1')
         this.form = this.listInfo
         this.fetchLine(this.form.tpId)
         this.form.oldCode = this.listInfo.color
         this.form.rTpId = this.listInfo.tpId
         this.form.rPlId = this.listInfo.plId
         this.form.rProductionDate = this.listInfo.productionDate
-        this.form.isOutbreed = '0'
       }
     },
     methods: {

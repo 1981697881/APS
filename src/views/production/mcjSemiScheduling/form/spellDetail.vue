@@ -183,9 +183,8 @@
     mounted() {
       this.fetchFormat()
       if (this.listInfo) {
+        this.$set(this.form, 'isOutbreed', '1')
         this.list = this.listInfo
-
-        this.form.isOutbreed = '0'
       }
     },
     methods: {

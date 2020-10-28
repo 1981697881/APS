@@ -184,8 +184,7 @@
       this.fetchFormat()
       if (this.listInfo) {
         this.list = this.listInfo
-
-        this.form.isOutbreed = '0'
+        this.$set(this.form, 'isOutbreed', '1')
       }
     },
     methods: {

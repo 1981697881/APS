@@ -121,13 +121,13 @@
     mounted() {
       this.fetchFormat()
       if (this.listInfo) {
+        this.$set(this.form, 'isOutbreed', '1')
         this.list = this.listInfo
         let num = 0
         this.list.forEach((item, index) =>{
           num += Number(item.allocatedNum)
         })
         this.form.allocatedNum = num
-        this.form.isOutbreed = '0'
       }
     },
     methods: {
