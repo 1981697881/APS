@@ -30,6 +30,7 @@
             :on-error="uploadError"
             accept="xlsx,xls"
             ref="upload"
+            v-for="(t,i) in btnList" :key="i" v-if="t.category == 'import'"
             :headers="headers"
             :show-file-list="false"
             action="web/excel/import/punchRecord"
@@ -48,13 +49,14 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { getFrameList } from "@/api/basic/index";
+import { mapGetters } from 'vuex'
+import { getByUserAndPrId } from '@/api/system/index'
+import { getFrameList } from '@/api/basic/index'
 import {getToken} from '@/utils/auth'
 export default {
   components: {},
   computed: {
-    ...mapGetters(["node","clickData","selections"])
+    ...mapGetters(['node','clickData','selections'])
   },
   data() {
     return {
@@ -62,6 +64,7 @@ export default {
         'authorization': getToken('apsrx'),
       },
       isUpload: null,
+      btnList: [],
       pArray: [],
       value: null,
       deptIds: null,
@@ -74,9 +77,17 @@ export default {
     this.value = (new Date().getFullYear() + '-' + this.doHandleMonth((new Date().getMonth() + 1))) // 当前日期
   },
   mounted() {
-    this.fetchFormat();
+    this.fetchFormat()
+    let path = this.$route.meta.id
+    getByUserAndPrId(path).then(res => {
+      this.btnList = res.data
+      this.$forceUpdate();
+    });
   },
   methods: {
+    onFun(method){
+      this[method]()
+    },
     // 切换仓库
     changeCheck(val) {
       this.$emit('queryBtn', this.qFilter())
@@ -87,7 +98,7 @@ export default {
     uploadError(res) {
       this.$message({
         message: '上传失败',
-        type: "warning"
+        type: 'warning'
       });
       this.$emit('uploadList')
     },
@@ -95,25 +106,25 @@ export default {
       if(res.flag){
         this.$message({
           message: res.msg,
-          type: "success"
+          type: 'success'
         });
         this.$emit('uploadList')
       }else{
         this.$message({
           message: res.msg,
-          type: "warning"
+          type: 'warning'
         });
       }
     },
     handleUpload(file, fileList){
-      if(file.status=="ready"){
+      if(file.status=='ready'){
         this.submitUpload()
       }
     },
     doHandleMonth(month) {
       var m = month;
       if(month.toString().length == 1) {
-        m = "0" + month;
+        m = '0' + month;
       }
       return m;
     },
@@ -153,8 +164,8 @@ export default {
         })
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },

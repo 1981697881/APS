@@ -53,23 +53,25 @@
           </el-form-item>
         </el-col>
         <el-button-group style="float:right">
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
+          <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
+        <!--  <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>-->
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click.native="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
         </el-button-group>
       </el-row>
     </el-form>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import {getWarehouseList} from "@/api/basic/index";
-import {exportAdjust} from "@/api/warehouse/index";
+import { mapGetters } from 'vuex'
+import { getWarehouseList } from '@/api/basic/index'
+import { exportAdjust } from '@/api/warehouse/index'
+import { getByUserAndPrId } from '@/api/system/index'
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
+  components: {},
+  computed: {
+    ...mapGetters(['node','clickData','selections'])
+  },
   data() {
     return {
       value: '',
@@ -102,6 +104,7 @@ export default {
       },
       parent: null,
       plaArray: [],
+      btnList: [],
       search: {
         keyword: null,
         goodCode: null,
@@ -114,8 +117,16 @@ export default {
   },
   mounted() {
     this.fetchWare(-1)
+    let path = this.$route.meta.id
+    getByUserAndPrId(path).then(res => {
+      this.btnList = res.data
+      this.$forceUpdate();
+    });
   },
   methods: {
+    onFun(method){
+      this[method]()
+    },
     // 关键字查询
     query(){
       this.$emit('queryBtn', this.qFilter())
@@ -179,8 +190,8 @@ export default {
         })
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },

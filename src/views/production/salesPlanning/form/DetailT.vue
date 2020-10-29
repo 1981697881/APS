@@ -59,12 +59,17 @@
         }else{
           let dateList = this.listInfo.factoryEstimatedDate.split(',')
           dateList.forEach((item, index) =>{
-            this.dateList.push({
-              factoryEstimatedDate: item
-            })
+            if(item == 'KC') {
+              this.dateList.push({
+                factoryEstimatedDate: null
+              })
+            }else{
+              this.dateList.push({
+                factoryEstimatedDate: item
+              })
+            }
           })
         }
-
       } else {
         this.dateList.push({
           factoryEstimatedDate: null

@@ -46,19 +46,21 @@
         </el-col>
         <el-button-group style="float:right">
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click.native="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
+          <!--<el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>-->
+          <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
         </el-button-group>
       </el-row>
     </el-form>
   </div>
 </template>
 <script>
-  import { mapGetters } from "vuex";
-  import {exportTaskSaleOrder} from "@/api/production/index";
+  import { mapGetters } from 'vuex'
+  import { exportTaskSaleOrder } from '@/api/production/index'
+  import { getByUserAndPrId } from '@/api/system/index'
   export default {
     components: {},
     computed: {
-      ...mapGetters(["node","clickData","selections"])
+      ...mapGetters(['node','clickData','selections'])
     },
     data() {
       return {
@@ -90,6 +92,7 @@
             }
           }]
         },
+        btnList: [],
         search: {
           orderNum: null,
           taskNum: null,
@@ -102,9 +105,16 @@
       this.value[1] = this.getDay('', 0).date
     },
     mounted() {
-
+      let path = this.$route.meta.id
+      getByUserAndPrId(path).then(res => {
+        this.btnList = res.data
+        this.$forceUpdate();
+      });
     },
     methods: {
+      onFun(method){
+        this[method]()
+      },
       // 查询前后三天日期
       getDay(date, day){
         var today = new Date();
@@ -116,18 +126,18 @@
         var getDay = today.getDay()
         tMonth = this.doHandleMonth(tMonth + 1)
         tDate = this.doHandleMonth(tDate)
-        var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+        var weeks = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
         var week = weeks[getDay]
         return {
           day: tDate,
           week: week,
-          date: tYear + "-" + tMonth + "-" + tDate
+          date: tYear + '-' + tMonth + '-' + tDate
         }
       },
       doHandleMonth(month) {
         var m = month;
         if(month.toString().length == 1) {
-          m = "0" + month;
+          m = '0' + month;
         }
         return m;
       },

@@ -72,7 +72,7 @@ export default {
       this.fetchData()
     },
     dblclick(obj) {
-      this.$emit('showDialog', obj.row)
+     /* this.$emit('showDialog', obj.row)*/
     },
     // 监听单击某一行
     rowClick(obj) {

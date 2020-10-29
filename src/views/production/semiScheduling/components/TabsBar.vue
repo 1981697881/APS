@@ -3,20 +3,24 @@
     <el-form v-model="search" :size="'mini'" :label-width="'60px'" >
       <el-row :gutter="24">
         <el-button-group style="float:right;">
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
+        <!--  <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleMove">挪单</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-sort-up" @click="handleSplit">拆单</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-sort-down" @click="handleSpell">拼单</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
-           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
+           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint">打印</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>-->
+          <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-upload
             name="order"
             :on-success="uploadSuccess"
             :on-error="uploadError"
             accept="xlsx,xls"
             ref="upload"
+            v-for="(t,i) in btnList" :key="i" v-if="t.category == 'import'"
             :headers="headers"
             :show-file-list="false"
             action="web/excel/import/semiTaskScheduling"
@@ -29,8 +33,7 @@
             <el-button size="mini" type="primary" icon="el-icon-upload2" >导入</el-button>
             <el-button style="margin-left: 10px;display: none" size="mini" type="success" @click="submitUpload">上传到服务器</el-button>
           </el-upload>
-          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint">打印</el-button>
+
         </el-button-group>
       </el-row>
       <el-row :gutter="24" style="padding-top: 15px;">
@@ -89,6 +92,7 @@
   import { addOperationLog } from '@/api/system/index'
   import { getSemiFinishedProducts} from '@/api/basic/index'
   import {getToken} from '@/utils/auth'
+  import { getByUserAndPrId } from '@/api/system/index'
   export default {
     components: {},
     computed: {
@@ -113,6 +117,7 @@
           value: '已完工',
           label: '已完工'
         }],
+        btnList: [],
         pickerOptions: {
           shortcuts: [{
             text: '最近一周',
@@ -154,8 +159,16 @@
     },
     mounted: function() {
       this.$emit('firstLoad', this.value)
+      let path = this.$route.meta.id
+      getByUserAndPrId(path).then(res => {
+        this.btnList = res.data
+        this.$forceUpdate();
+      });
     },
     methods: {
+      onFun(method){
+        this[method]()
+      },
       fetchLine(val) {
         this.search.plId = null
         getSemiFinishedProducts(val).then(res => {

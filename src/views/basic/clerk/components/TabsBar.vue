@@ -11,34 +11,46 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
         <el-button-group style="float:right">
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleAdd">新增</el-button>
+          <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
+         <!-- <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleAdd">新增</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="alter">修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="Delivery">删除</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>-->
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
         </el-button-group>
       </el-row>
     </el-form>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { alterClerk } from '@/api/basic/index';
+import { mapGetters } from 'vuex'
+import { alterClerk } from '@/api/basic/index'
+import { getByUserAndPrId } from '@/api/system/index'
 export default {
   components: {},
   computed: {
-    ...mapGetters(["node","clickData","selections"])
+    ...mapGetters(['node','clickData','selections'])
   },
   data() {
     return {
+      btnList: [],
       search: {
         name: null
       }
     };
   },
-
+  mounted() {
+    let path = this.$route.meta.id
+    getByUserAndPrId(path).then(res => {
+      this.btnList = res.data
+      this.$forceUpdate();
+    });
+  },
   methods: {
+    onFun(method){
+      this[method]()
+    },
     Delivery() {
       if (this.clickData.eid) {
         this.$confirm('是否删除（' + this.clickData.name + '），删除后将无法恢复?', '提示', {
@@ -57,8 +69,8 @@ export default {
         });
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         })
       }
     },
@@ -67,8 +79,8 @@ export default {
         this.$emit('showDialog', this.clickData)
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         })
       }
     },

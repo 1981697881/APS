@@ -32,16 +32,19 @@
         </el-col>
         <el-button-group style="float:right">
           <!--<el-button :size="'mini'" type="primary" icon="el-icon-search" @click="handleAdd">新增</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="del">删除</el-button>-->
+          <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="del">删除</el-button
           <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleAlter">信息维护</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
-         <!-- <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>-->
-          <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleSync" >同步</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleSync" >同步</el-button>-->
+          <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
           <el-upload
             name="order"
             :on-success="uploadSuccess"
             :on-error="uploadError"
+            v-for="(t,i) in btnList" :key="i"
+            v-if="t.category == 'import'"
             accept="xlsx,xls"
             ref="upload"
             :headers="headers"
@@ -64,7 +67,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { PrintFour } from '@/tools/doPrint'
+import { getByUserAndPrId } from '@/api/system/index'
 import {getToken} from '@/utils/auth'
 export default {
   components: {},
@@ -77,6 +80,7 @@ export default {
       headers: {
         'authorization': getToken('apsrx'),
       },
+      btnList: [],
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -118,10 +122,17 @@ export default {
       }
     };
   },
-  mounted(){
-
+  mounted() {
+    let path = this.$route.meta.id
+    getByUserAndPrId(path).then(res => {
+      this.btnList = res.data
+      this.$forceUpdate();
+    });
   },
   methods: {
+    onFun(method){
+      this[method]()
+    },
     submitUpload() {
       this.$refs.upload.submit()
     },

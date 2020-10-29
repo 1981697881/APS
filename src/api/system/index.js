@@ -262,6 +262,15 @@ export function dictGetById(params) {
     },
     method: 'get'
   })
+}// 权限按钮-查找
+export function getByUserAndPrId(params) {
+  return request({
+    url: '/sys-menu/getByUserAndPrId/' + params,
+    headers: {
+      'authorization': getToken('apsrx')
+    },
+    method: 'get'
+  })
 }
 // 数据字典-修改
 export function alterDict(params) {

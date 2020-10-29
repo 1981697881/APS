@@ -2,11 +2,12 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-button-group style="float:right">
-        <el-button :size="'mini'" type="primary" @click="handlerAdd">新建</el-button>
+        <!--<el-button :size="'mini'" type="primary" @click="handlerAdd">新建</el-button>
         <el-button :size="'mini'" type="primary" @click="handlerAlter">修改</el-button>
         <el-button :size="'mini'" type="primary" @click="handlerScheduling">排班</el-button>
         <el-button :size="'mini'" type="primary" @click="handlerUnScheduling">取消排班</el-button>
-        <el-button :size="'mini'" type="primary" @click="del">删除</el-button>
+        <el-button :size="'mini'" type="primary" @click="del">删除</el-button>-->
+        <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
       </el-button-group>
     </el-form>
   </div>
@@ -14,20 +15,32 @@
 
 <script>
 
-import { mapGetters } from "vuex"
-import { empRemByEid } from "@/api/attendance/index"
+import { mapGetters } from 'vuex'
+import { empRemByEid } from '@/api/attendance/index'
+import { getByUserAndPrId } from '@/api/system/index'
 export default {
   data() {
     return {
+      btnList: [],
       search: {
         name: ""
       }
     };
   },
   computed: {
-    ...mapGetters(["node","clickData","selections"])
+    ...mapGetters(['node','clickData','selections'])
   },
-  methods:{
+  mounted() {
+    let path = this.$route.meta.id
+    getByUserAndPrId(path).then(res => {
+      this.btnList = res.data
+      this.$forceUpdate();
+    });
+  },
+  methods: {
+    onFun(method){
+      this[method]()
+    },
     handleTab(node){
       if(node){
         console.log(node.data.type)
@@ -36,8 +49,8 @@ export default {
         }
       }else{
         this.$message({
-          type:"warning",
-          message:"请先选择房产"
+          type:'warning',
+          message:'请先选择房产'
         })
       }
     },
@@ -63,8 +76,8 @@ export default {
         });
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -92,8 +105,8 @@ export default {
         });
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -102,8 +115,8 @@ export default {
         this.$emit('showDialog', this.clickData)
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     }

@@ -190,6 +190,12 @@
     methods: {
       deleteRow(index, rows) {
         rows.splice(index, 1);
+        let list = this.list
+        let num = 0
+        list.forEach((item, index) =>{
+          num += Number(item.allocatedNum)
+        })
+        this.form.allocatedNum = num
       },
       query() {
         this.fetchData();
@@ -242,22 +248,22 @@
               obj.allocatedNum = item.allocatedNum
               obj.gid = item.gid
               obj.isOutbreed = me.form.isOutbreed
-              obj.plId = item.plId
-              obj.productionDate = item.productionDate
-              obj.productionType = item.productionType
+              obj.plId = me.form.plId
+              obj.productionDate = me.form.productionDate
               obj.remark = item.remark
+              obj.taskId = item.taskId
               num += Number(item.allocatedNum)
               if(result.indexOf(item.gid) == -1){
                 result.push(item.gid)
               }
               lData.push(obj)
             })
-            data.taskId = me.form.taskId
-            data.extendList = lData
+           /* data.taskId = me.form.taskId
+            data.extendPojo = lData*/
             if(me.list.length > 1 ){
               if(num <= me.form.allocatedNum){
                 if(result.length == 1){
-                  shareBill(data).then(res => {
+                  shareBill(lData).then(res => {
                     if(res.flag){
                       me.$emit('hideSpell', false)
                       me.$emit('uploadList')

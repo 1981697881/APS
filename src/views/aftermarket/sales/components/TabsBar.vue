@@ -38,10 +38,11 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
         <el-button-group style="float:right;padding-right: 10px">
-          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
+         <!-- <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">核准</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>-->
+          <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
         </el-button-group>
       </el-row>
     </el-form>
@@ -125,7 +126,8 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { salesListSync, exportSales, notarizeList} from "@/api/aftermarket/index"
+import { salesListSync, exportSales, notarizeList} from '@/api/aftermarket/index'
+import { getByUserAndPrId } from '@/api/system/index'
 export default {
   components: {},
   computed: {
@@ -148,6 +150,7 @@ export default {
         value: [],
       },
       value: '',
+      btnList: [],
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -182,7 +185,17 @@ export default {
       }
     }
   },
+  mounted() {
+    let path = this.$route.meta.id
+    getByUserAndPrId(path).then(res => {
+      this.btnList = res.data
+      this.$forceUpdate();
+    });
+  },
   methods: {
+    onFun(method){
+      this[method]()
+    },
     // 下载文件
     download(res) {
       if (!res.data) {
@@ -216,8 +229,8 @@ export default {
         /*this.$emit('showDialog', this.clickData)*/
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -256,8 +269,8 @@ export default {
             })
        /*   }else{
             this.$message({
-              message: "请选择时间",
-              type: "warning"
+              message: '请选择时间',
+              type: 'warning'
             });
           }*/
         } else {

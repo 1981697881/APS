@@ -3,16 +3,17 @@
     <el-form v-model="search" :size="'mini'" :label-width="'40px'" >
       <el-row :gutter="24">
         <el-button-group style="float:right;padding-right: 15px;">
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
+          <!--<el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleMove">挪单</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-sort-up" @click="handleSplit">拆单</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-sort-down" @click="handleSpell">拼单</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint" >打印</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint" >打印</el-button>-->
+          <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
         </el-button-group>
       </el-row>
       <el-row :gutter="24"  style="padding-top: 15px;">
@@ -74,15 +75,16 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex"
-import { schedulingStop } from "@/api/production/index";
-import { addOperationLog } from "@/api/system/index"
+import { mapGetters } from 'vuex'
+import { schedulingStop } from '@/api/production/index';
+import { addOperationLog } from '@/api/system/index'
 import { getFinalGoodsT} from '@/api/basic/index'
 import { PrintSchedule } from '@/tools/doPrint'
+import { getByUserAndPrId } from '@/api/system/index'
 export default {
   components: {},
   computed: {
-    ...mapGetters(["node","clickData","selections"])
+    ...mapGetters(['node','clickData','selections'])
   },
   data() {
     return {
@@ -129,6 +131,7 @@ export default {
       }],
       visible: false,
       rArray: [],
+      btnList: [],
       search: {
         allocatedStatus: '计划中',
         oldCode: null,
@@ -138,8 +141,17 @@ export default {
       }
     };
   },
-
+  mounted() {
+    let path = this.$route.meta.id
+    getByUserAndPrId(path).then(res => {
+      this.btnList = res.data
+      this.$forceUpdate();
+    });
+  },
   methods: {
+    onFun(method){
+      this[method]()
+    },
     exportData() {
       this.$emit('exportData')
       let qFilter = this.qFilter()
@@ -178,8 +190,8 @@ export default {
         });
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -189,8 +201,8 @@ export default {
         LODOP.PREVIEW()
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -214,8 +226,8 @@ export default {
         });
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -242,8 +254,8 @@ export default {
         }
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -252,8 +264,8 @@ export default {
         this.$emit('handleMove', this.selections[0])
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -262,8 +274,8 @@ export default {
         this.$emit('handleSplit', this.selections[0])
       } else {
         this.$message({
-          message: "无选中行或选中数量大于1",
-          type: "warning"
+          message: '无选中行或选中数量大于1',
+          type: 'warning'
         });
       }
     },
@@ -272,8 +284,8 @@ export default {
         this.$emit('handleSpell', this.selections)
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },

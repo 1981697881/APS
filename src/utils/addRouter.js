@@ -21,7 +21,7 @@ export function addRouter(routerlist) {
 
     if (e.text) { // meta
       e_new = Object.assign({}, e_new, {
-        meta: { title: e.text, icon: '' }
+        meta: { title: e.text, icon: '', id: e.smuId }
       })
     }
 

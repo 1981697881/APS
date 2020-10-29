@@ -50,12 +50,13 @@
           </el-form-item>
         </el-col>-->
         <el-button-group style="float:right;padding-right: 10px">
-          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
+          <!--  <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handleSync">U9同步</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
-        <!--  <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">确认</el-button>-->
-          <!--<el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleShow">补充信息</el-button>-->
-          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarize">确认</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleShow">补充信息</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>-->
+          <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
         </el-button-group>
       </el-row>
     </el-form>
@@ -138,9 +139,10 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { syncPOInfoQuery, procurementBarcode, exportProcurement, notarizeBeputList} from "@/api/warehouse/index";
+import { mapGetters } from "vuex"
+import { syncPOInfoQuery, procurementBarcode, exportProcurement, notarizeBeputList} from "@/api/warehouse/index"
 import { PrintThree } from '@/tools/doPrint'
+import { getByUserAndPrId } from '@/api/system/index'
 export default {
   components: {},
   computed: {
@@ -162,6 +164,7 @@ export default {
         businessDateEnd: '',
         value: [],
       },
+      btnList: [],
       options: [{
         value: true,
         label: '已核准'
@@ -208,8 +211,16 @@ export default {
     };
   },
   mounted() {
+    let path = this.$route.meta.id
+    getByUserAndPrId(path).then(res => {
+      this.btnList = res.data
+      this.$forceUpdate();
+    });
   },
   methods: {
+    onFun(method){
+      this[method]()
+    },
     selectChange(val) {
       this.isConfirm = val
       this.$emit('uploadList')

@@ -41,8 +41,9 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
         <el-button-group style="float:right">
-          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleAlter">库位编辑</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleAdd">同步</el-button>
+          <!--<el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleAlter">库位编辑</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleAdd">同步</el-button>-->
+          <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
         </el-button-group>
       </el-row>
@@ -50,13 +51,14 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import {getWarehouseList} from "@/api/basic/index"
+import { mapGetters } from 'vuex'
+import { getByUserAndPrId } from '@/api/system/index'
+import {getWarehouseList} from '@/api/basic/index'
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
+  components: {},
+  computed: {
+    ...mapGetters(['node','clickData','selections'])
+  },
   data() {
     return {
       plaArray: [],
@@ -67,6 +69,7 @@ export default {
         status: null,
         code: null,
       },
+      btnList: [],
       options: [{
         value: 1,
         label: '是'
@@ -78,8 +81,16 @@ export default {
   },
   mounted(){
     this.fetchWare(-1)
+    let path = this.$route.meta.id
+    getByUserAndPrId(path).then(res => {
+      this.btnList = res.data
+      this.$forceUpdate();
+    });
   },
   methods: {
+    onFun(method){
+      this[method]()
+    },
     fetchWare(val) {
       getWarehouseList(val).then(res => {
         if(res.flag) {

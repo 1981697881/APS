@@ -3,16 +3,17 @@
     <el-form v-model="search" :size="'mini'" :label-width="'40px'" >
       <el-row :gutter="24">
         <el-button-group style="float:right;padding-right: 15px;">
-          <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
+          <!--<el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handleDialog">插入</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleMove">挪单</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-sort-up" @click="handleSplit">拆单</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-sort-down" @click="handleSpell">拼单</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-circle-close" @click="over">结束</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="delivery">删除</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-tickets" @click="report">汇报</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint" >打印</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="confirmPrint" >打印</el-button>-->
+          <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
           <!--<el-popover
             placement="bottom"
             width="200"
@@ -92,6 +93,7 @@ import { PrintSchedule } from '@/tools/doPrint'
 import { getFinalGoodsT } from '@/api/basic/index'
 import { addOperationLog } from '@/api/system/index'
 import { schedulingStop } from '@/api/production/index'
+import { getByUserAndPrId } from '@/api/system/index'
 export default {
   components: {},
   computed: {
@@ -141,6 +143,7 @@ export default {
         label: '已完工'
       }],
       rArray: [],
+      btnList: [],
       visible: false,
       search: {
         allocatedStatus: '计划中',
@@ -151,7 +154,17 @@ export default {
       }
     };
   },
+  mounted() {
+    let path = this.$route.meta.id
+    getByUserAndPrId(path).then(res => {
+      this.btnList = res.data
+      this.$forceUpdate();
+    });
+  },
   methods: {
+    onFun(method){
+      this[method]()
+    },
     handleMove() {
       if (this.selections.length > 0) {
         this.$emit('handleMove', this.selections[0])

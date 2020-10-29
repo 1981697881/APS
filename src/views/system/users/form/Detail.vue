@@ -46,7 +46,7 @@
       </el-row>
       <el-tabs  v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="所属用户组" name="first">
-          <el-row >
+          <el-row>
             <el-table :data="list" border height="250px" ref="multipleTable" @selection-change="handleSelectionChange" stripe size="mini" :highlight-current-row="true" >
               <el-table-column align="center" type="selection"></el-table-column>
               <el-table-column
