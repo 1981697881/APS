@@ -116,7 +116,7 @@
   </div>
 </template>
 <script>
-  import { separateBill } from '@/api/production/index'
+  import { separateBill, isOutbreed } from '@/api/production/index'
   import { getFinalGoodsTypeT, getFinalGoodsT} from '@/api/basic/index'
   export default {
     props: {
@@ -193,7 +193,7 @@
           if (i.isSet) return this.$message.warning('请先保存当前编辑项');
         }
         this.cIndex += 1
-        let j = {isSet: true, productionDate: null, cIndex: this.cIndex, plId: null, allocatedNum: 10};
+        let j = {isSet: true, productionDate: null, cIndex: this.cIndex, plName: null, allocatedNum: 10};
         this.list.push(j);
         this.sel = JSON.parse(JSON.stringify(j));
       },
@@ -215,7 +215,7 @@
         //提交数据
         if (row.isSet) {
           const sel = this.sel
-          if((sel.productionDate == null || sel.productionDate === '') || (sel.plId == null || sel.plId === '') || (sel.allocatedNum == null || sel.allocatedNum === '')){
+          if((sel.productionDate == null || sel.productionDate === '') || (sel.plName == null || sel.plName === '') || (sel.allocatedNum == null || sel.allocatedNum === '')){
             return this.$message({
               type: 'error',
               message: '请输入必填项!'
@@ -254,10 +254,17 @@
           if (valid) {
             let data = {}
             let lData = []
+            let lData2 = []
             let num = 0
             let list = this.list
             list.forEach(function(item, index) {
               let obj = {}
+              let obj2 = {}
+              obj2.taskId = me.form.taskId
+              obj2.allocatedNum = item.allocatedNum
+              obj2.plId = item.plId
+              obj2.productionDate = item.productionDate
+              lData2.push(obj2)
               obj.allocatedNum = item.allocatedNum
               obj.gid = me.form.gid
               obj.isOutbreed = me.form.isOutbreed
@@ -271,15 +278,38 @@
             })
             data.taskId = me.form.taskId
             data.extendList = lData
-            console.log(num)
-            console.log(data)
-            if(me.list.length > 0 ){
+            if(me.list.length > 0 ) {
               if(num <= me.form.allocatedNum){
-                separateBill(data).then(res => {
-                  if(res.flag){
-                    me.$emit('hideSplit', false)
-                    me.$emit('uploadList')
-                  }
+                isOutbreed(lData2).then(res => {
+                  if (res.flag) {
+                    separateBill(data).then(reso => {
+                      if(reso.flag){
+                        me.$emit('hideSplit', false)
+                        me.$emit('uploadList')
+                      }
+                    })
+                  } else {
+                  this.$confirm(res.msg + ',是否超出常量生产?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                  }).then(() => {
+                    lData.forEach((item, index) =>{
+                      item.isOutbreed = '1'
+                    })
+                    separateBill(data).then(reso => {
+                      if(reso.flag){
+                        me.$emit('hideSplit', false)
+                        me.$emit('uploadList')
+                      }
+                    })
+                  }).catch(() => {
+                    this.$message({
+                      type: 'info',
+                      message: '已取消删除'
+                    });
+                  });
+                }
                 })
               } else {
                 this.$message({

@@ -102,7 +102,7 @@
   </div>
 </template>
 <script>
-  import { shareBill, getSemiList } from '@/api/production/index'
+  import { shareBill, getSemiList, isOutbreed } from '@/api/production/index'
   import { getMcjSemiSchedulingType, getMcjSemiFinishedProducts} from '@/api/basic/index'
   export default {
     props: {
@@ -240,11 +240,18 @@
           if (valid) {
             let data = {}
             let lData = []
+            let lData2 = []
             let num = 0
             let list = this.list
             let result = []
             list.forEach(function(item, index) {
               let obj = {}
+              let obj2 = {}
+              obj2.taskId = item.taskId
+              obj2.allocatedNum = item.allocatedNum
+              obj2.plId = me.form.plId
+              obj2.productionDate = me.form.productionDate
+              lData2.push(obj2)
               obj.allocatedNum = item.allocatedNum
               obj.gid = item.gid
               obj.isOutbreed = me.form.isOutbreed
@@ -258,15 +265,40 @@
               }
               lData.push(obj)
             })
-         /*   data.taskId = me.form.taskId
-            data.extendPojo = lData*/
+            /* data.taskId = me.form.taskId
+             data.extendPojo = lData*/
             if(me.list.length > 1 ){
               if(num <= me.form.allocatedNum){
                 if(result.length == 1){
-                  shareBill(lData).then(res => {
-                    if(res.flag){
-                      me.$emit('hideSpell', false)
-                      me.$emit('uploadList')
+                  isOutbreed(lData2).then(res => {
+                    if (res.flag) {
+                      shareBill(lData).then(reso => {
+                        if(reso.flag){
+                          me.$emit('hideSpell', false)
+                          me.$emit('uploadList')
+                        }
+                      })
+                    } else {
+                      this.$confirm(res.msg + ',是否超出常量生产?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                      }).then(() => {
+                        lData.forEach((item, index) =>{
+                          item.isOutbreed = '1'
+                        })
+                        shareBill(lData).then(reso => {
+                          if(reso.flag){
+                            me.$emit('hideSpell', false)
+                            me.$emit('uploadList')
+                          }
+                        })
+                      }).catch(() => {
+                        this.$message({
+                          type: 'info',
+                          message: '已取消删除'
+                        });
+                      });
                     }
                   })
                 }else{
@@ -275,7 +307,6 @@
                     message: '物料信息需要一致!'
                   });
                 }
-
               } else {
                 this.$message({
                   type: 'error',

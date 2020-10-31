@@ -116,7 +116,7 @@
   </div>
 </template>
 <script>
-  import { separateBill } from '@/api/production/index'
+  import { separateBill, isOutbreed } from '@/api/production/index'
   import { getMcjSemiSchedulingType, getMcjSemiFinishedProducts} from '@/api/basic/index'
   export default {
     props: {
@@ -254,10 +254,17 @@
           if (valid) {
             let data = {}
             let lData = []
+            let lData2 = []
             let num = 0
             let list = this.list
             list.forEach(function(item, index) {
               let obj = {}
+              let obj2 = {}
+              obj2.taskId = me.form.taskId
+              obj2.allocatedNum = item.allocatedNum
+              obj2.plId = item.plId
+              obj2.productionDate = item.productionDate
+              lData2.push(obj2)
               obj.allocatedNum = item.allocatedNum
               obj.gid = me.form.gid
               obj.isOutbreed = me.form.isOutbreed
@@ -271,24 +278,47 @@
             })
             data.taskId = me.form.taskId
             data.extendList = lData
-            console.log(num)
-            console.log(data)
-            if(me.list.length > 0 ){
+            if(me.list.length > 0 ) {
               if(num <= me.form.allocatedNum){
-                separateBill(data).then(res => {
-                  if(res.flag) {
-                    me.$emit('hideSplit', false)
-                    me.$emit('uploadList')
+                isOutbreed(lData2).then(res => {
+                  if (res.flag) {
+                    separateBill(data).then(reso => {
+                      if(reso.flag){
+                        me.$emit('hideSplit', false)
+                        me.$emit('uploadList')
+                      }
+                    })
+                  } else {
+                    this.$confirm(res.msg + ',是否超出常量生产?', '提示', {
+                      confirmButtonText: '确定',
+                      cancelButtonText: '取消',
+                      type: 'warning'
+                    }).then(() => {
+                      lData.forEach((item, index) =>{
+                        item.isOutbreed = '1'
+                      })
+                      separateBill(data).then(reso => {
+                        if(reso.flag){
+                          me.$emit('hideSplit', false)
+                          me.$emit('uploadList')
+                        }
+                      })
+                    }).catch(() => {
+                      this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                      });
+                    });
                   }
                 })
               } else {
-                me.$message({
+                this.$message({
                   type: 'error',
                   message: '拆单数量不能大于原单数量!'
                 });
               }
             } else {
-              this.$message({
+              me.$message({
                 type: 'error',
                 message: '无拆单数量!'
               });

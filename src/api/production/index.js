@@ -319,5 +319,17 @@ export function shareBill(params) {
     data: params,
     method: 'post'
   })
+}// 判断超产
+export function isOutbreed(params) {
+  const url = '/scheduling-extend/isOutbreed'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    data: params,
+    method: 'post'
+  })
 }
 

@@ -261,7 +261,7 @@ export default {
     },
     handleMove() {
       if (this.selections.length > 0) {
-        this.$emit('handleMove', this.selections[0])
+        this.$emit('handleMove', this.selections)
       } else {
         this.$message({
           message: '无选中行',
