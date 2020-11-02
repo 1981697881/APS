@@ -93,6 +93,6 @@ export default {
 
 <style lang='scss' scoped>
 .list-main {
-  height: calc(100vh - 250px);
+  height: calc(100vh - 300px);
 }
 </style>

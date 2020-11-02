@@ -101,6 +101,7 @@
                     type="date"
                     size="mini"
                     value-format="yyyy-MM-dd"
+                    :picker-options="pickerOptionsStart"
                     placeholder="选择日期">
                   </el-date-picker>
                 </div>
@@ -162,6 +163,14 @@
     },
     data() {
       return {
+        pickerOptionsStart: {
+          disabledDate: time => {
+            let beginDateVal = new Date()
+            beginDateVal=beginDateVal.setDate(beginDateVal.getDate()-1)
+            beginDateVal=new Date(beginDateVal)
+              return time.getTime() < beginDateVal
+          }
+        },
         data: [],
         disPl: false,
         value: false,

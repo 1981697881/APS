@@ -41,7 +41,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20">
+     <!-- <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'是否超产'" >
             <el-switch
@@ -52,7 +52,7 @@
             </el-switch>
           </el-form-item>
         </el-col>
-      </el-row>
+      </el-row>-->
       <el-row >
         <el-table el-table :height="'calc(100vh/2.8)'"  :data="list" border size="mini" :highlight-current-row="true">
           <el-table-column prop="date" label="序号" type="index" align="center" sortable></el-table-column>
@@ -75,6 +75,7 @@
                     type="date"
                     size="mini"
                     value-format="yyyy-MM-dd"
+                    :picker-options="pickerOptionsStart"
                     placeholder="选择日期">
                   </el-date-picker>
                 </div>
@@ -132,6 +133,14 @@
     },
     data() {
       return {
+        pickerOptionsStart: {
+          disabledDate: time => {
+            let beginDateVal = new Date()
+            beginDateVal=beginDateVal.setDate(beginDateVal.getDate()-1)
+            beginDateVal=new Date(beginDateVal)
+            return time.getTime() <= beginDateVal;
+          }
+        },
         cIndex: 0,
         form: {
           taskNum: null,
@@ -189,11 +198,13 @@
       },
       //添加
       addMaster() {
+        let num = 0
         for (let i of this.list) {
+          num += Number(i.allocatedNum)
           if (i.isSet) return this.$message.warning('请先保存当前编辑项');
         }
         this.cIndex += 1
-        let j = {isSet: true, productionDate: null, cIndex: this.cIndex, plId: null, allocatedNum: 10};
+        let j = {isSet: true, productionDate: null, cIndex: this.cIndex, plName: null, allocatedNum: this.form.allocatedNum - num};
         this.list.push(j);
         this.sel = JSON.parse(JSON.stringify(j));
       },

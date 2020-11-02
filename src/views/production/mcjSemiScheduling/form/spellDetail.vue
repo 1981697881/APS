@@ -61,6 +61,7 @@
                 v-model="form.productionDate"
                 type="date"
                 value-format="yyyy-MM-dd"
+                :picker-options="pickerOptionsStart"
                 placeholder="选择日期">
               </el-date-picker>
             </div>
@@ -83,7 +84,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20">
+      <!--<el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'是否超产'" >
             <el-switch
@@ -94,7 +95,7 @@
             </el-switch>
           </el-form-item>
         </el-col>
-      </el-row>
+      </el-row>-->
     </el-form>
     <div slot="footer" style="text-align:center;padding-top: 15px">
       <el-button type="primary" @click="saveData('form')">保存</el-button>
@@ -118,6 +119,14 @@
     },
     data() {
       return {
+        pickerOptionsStart: {
+          disabledDate: time => {
+            let beginDateVal = new Date()
+            beginDateVal=beginDateVal.setDate(beginDateVal.getDate()-1)
+            beginDateVal=new Date(beginDateVal)
+            return time.getTime() <= beginDateVal;
+          }
+        },
         value: [],
         form: {
           allocatedNum: null,

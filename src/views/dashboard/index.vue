@@ -116,6 +116,7 @@ export default {
       endDate: this.getDay('', 30).date
     }
     let data = this.fetchData(obj)
+    console.log(data)
     this.$refs.zyList.fetchData(data)
     this.$refs.mcjList.fetchData(data)
   },
@@ -207,7 +208,7 @@ export default {
               // 根据时间生成表头 把时间包含数据重新组装 -》array
               columns.push({text: this.getDay(arr, i).date + '', name: this.getDay(arr, i).date + '', width: '100px'})
               arrayDay.push(this.getDay(arr, i).date)
-              data.forEach((item, index) => {
+             /* data.forEach((item, index) => {
                 for (let j in item) {
                   let aDate = item.date.replace(/:/g, '-')
                   aDate = aDate.replace(/ /g, '-')
@@ -228,22 +229,9 @@ export default {
                     }else if (j == 'dopeDeliveryNum') {
                       dopeDeliveryNum.push((item.dopeDeliveryNum == null ? 0 : item.dopeDeliveryNum))
                     }
-                    results.push(i)
                   }
                 }
-              })
-
-              if(results.indexOf(i) == -1){
-                indentNum.push(0)
-                invPorcelainNum.push(0)
-                porcelainYield.push(0)
-                porcelainDeliveryNum.push(0)
-
-                orderNum.push(0)
-                dopeYield.push(0)
-                dopeDeliveryNum.push(0)
-                results.push(i)
-              }
+              })*/
             }
             data.forEach((item, index) => {
               array.forEach((item2, index2) => {
@@ -254,10 +242,13 @@ export default {
                 let key = this.getDay(arr1, 0).date + ''
                 if (index2 == 0) {
                   item2[key] = item.orderNum
+                  orderNum.push((item.orderNum == null ? 0 : item.orderNum))
                 } else if (index2 == 1) {
                   item2[key] = item.dopeYield
+                  dopeYield.push((item.dopeYield == null ? 0 : item.dopeYield))
                 } else if (index2 == 2) {
                   item2[key] = item.dopeDeliveryNum
+                  dopeDeliveryNum.push((item.dopeDeliveryNum == null ? 0 : item.dopeDeliveryNum))
                 }
               })
               array2.forEach((item2, index2) => {
@@ -268,12 +259,16 @@ export default {
                 let key = this.getDay(arr1, 0).date + ''
                 if (index2 == 0) {
                   item2[key] = item.indentNum
+                  indentNum.push((item.indentNum == null ? 0 : item.indentNum))
                 } else if (index2 == 1) {
                   item2[key] = item.invPorcelainNum
+                  invPorcelainNum.push((item.invPorcelainNum == null ? 0 : item.invPorcelainNum))
                 } else if (index2 == 2) {
                   item2[key] = item.porcelainYield
+                  porcelainYield.push((item.porcelainYield == null ? 0 : item.porcelainYield))
                 } else if (index2 == 3) {
                   item2[key] = item.porcelainDeliveryNum
+                  porcelainDeliveryNum.push((item.porcelainDeliveryNum == null ? 0 : item.porcelainDeliveryNum))
                 }
               })
             })
