@@ -116,7 +116,6 @@ export default {
       endDate: this.getDay('', 30).date
     }
     let data = this.fetchData(obj)
-    console.log(data)
     this.$refs.zyList.fetchData(data)
     this.$refs.mcjList.fetchData(data)
   },

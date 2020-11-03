@@ -4,7 +4,7 @@ import {
 } from '@/utils/auth' // get token from cookie
 // 查询角色列表
 export function permissionsList(data) {
-  //查询分页数据
+  // 查询分页数据
   const url = '/Admin/role/list'
   return request({
     headers: {
@@ -51,7 +51,7 @@ export function updateRoles(data) {
     data: data
   })
 }
-//获取菜单树
+// 获取菜单树
 export function getSysMenuTree() {
   const url = '/Admin/getSysMenuTree'
   return request({
@@ -62,7 +62,7 @@ export function getSysMenuTree() {
     method: 'get',
   })
 }
-//获取角色菜单树
+// 获取角色菜单树
 export function getRoleMenu(data) {
   const url = '/Admin/getRoleMenu'
   return request({
@@ -74,7 +74,7 @@ export function getRoleMenu(data) {
     params:{rid:data}
   })
 }
-//保存权限
+// 保存权限
 export function addRoleMenu(data) {
   const url = '/Admin/addRoleMenu'
   return request({
