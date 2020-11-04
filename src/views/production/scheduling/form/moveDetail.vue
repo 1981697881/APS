@@ -1,86 +1,100 @@
 <template>
   <div>
     <el-form :model="form" :rules="rules" ref="form" label-width="90px" :size="'mini'">
-      <!--<el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'排产单号'">
-            <el-input v-model="form.taskNum" disabled></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'色号'" >
-            <el-input v-model="form.oldCode" disabled></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'排产数量'" >
-            <el-input v-model="form.allocatedNum" disabled></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'生产日期'" >
-            <el-input v-model="form.rProductionDate" disabled></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'现生产线'" >
-            <el-select v-model="form.rTpId" class="width-full" placeholder="生产线" disabled>
-              <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i" ></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'现生产设备'" >
-            <el-select v-model="form.rPlId" class="width-full" placeholder="生产设备" disabled>
-              <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray"  :key="i"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'是否超产'" >
-            <el-switch
-              v-model="form.isOutbreed"
-              active-value="1"
-              inactive-value="0"
-            >
-            </el-switch>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'计划日期'" prop="productionDate">
-            <div class="block" >
-              <el-date-picker
-                v-model="form.productionDate"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="选择日期">
-              </el-date-picker>
-            </div>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'生产线'" prop="tpId">
-            <el-select v-model="form.tpId" class="width-full" placeholder="生产线" @change="selectChange">
-              <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'生产设备'" prop="plId">
-            <el-select v-model="form.plId" class="width-full" placeholder="生产设备" :disabled="disPl">
-              <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in sArray"  :key="i"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-      </el-row>-->
+     <el-row :gutter="20">
+       <el-col :span="12">
+         <el-form-item :label="'生产日期'" prop="productionDate">
+           <div class="block" >
+             <el-date-picker
+               v-model="form.productionDate"
+               type="date"
+               @change="dateChange"
+               value-format="yyyy-MM-dd"
+               placeholder="选择日期">
+             </el-date-picker>
+           </div>
+         </el-form-item>
+       </el-col>
+     </el-row>
+      <!-- <el-col :span="12">
+        <el-form-item :label="'排产单号'">
+          <el-input v-model="form.taskNum" disabled></el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item :label="'色号'" >
+          <el-input v-model="form.oldCode" disabled></el-input>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-form-item :label="'排产数量'" >
+          <el-input v-model="form.allocatedNum" disabled></el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item :label="'生产日期'" >
+          <el-input v-model="form.rProductionDate" disabled></el-input>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-form-item :label="'现生产线'" >
+          <el-select v-model="form.rTpId" class="width-full" placeholder="生产线" disabled>
+            <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i" ></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item :label="'现生产设备'" >
+          <el-select v-model="form.rPlId" class="width-full" placeholder="生产设备" disabled>
+            <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray"  :key="i"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-form-item :label="'是否超产'" >
+          <el-switch
+            v-model="form.isOutbreed"
+            active-value="1"
+            inactive-value="0"
+          >
+          </el-switch>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item :label="'计划日期'" prop="productionDate">
+          <div class="block" >
+            <el-date-picker
+              v-model="form.productionDate"
+              type="date"
+              value-format="yyyy-MM-dd"
+              placeholder="选择日期">
+            </el-date-picker>
+          </div>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-form-item :label="'生产线'" prop="tpId">
+          <el-select v-model="form.tpId" class="width-full" placeholder="生产线" @change="selectChange">
+            <el-option :label="t.tpName" :value="t.tpId" v-for="(t,i) in pArray" :key="i"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item :label="'生产设备'" prop="plId">
+          <el-select v-model="form.plId" class="width-full" placeholder="生产设备" :disabled="disPl">
+            <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in sArray"  :key="i"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>-->
       <el-row >
         <el-table el-table :height="'calc(100vh/2.8)'"  :data="list" border size="mini" :highlight-current-row="true">
           <el-table-column prop="date" label="序号" type="index" align="center" sortable></el-table-column>
@@ -94,10 +108,10 @@
             :width="t.width?t.width:(selfAdaption?'':'150px')"
           >
             <template slot-scope="scope">
-                <span v-if="scope.row.isSet">
+                <span>
                   <div class="block" v-if="t.name == 'productionDate'">
                   <el-date-picker
-                    v-model="sel[t.name]"
+                    v-model="scope.row[t.name]"
                     type="date"
                     size="mini"
                     value-format="yyyy-MM-dd"
@@ -105,14 +119,14 @@
                     placeholder="选择日期">
                   </el-date-picker>
                 </div>
-                  <el-select size="mini" v-else-if="t.name == 'tpName'" v-model="sel[t.name]" placeholder="请选择" @change="changeTpId($event, sel)">
+                  <el-select size="mini" v-else-if="t.name == 'tpName'" v-model="scope.row[t.name]" placeholder="请选择" @change="changeTpId($event, scope.row)">
                     <el-option
                       :label="t.tpName"
                       :value="t.tpName"
                       v-for="(t,i) in pArray"
                       :key="i">
                     </el-option>
-                  </el-select><el-select size="mini" v-else-if="t.name == 'plNName'" v-model="sel[t.name]" placeholder="请选择" @change="changePlId($event, sel)">
+                  </el-select><el-select size="mini" v-else-if="t.name == 'plNName'" v-model="scope.row[t.name]" placeholder="请选择" @change="changePlId($event, scope.row)">
                     <el-option
                       :label="t.plName"
                       :value="t.plName"
@@ -120,22 +134,22 @@
                       :key="i">
                     </el-option>
                   </el-select>
-                  <span v-else>{{sel[t.name]}}</span>
+                  <span v-else>{{scope.row[t.name]}}</span>
                 </span>
-              <span v-else>{{scope.row[t.name]}}</span>
+              <!--<span v-else>{{scope.row[t.name]}}</span>-->
             </template>
           </el-table-column>
           <el-table-column label="操作" width="100">
             <template slot-scope="scope">
-                  <span class="el-tag el-tag--info el-tag--mini" style="cursor: pointer;" @click="pwdChange(scope.row,scope.$index,true)">
+                <!--  <span class="el-tag el-tag&#45;&#45;info el-tag&#45;&#45;mini" style="cursor: pointer;" @click="pwdChange(scope.row,scope.$index,true)">
                     {{scope.row.isSet?'确定':"修改"}}
-                  </span>
+                  </span>-->
               <span v-if="!scope.row.isSet" class="el-tag el-tag--danger el-tag--mini" @click="deleteRow(scope.row,scope.$index,list)" style="cursor: pointer;">
                     删除
                   </span>
-              <span v-else class="el-tag  el-tag--mini" style="cursor: pointer;" @click="pwdChange(scope.row,scope.$index,false)">
+             <!-- <span v-else class="el-tag  el-tag&#45;&#45;mini" style="cursor: pointer;" @click="pwdChange(scope.row,scope.$index,false)">
                     取消
-                  </span>
+                  </span>-->
             </template>
           </el-table-column>
         </el-table>
@@ -223,6 +237,7 @@
       this.fetchFormat()
       if (this.listInfo) {
         this.list = this.listInfo
+
       /*  this.$set(this.listInfo, 'isOutbreed', '1')
         this.form = this.listInfo
         this.fetchLine(this.form.tpId)
@@ -234,6 +249,12 @@
       }
     },
     methods: {
+      dateChange(val){
+       let list = this.list
+        list.forEach((item, index) =>{
+          item.productionDate = val
+        })
+      },
       changeTpId(val, row) {
         const me = this
         this.pArray.forEach((item, index) => {
@@ -241,12 +262,13 @@
             getFinalGoodsT(item.tpId).then(res => {
               if(res.flag) {
                 me.$set(this, 'rArray', res.data)
+                me.$set(row, 'plNName', null)
+                me.$set(row, 'plId', null)
                 me.$forceUpdate();
               }
             })
           }
         })
-        console.log(row)
       },
       changePlId(val, row) {
         const me = this
@@ -360,12 +382,18 @@
               });
             } else {
                 this.$confirm(res.msg + ',是否超出常量生产?', '提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消',
+                  confirmButtonText: '超产',
+                  cancelButtonText: '不超产',
+                  distinguishCancelAndClose: true,
                   type: 'warning'
                 }).then(() => {
-                  lData.forEach((item, index) =>{
-                    item.isOutbreed = '1'
+                  let isDate = res.data
+                  isDate.forEach((it, ind) =>{
+                    lData.forEach((item, index) =>{
+                      if(it == item.taskId){
+                        item.isOutbreed = '1'
+                      }
+                    })
                   })
                    moveBill(lData).then(reso => {
                     if(reso.flag){
@@ -373,11 +401,18 @@
                       me.$emit('uploadList')
                     }
                   });
-                }).catch(() => {
-                  this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                  });
+                }).catch(action => {
+                  if(action == 'cancel'){
+                    lData.forEach((item, index) =>{
+                      item.isOutbreed = '0'
+                    })
+                    moveBill(lData).then(reso => {
+                      if(reso.flag){
+                        me.$emit('hideMove', false)
+                        me.$emit('uploadList')
+                      }
+                    });
+                  }
                 });
             }
           });

@@ -289,12 +289,18 @@
                       })
                     } else {
                       this.$confirm(res.msg + ',是否超出常量生产?', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
+                        confirmButtonText: '超产',
+                        cancelButtonText: '不超产',
+                        distinguishCancelAndClose: true,
                         type: 'warning'
                       }).then(() => {
-                        lData.forEach((item, index) =>{
-                          item.isOutbreed = '1'
+                        let isDate = res.data
+                        isDate.forEach((it, ind) =>{
+                          lData.forEach((item, index) =>{
+                            if(it == item.taskId){
+                              item.isOutbreed = '1'
+                            }
+                          })
                         })
                         shareBill(lData).then(reso => {
                           if(reso.flag){
@@ -302,12 +308,19 @@
                             me.$emit('uploadList')
                           }
                         })
-                      }).catch(() => {
-                        this.$message({
-                          type: 'info',
-                          message: '已取消删除'
-                        });
-                      });
+                      }).catch(action => {
+                        if(action == 'cancel') {
+                          lData.forEach((item, index) => {
+                            item.isOutbreed = '0'
+                          })
+                          shareBill(lData).then(reso => {
+                            if (reso.flag) {
+                              me.$emit('hideSpell', false)
+                              me.$emit('uploadList')
+                            }
+                          })
+                        }
+                      })
                     }
                   })
                 }else{
