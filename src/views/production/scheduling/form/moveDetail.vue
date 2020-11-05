@@ -1,21 +1,21 @@
 <template>
   <div>
     <el-form :model="form" :rules="rules" ref="form" label-width="90px" :size="'mini'">
-     <el-row :gutter="20">
-       <el-col :span="12">
-         <el-form-item :label="'生产日期'" prop="productionDate">
-           <div class="block" >
-             <el-date-picker
-               v-model="form.productionDate"
-               type="date"
-               @change="dateChange"
-               value-format="yyyy-MM-dd"
-               placeholder="选择日期">
-             </el-date-picker>
-           </div>
-         </el-form-item>
-       </el-col>
-     </el-row>
+      <el-row :gutter="20">
+        <el-col :span="4">
+          <el-form-item :label="'生产日期'" prop="productionDate">
+            <div class="block" >
+              <el-date-picker
+                v-model="form.productionDate"
+                type="date"
+                @change="dateChange"
+                value-format="yyyy-MM-dd"
+                placeholder="选择日期">
+              </el-date-picker>
+            </div>
+          </el-form-item>
+        </el-col>
+      </el-row>
       <!-- <el-col :span="12">
         <el-form-item :label="'排产单号'">
           <el-input v-model="form.taskNum" disabled></el-input>

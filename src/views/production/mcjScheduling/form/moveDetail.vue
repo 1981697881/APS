@@ -2,7 +2,7 @@
   <div>
     <el-form :model="form" :rules="rules" ref="form" label-width="90px" :size="'mini'">
       <el-row :gutter="20">
-        <el-col :span="12">
+        <el-col :span="4">
           <el-form-item :label="'生产日期'" prop="productionDate">
             <div class="block" >
               <el-date-picker

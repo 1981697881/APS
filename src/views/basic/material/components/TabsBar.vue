@@ -36,8 +36,8 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handleAlter">信息维护</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-printer" @click="print">打印</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-sort" @click="handleSync" >同步</el-button>-->
+          <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'loading'" :size="'mini'" type="primary" icon="el-icon-success" @click="onFun(t.path)" v-loading.fullscreen.lock="fullscreenLoading">{{t.menuName}}</el-button>
           <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
           <el-upload
             name="order"
@@ -68,14 +68,16 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getByUserAndPrId } from '@/api/system/index'
+import { updateType } from '@/api/basic/index'
 import {getToken} from '@/utils/auth'
 export default {
   components: {},
   computed: {
-    ...mapGetters(["node","clickData","selections"])
+    ...mapGetters(['node','clickData','selections'])
   },
   data() {
     return {
+      fullscreenLoading: false,
       isUpload: null,
       headers: {
         'authorization': getToken('apsrx'),
@@ -126,11 +128,20 @@ export default {
     let path = this.$route.meta.id
     getByUserAndPrId(path).then(res => {
       this.btnList = res.data
-      this.$forceUpdate();
+      this.$forceUpdate()
     });
   },
   methods: {
-    onFun(method){
+    updateType() {
+      this.fullscreenLoading = true
+      updateType().then(res => {
+        if (res.flag) {
+          this.fullscreenLoading = false
+          this.$emit('uploadList')
+        }
+      })
+    },
+    onFun(method) {
       this[method]()
     },
     submitUpload() {
@@ -139,7 +150,7 @@ export default {
     uploadError(res) {
       this.$message({
         message: '上传失败',
-        type: "warning"
+        type: 'warning'
       });
       this.$emit('uploadList')
     },
@@ -147,18 +158,18 @@ export default {
       if(res.flag){
         this.$message({
           message: res.msg,
-          type: "success"
+          type: 'success'
         });
         this.$emit('uploadList')
       }else{
         this.$message({
           message: res.msg,
-          type: "warning"
+          type: 'warning'
         });
       }
     },
-    handleUpload(file, fileList){
-      if(file.status=="ready"){
+    handleUpload(file, fileList) {
+      if(file.status == 'ready') {
         this.submitUpload()
       }
     },
@@ -181,8 +192,8 @@ export default {
         })
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -190,15 +201,15 @@ export default {
       this.search.goodCode = null
       this.search.oldCode = null
       this.value = []
-      this.$emit("uploadList")
+      this.$emit('uploadList')
     },
     handleAlter() {
       if (this.clickData.gid) {
         this.$emit('showDialog', this.clickData)
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -212,26 +223,26 @@ export default {
     disable() {
       if (this.clickData.gid) {
         this.$message({
-          message: "抱歉，功能尚未完善！",
-          type: "warning"
+          message: '抱歉，功能尚未完善！',
+          type: 'warning'
         });
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
     enable() {
       if (this.clickData.gid) {
         this.$message({
-          message: "抱歉，功能尚未完善！",
-          type: "warning"
+          message: '抱歉，功能尚未完善！',
+          type: 'warning'
         });
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },
@@ -242,8 +253,8 @@ export default {
         LODOP.PREVIEW()*/
       } else {
         this.$message({
-          message: "无选中行",
-          type: "warning"
+          message: '无选中行',
+          type: 'warning'
         });
       }
     },

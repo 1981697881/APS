@@ -908,3 +908,14 @@ export function wareBindDelete(data) {
     method: 'delete'
   })
 }
+// 物料管理-更新类别
+export function updateType(data) {
+  const url = '/goods/updateType'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx')
+    },
+    method: 'post'
+  })
+}
