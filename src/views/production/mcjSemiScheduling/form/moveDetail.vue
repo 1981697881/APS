@@ -123,7 +123,7 @@
           taskId: null
         },
         columns: [
-          {text: '色号', name: 'color'},
+          {text: '色号', name: 'oldCode'},
           {text: '排产单号', name: 'taskNum'},
           {text: '生产日期', name: 'productionDate'},
           {text: '原生产设备', name: 'plName'},
@@ -158,7 +158,7 @@
       console.log(this.listInfo)
       this.fetchFormat()
       if (this.listInfo) {
-        this.list = this.listInfo
+        this.list = [this.listInfo]
         /*this.$set(this.listInfo, 'isOutbreed', '1')
         this.form = this.listInfo
         this.fetchLine(this.form.tpId)

@@ -1,13 +1,11 @@
 <template>
   <div class="app-list">
-    <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
         <tabs-bar ref="tabs" @showDialog="handlerDialog" @queryBtn="query" @theDelivery="delivery"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog"/>
     </div>
-
     <el-dialog
       :visible.sync="visible"
       title="基本信息"
@@ -25,7 +23,6 @@
 <script>
 import { TabsBar, List } from "./components";
 import { Info } from "./form";
-
 export default {
   components: {
     TabsBar,

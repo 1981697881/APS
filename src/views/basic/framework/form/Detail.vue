@@ -22,7 +22,6 @@
 
       </el-row>
       <el-row :gutter="20">
-
         <el-col :span="12">
           <el-form-item :label="'上级组织'" >
             <el-select v-model="form.deptParent"   placeholder="请选择">
