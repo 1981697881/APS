@@ -149,15 +149,18 @@ export default {
     });
   },
   methods: {
+    // 动态调用方法
     onFun(method){
       this[method]()
     },
+    // 导出
     exportData() {
       this.$emit('exportData')
       let qFilter = this.qFilter()
       addOperationLog({message: '导出主业成品生产计划,导出条件日期:'+qFilter.productionDateStart+'-'+ qFilter.productionDateEnd +'设备:'+qFilter.plId+'生产状态:'+qFilter.allocatedStatus+'旧料号:'+qFilter.oldCode+'排产单号:'+qFilter.taskNum}).then(res => {
       })
     },
+    // 获取设备
     fetchLine(val) {
       this.search.plId = null
       getFinalGoodsT(val).then(res => {
@@ -166,12 +169,15 @@ export default {
         }
       })
     },
+    // 下拉选择之后刷新页面
     selectLine(val) {
       this.$emit('uploadList')
     },
+    // 下拉选择之后刷新页面
     selectChange(val) {
       this.$emit('uploadList')
     },
+    // 删除
     delivery() {
       if (this.selections[0].taskId) {
         this.$confirm('是否删除(' + this.selections[0].productionDate + '/' + this.selections[0].plName + '/' + this.selections[0].color + ')，删除后将无法恢复?', '提示', {
@@ -195,6 +201,7 @@ export default {
         });
       }
     },
+    // 提交打印
     confirmPrint() {
       if (this.selections.length > 0) {
         PrintSchedule(this.selections)
@@ -206,6 +213,7 @@ export default {
         });
       }
     },
+    // 结束单据
     over() {
       if (this.selections[0].taskId) {
         this.$confirm('是否结束(' + this.selections[0].productionDate + '/' + this.selections[0].plName + '/' + this.selections[0].color + ')，结束后将完成生产?', '提示', {
@@ -231,6 +239,7 @@ export default {
         });
       }
     },
+    // 刷新
     upload() {
       this.search.allocatedStatus = null
       this.search.oldCode = null
@@ -240,6 +249,7 @@ export default {
       this.value = []
       this.$emit('uploadList')
     },
+    // 调用汇报窗口
     report() {
       console.log(this.selections)
       if (this.selections.length > 0) {
@@ -259,9 +269,30 @@ export default {
         });
       }
     },
+    // 挪单
     handleMove() {
       if (this.selections.length > 0) {
-        this.$emit('handleMove', this.selections)
+        if(this.selections.length > 1){
+          let selections = this.selections
+          let isFormat = true
+          let date = selections[0].productionDate
+          selections.map((item, index) =>{
+            if(date != item.productionDate){
+              isFormat = false
+              return isFormat
+            }
+          })
+          if(isFormat){
+            this.$emit('handleMove', this.selections)
+          }else{
+            this.$message({
+              message: '所选择计划日期必须一致',
+              type: 'warning'
+            });
+          }
+        }else{
+          this.$emit('handleMove', this.selections)
+        }
       } else {
         this.$message({
           message: '无选中行',

@@ -10,6 +10,7 @@
                 type="date"
                 @change="dateChange"
                 value-format="yyyy-MM-dd"
+                :picker-options="pickerOptionsStart"
                 placeholder="选择日期">
               </el-date-picker>
             </div>
@@ -30,7 +31,7 @@
           >
             <template slot-scope="scope">
                 <span>
-                  <div class="block" v-if="t.name == 'productionDate'">
+                 <!-- <div class="block" v-if="t.name == 'productionDate'">
                   <el-date-picker
                     v-model="scope.row[t.name]"
                     type="date"
@@ -39,8 +40,8 @@
                     :picker-options="pickerOptionsStart"
                     placeholder="选择日期">
                   </el-date-picker>
-                </div>
-                  <el-select size="mini" v-else-if="t.name == 'tpName'" v-model="scope.row[t.name]" placeholder="请选择" @change="changeTpId($event, scope.row)">
+                </div>-->
+                  <el-select size="mini" v-if="t.name == 'tpName'" v-model="scope.row[t.name]" placeholder="请选择" @change="changeTpId($event, scope.row)">
                     <el-option
                       :label="t.tpName"
                       :value="t.tpName"

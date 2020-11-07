@@ -51,7 +51,7 @@ export default {
     };
   },
   mounted() {
-    this.$refs.list.fetchData()
+    this.$refs.list.fetchData(this.$refs.tabs.qFilter())
   },
   methods: {
     hideWindow(val) {

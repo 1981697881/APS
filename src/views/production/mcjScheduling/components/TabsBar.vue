@@ -167,7 +167,27 @@ export default {
     },
     handleMove() {
       if (this.selections.length > 0) {
-        this.$emit('handleMove', this.selections)
+        if(this.selections.length > 1){
+          let selections = this.selections
+          let isFormat = true
+          let date = selections[0].productionDate
+          selections.map((item, index) =>{
+            if(date != item.productionDate){
+              isFormat = false
+              return isFormat
+            }
+          })
+          if(isFormat){
+            this.$emit('handleMove', this.selections)
+          }else{
+            this.$message({
+              message: '所选择计划日期必须一致',
+              type: 'warning'
+            });
+          }
+        }else{
+          this.$emit('handleMove', this.selections)
+        }
       } else {
         this.$message({
           message: '无选中行',
