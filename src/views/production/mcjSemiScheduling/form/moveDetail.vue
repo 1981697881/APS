@@ -160,6 +160,9 @@
       this.fetchFormat()
       if (this.listInfo) {
         this.list = [this.listInfo]
+        this.list.forEach((item,index)=>{
+          item.plNName = item.plName
+        })
         /*this.$set(this.listInfo, 'isOutbreed', '1')
         this.form = this.listInfo
         this.fetchLine(this.form.tpId)

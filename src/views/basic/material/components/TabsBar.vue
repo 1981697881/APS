@@ -43,8 +43,7 @@
             name="order"
             :on-success="uploadSuccess"
             :on-error="uploadError"
-            v-for="(t,i) in btnList" :key="i"
-            v-if="t.category == 'import'"
+
             accept="xlsx,xls"
             ref="upload"
             :headers="headers"
@@ -56,7 +55,7 @@
             :on-change="handleUpload"
             :limit="3"
           >
-            <el-button size="mini" type="primary" icon="el-icon-upload2" >导入</el-button>
+            <el-button  v-for="(t,i) in btnList" :key="i" v-if="t.category == 'import'" size="mini" type="primary" icon="el-icon-upload2" >导入</el-button>
             <el-button style="margin-left: 10px;display: none" size="mini" type="success" @click="submitUpload">上传到服务器</el-button>
           </el-upload>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh"    @click="upload">刷新</el-button>

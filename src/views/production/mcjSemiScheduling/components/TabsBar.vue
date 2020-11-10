@@ -21,7 +21,7 @@
             accept="xlsx,xls"
             ref="upload"
             :headers="headers"
-            v-for="(t,i) in btnList" :key="i" v-if="t.category == 'import'"
+
             :show-file-list="false"
             action="web/excel/import/semiTaskScheduling"
             class="upload-demo"
@@ -30,7 +30,7 @@
             :on-change="handleUpload"
             :limit="1"
           >
-            <el-button size="mini" type="primary" icon="el-icon-upload2" >导入</el-button>
+            <el-button  v-for="(t,i) in btnList" :key="i" v-if="t.category == 'import'" size="mini" type="primary" icon="el-icon-upload2" >导入</el-button>
             <el-button style="margin-left: 10px;display: none" size="mini" type="success" @click="submitUpload">上传到服务器</el-button>
           </el-upload>
         </el-button-group>
