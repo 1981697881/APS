@@ -24,12 +24,14 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
         <el-button-group style="float:right;">
+          <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="recalculation">重算</el-button>
           <el-upload
             name="order"
             :on-success="uploadSuccess"
             :on-error="uploadError"
             accept="xlsx,xls"
             ref="upload"
+            style="float: left"
             :headers="headers"
             :show-file-list="false"
             action="web/excel/import/punchRecord"
@@ -138,6 +140,9 @@ export default {
       this.search.deptName = null
       this.value = []
       this.$emit('uploadList')
+    },
+    recalculation(){
+      this.$emit('showRerun')
     },
     // 关键字查询
     query() {

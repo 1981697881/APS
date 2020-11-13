@@ -42,13 +42,13 @@ export default {
         { text: '产品名称', name: 'goodName', width: '150px' },
         { text: '色号', name: 'color', width: '150px' },
         { text: '订单数量', name: 'num' },
-        { text: '产品最终价', name: '' },
-        { text: '价税合计', name: '' },
+        { text: '产品最终价', name: 'finallyPriceTc' },
+        { text: '价税合计', name: 'totalMoneyTc' },
         { text: '料号', name: 'goodCode', width: '150px' },
         { text: '订单号', name: 'orderNum', width: '150px', sort: true },
         { text: '已出货数量', name: 'sendNum' },
         { text: '待运输数量', name: 'beSendNum' },
-        { text: '已运输', name: '' },
+        { text: '已运输', name: 'alreadySendNum' },
       ]
     };
   },

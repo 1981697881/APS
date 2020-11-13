@@ -126,3 +126,40 @@ export function updateSalary(params) {
     data: params
   })
 }
+// 考勤管理-考勤重算
+export function attendCal(params) {
+  const url = '/attend-manage/attendCal'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}// 考勤管理-更新考勤时间
+export function addOrUpdateAttendManage(params) {
+  const url = '/attend-manage/addOrUpdateAttendManage'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}// 考勤管理-更新假期
+export function addOrUpdateAttendanceExtension(params) {
+  const url = '/attend-manage/addOrUpdateAttendanceExtension'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}

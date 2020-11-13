@@ -276,8 +276,9 @@ export default {
           let selections = this.selections
           let isFormat = true
           let date = selections[0].productionDate
+          let plId = selections[0].plId
           selections.map((item, index) =>{
-            if(date != item.productionDate){
+            if(date != item.productionDate && plId != item.plId){
               isFormat = false
               return isFormat
             }
@@ -286,7 +287,7 @@ export default {
             this.$emit('handleMove', this.selections)
           }else{
             this.$message({
-              message: '所选择计划日期必须一致',
+              message: '所选择计划日期和设备必须一致',
               type: 'warning'
             });
           }

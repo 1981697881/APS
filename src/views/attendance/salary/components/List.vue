@@ -145,13 +145,20 @@ export default {
     celldblclick(row, column, cell, event) {
       console.log(row)
       console.log(column)
-      this.$emit('showDialog', [row, column.property.match(/\d+/g)[0]])
+      if(column.property.match(/\d+/g) == null){
+        this.$emit('showDialog',  [row, -1])
+      }else{
+        this.$emit('showDialog', [row, column.property.match(/\d+/g)[0]])
+      }
     },
     cellclick(row, column, cell, event) {
       this.row = row
       this.column = column
-      console.log(column)
-      this.$store.dispatch("list/setClickData", [row, column.property.match(/\d+/g)[0]])
+      if(column.property.match(/\d+/g) == null){
+        this.$store.dispatch("list/setClickData", [row, -1])
+      }else{
+        this.$store.dispatch("list/setClickData", [row, column.property.match(/\d+/g)[0]])
+      }
     },
     // 监听单击某一行
     rowClick(obj) {

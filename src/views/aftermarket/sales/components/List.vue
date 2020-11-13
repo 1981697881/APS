@@ -1,37 +1,37 @@
 <template>
   <div>
     <list
-       class="list-main box-shadow"
+      class="list-main box-shadow"
       :columns="columns"
       :loading="loading"
       :list="list"
       index
-       :selfAdaption="false"
+      :selfAdaption="false"
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
-       @row-click="rowClick"
+      @row-click="rowClick"
     />
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex"
-import { getSalesList } from "@/api/aftermarket/index"
-import List from "@/components/List"
+import { mapGetters } from 'vuex'
+import { getSalesList } from '@/api/aftermarket/index'
+import List from '@/components/List'
 export default {
   components: {
     List
   },
   computed: {
-    ...mapGetters(["node"])
+    ...mapGetters(['node'])
   },
   data() {
     return {
       loading: false,
       list: {},
       columns: [
-        { text: 'soId', name: 'soId', default: false},
+        { text: 'soId', name: 'soId', default: false },
         { text: '大区', name: 'departmentName' },
         { text: '业务员', name: 'seller' },
         { text: '助理', name: 'createBy' },
@@ -51,18 +51,18 @@ export default {
         { text: '入库', name: 'inStockNum' },
         { text: '已出货数量', name: 'sendNum' },
         { text: '待运输数量', name: 'beSendNum' },
-        { text: '已运输', name: '' },
-        { text: '订单未发数量', name: '' },
-        { text: '订单未发金额', name: '' },
-        { text: 'OK数量', name: '' },
-        { text: 'OK金额', name: '' },
-        { text: '未好金额', name: '' },
-        { text: '未好数量', name: '' },
+        { text: '已运输', name: 'alreadySendNum' },
+        { text: '订单未发数量', name: 'orderNoSendNum' },
+        { text: '订单未发金额', name: 'orderNoSendMoney' },
+        { text: 'OK数量', name: 'okNum' },
+        { text: 'OK金额', name: 'okMoney' },
+        { text: '未好金额', name: 'notOkMoney' },
+        { text: '未好数量', name: 'notOkNum' },
        /* { text: '外包OK数量', name: '' },
         { text: '外包OK金额', name: '' },
         { text: '外包未好数量', name: '' },
         { text: '外包未好金额', name: '' },*/
-        { text: '制造单位', name: '' },
+        { text: '制造单位', name: 'makeUnit' },
         { text: '供应商', name: 'provideSupplier' },
         { text: '核准状态', name: 'auditStatus' },
         { text: '最近同步时间', name: 'syncTime', width: '150px' },
@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     ExportData() {
-      import("@/vendor/Export2Excel").then(excel => {
+      import('@/vendor/Export2Excel').then(excel => {
         // 表格的表头列表
         const columns = this.columns
         const tHeader = []
@@ -108,7 +108,7 @@ export default {
     },
     // 监听单击某一行
     rowClick(obj) {
-      this.$store.dispatch("list/setClickData", obj.row)
+      this.$store.dispatch('list/setClickData', obj.row)
     },
     uploadPr(val) {
       this.fetchData(val,{
