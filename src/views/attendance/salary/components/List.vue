@@ -213,7 +213,8 @@ export default {
         { text: '上月剩余年假/H', name: 'remainingAnnualLeaveLastMonth' },
         { text: '本月剩余年假/H', name: 'annualLeaveRemainingThisMonth' },
         { text: '餐补', name: 'mealSupplement' },
-        { text: '出差补贴', name: 'travelAllowance'}
+        { text: '出差补贴', name: 'travelAllowance'},
+        { text: 'aeId', name: 'aeId', default: false},
       )
       this.loading = true
       getSalaryList(val).then(res => {
@@ -273,6 +274,7 @@ export default {
               eval("obj.annualLeaveRemainingThisMonth='" + item.annualLeaveRemainingThisMonth + "'")
               eval("obj.mealSupplement='" + item.mealSupplement + "'")
               eval("obj.travelAllowance='" + item.travelAllowance + "'")
+              eval("obj.aeId='" + item.aeId + "'")
             }
 
             arr.push(obj)

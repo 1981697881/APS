@@ -168,7 +168,7 @@
     },
     created() {
       if (this.listInfo) {
-        this.fetchData(this.listInfo);
+        this.form = this.listInfo
       }
     },
     mounted() {
@@ -202,6 +202,7 @@
         this.$refs[form].validate((valid) => {
           //判断必填项
           if (valid) {
+            this.form.date = this.form.noteDate
             addOrUpdateAttendanceExtension(this.form).then(res => {
               this.$emit('hideDialog')
               this.$emit('uploadList')

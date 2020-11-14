@@ -6,6 +6,7 @@
           <el-form-item :label="'上班时间'" prop="startTime">
             <el-time-picker
               v-model="form.startTime"
+              style="width: 100%"
               placeholder="任意时间点">
             </el-time-picker>
           </el-form-item>
@@ -14,6 +15,7 @@
           <el-form-item :label="'下班时间'" prop="endTime">
             <el-time-picker
               v-model="form.endTime"
+              style="width: 100%"
               placeholder="任意时间点">
             </el-time-picker>
           </el-form-item>
@@ -80,6 +82,7 @@ export default {
   },
  created() {
    if (this.listInfo) {
+     this.form = this.listInfo
      this.fetchData(this.listInfo);
    }
  },
@@ -138,15 +141,17 @@ export default {
    fetchData(val) {
      const me = this
      getSalaryList(val).then(res => {
-       this.$set(me, 'form', res.data[0])
-       me.form = res.data[0]
-       this.$set(me.form, 'amId', res.data[0].detail[0].amId)
-       this.$set(me.form, 'startTime', new Date(res.data[0].detail[0].startTime))
-       this.$set(me.form, 'endTime', new Date(res.data[0].detail[0].endTime))
-       /*this.$set(me.form, 'overtimeNum', res.data[0].detail[0].overtimeNum)
-       this.$set(me.form, 'normalNum', res.data[0].detail[0].normalNum)*/
-       delete me.form.detail
-      console.log(res)
+       if(res.data.length > 0){
+         this.$set(me, 'form', res.data[0])
+         me.form = res.data[0]
+         this.$set(me.form, 'amId', res.data[0].detail[0].amId)
+         this.$set(me.form, 'startTime', new Date(res.data[0].detail[0].startTime))
+         this.$set(me.form, 'endTime', new Date(res.data[0].detail[0].endTime))
+         /*this.$set(me.form, 'overtimeNum', res.data[0].detail[0].overtimeNum)
+         this.$set(me.form, 'normalNum', res.data[0].detail[0].normalNum)*/
+         delete me.form.detail
+         console.log(res)
+       }
      });
    },
  }

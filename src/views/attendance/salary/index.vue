@@ -95,17 +95,25 @@ export default {
         const listInfo = {}
         let dayNum = listBlank['noteDate'].split('-')
         if(obj[1] == -1){
-          let day = listBlank['noteDate'] + "-01"
+         /* let day = listBlank['noteDate'] + "-01"
           eval("listInfo.jobNum='" + listBlank['jobNum'] + "'")
-          eval("listInfo.date='" + day + "'")
-          this.listInfo = listInfo
+          eval("listInfo.date='" + day + "'")*/
+          this.listInfo = obj[0]
           this.visible2 = true
         }else{
-          let day = listBlank['noteDate'] + "-" + this.doHandleMonth(obj[1])
-          eval("listInfo.jobNum='" + listBlank['jobNum'] + "'")
-          eval("listInfo.date='" + day + "'")
-          this.listInfo = listInfo
-          this.visible = true
+          if(obj[0]['day'+obj[1]] != undefined || obj[0]['day'+obj[1]] != null){
+            let day = listBlank['noteDate'] + "-" + this.doHandleMonth(obj[1])
+            eval("listInfo.jobNum='" + listBlank['jobNum'] + "'")
+            eval("listInfo.name='" + listBlank['name'] + "'")
+            eval("listInfo.date='" + day + "'")
+            this.listInfo = listInfo
+            this.visible = true
+          } else {
+            this.$message({
+              message: "当前选中无数据！",
+              type: "warning"
+            });
+          }
         }
        /* if(Number(obj[1]) > Number(new Date(dayNum[0],dayNum[1],0).getDate())){
         }*/
