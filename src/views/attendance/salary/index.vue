@@ -105,6 +105,7 @@ export default {
             let day = listBlank['noteDate'] + "-" + this.doHandleMonth(obj[1])
             eval("listInfo.jobNum='" + listBlank['jobNum'] + "'")
             eval("listInfo.name='" + listBlank['name'] + "'")
+            eval("listInfo.deptName='" + listBlank['deptName'] + "'")
             eval("listInfo.date='" + day + "'")
             this.listInfo = listInfo
             this.visible = true

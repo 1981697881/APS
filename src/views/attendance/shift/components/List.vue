@@ -31,6 +31,7 @@
         columns: [
           { text: "id", name: "oowId", default: false},
           { text: "部门", name: "deptName" },
+          { text: "工号", name: "jobNum" },
           { text: "职员", name: "name" },
           { text: "上班时间", name: "startTime" },
           { text: "下班时间", name: "endTime" },

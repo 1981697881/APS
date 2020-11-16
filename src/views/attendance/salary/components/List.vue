@@ -100,7 +100,7 @@ export default {
           colspan: 1
         };
       }else{
-          if ((columnIndex === 0 || columnIndex === 1)) {
+          if ((columnIndex === 0 || columnIndex <= 2)) {
             if (rowIndex % 4 === 0) {
               return {
                 rowspan: 4,
@@ -114,7 +114,6 @@ export default {
             }
           }
       }
-
     },
      RetnWF2(year, month, nowday) {//JS判断的if elseif方法
       let wstr = ""
@@ -181,7 +180,7 @@ export default {
       this.columns = [
         { text: '工号', name: 'jobNum' },
         { text: '姓名', name: 'name' },
-        { text: '日期', name: 'noteDate' },
+        { text: '月份', name: 'noteDate', colspan: false },
         { text: '日期', name: '', colspan: true, data: [{text: '星期', name: 'time'}]
         },
       ]
@@ -215,6 +214,7 @@ export default {
         { text: '餐补', name: 'mealSupplement' },
         { text: '出差补贴', name: 'travelAllowance'},
         { text: 'aeId', name: 'aeId', default: false},
+        { text: '部门', name: 'deptName', default: false},
       )
       this.loading = true
       getSalaryList(val).then(res => {
@@ -222,13 +222,12 @@ export default {
         const data = res.data
         const arr = []
         data.forEach((item, index)=> {
-          for(let i = 0;i < 4;i++){
+          for(let i = 0; i < 4; i++){
             let obj = {}
             eval("obj.jobNum='" + item.jobNum + "'")
             eval("obj.name='" + item.name + "'")
             let nMonth = new Date(item.detail[0].startTime).getMonth()+1
             eval("obj.noteDate='" + (new Date(item.detail[0].startTime).getFullYear()+"-"+this.doHandleMonth(nMonth)) + "'")
-
             if(i == 0) {
               eval("obj.time='上班时间'")
             }else if(i == 1){
@@ -275,13 +274,12 @@ export default {
               eval("obj.mealSupplement='" + item.mealSupplement + "'")
               eval("obj.travelAllowance='" + item.travelAllowance + "'")
               eval("obj.aeId='" + item.aeId + "'")
+              eval("obj.deptName='" + item.deptName + "'")
             }
-
             arr.push(obj)
           }
         })
-
-        console.log(arr)
+        console.log(this.columns)
         this.list = arr
       })
     }

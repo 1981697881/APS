@@ -19,19 +19,44 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-form-item :label="'单号'">
             <el-input v-model="search.keyword" placeholder="单号"/>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-form-item :label="'色号'">
             <el-input v-model="search.color" placeholder="色号"/>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-form-item :label="'料号'">
             <el-input v-model="search.itemCode" placeholder="料号"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="'大区'">
+            <el-input v-model="search.itemCode" placeholder="大区"/>
+          </el-form-item>
+        </el-col><el-col :span="3">
+          <el-form-item :label="'业务员'" :label-width="'60px'">
+            <el-input v-model="search.seller" placeholder="业务员"/>
+          </el-form-item>
+        </el-col><el-col :span="3">
+          <el-form-item :label="'助理'">
+            <el-input v-model="search.itemCode" placeholder="助理"/>
+          </el-form-item>
+        </el-col><el-col :span="3">
+          <el-form-item :label="'公司名称'" :label-width="'80px'">
+            <el-input v-model="search.itemCode" placeholder="公司名称"/>
+          </el-form-item>
+        </el-col><el-col :span="3">
+          <el-form-item :label="'项目名称'" :label-width="'80px'">
+            <el-input v-model="search.soName" placeholder="项目名称"/>
+          </el-form-item>
+        </el-col><el-col :span="3">
+          <el-form-item :label="'状态'">
+            <el-input v-model="search.itemCode" placeholder="状态"/>
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -180,6 +205,8 @@ export default {
       },
       search: {
         color: null,
+        soName: null,
+        seller: null,
         itemCode: null,
         keyword: null
       }
@@ -240,6 +267,8 @@ export default {
       this.search.keyword != null && this.search.keyword != '' ? obj.docNo = this.search.keyword : null
       this.search.itemCode != null && this.search.itemCode != '' ? obj.itemCode = this.search.itemCode : null
       this.search.color != null && this.search.color != '' ? obj.color = this.search.color : null
+      this.search.soName != null && this.search.soName != '' ? obj.soName = this.search.soName : null
+      this.search.seller != null && this.search.seller != '' ? obj.seller = this.search.seller : null
       this.value != null && this.value != undefined ? obj.businessDateEnd = this.value[1] : null
       this.value != null && this.value != undefined ? obj.businessDateStart = this.value[0] : null
       return obj
@@ -252,6 +281,8 @@ export default {
       this.$emit('uploadList')
       this.search.keyword = ''
       this.search.color = ''
+      this.search.soName = ''
+      this.search.seller = ''
       this.search.itemCode = ''
       this.value = ''
     },

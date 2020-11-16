@@ -3,6 +3,25 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="120px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
+          <el-form-item :label="'部门'">
+            <el-input v-model="form.deptName" readOnly="true"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'职员'">
+            <el-input v-model="form.name" readOnly="true"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'日期'">
+            <el-input v-model="form.noteDate" readOnly="true"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
           <el-form-item :label="'抵扣年假/H'">
             <el-input v-model="form.annualLeaveDeduction"></el-input>
           </el-form-item>

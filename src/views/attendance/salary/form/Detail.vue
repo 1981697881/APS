@@ -3,6 +3,25 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="120px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
+          <el-form-item :label="'部门'">
+            <el-input v-model="form.deptName" readOnly="true"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'职员'">
+            <el-input v-model="form.name" readOnly="true"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'日期'">
+            <el-input v-model="form.date" disabled></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
           <el-form-item :label="'上班时间'" prop="startTime">
             <el-time-picker
               v-model="form.startTime"
@@ -21,18 +40,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <!--<el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'正班时长'" prop="normalNum">
-            <el-input v-model="form.normalNum"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'加班时长'" prop="overtimeNum">
-            <el-input v-model="form.overtimeNum"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>-->
+
    </el-form>
    <div slot="footer" style="text-align:center;padding-top: 15px">
        <el-button type="primary" @click.native="saveData('form')">保存</el-button>
@@ -83,6 +91,7 @@ export default {
  created() {
    if (this.listInfo) {
      this.form = this.listInfo
+     console.log(this.form)
      this.fetchData(this.listInfo);
    }
  },
@@ -132,18 +141,16 @@ export default {
      })
    },
    doHandleMonth(month) {
-     var m = month;
+     var m = month
      if(month.toString().length == 1) {
-       m = "0" + month;
+       m = "0" + month
      }
-     return m;
+     return m
    },
    fetchData(val) {
      const me = this
      getSalaryList(val).then(res => {
        if(res.data.length > 0){
-         this.$set(me, 'form', res.data[0])
-         me.form = res.data[0]
          this.$set(me.form, 'amId', res.data[0].detail[0].amId)
          this.$set(me.form, 'startTime', new Date(res.data[0].detail[0].startTime))
          this.$set(me.form, 'endTime', new Date(res.data[0].detail[0].endTime))
@@ -152,10 +159,10 @@ export default {
          delete me.form.detail
          console.log(res)
        }
-     });
-   },
+     })
+   }
  }
-};
+}
 </script>
 
 <style>
