@@ -36,7 +36,7 @@
         </el-col>
         <el-col :span="3">
           <el-form-item :label="'大区'">
-            <el-input v-model="search.itemCode" placeholder="大区"/>
+            <el-input v-model="search.departmentName" placeholder="大区"/>
           </el-form-item>
         </el-col><el-col :span="3">
           <el-form-item :label="'业务员'" :label-width="'60px'">
@@ -44,21 +44,28 @@
           </el-form-item>
         </el-col><el-col :span="3">
           <el-form-item :label="'助理'">
-            <el-input v-model="search.itemCode" placeholder="助理"/>
+            <el-input v-model="search.createBy" placeholder="助理"/>
           </el-form-item>
         </el-col><el-col :span="3">
           <el-form-item :label="'公司名称'" :label-width="'80px'">
-            <el-input v-model="search.itemCode" placeholder="公司名称"/>
+            <el-input v-model="search.customerName" placeholder="公司名称"/>
           </el-form-item>
         </el-col><el-col :span="3">
           <el-form-item :label="'项目名称'" :label-width="'80px'">
             <el-input v-model="search.soName" placeholder="项目名称"/>
           </el-form-item>
-        </el-col><el-col :span="3">
-          <el-form-item :label="'状态'">
-            <el-input v-model="search.itemCode" placeholder="状态"/>
-          </el-form-item>
-        </el-col>
+        </el-col> <el-col :span="3">
+        <el-form-item :label="'状态'">
+          <el-select v-model="search.isConfirm" placeholder="请选择" @change="selectChange">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
@@ -160,6 +167,13 @@ export default {
   },
   data() {
     return {
+      options: [{
+        value: true,
+        label: '已核准'
+      }, {
+        value: false,
+        label: '未核准'
+      }],
       visible: null,
       fullscreenLoading: false,
       form: {
@@ -205,8 +219,12 @@ export default {
       },
       search: {
         color: null,
+        isConfirm: false,
         soName: null,
         seller: null,
+        departmentName: null,
+        createBy: null,
+        customerName: null,
         itemCode: null,
         keyword: null
       }
@@ -220,6 +238,10 @@ export default {
     });
   },
   methods: {
+    selectChange(val) {
+      this.search.isConfirm = val
+      this.$emit('uploadList')
+    },
     onFun(method){
       this[method]()
     },
@@ -237,10 +259,10 @@ export default {
       link.click()
     },
     exportData() {
-     /* exportSales(this.qFilter()).then(res => {
+      exportSales(this.qFilter()).then(res => {
         this.download(res)
-      })*/
-      this.$emit('exportData')
+      })
+     /* this.$emit('exportData')*/
     },
     changeDate(val) {
       this.form.businessDateEnd = val[1]
@@ -269,6 +291,10 @@ export default {
       this.search.color != null && this.search.color != '' ? obj.color = this.search.color : null
       this.search.soName != null && this.search.soName != '' ? obj.soName = this.search.soName : null
       this.search.seller != null && this.search.seller != '' ? obj.seller = this.search.seller : null
+      this.search.departmentName != null && this.search.departmentName != '' ? obj.departmentName = this.search.departmentName : null
+      this.search.createBy != null && this.search.createBy != '' ? obj.createBy = this.search.createBy : null
+      this.search.customerName != null && this.search.customerName != '' ? obj.customerName = this.search.customerName : null
+      obj.isConfirm = this.search.isConfirm
       this.value != null && this.value != undefined ? obj.businessDateEnd = this.value[1] : null
       this.value != null && this.value != undefined ? obj.businessDateStart = this.value[0] : null
       return obj
@@ -278,13 +304,17 @@ export default {
       this.$emit('uploadList', this.qFilter())
     },
     upload() {
-      this.$emit('uploadList')
       this.search.keyword = ''
       this.search.color = ''
       this.search.soName = ''
       this.search.seller = ''
       this.search.itemCode = ''
+      this.search.departmentName = ''
+      this.search.createBy = ''
+      this.search.customerName = ''
+      this.search.isConfirm = false
       this.value = ''
+      this.$emit('uploadList')
     },
     confirm(form) {
       this.fullscreenLoading = true

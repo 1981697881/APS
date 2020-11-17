@@ -37,6 +37,7 @@ export default {
     };
   },
   mounted() {
+    console.log(this.$refs.tabs.qFilter())
     this.$refs.list.fetchData(this.$refs.tabs.qFilter())
   },
   methods: {
