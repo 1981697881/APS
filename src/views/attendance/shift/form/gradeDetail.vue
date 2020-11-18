@@ -2,14 +2,21 @@
   <div>
     <el-form :model="form" :rules="rules" ref="form" :size="'mini'" label-width="60px">
       <el-row :gutter="20">
-        <el-col :span="10" >
+        <el-col :span="7" >
           <el-form-item :label="'班次'" prop="oowId">
             <el-select v-model="form.oowId" class="width-full" placeholder="请选择班次" >
               <el-option :label="t.oowName" :value="t.oowId" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="10">
+        <el-col :span="7">
+          <el-form-item :label="'部门'">
+            <el-select v-model="form.deptNumber" filterable class="width-full"  placeholder="请选择部门" @change="selectChange">
+              <el-option :label="t.deptName" :value="t.deptId" v-for="(t,i) in rArray" :key="i"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="7">
           <el-form-item :label="'职员'">
             <el-input v-model="name" ></el-input>
           </el-form-item>
@@ -42,7 +49,7 @@
   import { mapGetters } from "vuex"
   import List from "@/components/List"
   import {empBind, getShiftList} from "@/api/attendance/index"
-  import {getClerkList} from "@/api/basic/index"
+  import {getClerkList, getFrameList} from "@/api/basic/index"
   export default {
     components: {
       List
@@ -76,6 +83,7 @@
           { text: "描述", name: "remark" },
         ],
         pArray: [],
+        rArray: [],
         rules: {
           oowId: [
             {required: true, message: '请选择班次', trigger: 'change'},
@@ -86,11 +94,27 @@
     mounted() {
       this.formatData()
       this.fetchData()
+      this.fetchFormat()
       if(this.listInfo) {
         this.fetchData(this.listInfo.name)
       }
     },
     methods: {
+      fetchFormat() {
+        const data = {
+          pageNum: 1,
+          pageSize: 1000,
+        };
+        getFrameList(data, { disable: false }).then(res => {
+          this.rArray = res.data.records
+        });
+      },
+      // 切换类别
+      selectChange(val) {
+        let arr = []
+        arr.push(val)
+        this.fetchData({deptIds: arr})
+      },
       //监听每页显示几条
       handleSize(val) {
         this.list.size = val
@@ -132,10 +156,11 @@
           pageSize: this.list.size
         })
       },
-      fetchData(val, data = {
+      fetchData(val = {}, data = {
         pageNum: this.list.current || 1,
         pageSize: this.list.size || 50
       }) {
+        val.disable = false
         this.loading = true;
         getClerkList(data, val).then(res => {
           this.loading = false;

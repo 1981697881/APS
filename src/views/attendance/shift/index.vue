@@ -22,7 +22,7 @@
       title="排班信息"
       v-if="visible2"
       v-dialogDrag
-      :width="'40%'"
+      :width="'80%'"
       destroy-on-close
     >
       <grade @hideDialog="hideSch" @uploadList="uploadSch" :listInfo="listInfo"></grade>

@@ -4,7 +4,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'部门'">
-            <el-select v-model="form.deptNumber" class="width-full"  placeholder="请选择部门">
+            <el-select v-model="form.deptNumber" class="width-full"  placeholder="请选择部门" @change="selectChange">
               <el-option :label="t.deptName" :value="t.deptId" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
@@ -104,6 +104,15 @@
 
     },
     methods: {
+      // 切换类别
+      selectChange(val) {
+        console.log(val)
+        this.form.empNumbers = null
+        this.rArray = []
+        let arr = []
+        arr.push(val)
+        this.fetchLine(arr)
+      },
       saveData(form) {
         this.$refs[form].validate((valid) => {
           //判断必填项
@@ -125,6 +134,15 @@
           }
         })
       },
+      fetchLine(val){
+        const data = {
+          pageNum: 1,
+          pageSize: 1000,
+        };
+        getClerkList(data, { disable: false, deptIds: val }).then(res => {
+          this.rArray = res.data.records
+        });
+      },
       fetchFormat() {
         const data = {
           pageNum: 1,
@@ -133,9 +151,7 @@
         getFrameList(data,{ disable: false }).then(res => {
           this.pArray = res.data.records
         });
-        getClerkList(data,{ disable: false }).then(res => {
-          this.rArray = res.data.records
-        });
+
       },
     }
   };

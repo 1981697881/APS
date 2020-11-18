@@ -18,6 +18,7 @@
         :key="i"
         align="center"
         :prop="t.name"
+        :fixed="t.fixed"
         :label="t.text"
         v-if="t.default!=undefined?t.default:true"
         :width="t.width?t.width:(selfAdaption?'':'120px')"
@@ -178,10 +179,10 @@ export default {
       const mouthLength = aData.getDate()
       this.dayLength = mouthLength
       this.columns = [
-        { text: '工号', name: 'jobNum' },
-        { text: '姓名', name: 'name' },
-        { text: '月份', name: 'noteDate', colspan: false },
-        { text: '日期', name: '', colspan: true, data: [{text: '星期', name: 'time'}]
+        { text: '工号', name: 'jobNum',fixed: true },
+        { text: '姓名', name: 'name',fixed: true, },
+        { text: '月份', name: 'noteDate', colspan: false, fixed: true },
+        { text: '日期', name: '',fixed: true, colspan: true, data: [{text: '星期', name: 'time'}]
         },
       ]
       for (let i = 1; i <= mouthLength; i++) {
@@ -191,9 +192,9 @@ export default {
       }
       this.columns.push(
         { text: '总工时', name: 'totalTime'},
-        { text: '平时', name: 'normalOverWTime' },
-        { text: '双休', name: 'weekendOverWTime' },
-        { text: '法定', name: 'statutoryOverWTime' },
+        { text: '平时加班', name: 'normalOverWTime' },
+        { text: '双休加班', name: 'weekendOverWTime' },
+        { text: '法定加班', name: 'statutoryOverWTime' },
         { text: '抵扣年假/H', name: 'annualLeaveDeduction' },
         { text: '本月使用年假/H', name: 'useAnnualLeave' },
         { text: '病假/H', name: 'sickLeave' },
@@ -228,6 +229,8 @@ export default {
             eval("obj.name='" + item.name + "'")
             let nMonth = new Date(item.detail[0].startTime).getMonth()+1
             eval("obj.noteDate='" + (new Date(item.detail[0].startTime).getFullYear()+"-"+this.doHandleMonth(nMonth)) + "'")
+            eval("obj.aeId='" + item.aeId + "'")
+            eval("obj.deptName='" + item.deptName + "'")
             if(i == 0) {
               eval("obj.time='上班时间'")
             }else if(i == 1){
@@ -239,9 +242,9 @@ export default {
             }
             item.detail.forEach((item1, index1)=> {
               if(i == 0) {
-                eval("obj.day" + new Date(item1.startTime).getDate() + "='" + (new Date(item1.startTime).getHours() + ':' + new Date(item1.startTime).getMinutes()) + "'")
+                eval("obj.day" + new Date(item1.startTime).getDate() + "='" + (this.doHandleMonth(new Date(item1.startTime).getHours()) + ':' + this.doHandleMonth(new Date(item1.startTime).getMinutes())) + "'")
               }else if(i == 1) {
-                eval("obj.day" + new Date(item1.startTime).getDate() + "='" + (new Date(item1.endTime).getHours() + ':' + new Date(item1.endTime).getMinutes()) + "'")
+                eval("obj.day" + new Date(item1.startTime).getDate() + "='" + (this.doHandleMonth(new Date(item1.endTime).getHours()) + ':' + this.doHandleMonth(new Date(item1.endTime).getMinutes())) + "'")
               }else if(i == 2) {
                 eval("obj.day" + new Date(item1.startTime).getDate() + "='" + item1.normalNum + "'")
               }else{
@@ -273,8 +276,7 @@ export default {
               eval("obj.annualLeaveRemainingThisMonth='" + item.annualLeaveRemainingThisMonth + "'")
               eval("obj.mealSupplement='" + item.mealSupplement + "'")
               eval("obj.travelAllowance='" + item.travelAllowance + "'")
-              eval("obj.aeId='" + item.aeId + "'")
-              eval("obj.deptName='" + item.deptName + "'")
+
             }
             arr.push(obj)
           }

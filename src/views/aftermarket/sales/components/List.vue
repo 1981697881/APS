@@ -62,7 +62,7 @@ export default {
         { text: '外包OK金额', name: '' },
         { text: '外包未好数量', name: '' },
         { text: '外包未好金额', name: '' },*/
-        { text: '制造单位', name: 'makeUnit' },
+        { text: '制造单位', name: 'modept1' },
         { text: '供应商', name: 'provideSupplier' },
         { text: '核准状态', name: 'auditStatus' },
         { text: '最近同步时间', name: 'syncTime', width: '150px' },
