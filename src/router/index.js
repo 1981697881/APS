@@ -53,418 +53,425 @@ export const StaticRouterMap = [{
     }
   }]
 },
-/*  {
-  path: '/basic',
-  component: Layout,
-  name: 'Basic',
-  meta: {
-    title: '基础资料',
-    icon: 'component'
-  },
-  children: [{
-      path: 'framework',
-      component: () => import('@/views/basic/framework/index'),
-      name: 'Framework',
-      meta: {
-        title: '组织架构'
-      },
-    },{
-      path: 'material',
-      component: () => import('@/views/basic/material/index'),
-      name: 'Material',
-      meta: {
-        title: '物料管理'
-      },
-    },
-    {
-      path: 'clerk',
-      component: () => import('@/views/basic/clerk/index'),
-      name: 'Clerk',
-      meta: {
-        title: '职员管理'
-      },
-    },
-    {
-      path: 'supplier',
-      component: () => import('@/views/basic/supplier/index'),
-      name: 'Supplier',
-      meta: {
-        title: '供应商管理'
-      },
-    },{
-      path: 'inventory',
-      component: () => import('@/views/basic/inventory/index'),
-      name: 'Inventory',
-      meta: {
-        title: '库存信息'
-      },
-    },{
-      path: 'resources',
-      component: () => import('@/views/basic/resources/index'),
-      name: 'Resources',
-      meta: {
-        title: '生产资源管理'
-      },
-    },{
-      path: 'barcode',
-      component: () => import('@/views/basic/barcode/index'),
-      name: 'Barcode',
-      meta: {
-        title: '条码设置'
-      },
-    },
-    {
-      path: 'regulation',
-      component: () => import('@/views/basic/regulation/index'),
-      name: 'Regulation',
-      meta: {
-        title: '规格设置'
-      },
-    }
-    ]
-  },
-  {
-    path: '/production',
+  /*{
+    path: '/basic',
     component: Layout,
-    name: 'Production',
+    name: 'Basic',
     meta: {
-      title: '生产管理',
-      icon: "component"
-    },
-    children: [
-      /!*{
-      path: 'prepare',
-      component: () => import('@/views/production/prepare/index'),
-      name: 'Prepare',
-      meta: {
-        title: '生产单管理'
-      },
-    },*!/
-      {
-      path: 'scheduling',
-      component: () => import('@/views/production/scheduling/index'),
-      name: 'Scheduling',
-      meta: {
-        title: '生产排程'
-      },
-    },{
-      path: 'sboard',
-      component: () => import('@/views/production/sboard/index'),
-      name: 'sboard',
-      meta: {
-        title: '生产任务看板'
-      },
-    },{
-      path: 'efficiency',
-      component: () => import('@/views/production/efficiency/index'),
-      name: 'Efficiency',
-      meta: {
-        title: '工时效率统计表'
-      },
-    }]
-  },
-  {
-    path: '/warehouse',
-    component: Layout,
-    name: 'Warehouse',
-    meta: {
-      title: '仓库物流管理',
+      title: '基础资料',
       icon: 'component'
     },
     children: [{
-      path: 'procurement',
-      component: () => import('@/views/warehouse/procurement/index'),
-      name: 'Procurement',
-      meta: {
-        title: '采购入库计划'
+        path: 'barcode',
+        component: () => import('@/views/basic/barcode/index'),
+        name: 'Barcode',
+        meta: {
+          title: '条码设置'
+        },
+      },]}  {
+        path: 'framework',
+        component: () => import('@/views/basic/framework/index'),
+        name: 'Framework',
+        meta: {
+          title: '组织架构'
+        },
+      },{
+        path: 'material',
+        component: () => import('@/views/basic/material/index'),
+        name: 'Material',
+        meta: {
+          title: '物料管理'
+        },
       },
-    },{
-      path: 'recipients',
-      component: () => import('@/views/warehouse/recipients/index'),
-      name: 'Recipients',
-      meta: {
-        title: '出货计划'
-      },
-    },{
-      path: 'movingframe',
-      component: () => import('@/views/warehouse/movingframe/index'),
-      name: 'Movingframe',
-      meta: {
-        title: '移库信息'
-      },
-    },{
-      path: 'adjust',
-      component: () => import('@/views/warehouse/adjust/index'),
-      name: 'Adjust',
-      meta: {
-        title: '库存调整'
-      },
-    },{
-      path: 'storageBin',
-      component: () => import('@/views/warehouse/storageBin/index'),
-      name: 'StorageBin',
-      meta: {
-        title: '库位信息'
-      },
-    },{
-      path: 'libraryStatistics',
-      component: () => import('@/views/warehouse/libraryStatistics/index'),
-      name: 'LibraryStatistics',
-      meta: {
-        title: '入库统计表'
-      },
-    },{
-      path: 'outboundStatistics',
-      component: () => import('@/views/warehouse/outboundStatistics/index'),
-      name: 'OutboundStatistics',
-      meta: {
-        title: '出库统计表'
-      },
-    },{
-      path: 'laborMonitoring',
-      component: () => import('@/views/warehouse/laborMonitoring/index'),
-      name: 'LaborMonitoring',
-      meta: {
-        title: '物流部效率统计'
-      },
-    },{
-      path: 'deliveryOrderBoard',
-      component: () => import('@/views/warehouse/deliveryOrderBoard/index'),
-      name: 'DeliveryOrderBoard',
-      meta: {
-        title: '出货单可发看板'
-      },
-    },{
-      path: 'shipmentBoard',
-      component: () => import('@/views/warehouse/shipmentBoard/index'),
-      name: 'ShipmentBoard',
-      meta: {
-        title: '出货统计看板'
-      },
-    },{
-      path: 'receivingBoard',
-      component: () => import('@/views/warehouse/receivingBoard/index'),
-      name: 'ReceivingBoard',
-      meta: {
-        title: '收货统计看板'
-      },
-    },{
-      path: ' locationBoard',
-      component: () => import('@/views/warehouse/locationBoard/index'),
-      name: 'LocationBoard',
-      meta: {
-        title: '库位看板'
-      },
-    },
-     /!* {
-      path: 'materialback',
-      component: () => import('@/views/warehouse/materialback/index'),
-      name: 'Materialback',
-      meta: {
-        title: '退料单'
-      },
-    },{
-      path: 'returns',
-      component: () => import('@/views/warehouse/returns/index'),
-      name: 'Returns',
-      meta: {
-        title: '退货入库单'
-      },
-    },{
-      path: 'storage',
-      component: () => import('@/views/warehouse/storage/index'),
-      name: 'Storage',
-      meta: {
-        title: '生产入库'
-      },
-    },{
-      path: 'shelves',
-      component: () => import('@/views/warehouse/shelves/index'),
-      name: 'Shelves',
-      meta: {
-        title: '商品上架'
-      },
-    },{
-      path: 'picking',
-      component: () => import('@/views/warehouse/picking/index'),
-      name: 'Picking',
-      meta: {
-        title: '拣货单管理'
-      },
-    },{
-      path: 'soldout',
-      component: () => import('@/views/warehouse/soldout/index'),
-      name: 'Soldout',
-      meta: {
-        title: '商品下架'
-      },
-    },{
-      path: 'sipping',
-      component: () => import('@/views/warehouse/sipping/index'),
-      name: 'Sipping',
-      meta: {
-        title: '发货出库'
-      },
-    },{
-      path: 'scrap',
-      component: () => import('@/views/warehouse/scrap/index'),
-      name: 'Scrap',
-      meta: {
-        title: '商品报废'
-      },
-    },
       {
-      path: 'differences',
-      component: () => import('@/views/warehouse/differences/index'),
-      name: 'Differences',
-      meta: {
-        title: '发货差异报表'
+        path: 'clerk',
+        component: () => import('@/views/basic/clerk/index'),
+        name: 'Clerk',
+        meta: {
+          title: '职员管理'
+        },
       },
-    }*!/
-    ]
-  },
-  {
-    path: '/aftermarket',
-    component: Layout,
-    name: 'Aftermarket',
-    meta: {
-      title: '销售管理',
-      icon: "component"
-    },
-    children: [
-     {
-      path: 'sales',
-      component: () => import('@/views/aftermarket/sales/index'),
-      name: 'Sales',
-      meta: {
-        title: '销售计划'
+      {
+        path: 'supplier',
+        component: () => import('@/views/basic/supplier/index'),
+        name: 'Supplier',
+        meta: {
+          title: '供应商管理'
+        },
+      },{
+        path: 'inventory',
+        component: () => import('@/views/basic/inventory/index'),
+        name: 'Inventory',
+        meta: {
+          title: '库存信息'
+        },
+      },{
+        path: 'resources',
+        component: () => import('@/views/basic/resources/index'),
+        name: 'Resources',
+        meta: {
+          title: '生产资源管理'
+        },
+      },{
+        path: 'barcode',
+        component: () => import('@/views/basic/barcode/index'),
+        name: 'Barcode',
+        meta: {
+          title: '条码设置'
+        },
       },
+      {
+        path: 'regulation',
+        component: () => import('@/views/basic/regulation/index'),
+        name: 'Regulation',
+        meta: {
+          title: '规格设置'
+        },
+      }
+      ]
     },
     {
-      path: 'shipping',
-      component: () => import('@/views/aftermarket/shipping/index'),
-      name: 'Shipping',
+      path: '/production',
+      component: Layout,
+      name: 'Production',
       meta: {
-        title: '订单转出货情况表'
+        title: '生产管理',
+        icon: "component"
       },
-    },{
-      path: 'inVoorraad',
-      component: () =>import('@/views/aftermarket/inVoorraad/index'),
-      name: 'inVoorraad',
-      meta: {
-        title: '产品可出货库存表'
-      },
-    },{
-      path: 'auftragslage',
-      component: () => import('@/views/aftermarket/auftragslage/index'),
-      name: 'Auftragslage',
-      meta: {
-        title: '项目订货情况分析表'
-      },
-    }
-      /!*, {
-       path: 'shipment',
-       component: () => import('@/views/aftermarket/shipment/index'),
-       name: 'Shipment',
-       meta: {
-         title: '出货排程'
-       },
-     }
-    ,{
-       path: 'perform',
-       component: () => import('@/views/aftermarket/perform/index'),
-       name: 'Perform',
-       meta: {
-         title: '订单执行统计'
-       },
-     }*!/
-    ]
-  },
-  {
-    path: '/attendance',
-    component: Layout,
-    name: 'Attendance',
-    meta: {
-      title: '考勤管理',
-      icon: "component"
+      children: [
+        /!*{
+        path: 'prepare',
+        component: () => import('@/views/production/prepare/index'),
+        name: 'Prepare',
+        meta: {
+          title: '生产单管理'
+        },
+      },*!/
+        {
+        path: 'scheduling',
+        component: () => import('@/views/production/scheduling/index'),
+        name: 'Scheduling',
+        meta: {
+          title: '生产排程'
+        },
+      },{
+        path: 'sboard',
+        component: () => import('@/views/production/sboard/index'),
+        name: 'sboard',
+        meta: {
+          title: '生产任务看板'
+        },
+      },{
+        path: 'efficiency',
+        component: () => import('@/views/production/efficiency/index'),
+        name: 'Efficiency',
+        meta: {
+          title: '工时效率统计表'
+        },
+      }]
     },
-    children: [{
-      path: 'shift',
-      component: () => import('@/views/attendance/shift/index'),
-      name: 'Shift',
+    {
+      path: '/warehouse',
+      component: Layout,
+      name: 'Warehouse',
       meta: {
-        title: '班次管理'
+        title: '仓库物流管理',
+        icon: 'component'
       },
-    },{
-      path: 'arrange',
-      component: () => import('@/views/attendance/arrange/index'),
-      name: 'Arrange',
-      meta: {
-        title: '排班'
+      children: [{
+        path: 'procurement',
+        component: () => import('@/views/warehouse/procurement/index'),
+        name: 'Procurement',
+        meta: {
+          title: '采购入库计划'
+        },
+      },{
+        path: 'recipients',
+        component: () => import('@/views/warehouse/recipients/index'),
+        name: 'Recipients',
+        meta: {
+          title: '出货计划'
+        },
+      },{
+        path: 'movingframe',
+        component: () => import('@/views/warehouse/movingframe/index'),
+        name: 'Movingframe',
+        meta: {
+          title: '移库信息'
+        },
+      },{
+        path: 'adjust',
+        component: () => import('@/views/warehouse/adjust/index'),
+        name: 'Adjust',
+        meta: {
+          title: '库存调整'
+        },
+      },{
+        path: 'storageBin',
+        component: () => import('@/views/warehouse/storageBin/index'),
+        name: 'StorageBin',
+        meta: {
+          title: '库位信息'
+        },
+      },{
+        path: 'libraryStatistics',
+        component: () => import('@/views/warehouse/libraryStatistics/index'),
+        name: 'LibraryStatistics',
+        meta: {
+          title: '入库统计表'
+        },
+      },{
+        path: 'outboundStatistics',
+        component: () => import('@/views/warehouse/outboundStatistics/index'),
+        name: 'OutboundStatistics',
+        meta: {
+          title: '出库统计表'
+        },
+      },{
+        path: 'laborMonitoring',
+        component: () => import('@/views/warehouse/laborMonitoring/index'),
+        name: 'LaborMonitoring',
+        meta: {
+          title: '物流部效率统计'
+        },
+      },{
+        path: 'deliveryOrderBoard',
+        component: () => import('@/views/warehouse/deliveryOrderBoard/index'),
+        name: 'DeliveryOrderBoard',
+        meta: {
+          title: '出货单可发看板'
+        },
+      },{
+        path: 'shipmentBoard',
+        component: () => import('@/views/warehouse/shipmentBoard/index'),
+        name: 'ShipmentBoard',
+        meta: {
+          title: '出货统计看板'
+        },
+      },{
+        path: 'receivingBoard',
+        component: () => import('@/views/warehouse/receivingBoard/index'),
+        name: 'ReceivingBoard',
+        meta: {
+          title: '收货统计看板'
+        },
+      },{
+        path: ' locationBoard',
+        component: () => import('@/views/warehouse/locationBoard/index'),
+        name: 'LocationBoard',
+        meta: {
+          title: '库位看板'
+        },
       },
+       /!* {
+        path: 'materialback',
+        component: () => import('@/views/warehouse/materialback/index'),
+        name: 'Materialback',
+        meta: {
+          title: '退料单'
+        },
+      },{
+        path: 'returns',
+        component: () => import('@/views/warehouse/returns/index'),
+        name: 'Returns',
+        meta: {
+          title: '退货入库单'
+        },
+      },{
+        path: 'storage',
+        component: () => import('@/views/warehouse/storage/index'),
+        name: 'Storage',
+        meta: {
+          title: '生产入库'
+        },
+      },{
+        path: 'shelves',
+        component: () => import('@/views/warehouse/shelves/index'),
+        name: 'Shelves',
+        meta: {
+          title: '商品上架'
+        },
+      },{
+        path: 'picking',
+        component: () => import('@/views/warehouse/picking/index'),
+        name: 'Picking',
+        meta: {
+          title: '拣货单管理'
+        },
+      },{
+        path: 'soldout',
+        component: () => import('@/views/warehouse/soldout/index'),
+        name: 'Soldout',
+        meta: {
+          title: '商品下架'
+        },
+      },{
+        path: 'sipping',
+        component: () => import('@/views/warehouse/sipping/index'),
+        name: 'Sipping',
+        meta: {
+          title: '发货出库'
+        },
+      },{
+        path: 'scrap',
+        component: () => import('@/views/warehouse/scrap/index'),
+        name: 'Scrap',
+        meta: {
+          title: '商品报废'
+        },
+      },
+        {
+        path: 'differences',
+        component: () => import('@/views/warehouse/differences/index'),
+        name: 'Differences',
+        meta: {
+          title: '发货差异报表'
+        },
+      }*!/
+      ]
     },
-     /!* {
-      path: 'punchcard',
-      component: () => import('@/views/attendance/punchcard/index'),
-      name: 'Punchcard',
+    {
+      path: '/aftermarket',
+      component: Layout,
+      name: 'Aftermarket',
       meta: {
-        title: '打卡管理'
+        title: '销售管理',
+        icon: "component"
       },
-    },{
-      path: 'vacate',
-      component: () => import('@/views/attendance/vacate/index'),
-      name: 'Vacate',
-      meta: {
-        title: '请假管理'
+      children: [
+       {
+        path: 'sales',
+        component: () => import('@/views/aftermarket/sales/index'),
+        name: 'Sales',
+        meta: {
+          title: '销售计划'
+        },
       },
-    },*!/
       {
-      path: 'salary',
-      component: () => import('@/views/attendance/salary/index'),
-      name: 'Salary',
-      meta: {
-        title: '考勤管理'
-      },
-    }]
-  },
-  {
-    path: '/system',
-    component: Layout,
-    name: 'System',
-    meta: {
-      title: '系统设置',
-      icon: "component"
+        path: 'shipping',
+        component: () => import('@/views/aftermarket/shipping/index'),
+        name: 'Shipping',
+        meta: {
+          title: '订单转出货情况表'
+        },
+      },{
+        path: 'inVoorraad',
+        component: () =>import('@/views/aftermarket/inVoorraad/index'),
+        name: 'inVoorraad',
+        meta: {
+          title: '产品可出货库存表'
+        },
+      },{
+        path: 'auftragslage',
+        component: () => import('@/views/aftermarket/auftragslage/index'),
+        name: 'Auftragslage',
+        meta: {
+          title: '项目订货情况分析表'
+        },
+      }
+        /!*, {
+         path: 'shipment',
+         component: () => import('@/views/aftermarket/shipment/index'),
+         name: 'Shipment',
+         meta: {
+           title: '出货排程'
+         },
+       }
+      ,{
+         path: 'perform',
+         component: () => import('@/views/aftermarket/perform/index'),
+         name: 'Perform',
+         meta: {
+           title: '订单执行统计'
+         },
+       }*!/
+      ]
     },
-    children: [{
-      path: 'users',
-      component: () => import('@/views/system/users/index'),
-      name: 'Users',
+    {
+      path: '/attendance',
+      component: Layout,
+      name: 'Attendance',
       meta: {
-        title: '用户管理'
+        title: '考勤管理',
+        icon: "component"
       },
-    },{
-      path: 'journal',
-      component: () => import('@/views/system/journal/index'),
-      name: 'Journal',
+      children: [{
+        path: 'shift',
+        component: () => import('@/views/attendance/shift/index'),
+        name: 'Shift',
+        meta: {
+          title: '班次管理'
+        },
+      },{
+        path: 'arrange',
+        component: () => import('@/views/attendance/arrange/index'),
+        name: 'Arrange',
+        meta: {
+          title: '排班'
+        },
+      },
+       /!* {
+        path: 'punchcard',
+        component: () => import('@/views/attendance/punchcard/index'),
+        name: 'Punchcard',
+        meta: {
+          title: '打卡管理'
+        },
+      },{
+        path: 'vacate',
+        component: () => import('@/views/attendance/vacate/index'),
+        name: 'Vacate',
+        meta: {
+          title: '请假管理'
+        },
+      },*!/
+        {
+        path: 'salary',
+        component: () => import('@/views/attendance/salary/index'),
+        name: 'Salary',
+        meta: {
+          title: '考勤管理'
+        },
+      }]
+    },
+    {
+      path: '/system',
+      component: Layout,
+      name: 'System',
       meta: {
-        title: '日志管理'
+        title: '系统设置',
+        icon: "component"
       },
-    },{
-      path: 'notice',
-      component: () => import('@/views/system/notice/index'),
-      name: 'Notice',
-      meta: {
-        title: '通知管理'
-      },
-    },{
-      path: 'board',
-      component: () => import('@/views/system/board/index'),
-      name: 'Board',
-      meta: {
-        title: '看板管理'
-      },
-    }]
-  },*/
+      children: [{
+        path: 'users',
+        component: () => import('@/views/system/users/index'),
+        name: 'Users',
+        meta: {
+          title: '用户管理'
+        },
+      },{
+        path: 'journal',
+        component: () => import('@/views/system/journal/index'),
+        name: 'Journal',
+        meta: {
+          title: '日志管理'
+        },
+      },{
+        path: 'notice',
+        component: () => import('@/views/system/notice/index'),
+        name: 'Notice',
+        meta: {
+          title: '通知管理'
+        },
+      },{
+        path: 'board',
+        component: () => import('@/views/system/board/index'),
+        name: 'Board',
+        meta: {
+          title: '看板管理'
+        },
+      }]
+    },*/
   /* {
     path: 'external-link',
     component: Layout,

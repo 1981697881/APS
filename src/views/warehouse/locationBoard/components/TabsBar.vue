@@ -47,7 +47,6 @@ export default {
     },
     upload() {
       this.search.keyword = ''
-      this.parent = null
       this.$emit('uploadList')
     },
     fetchWare(val) {

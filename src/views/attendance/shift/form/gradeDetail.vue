@@ -151,7 +151,7 @@
         })
       },
       query() {
-        this.fetchData({name: this.name}, {
+        this.fetchData({name: this.name, deptIds: this.form.deptNumber == null?[]:[this.form.deptNumber]}, {
           pageNum: 1,
           pageSize: this.list.size
         })

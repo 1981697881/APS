@@ -71,6 +71,46 @@
             </el-col>
           </el-col>
           <el-col :span="24">
+            <el-col :span="12">
+              <el-form-item :label="'夜宵/早点开始时间'" prop="foodStartTime">
+                <el-time-picker
+                  arrow-control
+                  v-model="form1.foodStartTime"
+                  :picker-options="{
+                selectableRange: '0:00:00 - 23:59:59'
+               }"
+                  value-format="HH:mm:ss"
+                  placeholder="任意时间点">
+                </el-time-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item :label="'夜宵/早点结束时间'" prop="foodEndTime">
+                <el-time-picker
+                  arrow-control
+                  v-model="form1.foodEndTime"
+                  :picker-options="{
+                selectableRange: '0:00:00 - 23:59:59'
+               }"
+                  value-format="HH:mm:ss"
+                  placeholder="任意时间点">
+                </el-time-picker>
+              </el-form-item>
+            </el-col>
+          </el-col>
+          <el-col :span="24">
+            <el-col :span="12">
+              <el-form-item :label="'段内休息时间'" prop="takeBreaks">
+                <el-input  v-model="form1.takeBreaks"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item :label="'加班休息时间'" prop="overtimeBreak">
+                <el-input v-model="form1.overtimeBreak"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-col>
+          <el-col :span="24">
             <div style="margin-top: 20px;margin-bottom: 10px">
               <el-button @click="setRow">添加</el-button>
             </div>
@@ -183,6 +223,10 @@ export default {
         oowId: null,
         oowName: null,
         overtimeAllowableValue: null,
+        foodStartTime: null,
+        foodEndTime: null,
+        takeBreaks: null,
+        overtimeBreak: null,
         punchTimeLast: null,
         punchTimeLimit: null,
         takeWholeMinutes: null,
@@ -218,6 +262,16 @@ export default {
           {required: true, message: '请输入值', trigger: 'change'},
         ],
         takeWholeMinutes: [
+          {required: true, message: '请输入值', trigger: 'blur'},
+        ],foodStartTime: [
+          {required: true, message: '请输入值', trigger: 'change'},
+        ],
+        takeBreaks: [
+          {required: true, message: '请输入值', trigger: 'blur'},
+        ],foodEndTime: [
+          {required: true, message: '请输入值', trigger: 'change'},
+        ],
+        overtimeBreak: [
           {required: true, message: '请输入值', trigger: 'blur'},
         ],
       },

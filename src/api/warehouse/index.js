@@ -297,6 +297,7 @@ export function getDeliveryOrderBoardList(data, query) {
     url: url,
     headers: {
       'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
     },
     method: 'POST',
     data: query

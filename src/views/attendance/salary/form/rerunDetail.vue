@@ -11,8 +11,8 @@
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'职员'">
-            <el-select v-model="form.empNumbers" multiple filterable class="width-full"  placeholder="请选择职员" >
-              <el-option :label="t.name" :value="t.eid" v-for="(t,i) in rArray" :key="i"></el-option>
+            <el-select v-model="form.empNumbers" filterable multiple  class="width-full"  placeholder="请选择职员" >
+              <el-option v-for="(t,i) in rArray" :label="t.name" :value="t.eid" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -107,7 +107,7 @@
       // 切换类别
       selectChange(val) {
         console.log(val)
-        this.form.empNumbers = null
+      this.form.empNumbers = []
         this.rArray = []
         let arr = []
         arr.push(val)

@@ -2,6 +2,23 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'60px'">
       <el-row :gutter="10">
+        <el-col :span="6" style="display: inline-block">
+          <el-form-item :label="'日期'">
+            <el-date-picker
+              v-model="value"
+              type="daterange"
+              align="right"
+              style="width: auto"
+              class="input-class"
+              unlink-panels
+              range-separator="至"
+              value-format="yyyy-MM-dd"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions">
+            </el-date-picker>
+          </el-form-item>
+        </el-col>
         <el-col :span="4">
           <el-form-item :label="'单号'">
             <el-input v-model="search.shipNo" placeholder="单号" />
@@ -26,12 +43,40 @@
 import { mapGetters } from "vuex";
 import {getMType} from "@/api/basic/index";
 export default {
-    components: {},
-    computed: {
-        ...mapGetters(["node","clickData","selections"])
-    },
+  components: {},
+  computed: {
+    ...mapGetters(["node","clickData","selections"])
+  },
   data() {
     return {
+      value: '',
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
       search: {
         oldCode: null,
         shipNo: null,
@@ -49,7 +94,7 @@ export default {
     upload() {
       this.search.oldCode = ''
       this.search.shipNo = ''
-      this.value = ''
+      this.value = []
       this.$emit('uploadList')
     },
     // 查询条件过滤
@@ -57,6 +102,8 @@ export default {
       let obj = {}
       this.search.oldCode != null && this.search.oldCode != '' ? obj.oldCode = this.search.oldCode : null
       this.search.shipNo != null && this.search.shipNo != '' ? obj.shipNo = this.search.shipNo : null
+      this.value != null && this.value != undefined ? obj.endDate = this.value[1] : null
+      this.value != null && this.value != undefined ? obj.startDate = this.value[0] : null
       return obj
     },
     handleAlter() {
