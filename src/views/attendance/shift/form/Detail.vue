@@ -98,18 +98,7 @@
               </el-form-item>
             </el-col>
           </el-col>
-          <el-col :span="24">
-            <el-col :span="12">
-              <el-form-item :label="'段内休息时间'" prop="takeBreaks">
-                <el-input  v-model="form1.takeBreaks"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item :label="'加班休息时间'" prop="overtimeBreak">
-                <el-input v-model="form1.overtimeBreak"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-col>
+
           <el-col :span="24">
             <div style="margin-top: 20px;margin-bottom: 10px">
               <el-button @click="setRow">添加</el-button>
@@ -137,7 +126,7 @@
       destroy-on-close
       append-to-body
     >
-      <el-form :model="form2" :rules="rules2" ref="form2" label-width="80px" :size="'mini'">
+      <el-form :model="form2" :rules="rules2" ref="form2" label-width="110px" :size="'mini'">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'woId'" style="display: none">
@@ -171,6 +160,18 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-col :span="24">
+          <el-col :span="12">
+            <el-form-item :label="'段内休息时间'" prop="takeBreaks">
+              <el-input  v-model="form2.takeBreaks" placeholder="分钟"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="'加班休息时间'" prop="overtimeBreak">
+              <el-input v-model="form2.overtimeBreak" placeholder="分钟"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-col>
         <!--<el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'段内休息'" prop="roleName">
@@ -214,6 +215,8 @@ export default {
       form2: {
         endTime: null,
         woId: null,
+        takeBreaks: null,
+        overtimeBreak: null,
         startTime: null
       },
       form1: {
@@ -225,8 +228,6 @@ export default {
         overtimeAllowableValue: null,
         foodStartTime: null,
         foodEndTime: null,
-        takeBreaks: null,
-        overtimeBreak: null,
         punchTimeLast: null,
         punchTimeLimit: null,
         takeWholeMinutes: null,
@@ -237,6 +238,8 @@ export default {
       columns: [
         { text: "上班时间", name: "startTime" },
         { text: "下班时间", name: "endTime" },
+        { text: "段内休息时间", name: "takeBreaks" },
+        { text: "加班休息时间", name: "overtimeBreak" },
       ],
       pArray: [],
       rules: {
@@ -266,16 +269,17 @@ export default {
         ],foodStartTime: [
           {required: true, message: '请输入值', trigger: 'change'},
         ],
-        takeBreaks: [
-          {required: true, message: '请输入值', trigger: 'blur'},
-        ],foodEndTime: [
+      foodEndTime: [
           {required: true, message: '请输入值', trigger: 'change'},
-        ],
-        overtimeBreak: [
-          {required: true, message: '请输入值', trigger: 'blur'},
         ],
       },
       rules2: {
+        overtimeBreak: [
+          {required: true, message: '请输入值', trigger: 'blur'},
+        ],
+        takeBreaks: [
+          {required: true, message: '请输入值', trigger: 'blur'},
+        ],
         endTime: [
           {required: true, message: '请选择日期', trigger: 'change'}
         ],

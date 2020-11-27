@@ -34,14 +34,14 @@ export default {
       list: {},
       multipleSelection: [],
       columns: [
-        { text: '订单日期', name: 'soDate', width: '150px' },
+        { text: '订单日期', name: 'soDate', width: '150px', sort: true },
         { text: '色号/旧料号', name: 'color', width: '180px' },
         { text: '订单数量', name: 'odPrNum' },
         { text: '库存数量', name: 'evenNum' },
         { text: '最高安全库存', name: 'maxStock' },
         { text: '最低安全库存', name: 'minStock' },
         { text: '计划数量', name: 'allocatedNum' },
-        { text: '计划日期', name: 'productionDate', width: '150px' },
+        { text: '计划日期', name: 'productionDate', width: '150px', sort: true },
         { text: '实际完工数量', name: 'productionQuantity' },
         { text: '生产设备', name: 'plName' },
         { text: '产品分类', name: 'productType' },
@@ -50,8 +50,8 @@ export default {
         { text: '生产状态', name: 'allocatedStatus' },
         { text: '生产类型', name: 'productionType', width: '100px' },
         { text: '备注', name: 'remark' },
-        { text: '订单号', name: 'soNum' , width: '150px' },
-        { text: '排产单号', name: 'taskNum', width: '150px' },
+        { text: '订单号', name: 'soNum' , width: '150px', sort: true },
+        { text: '排产单号', name: 'taskNum', width: '150px', sort: true },
       ]
     };
   },

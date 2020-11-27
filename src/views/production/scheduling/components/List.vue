@@ -9,6 +9,7 @@
       type
        timeColor
       @handle-size="handleSize"
+      @sortChange="sortChange"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
        @selection-change="handleSelectionChange"
@@ -34,12 +35,12 @@ export default {
       list: {},
       multipleSelection: [],
       columns: [
-        { text: '订单日期', name: 'soDate', width: '150px' },
+        { text: '订单日期', name: 'soDate', width: '150px', sort: true },
         { text: '色号/旧料号', name: 'color', width: '180px'},
         { text: '订单数量', name: 'odPrNum' },
         { text: '计划数量', name: 'allocatedNum' },
         { text: '实际完工数量', name: 'productionQuantity' },
-        { text: '计划日期', name: 'productionDate', width: '150px' },
+        { text: '计划日期', name: 'productionDate', width: '150px', sort: true },
         { text: '生产设备', name: 'plName' },
         { text: '产品分类', name: 'productType' },
         { text: '任务警示', name: 'alertStatus', formatt: 'taskWarning' },
@@ -47,12 +48,15 @@ export default {
         { text: '生产状态', name: 'allocatedStatus' },
         { text: '生产类型', name: 'productionType', width: '100px' },
         { text: '备注', name: 'remark' },
-        { text: '订单号', name: 'soNum' , width: '150px' },
-        { text: '排产单号', name: 'taskNum', width: '150px' },
+        { text: '订单号', name: 'soNum' , width: '150px', sort: true },
+        { text: '排产单号', name: 'taskNum', width: '150px', sort: true },
       ]
     };
   },
   methods: {
+    sortChange(val){
+      console.log(val.row)
+    },
     ExportData() {
       import("@/vendor/Export2Excel").then(excel => {
         // 表格的表头列表

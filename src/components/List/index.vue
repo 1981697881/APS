@@ -12,6 +12,7 @@
       :row-style="formatRow ? rowClass : null"
        @selection-change="handleSelectionChange"
       :height="height"
+      @sort-change="sortChange"
       :show-summary="showSummary"
       :summary-method="getSummaries"
       v-loading="loading"
@@ -119,6 +120,9 @@ export default {
     }
   },
   methods: {
+    sortChange(row) {
+      return this.$emit('sortChange', { row });
+    },
     taskWarning(row, column) {
       let stau = ''
       if(row.isClash){
@@ -184,7 +188,7 @@ export default {
     },
     rowClass(row, index) {
       if(row.row.evenNum >= row.row.qty){
-        return { "background-color": "#FFDAB9" }
+        return { 'background-color': '#FFDAB9' }
       }
     },
     // 监听多选 参数-所有选中的值
@@ -195,7 +199,7 @@ export default {
       const sums = [];
       columns.forEach((column,index) => {
         if(index == 0){
-          sums[index] = "合计"
+          sums[index] = '合计'
         }else{
           const values = data.map(item=>Number(item[column.property]))
           const flag = values.every(item=>isNaN(item))
@@ -214,19 +218,19 @@ export default {
     },
     // 表格单击操作
     rowClick(row, column, el) {
-      return this.$emit("row-click", { row, column, el });
+      return this.$emit('row-click', { row, column, el });
     },
     // 表格双击操作
     dblclick(row, column, el) {
-      return this.$emit("dblclick", { row, column, el });
+      return this.$emit('dblclick', { row, column, el });
     },
-    //监听每页显示数量
+    // 监听每页显示数量
     handleSize(size) {
-      return this.$emit("handle-size", size);
+      return this.$emit('handle-size', size);
     },
-    //监听当前页码数
+    // 监听当前页码数
     handleCurrent(current) {
-      return this.$emit("handle-current", current);
+      return this.$emit('handle-current', current);
     }
   }
 };
