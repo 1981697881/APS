@@ -122,7 +122,7 @@
       :visible.sync="visible"
       title="班次信息"
       v-if="visible"
-      :width="'30%'"
+      :width="'50%'"
       destroy-on-close
       append-to-body
     >
