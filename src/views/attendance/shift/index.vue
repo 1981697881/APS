@@ -90,9 +90,11 @@ export default {
     // 更新列表
     upload() {
       this.$refs.tree.fetchData()
+      this.uploadSch(this.oowId)
     },
     // 更新列表
     uploadSch(val) {
+      this.oowId = val
       this.$refs.list.fetchData(val)
     },// 查询
     query() {

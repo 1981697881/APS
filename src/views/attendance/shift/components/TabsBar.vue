@@ -95,12 +95,12 @@ export default {
           })
           empRemByEid(array).then(res => {
             this.$emit('hideDialog', false)
-            this.$emit('uploadList', this.form.oowId)
+            this.$emit('uploadList')
           });
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: '已取消'
           });
         });
       } else {
