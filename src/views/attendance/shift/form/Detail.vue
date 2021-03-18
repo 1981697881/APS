@@ -72,7 +72,7 @@
           </el-col>
           <el-col :span="24">
             <el-col :span="12">
-              <el-form-item :label="'第一用餐开始时间'" prop="foodStartTime">
+              <el-form-item :label="'第三段就餐开始时间'" prop="foodStartTime">
                 <el-time-picker
                   arrow-control
                   v-model="form1.foodStartTime"
@@ -85,7 +85,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item :label="'第一用餐结束时间'" prop="foodEndTime">
+              <el-form-item :label="'第三段就餐结束时间'" prop="foodEndTime">
                 <el-time-picker
                   arrow-control
                   v-model="form1.foodEndTime"

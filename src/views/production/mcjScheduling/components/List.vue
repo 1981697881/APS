@@ -36,6 +36,8 @@ export default {
       columns: [
         { text: '订单日期', name: 'soDate', width: '150px', sort: true },
         { text: '色号/旧料号', name: 'color', width: '180px' },
+        { text: '参照料号1', name: 'codeOne', width: '180px'},
+        { text: '参照料号2', name: 'codeTwo', width: '180px'},
         { text: '订单数量', name: 'odPrNum' },
         { text: '库存数量', name: 'evenNum' },
         { text: '最高安全库存', name: 'maxStock' },
