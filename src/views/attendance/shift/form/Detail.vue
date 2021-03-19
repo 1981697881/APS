@@ -70,7 +70,7 @@
               </el-form-item>
             </el-col>
           </el-col>
-          <el-col :span="24">
+          <!--<el-col :span="24">
             <el-col :span="12">
               <el-form-item :label="'第三段就餐开始时间'" prop="foodStartTime">
                 <el-time-picker
@@ -97,7 +97,7 @@
                 </el-time-picker>
               </el-form-item>
             </el-col>
-          </el-col>
+          </el-col>-->
 
           <el-col :span="24">
             <div style="margin-top: 20px;margin-bottom: 10px">

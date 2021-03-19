@@ -24,6 +24,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
         <el-button-group style="float:right;">
+          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="recalculation">重算</el-button>
           <el-upload
             name="order"
@@ -88,6 +89,9 @@ export default {
   methods: {
     onFun(method){
       this[method]()
+    },
+    exportData() {
+      this.$emit('exportData')
     },
     // 切换仓库
     changeCheck(val) {

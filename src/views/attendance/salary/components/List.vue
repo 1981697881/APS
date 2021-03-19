@@ -83,6 +83,47 @@ export default {
   created() {
   },
   methods: {
+    ExportData() {
+      import('@/vendor/Export2Excel').then(excel => {
+        // 表格的表头列表
+        const columns = this.columns
+        const tHeader = []
+        const multiHeader = []
+        // 与表头相对应的数据里边的字段
+        const filterVal = []
+        let result = []
+        columns.forEach((item, index) => {
+          if(item.colspan){
+            item.data.forEach((item2, index2) =>{
+              multiHeader.push(item2.text)
+              if(result.indexOf(item.text)==-1){
+                tHeader.push(item.text)
+                result.push(item.text)
+              }else{
+                tHeader.push('')
+              }
+              filterVal.push(item2.name)
+            })
+          }else{
+            multiHeader.push('')
+            tHeader.push(item.text)
+            filterVal.push(item.name)
+          }
+        })
+        const merges = []
+        const list = this.list
+        const data = this.formatJson(filterVal, list)
+        // 这里还是使用export_json_to_excel方法比较好，方便操作数据
+        excel.export_json_to_excel([tHeader], data, '考勤', multiHeader, merges)
+      })
+    },
+    formatJson(filter, jsonDate){
+      return jsonDate.map(v =>
+        filter.map(j => {
+          return v[j]
+        })
+      )
+    },
     tableCellStyle(row, rowIndex, column) {
       if (this.row === row.row) {
         let col1 = row.column.property
@@ -214,8 +255,8 @@ export default {
         { text: '本月剩余年假/H', name: 'annualLeaveRemainingThisMonth' },
         { text: '餐补', name: 'mealSupplement' },
         { text: '出差补贴', name: 'travelAllowance'},
-        { text: 'aeId', name: 'aeId', default: false},
-        { text: '部门', name: 'deptName', default: false},
+        /*{ text: 'aeId', name: 'aeId', default: false},
+        { text: '部门', name: 'deptName', default: false},*/
       )
       this.loading = true
       getSalaryList(val).then(res => {
@@ -276,12 +317,10 @@ export default {
               eval("obj.annualLeaveRemainingThisMonth='" + item.annualLeaveRemainingThisMonth + "'")
               eval("obj.mealSupplement='" + item.mealSupplement + "'")
               eval("obj.travelAllowance='" + item.travelAllowance + "'")
-
             }
             arr.push(obj)
           }
         })
-        console.log(this.columns)
         this.list = arr
       })
     }

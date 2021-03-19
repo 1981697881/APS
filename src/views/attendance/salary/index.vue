@@ -2,7 +2,7 @@
   <div class="app-list">
     <div class="list-containerOther">
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @showRerun="handlerRerun" @queryBtn="query" @uploadList="upload" @theDelivery="delivery"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @showRerun="handlerRerun" @exportData="exportData" @queryBtn="query" @uploadList="upload" @theDelivery="delivery"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog"/>
     </div>
@@ -69,6 +69,9 @@ export default {
     this.$refs.list.fetchData(this.$refs.tabs.qFilter())
   },
   methods: {
+    exportData() {
+      this.$refs.list.ExportData()
+    },
     delivery(obj){
       if(obj){
         this.$refs.list.Delivery(obj.oid)

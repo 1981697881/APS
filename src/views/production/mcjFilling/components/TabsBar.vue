@@ -72,7 +72,7 @@ export default {
     };
   },
   created: function() {
-    this.value[0] = this.getMonth('', -3).month
+    this.value[0] = this.getMonth('', -63).month
     this.value[1] = this.getMonth('', 0).month
   },
   mounted() {
@@ -108,13 +108,13 @@ export default {
     // 查询前后三天日期
     getMonth(date, day){
       var today = new Date();
-      var targetday_milliseconds=today.getTime()
+      var targetday_milliseconds=today.getTime()+ 1000*60*60*24*day
       today.setTime(targetday_milliseconds) //注意，这行是关键代码
       var tYear = today.getFullYear()
       var tMonth = today.getMonth()
       var tDate = today.getDate()
       var getDay = today.getDay()
-      tMonth = this.doHandleMonth(tMonth + 1 + day)
+      tMonth = this.doHandleMonth(tMonth + 1 )
       tDate = this.doHandleMonth(tDate)
       var weeks = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
       var week = weeks[getDay]

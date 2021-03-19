@@ -151,6 +151,7 @@
         return m;
       },
       fetchData(val) {
+        console.log(val)
         this.loading = true
         let array1 = []
         let array2 = []
