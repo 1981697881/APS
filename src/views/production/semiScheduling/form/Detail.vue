@@ -63,8 +63,13 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'备注'">
-            <el-input v-model="form.remark"></el-input>
+          <el-form-item :label="'是否超产'" >
+            <el-switch
+              v-model="form.isOutBreed"
+              active-value="1"
+              inactive-value="0"
+            >
+            </el-switch>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -75,6 +80,13 @@
               <el-radio :label=4 style="color:#3b199a">暂停</el-radio>
               <!--<el-radio :label=1 style="color:#dc9118" disabled>延误</el-radio>-->
             </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'备注'">
+            <el-input v-model="form.remark"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -105,6 +117,7 @@
           tips: null,
           isSemi: 1,
           oldCode: null,
+          isOutBreed: '0',
           alertStatus: null,
           plId: null,
           tpId: null,
