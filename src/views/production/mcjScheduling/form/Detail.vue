@@ -63,7 +63,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'生产设备'" prop="plId">
-            <el-select v-model="form.plId" class="width-full" placeholder="生产设备" :disabled="isNow">
+            <el-select v-model="form.plId" class="width-full" placeholder="生产设备" >
               <el-option :label="t.plName" :value="t.plId" v-for="(t,i) in rArray"  :key="i"></el-option>
             </el-select>
           </el-form-item>
@@ -81,7 +81,6 @@
               <el-date-picker
                 v-model="form.productionDate"
                 type="date"
-                :disabled="isNow"
                 value-format="yyyy-MM-dd"
                 placeholder="选择日期">
               </el-date-picker>

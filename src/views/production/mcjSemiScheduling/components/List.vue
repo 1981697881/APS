@@ -287,7 +287,7 @@
                         result.some((item4, index4)=>{
                           if(typeof(item4['oldCode'+index2]) == 'undefined' && item4['plName'] == i){
                             if(result2.indexOf(item3.taskId) == -1) {
-                              eval("item4.oldCode" + index2 + "='" + item3.color + "'")
+                              eval("item4.oldCode" + index2 + "='"  + item3.color + "'")
                               eval("item4.goodName" + index2 + "='" + item3.goodName + "'")
                               eval("item4.taskId" + index2 + "='" + item3.taskId + "'")
                               eval("item4.allocatedNum" + index2 + "='" + item3.allocatedNum + "'")
