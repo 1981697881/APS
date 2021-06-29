@@ -122,16 +122,16 @@
                 </div>-->
                   <el-select size="mini" v-if="t.name == 'tpName'" v-model="scope.row[t.name]" placeholder="请选择" @change="changeTpId($event, scope.row)">
                     <el-option
-                      :label="t.tpName"
-                      :value="t.tpName"
-                      v-for="(t,i) in pArray"
+                      :label="p.tpName"
+                      :value="p.tpName"
+                      v-for="(p,i) in pArray"
                       :key="i">
                     </el-option>
                   </el-select><el-select size="mini" v-else-if="t.name == 'plNName'" v-model="scope.row[t.name]" placeholder="请选择" @change="changePlId($event, scope.row)">
                     <el-option
-                      :label="t.plName"
-                      :value="t.plName"
-                      v-for="(t,i) in rArray"
+                      :label="p.plName"
+                      :value="p.plName"
+                      v-for="(p,i) in scope.row.rArray"
                       :key="i">
                     </el-option>
                   </el-select>
@@ -234,13 +234,17 @@
     created() {
 
     },
-    mounted() {
+     mounted() {
       this.fetchFormat()
       if (this.listInfo) {
         this.list = this.listInfo
         this.list.forEach((item,index)=>{
           item.plNName = item.plName
+          this.fetchLine(item.tpId).then(result => {
+             item.rArray = result
+            })
         })
+        console.log(this.list)
       /*  this.$set(this.listInfo, 'isOutbreed', '1')
         this.form = this.listInfo
         this.fetchLine(this.form.tpId)
@@ -264,7 +268,7 @@
           if(item.tpName === val) {
             getFinalGoodsT(item.tpId).then(res => {
               if(res.flag) {
-                me.$set(this, 'rArray', res.data)
+                me.$set(row, 'rArray', res.data)
                 me.$set(row, 'plNName', null)
                 me.$set(row, 'plId', null)
                 me.$forceUpdate();
@@ -435,12 +439,14 @@
           }
         })
       },
-      fetchLine(val) {
-        getFinalGoodsT(val).then(res => {
+      async fetchLine(val) {
+        let array = []
+       await getFinalGoodsT(val).then(res => {
           if(res.flag) {
-            this.rArray = res.data
+            array = res.data
           }
         })
+        return array
       },
       fetchLine2(val) {
         getFinalGoodsT(val).then(res => {
