@@ -162,8 +162,8 @@
   </div>
 </template>
 <script>
-  import { moveBill, isOutbreed } from "@/api/production/index"
-  import { getFinalGoodsTypeT, getFinalGoodsT} from '@/api/basic/index'
+  import { moveBill, isOutbreed } from '@/api/production/index'
+  import { getFinalGoodsTypeT, getFinalGoodsT } from '@/api/basic/index'
   export default {
     props: {
       listInfo: {

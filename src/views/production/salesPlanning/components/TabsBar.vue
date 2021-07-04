@@ -313,6 +313,21 @@
       query() {
         this.$emit('queryBtn', this.qFilter())
       },
+      //不核准
+      notConfirm(form) {
+        if (this.clickData) {
+            updateSaleOrderDetail({soDeId: this.clickData.soDeId, factoryEstimatedDate: value}).then(res => {
+              if(res.flag) {
+                this.$emit('uploadList')
+              }
+            })
+        } else {
+          this.$message({
+            message: "无选中行",
+            type: "warning"
+          });
+        }
+      },
       confirm(form) {
         this.fullscreenLoading = true
         this.$refs[form].validate((valid) => {

@@ -12,7 +12,7 @@
       @dblclick="dblclick"
        @row-click="rowClick"
     />-->
-    <el-table :height="height" :data="list" border size="mini" @cell-dblclick="celldblclick" @cell-click="cellclick"  :cell-style="tableCellStyle" :span-method="objectSpanMethod" >
+    <el-table v-if="renderComponent" :height="height" :data="list" border size="mini" @cell-dblclick="celldblclick" @cell-click="cellclick"  :cell-style="tableCellStyle" :span-method="objectSpanMethod" >
       <el-table-column
         v-for="(t,i) in columns"
         :key="i"
@@ -74,6 +74,7 @@ export default {
   },
   data() {
     return {
+      renderComponent: true,
       dayLength: 0,
       loading: false,
       list: [],
@@ -83,6 +84,14 @@ export default {
   created() {
   },
   methods: {
+    forceRerender() {
+      // 从 DOM 中删除 my-component 组件
+      this.renderComponent = false;
+      this.$nextTick(() => {
+        // 在 DOM 中添加 my-component 组件
+        this.renderComponent = true;
+      });
+    },
     ExportData() {
       import('@/vendor/Export2Excel').then(excel => {
         // 表格的表头列表
@@ -214,9 +223,9 @@ export default {
     },
     fetchData(val) {
       this.columns = []
+
       // 初始化列表
       const aData = new Date(val.month.split('-')[0], val.month.split('-')[1], 0)
-      console.log(aData)
       const mouthLength = aData.getDate()
       this.dayLength = mouthLength
       this.columns = [
@@ -226,6 +235,7 @@ export default {
         { text: '日期', name: '',fixed: true, colspan: true, data: [{text: '星期', name: 'time'}]
         },
       ]
+      console.log(mouthLength)
       for (let i = 1; i <= mouthLength; i++) {
         const week = this.RetnWF2(val.month.split('-')[0], val.month.split('-')[1], i)
         const obj = { text: i + '', name: '', colspan: true, data: [{ width: '250px', text: week + '', name: 'day' + i }] }
@@ -258,6 +268,7 @@ export default {
         /*{ text: 'aeId', name: 'aeId', default: false},
         { text: '部门', name: 'deptName', default: false},*/
       )
+      this.forceRerender();
       this.loading = true
       getSalaryList(val).then(res => {
         this.loading = false
