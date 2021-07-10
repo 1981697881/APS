@@ -57,6 +57,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="open">日期修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>-->
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-close" @click="nuNotarize">不核准</el-button>
         </el-button-group>
       </el-row>
     </el-form>
@@ -140,7 +141,7 @@
 </template>
 <script>
   import { mapGetters } from 'vuex'
-  import { salesListSync, exportSales, notarizeBatchList} from "@/api/aftermarket/index"
+  import { salesListSync, exportSales, notarizeBatchList,setOrderNoSchedul} from "@/api/aftermarket/index"
   import { updateSaleOrderDetail} from "@/api/production/index"
   import { getByUserAndPrId } from '@/api/system/index'
   export default {
@@ -286,6 +287,28 @@
             }
           })
           notarizeBatchList({soIds: arrray}).then(res => {
+            if(res.flag) {
+              this.$emit('queryBtn', this.qFilter())
+            }
+          })
+          /*this.$emit('showDialog', this.clickData)*/
+        } else {
+          this.$message({
+            message: "无选中行",
+            type: "warning"
+          });
+        }
+      },
+      nuNotarize() {
+        if (this.selections.length>0) {
+          const selection = this.selections
+          let arrray = []
+          selection.forEach((item, index) => {
+            if(arrray.indexOf(item.soId) == -1){
+              arrray.push(item.soId)
+            }
+          })
+          setOrderNoSchedul({soIds: arrray}).then(res => {
             if(res.flag) {
               this.$emit('queryBtn', this.qFilter())
             }

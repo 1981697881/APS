@@ -56,6 +56,19 @@ export function notarizeBatchList(params) {
     data: params
   })
 }
+// 不核准
+export function setOrderNoSchedul(params) {
+  const url = '/sale-order/setOrderNoSchedul'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('apsrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
 // 二次确认单据
 export function notarizeAgain(params) {
   const url = '/sale-order/confirmAgain'
