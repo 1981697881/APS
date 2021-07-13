@@ -36,7 +36,7 @@
         </el-col>
         <el-col :span="3">
           <el-form-item :label="'状态'" :label-width="'70px'">
-            <el-select v-model="isConfirm" placeholder="请选择" @change="selectChange">
+            <el-select v-model="auditStatus" placeholder="请选择" @change="selectChange">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -57,7 +57,8 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="open">日期修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>-->
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-close" @click="nuNotarize">不核准</el-button>
+         <!-- <el-button :size="'mini'" type="primary" icon="el-icon-close" @click="nuNotarize">不核准</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="notarizeAgain">再次核准</el-button>-->
         </el-button-group>
       </el-row>
     </el-form>
@@ -141,7 +142,7 @@
 </template>
 <script>
   import { mapGetters } from 'vuex'
-  import { salesListSync, exportSales, notarizeBatchList,setOrderNoSchedul} from "@/api/aftermarket/index"
+  import { salesListSync, exportSales, notarizeBatchList,setOrderNoSchedul,notarizeAgain} from "@/api/aftermarket/index"
   import { updateSaleOrderDetail} from "@/api/production/index"
   import { getByUserAndPrId } from '@/api/system/index'
   export default {
@@ -166,13 +167,20 @@
           value: [],
         },
         options: [{
-          value: true,
-          label: '已排产'
+          value: '0',
+          label: '未核准'
         }, {
-          value: false,
-          label: '未排产'
+          value: '1',
+          label: '已核准'
+        }, {
+          value: '4',
+          label: '不核准'
+        }, {
+          value: '5',
+          label: '异常排程'
         }],
         isConfirm: false,
+        auditStatus: '0',
         value: '',
         pickerOptions: {
           shortcuts: [{
@@ -249,7 +257,7 @@
        }
       },
       selectChange(val) {
-        this.isConfirm = val
+        this.auditStatus = val
         this.$emit('uploadList')
       },
       errorInfo() {
@@ -267,6 +275,20 @@
         link.setAttribute('download', res.headers['content-disposition'].split('filename=')[1])
         document.body.appendChild(link)
         link.click()
+      },
+      notarizeAgain() {
+        if (this.clickData.soId) {
+          notarizeAgain({soId: this.clickData.soId}).then(res => {
+            if(res.flag) {
+              this.$emit('queryBtn', this.qFilter())
+            }
+          })
+        } else {
+          this.$message({
+            message: "无选中行",
+            type: "warning"
+          });
+        }
       },
       exportData() {
         exportSales(this.qFilter()).then(res => {
@@ -299,6 +321,7 @@
           });
         }
       },
+      //不核准
       nuNotarize() {
         if (this.selections.length>0) {
           const selection = this.selections
@@ -329,14 +352,14 @@
         this.search.color != null && this.search.color != '' ? obj.color = this.search.color : null
         this.value != null && this.value != undefined ? obj.businessDateEnd = this.value[1] : null
         this.value != null && this.value != undefined ? obj.businessDateStart = this.value[0] : null
-        obj.isConfirm = this.isConfirm
+        obj.auditStatus = this.auditStatus
         return obj
       },
       // 关键字查询
       query() {
         this.$emit('queryBtn', this.qFilter())
       },
-      //不核准
+      //
       notConfirm(form) {
         if (this.clickData) {
             updateSaleOrderDetail({soDeId: this.clickData.soDeId, factoryEstimatedDate: value}).then(res => {
@@ -379,7 +402,7 @@
         this.search.color = ''
         this.search.itemCode = ''
         this.value = ''
-        this.isConfirm = false
+        this.auditStatus = 0
         this.$emit('uploadList')
       },
       handleSync() {
