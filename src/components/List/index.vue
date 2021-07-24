@@ -175,16 +175,33 @@ export default {
           return 'suspended-row0';
         }
       } else {
-        if (row.alertStatus == 3) {
-          return 'urgent-row';
-        } else if (row.alertStatus == 1) {
-          return 'delay-row';
-        }else if (row.alertStatus == 4) {
-          return 'conflict-row';
+        if(row.positionCode && row.grandpaPiCode){
+            if(this.getDaysBetween(row.createTime) > 365){
+              return 'urgent-row';
+            }else if(this.getDaysBetween(row.createTime) > 183){
+              return 'delay-row';
+            }else{
+              return '';
+            }
         }else{
-          return '';
+          if (row.alertStatus == 3) {
+            return 'urgent-row';
+          } else if (row.alertStatus == 1) {
+            return 'delay-row';
+          }else if (row.alertStatus == 4) {
+            return 'conflict-row';
+          }else{
+            return '';
+          }
         }
       }
+    },
+    getDaysBetween(data){
+      var endDate = new Date().getTime();
+      var startDate = Date.parse(data);
+      var days=Number((endDate - startDate)/(24 * 60 * 60 * 1000));
+      // alert(days);
+      return  days;
     },
     rowClass(row, index) {
       if(row.row.evenNum >= row.row.qty){

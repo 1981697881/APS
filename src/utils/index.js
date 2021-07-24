@@ -108,3 +108,32 @@ export function param2Obj(url) {
       '"}'
   )
 }
+/**
+ * @param {string} // 查询前后三天日期
+ * @returns {Object}
+ */
+export function getDay(date, day){
+  var today = new Date();
+  var targetday_milliseconds=today.getTime() + 1000*60*60*24*day
+  today.setTime(targetday_milliseconds) //注意，这行是关键代码
+  var tYear = today.getFullYear()
+  var tMonth = today.getMonth()
+  var tDate = today.getDate()
+  var getDay = today.getDay()
+  tMonth = doHandleMonth(tMonth + 1)
+  tDate = doHandleMonth(tDate)
+  var weeks = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
+  var week = weeks[getDay]
+  return {
+    day: tDate,
+    week: week,
+    date: tYear + '-' + tMonth + '-' + tDate
+  }
+}
+export function doHandleMonth(month) {
+  var m = month;
+  if(month.toString().length == 1) {
+    m = '0' + month;
+  }
+  return m;
+}

@@ -143,6 +143,7 @@ import { mapGetters } from "vuex"
 import { syncPOInfoQuery, procurementBarcode, exportProcurement, notarizeBeputList} from "@/api/warehouse/index"
 import { PrintThree } from '@/tools/doPrint'
 import { getByUserAndPrId } from '@/api/system/index'
+import { getDay } from '@/utils/index.js'
 export default {
   components: {},
   computed: {
@@ -172,7 +173,7 @@ export default {
         value: false,
         label: '未核准'
       }],
-      value: '',
+      value: [],
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -216,6 +217,10 @@ export default {
       this.btnList = res.data
       this.$forceUpdate();
     });
+  },
+  created: function() {
+    this.value[0] = getDay('', -30).date
+    this.value[1] = getDay('', 30).date
   },
   methods: {
     onFun(method){

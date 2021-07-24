@@ -72,6 +72,7 @@ import { mapGetters } from 'vuex'
 import { exportOutboundStatistics } from '@/api/warehouse/index'
 import { getWarehouseList } from '@/api/basic/index'
 import { getByUserAndPrId } from '@/api/system/index'
+import { getDay } from '@/utils/index.js'
 export default {
   components: {},
   computed: {
@@ -79,7 +80,7 @@ export default {
   },
   data() {
     return {
-      value: '',
+      value: [],
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -128,6 +129,10 @@ export default {
       this.btnList = res.data
       this.$forceUpdate();
     });
+  },
+  created: function() {
+    this.value[0] = getDay('', -30).date
+    this.value[1] = getDay('', 0).date
   },
   methods: {
     onFun(method){
