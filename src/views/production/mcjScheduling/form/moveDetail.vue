@@ -50,9 +50,9 @@
                     </el-option>
                   </el-select><el-select size="mini" v-else-if="t.name == 'plNName'" v-model="scope.row[t.name]" placeholder="请选择" @change="changePlId($event, scope.row)">
                     <el-option
-                      :label="t.plName"
-                      :value="t.plName"
-                      v-for="(t,i) in rArray"
+                      :label="p.plName"
+                      :value="p.plName"
+                      v-for="(p,i) in scope.row.rArray"
                       :key="i">
                     </el-option>
                   </el-select>
@@ -161,6 +161,9 @@
         this.list = this.listInfo
         this.list.forEach((item,index)=>{
           item.plNName = item.plName
+          this.fetchLine(item.tpId).then(result => {
+            item.rArray = result
+          })
         })
         /*  this.$set(this.listInfo, 'isOutbreed', '1')
           this.form = this.listInfo
@@ -357,12 +360,14 @@
           }
         })
       },
-      fetchLine(val) {
-        getFinalGoodsT(val).then(res => {
+      async fetchLine(val) {
+        let array = []
+        await getFinalGoodsT(val).then(res => {
           if(res.flag) {
-            this.rArray = res.data
+            array = res.data
           }
         })
+        return array
       },
       fetchLine2(val) {
         getFinalGoodsT(val).then(res => {
